@@ -10,6 +10,7 @@
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/CheckStrategy" />
             <option value="$PROJECT_DIR$/CreateIndicatorData" />
+            <option value="$PROJECT_DIR$/StrategyGeneration" />
           </set>
         </option>
       </GradleProjectSettings>
