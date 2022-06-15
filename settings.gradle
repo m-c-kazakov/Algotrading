@@ -1,2 +1,5 @@
 rootProject.name = 'AlgotradingProject'
 
+
+include 'CreateIndicatorData'
+include 'CheckStrategy'
