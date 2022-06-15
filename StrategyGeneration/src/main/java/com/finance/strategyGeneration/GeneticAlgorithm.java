@@ -34,6 +34,10 @@ public class GeneticAlgorithm {
 
         // Скрещивание
         List<DataOfStrategy> populationAfterCrossing = populationCrossingManager.execute(population);
+
+        // Мутация
+
+        // Эволюция
     }
 
     private List<DataOfStrategy> createRandomPopulation(int numberOfIndividuals) {

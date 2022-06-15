@@ -42,19 +42,15 @@ public class DataOfStrategy {
     Map<SumOfDealConfigurationKey, Object> sumOfDealConfigurationData;
 
     StopLossType stopLossType;
-    @Getter(AccessLevel.NONE)
     Map<StopLossConfigurationKey, Object> stopLossConfigurationData;
 
     TrailingStopType trailingStopType;
-    @Getter(AccessLevel.NONE)
     Map<TrailingStopConfigurationKey, Object> trailingStopConfigurationData;
 
     TakeProfitType takeProfitType;
-    @Getter(AccessLevel.NONE)
     Map<TakeProfitConfigurationKey, Object> takeProfitConfigurationData;
 
     TypeOfDeal typeOfDeal;
-    @Getter(AccessLevel.NONE)
     Candle[] candles;
     CandlesInformation candlesInformation;
 
