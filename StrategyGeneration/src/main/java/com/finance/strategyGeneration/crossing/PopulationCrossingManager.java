@@ -1,4 +1,4 @@
-package com.finance.strategyGeneration;
+package com.finance.strategyGeneration.crossing;
 
 import com.finance.strategyGeneration.dataHolder.DataOfStrategy;
 

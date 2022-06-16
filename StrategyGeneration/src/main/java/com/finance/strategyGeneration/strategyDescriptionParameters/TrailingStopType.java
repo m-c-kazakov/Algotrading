@@ -1,6 +1,18 @@
 package com.finance.strategyGeneration.strategyDescriptionParameters;
 
-public enum TrailingStopType {
+import java.util.List;
+import java.util.concurrent.ThreadLocalRandom;
 
-    FIXED
+public enum TrailingStopType {
+    FIXED;
+
+    public static List<TrailingStopType> getTrailingStopTypes() {
+        return List.of(TrailingStopType.values());
+    }
+
+    public static TrailingStopType getRandomTrailingStopType() {
+        List<TrailingStopType> trailingStopTypes = getTrailingStopTypes();
+        return trailingStopTypes.get(ThreadLocalRandom.current()
+                .nextInt(trailingStopTypes.size()));
+    }
 }

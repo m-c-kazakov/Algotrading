@@ -1,13 +1,14 @@
 package com.finance.strategyGeneration;
 
+import com.finance.strategyGeneration.crossing.PopulationCrossingManager;
 import com.finance.strategyGeneration.dataHolder.DataOfStrategy;
+import com.finance.strategyGeneration.mutation.MutationOfIndividual;
 import com.finance.strategyGeneration.stagesOfGeneticAlgorithm.RandomPopulationCreationManager;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Stream;
 
@@ -16,13 +17,14 @@ import java.util.stream.Stream;
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class GeneticAlgorithm {
 
-    static int NUMBER_OF_RANDOM_INDIVIDUALS = 100; // TODO вынести в property
-    static int NUMBER_OF_THE_BEST_INDIVIDUALS = 100; // TODO вынести в property
+    static int NUMBER_OF_RANDOM_INDIVIDUALS = 10; // TODO вынести в property
+    static int NUMBER_OF_THE_BEST_INDIVIDUALS = 10; // TODO вынести в property
     RandomPopulationCreationManager randomPopulationCreationManager;
     PopulationService populationService;
 
-
     PopulationCrossingManager populationCrossingManager;
+
+    MutationOfIndividual mutationOfIndividual;
 
     public void execute() {
 
@@ -36,8 +38,12 @@ public class GeneticAlgorithm {
         List<DataOfStrategy> populationAfterCrossing = populationCrossingManager.execute(population);
 
         // Мутация
+        List<DataOfStrategy> populationAfterMutation = mutationOfIndividual.execute(populationAfterCrossing);
 
         // Эволюция
+        // TODO Добавить блок с эволюцией
+
+        // Отбор
     }
 
     private List<DataOfStrategy> createRandomPopulation(int numberOfIndividuals) {

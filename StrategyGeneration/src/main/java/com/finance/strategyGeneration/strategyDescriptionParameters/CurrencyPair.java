@@ -10,6 +10,7 @@ import lombok.experimental.FieldDefaults;
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public enum CurrencyPair {
 
+    // TODO добавить возможность делать стратегии с использованием данных с разных валютных пар, акций и т.д.
     EUR_USD(4);
 
 

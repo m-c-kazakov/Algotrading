@@ -1,6 +1,5 @@
-package com.finance.strategyGeneration;
+package com.finance.strategyGeneration.crossing;
 
-import com.finance.strategyGeneration.crossing.TypesOfCrosses;
 import com.finance.strategyGeneration.dataHolder.DataOfStrategy;
 import com.finance.strategyGeneration.strategyDescriptionParameters.DescriptionToCloseADeal;
 import com.finance.strategyGeneration.strategyDescriptionParameters.DescriptionToOpenADeal;
@@ -57,12 +56,10 @@ public class PopulationCrossingManagerImpl implements PopulationCrossingManager 
                 .toList();
 
         DataOfStrategy firstParent = dataOfStrategyElements.get(0);
-        List<Indicator> firstIndicators = firstParent.getDescriptionToCloseADeal()
-                .getIndicators();
+        List<Indicator> firstIndicators = firstParent.getIndicatorsDescriptionToCloseADeal();
 
         DataOfStrategy secondParent = dataOfStrategyElements.get(1);
-        List<Indicator> secondIndicators = secondParent.getDescriptionToCloseADeal()
-                .getIndicators();
+        List<Indicator> secondIndicators = secondParent.getIndicatorsDescriptionToCloseADeal();
 
         int separator = createSeparator(firstIndicators, secondIndicators);
 
@@ -86,12 +83,10 @@ public class PopulationCrossingManagerImpl implements PopulationCrossingManager 
                 .toList();
 
         DataOfStrategy firstParent = dataOfStrategyElements.get(0);
-        List<Indicator> firstIndicators = firstParent.getDescriptionToOpenADeal()
-                .getIndicators();
+        List<Indicator> firstIndicators = firstParent.getIndicatorsDescriptionToOpenADeal();
 
         DataOfStrategy secondParent = dataOfStrategyElements.get(1);
-        List<Indicator> secondIndicators = secondParent.getDescriptionToOpenADeal()
-                .getIndicators();
+        List<Indicator> secondIndicators = secondParent.getIndicatorsDescriptionToOpenADeal();
 
         int separator = createSeparator(firstIndicators, secondIndicators);
 

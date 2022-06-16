@@ -3,17 +3,19 @@ package com.finance.strategyGeneration.random.indicator;
 import com.finance.strategyGeneration.strategyDescriptionParameters.TypeOfBar;
 import com.finance.strategyGeneration.strategyDescriptionParameters.indicators.SmaParameters;
 import lombok.AccessLevel;
+import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import org.springframework.stereotype.Component;
 
+import java.util.EnumMap;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.function.Supplier;
 
-@Component
+@Component("SMA")
 @RequiredArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class SmaRandomParametersGenerator implements RandomIndicatorParametersGenerator {
@@ -21,14 +23,15 @@ public class SmaRandomParametersGenerator implements RandomIndicatorParametersGe
     List<SmaParameters> smaParameters = List.of(SmaParameters.values());
     List<TypeOfBar> typeOfBars = List.of(TypeOfBar.values());
 
-    Map<SmaParameters, Supplier<String>> smaParametersSupplierMap = new HashMap<>();
+    @Getter
+    Map<String, Supplier<String>> parametersSupplierMap = new HashMap<>();
 
     {
-        smaParametersSupplierMap.put(SmaParameters.CALCULATE_BY,
+        parametersSupplierMap.put(SmaParameters.CALCULATE_BY.name(),
                 () -> String.valueOf(typeOfBars.get(ThreadLocalRandom.current()
                         .nextInt(typeOfBars.size()))));
 
-        smaParametersSupplierMap.put(SmaParameters.PERIOD, () -> String.valueOf(ThreadLocalRandom.current()
+        parametersSupplierMap.put(SmaParameters.PERIOD.name(), () -> String.valueOf(ThreadLocalRandom.current()
                 .nextInt(1, 101)));
     }
 
@@ -38,10 +41,8 @@ public class SmaRandomParametersGenerator implements RandomIndicatorParametersGe
 
         Map<String, String> randomParameters = new HashMap<>();
 
-        smaParameters.forEach(smaParameter -> {
-            randomParameters.put(smaParameter.name(), smaParametersSupplierMap.get(smaParameter)
-                    .get());
-        });
+        smaParameters.forEach(
+                smaParameter -> randomParameters.put(smaParameter.name(), parametersSupplierMap.get(smaParameter.name()).get()));
 
 
         return randomParameters;

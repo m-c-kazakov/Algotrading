@@ -5,6 +5,9 @@ import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import org.springframework.stereotype.Component;
 
+import java.util.Arrays;
+import java.util.List;
+
 @Component("SMA")
 @RequiredArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
@@ -14,5 +17,11 @@ public enum SmaParameters {
     PERIOD("Количество свечей которое будет учитываться для расчета значения");
 
     String description;
+
+    public static List<String> getParameters() {
+        return Arrays.stream(SmaParameters.values())
+                .map(Enum::name)
+                .toList();
+    }
 
 }

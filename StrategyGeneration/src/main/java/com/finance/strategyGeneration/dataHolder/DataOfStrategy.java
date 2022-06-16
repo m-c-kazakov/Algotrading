@@ -1,12 +1,15 @@
 package com.finance.strategyGeneration.dataHolder;
 
 import com.finance.strategyGeneration.strategyDescriptionParameters.*;
+import com.finance.strategyGeneration.strategyDescriptionParameters.indicators.Indicator;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.With;
 import lombok.experimental.FieldDefaults;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
@@ -61,6 +64,14 @@ public class DataOfStrategy {
     @Getter(AccessLevel.NONE)
     byte[] decisionToCloseADeal;
     DescriptionToCloseADeal descriptionToCloseADeal;
+
+    public List<Indicator> getIndicatorsDescriptionToOpenADeal() {
+        return descriptionToOpenADeal.getIndicators();
+    }
+
+    public List<Indicator> getIndicatorsDescriptionToCloseADeal() {
+        return descriptionToCloseADeal.getIndicators();
+    }
 
 
     public boolean getDecisionToOpenADeal(int cursor) {

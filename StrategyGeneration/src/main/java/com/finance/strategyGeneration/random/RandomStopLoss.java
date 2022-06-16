@@ -4,41 +4,45 @@ import com.finance.strategyGeneration.dataHolder.DataOfStrategy;
 import com.finance.strategyGeneration.strategyDescriptionParameters.StopLossConfigurationKey;
 import com.finance.strategyGeneration.strategyDescriptionParameters.StopLossType;
 import lombok.AccessLevel;
+import lombok.Getter;
 import lombok.experimental.FieldDefaults;
 import org.springframework.stereotype.Component;
 
 import java.util.EnumMap;
-import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.function.Consumer;
+import java.util.function.Supplier;
 
 @Component
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
-public class RandomStopLossImpl implements RandomStrategyParams {
+public class RandomStopLoss implements RandomStrategyParams {
 
-    static List<StopLossType> stopLossTypes = List.of(StopLossType.values());
-
+    // TODO Вынести паля и статические блоки инициализации
     static Map<StopLossType, Consumer<DataOfStrategy.DataOfStrategyBuilder>> stopLossTypeConsumerMap = new EnumMap<>(
             StopLossType.class);
+
+    @Getter
+    static Map<StopLossType, Supplier<Map<StopLossConfigurationKey, Object>>> mapWithSupplierGeneratedRandomParams = new EnumMap<>(
+            StopLossType.class);
+
+    static {
+        mapWithSupplierGeneratedRandomParams.put(StopLossType.FIXED, () -> Map.of(StopLossConfigurationKey.FIXED, ThreadLocalRandom.current()
+                .nextInt(1, 100)));
+    }
 
     static {
         stopLossTypeConsumerMap.put(StopLossType.FIXED, dataOfStrategyBuilder -> {
             dataOfStrategyBuilder.stopLossType(StopLossType.FIXED);
             dataOfStrategyBuilder.stopLossConfigurationData(
-                    Map.of(StopLossConfigurationKey.FIXED, ThreadLocalRandom.current()
-                            .nextInt(1, 100)));
+                    mapWithSupplierGeneratedRandomParams.get(StopLossType.FIXED).get());
         });
     }
 
     @Override
     public void add(DataOfStrategy.DataOfStrategyBuilder dataOfStrategyBuilder) {
 
-        StopLossType stopLossType = stopLossTypes.get(ThreadLocalRandom.current()
-                .nextInt(stopLossTypes.size()));
-
-        stopLossTypeConsumerMap.get(stopLossType)
-                .accept(dataOfStrategyBuilder);
+        stopLossTypeConsumerMap.get(StopLossType.getRandomStopLossType()).accept(dataOfStrategyBuilder);
 
 
     }
