@@ -2,18 +2,19 @@ package com.finance.strategyGeneration.strategyDescriptionParameters.indicators;
 
 import com.finance.strategyGeneration.strategyDescriptionParameters.CurrencyPair;
 import com.finance.strategyGeneration.strategyDescriptionParameters.TimeFrame;
-import lombok.AccessLevel;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.With;
+import lombok.*;
 import lombok.experimental.FieldDefaults;
 
 import java.util.HashMap;
 import java.util.Map;
 
-@Builder
-@Getter
+
+
 @With
+@Getter
+@Builder
+@ToString
+@EqualsAndHashCode
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class Indicator {
 

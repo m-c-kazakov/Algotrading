@@ -2,13 +2,9 @@ package com.finance.strategyGeneration.dataHolder;
 
 import com.finance.strategyGeneration.strategyDescriptionParameters.*;
 import com.finance.strategyGeneration.strategyDescriptionParameters.indicators.Indicator;
-import lombok.AccessLevel;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.With;
+import lombok.*;
 import lombok.experimental.FieldDefaults;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -24,14 +20,13 @@ import static java.util.Optional.ofNullable;
 @Getter
 @With
 @Builder
+@ToString
+@EqualsAndHashCode
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class DataOfStrategy {
 
 
     long id;
-
-    // TODO Придумать как просто формировать уникальное имя стратегии
-    String name;
 
     // это базовое значение * на количество знаков после запятой, которое есть у Pip. Находится в валютной паре
     long startScore;
@@ -54,14 +49,20 @@ public class DataOfStrategy {
     Map<TakeProfitConfigurationKey, Object> takeProfitConfigurationData;
 
     TypeOfDeal typeOfDeal;
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
     Candle[] candles;
     CandlesInformation candlesInformation;
 
     @Getter(AccessLevel.NONE)
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
     byte[] decisionToOpenADeal;
     DescriptionToOpenADeal descriptionToOpenADeal;
 
     @Getter(AccessLevel.NONE)
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
     byte[] decisionToCloseADeal;
     DescriptionToCloseADeal descriptionToCloseADeal;
 

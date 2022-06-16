@@ -3,6 +3,7 @@ package com.finance.strategyGeneration;
 import com.finance.strategyGeneration.crossing.PopulationCrossingManager;
 import com.finance.strategyGeneration.dataHolder.DataOfStrategy;
 import com.finance.strategyGeneration.mutation.MutationOfIndividual;
+import com.finance.strategyGeneration.populationSelection.PopulationSelection;
 import com.finance.strategyGeneration.stagesOfGeneticAlgorithm.RandomPopulationCreationManager;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
@@ -26,7 +27,9 @@ public class GeneticAlgorithm {
 
     MutationOfIndividual mutationOfIndividual;
 
-    public void execute() {
+    PopulationSelection populationSelection;
+
+    public List<DataOfStrategy> execute() {
 
 
         // Создать популяцию
@@ -44,6 +47,10 @@ public class GeneticAlgorithm {
         // TODO Добавить блок с эволюцией
 
         // Отбор
+        List<DataOfStrategy> populationAfterSelection = populationSelection.execute(populationAfterMutation);
+
+        return populationAfterSelection;
+
     }
 
     private List<DataOfStrategy> createRandomPopulation(int numberOfIndividuals) {
