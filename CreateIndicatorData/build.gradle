@@ -4,9 +4,9 @@ plugins {
     id 'java'
 }
 
-group = 'com.finance'
 version = '0.0.1-SNAPSHOT'
 sourceCompatibility = '11'
+
 
 configurations {
     compileOnly {
@@ -14,12 +14,8 @@ configurations {
     }
 }
 
-repositories {
-    mavenLocal()
-    mavenCentral()
-}
-
 dependencies {
+
     implementation 'org.springframework.boot:spring-boot-starter'
     compileOnly 'org.projectlombok:lombok'
     annotationProcessor 'org.projectlombok:lombok'
@@ -29,3 +25,4 @@ dependencies {
 tasks.named('test') {
     useJUnitPlatform()
 }
+
