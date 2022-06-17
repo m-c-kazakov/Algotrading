@@ -1,9 +1,9 @@
 package com.finance.strategyGeneration.mutation.indicatorMutation;
 
-import com.finance.strategyGeneration.dataHolder.DataOfStrategy;
+import com.finance.dataHolder.DataOfStrategy;
+import com.finance.strategyDescriptionParameters.DescriptionToOpenADeal;
+import com.finance.strategyDescriptionParameters.indicators.Indicator;
 import com.finance.strategyGeneration.mutation.Mutation;
-import com.finance.strategyGeneration.strategyDescriptionParameters.DescriptionToOpenADeal;
-import com.finance.strategyGeneration.strategyDescriptionParameters.indicators.Indicator;
 import org.springframework.stereotype.Component;
 
 import java.util.List;

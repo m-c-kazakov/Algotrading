@@ -1,8 +1,8 @@
 package com.finance.strategyGeneration.random;
 
-import com.finance.strategyGeneration.dataHolder.DataOfStrategy;
-import com.finance.strategyGeneration.strategyDescriptionParameters.SumOfDealConfigurationKey;
-import com.finance.strategyGeneration.strategyDescriptionParameters.SumOfDealType;
+import com.finance.dataHolder.DataOfStrategy;
+import com.finance.strategyDescriptionParameters.SumOfDealConfigurationKey;
+import com.finance.strategyDescriptionParameters.SumOfDealType;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -29,14 +29,17 @@ public class RandomSumOfDeal implements RandomStrategyParams {
             SumOfDealType.class);
 
     static {
-        mapWithSupplierGeneratedRandomParams.put(SumOfDealType.PERCENT_OF_SCORE, () -> Map.of(SumOfDealConfigurationKey.PERCENT_OF_SCORE, ThreadLocalRandom.current()
-                .nextInt(1, 5)));
+        mapWithSupplierGeneratedRandomParams.put(SumOfDealType.PERCENT_OF_SCORE,
+                () -> Map.of(SumOfDealConfigurationKey.PERCENT_OF_SCORE, ThreadLocalRandom.current()
+                        .nextInt(1, 5)));
     }
 
     static {
         sumOfDealTypeConsumerMap.put(SumOfDealType.PERCENT_OF_SCORE, dataOfStrategyBuilder -> {
             dataOfStrategyBuilder.sumOfDealType(SumOfDealType.PERCENT_OF_SCORE);
-            dataOfStrategyBuilder.sumOfDealConfigurationData(mapWithSupplierGeneratedRandomParams.get(SumOfDealType.PERCENT_OF_SCORE).get());
+            dataOfStrategyBuilder.sumOfDealConfigurationData(
+                    mapWithSupplierGeneratedRandomParams.get(SumOfDealType.PERCENT_OF_SCORE)
+                            .get());
         });
     }
 

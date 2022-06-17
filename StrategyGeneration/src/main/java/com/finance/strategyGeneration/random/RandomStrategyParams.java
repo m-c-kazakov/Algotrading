@@ -1,6 +1,6 @@
 package com.finance.strategyGeneration.random;
 
-import com.finance.strategyGeneration.dataHolder.DataOfStrategy;
+import com.finance.dataHolder.DataOfStrategy;
 
 public interface RandomStrategyParams {
     void add(DataOfStrategy.DataOfStrategyBuilder dataOfStrategyBuilder);

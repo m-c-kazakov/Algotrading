@@ -1,8 +1,8 @@
 package com.finance.strategyGeneration.random;
 
-import com.finance.strategyGeneration.dataHolder.DataOfStrategy;
-import com.finance.strategyGeneration.strategyDescriptionParameters.TakeProfitConfigurationKey;
-import com.finance.strategyGeneration.strategyDescriptionParameters.TakeProfitType;
+import com.finance.dataHolder.DataOfStrategy;
+import com.finance.strategyDescriptionParameters.TakeProfitConfigurationKey;
+import com.finance.strategyDescriptionParameters.TakeProfitType;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -38,7 +38,8 @@ public class RandomTakeProfit implements RandomStrategyParams {
         takeProfitTypeConsumerMap.put(TakeProfitType.FIXED, dataOfStrategyBuilder -> {
             dataOfStrategyBuilder.takeProfitType(TakeProfitType.FIXED);
             dataOfStrategyBuilder.takeProfitConfigurationData(
-                    mapWithSupplierGeneratedRandomParams.get(TakeProfitType.FIXED).get());
+                    mapWithSupplierGeneratedRandomParams.get(TakeProfitType.FIXED)
+                            .get());
         });
     }
 

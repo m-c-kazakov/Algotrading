@@ -1,12 +1,12 @@
 package com.finance.check.strategy.dealManagement.openingDealManagement;
 
-import com.finance.check.strategy.dataHolder.DataOfDeal;
-import com.finance.check.strategy.dataHolder.DataOfStrategy;
-import com.finance.check.strategy.dataHolder.StatisticsDataOfStrategy;
 import com.finance.check.strategy.dealManagement.stopLossManagement.StopLossManager;
 import com.finance.check.strategy.dealManagement.sumOfDealManagement.SumOfDealManger;
 import com.finance.check.strategy.dealManagement.takeProfitManagement.TakeProfitManager;
 import com.finance.check.strategy.dealManagement.trailingStopManagement.TrailingStopManager;
+import com.finance.dataHolder.DataOfDeal;
+import com.finance.dataHolder.DataOfStrategy;
+import com.finance.dataHolder.StatisticsDataOfStrategy;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
@@ -38,7 +38,7 @@ public class OpeningDealManagerImpl implements OpeningDealManager {
                 .name()))
                 .ifPresent(trailingStopManager -> trailingStopManager.update(dataOfStrategy, dataOfDeal, cursor));
 
-        ofNullable(sumOfDealManagement.get(dataOfStrategy.getCommandTypeForDeterminingSumOfDeal()
+        ofNullable(sumOfDealManagement.get(dataOfStrategy.getSumOfDealType()
                 .name()))
                 .ifPresent(sumOfDealManger -> sumOfDealManger.determineSumOfDeal(dataOfStrategy, dataOfDeal, cursor,
                         statisticsDataOfStrategy.getScore()));

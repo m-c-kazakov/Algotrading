@@ -1,7 +1,7 @@
 package com.finance.strategyGeneration;
 
+import com.finance.dataHolder.DataOfStrategy;
 import com.finance.strategyGeneration.crossing.PopulationCrossingManager;
-import com.finance.strategyGeneration.dataHolder.DataOfStrategy;
 import com.finance.strategyGeneration.mutation.MutationOfIndividual;
 import com.finance.strategyGeneration.populationSelection.PopulationSelection;
 import com.finance.strategyGeneration.stagesOfGeneticAlgorithm.RandomPopulationCreationManager;
@@ -34,8 +34,11 @@ public class GeneticAlgorithm {
 
         // Создать популяцию
         List<DataOfStrategy> randomPopulation = createRandomPopulation(NUMBER_OF_RANDOM_INDIVIDUALS);
-        List<DataOfStrategy> theBestIndividual = populationService.findTheBestIndividual(NUMBER_OF_THE_BEST_INDIVIDUALS);
-        List<DataOfStrategy> population = Stream.of(randomPopulation, theBestIndividual).flatMap(List::stream).toList();
+        List<DataOfStrategy> theBestIndividual = populationService.findTheBestIndividual(
+                NUMBER_OF_THE_BEST_INDIVIDUALS);
+        List<DataOfStrategy> population = Stream.of(randomPopulation, theBestIndividual)
+                .flatMap(List::stream)
+                .toList();
 
         // Скрещивание
         List<DataOfStrategy> populationAfterCrossing = populationCrossingManager.execute(population);
@@ -54,7 +57,7 @@ public class GeneticAlgorithm {
     }
 
     private List<DataOfStrategy> createRandomPopulation(int numberOfIndividuals) {
-        return Stream.iterate(0, integer -> integer < numberOfIndividuals, integer -> integer+1)
+        return Stream.iterate(0, integer -> integer < numberOfIndividuals, integer -> integer + 1)
                 .map(integer -> randomPopulationCreationManager.execute())
                 .toList();
     }

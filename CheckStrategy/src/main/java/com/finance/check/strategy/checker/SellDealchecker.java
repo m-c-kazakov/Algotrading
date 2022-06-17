@@ -1,7 +1,7 @@
 package com.finance.check.strategy.checker;
 
-import com.finance.check.strategy.dataHolder.DataOfDeal;
-import com.finance.check.strategy.dataHolder.DataOfStrategy;
+import com.finance.dataHolder.DataOfDeal;
+import com.finance.dataHolder.DataOfStrategy;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;

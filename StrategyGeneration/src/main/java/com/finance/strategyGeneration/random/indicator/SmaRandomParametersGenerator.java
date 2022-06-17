@@ -1,7 +1,7 @@
 package com.finance.strategyGeneration.random.indicator;
 
-import com.finance.strategyGeneration.strategyDescriptionParameters.TypeOfBar;
-import com.finance.strategyGeneration.strategyDescriptionParameters.indicators.SmaParameters;
+import com.finance.strategyDescriptionParameters.TypeOfBar;
+import com.finance.strategyDescriptionParameters.indicators.SmaParameters;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;

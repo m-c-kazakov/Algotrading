@@ -1,11 +1,11 @@
 package com.finance.strategyGeneration.mutation.indicatorMutation;
 
-import com.finance.strategyGeneration.dataHolder.DataOfStrategy;
+import com.finance.dataHolder.DataOfStrategy;
+import com.finance.strategyDescriptionParameters.CurrencyPair;
+import com.finance.strategyDescriptionParameters.DescriptionToOpenADeal;
+import com.finance.strategyDescriptionParameters.indicators.Indicator;
 import com.finance.strategyGeneration.mutation.Mutation;
 import com.finance.strategyGeneration.random.indicator.RandomIndicatorUtils;
-import com.finance.strategyGeneration.strategyDescriptionParameters.CurrencyPair;
-import com.finance.strategyGeneration.strategyDescriptionParameters.DescriptionToOpenADeal;
-import com.finance.strategyGeneration.strategyDescriptionParameters.indicators.Indicator;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
@@ -28,7 +28,8 @@ public class ReplacedIndicatorToOpeningDeal implements Mutation {
     public Stream<DataOfStrategy> execute(DataOfStrategy parentDataOfStrategy) {
         List<Indicator> indicators = parentDataOfStrategy.getIndicatorsDescriptionToOpenADeal();
 
-        int numberOfReplacedItems = Math.max(ThreadLocalRandom.current().nextInt(indicators.size() / 2), 1);
+        int numberOfReplacedItems = Math.max(ThreadLocalRandom.current()
+                .nextInt(indicators.size() / 2), 1);
 
         for (int i = 0; i < numberOfReplacedItems; i++) {
 

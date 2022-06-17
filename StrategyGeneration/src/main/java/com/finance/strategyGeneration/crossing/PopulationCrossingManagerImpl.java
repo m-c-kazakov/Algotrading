@@ -1,10 +1,10 @@
 package com.finance.strategyGeneration.crossing;
 
-import com.finance.strategyGeneration.dataHolder.DataOfStrategy;
-import com.finance.strategyGeneration.strategyDescriptionParameters.DescriptionToCloseADeal;
-import com.finance.strategyGeneration.strategyDescriptionParameters.DescriptionToOpenADeal;
-import com.finance.strategyGeneration.strategyDescriptionParameters.TypeOfDeal;
-import com.finance.strategyGeneration.strategyDescriptionParameters.indicators.Indicator;
+import com.finance.dataHolder.DataOfStrategy;
+import com.finance.strategyDescriptionParameters.DescriptionToCloseADeal;
+import com.finance.strategyDescriptionParameters.DescriptionToOpenADeal;
+import com.finance.strategyDescriptionParameters.TypeOfDeal;
+import com.finance.strategyDescriptionParameters.indicators.Indicator;
 import com.google.common.collect.Sets;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
@@ -39,16 +39,6 @@ public class PopulationCrossingManagerImpl implements PopulationCrossingManager 
         functions.add(PopulationCrossingManagerImpl::exchangeIndicatorsToOpenADeal);
         functions.add(PopulationCrossingManagerImpl::exchangeDescriptionToCloseADeal);
         functions.add(PopulationCrossingManagerImpl::exchangeIndicatorsToCloseADeal);
-    }
-
-    @Override
-    public List<DataOfStrategy> execute(List<DataOfStrategy> population) {
-        return Sets.combinations(Sets.newHashSet(population), 2)
-                .stream()
-                .flatMap(dataOfStrategies -> functions.stream()
-                        .flatMap(setListFunction -> setListFunction.apply(dataOfStrategies)
-                                .stream()))
-                .toList();
     }
 
     private static List<DataOfStrategy> exchangeIndicatorsToCloseADeal(Set<DataOfStrategy> dataOfStrategies) {
@@ -241,6 +231,16 @@ public class PopulationCrossingManagerImpl implements PopulationCrossingManager 
                 .withSumOfDealConfigurationData(firstParent.getSumOfDealConfigurationData());
 
         return List.of(firstParent, secondParent, firstChild, secondChild);
+    }
+
+    @Override
+    public List<DataOfStrategy> execute(List<DataOfStrategy> population) {
+        return Sets.combinations(Sets.newHashSet(population), 2)
+                .stream()
+                .flatMap(dataOfStrategies -> functions.stream()
+                        .flatMap(setListFunction -> setListFunction.apply(dataOfStrategies)
+                                .stream()))
+                .toList();
     }
 
 

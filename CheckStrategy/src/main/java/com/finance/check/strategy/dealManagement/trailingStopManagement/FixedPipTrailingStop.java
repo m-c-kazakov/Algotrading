@@ -1,9 +1,9 @@
 package com.finance.check.strategy.dealManagement.trailingStopManagement;
 
-import com.finance.check.strategy.dataHolder.DataOfDeal;
-import com.finance.check.strategy.dataHolder.DataOfStrategy;
-import com.finance.check.strategy.strategyDescriptionParameters.TrailingStopConfigurationKey;
-import com.finance.check.strategy.strategyDescriptionParameters.TypeOfDeal;
+import com.finance.dataHolder.DataOfDeal;
+import com.finance.dataHolder.DataOfStrategy;
+import com.finance.strategyDescriptionParameters.TrailingStopConfigurationKey;
+import com.finance.strategyDescriptionParameters.TypeOfDeal;
 import org.springframework.remoting.RemoteTimeoutException;
 import org.springframework.stereotype.Component;
 

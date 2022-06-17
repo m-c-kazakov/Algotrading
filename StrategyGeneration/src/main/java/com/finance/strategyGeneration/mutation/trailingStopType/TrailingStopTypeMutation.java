@@ -1,10 +1,10 @@
 package com.finance.strategyGeneration.mutation.trailingStopType;
 
-import com.finance.strategyGeneration.dataHolder.DataOfStrategy;
+import com.finance.dataHolder.DataOfStrategy;
+import com.finance.strategyDescriptionParameters.TrailingStopConfigurationKey;
+import com.finance.strategyDescriptionParameters.TrailingStopType;
 import com.finance.strategyGeneration.mutation.Mutation;
 import com.finance.strategyGeneration.random.RandomTrailingStop;
-import com.finance.strategyGeneration.strategyDescriptionParameters.TrailingStopConfigurationKey;
-import com.finance.strategyGeneration.strategyDescriptionParameters.TrailingStopType;
 import org.springframework.stereotype.Component;
 
 import java.util.Map;

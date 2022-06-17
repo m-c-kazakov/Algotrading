@@ -1,10 +1,10 @@
 package com.finance.check.strategy.dealManagement.closingDealManagement;
 
-import com.finance.check.strategy.dataHolder.DataOfDeal;
-import com.finance.check.strategy.dataHolder.DataOfStrategy;
-import com.finance.check.strategy.dataHolder.StatisticsDataOfStrategy;
 import com.finance.check.strategy.dealManagement.collector.StatisticsInformationCollector;
-import com.finance.check.strategy.strategyDescriptionParameters.TypeOfDeal;
+import com.finance.dataHolder.DataOfDeal;
+import com.finance.dataHolder.DataOfStrategy;
+import com.finance.dataHolder.StatisticsDataOfStrategy;
+import com.finance.strategyDescriptionParameters.TypeOfDeal;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;

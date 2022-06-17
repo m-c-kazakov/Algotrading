@@ -1,12 +1,12 @@
 package com.finance.check.strategy;
 
 import com.finance.check.strategy.checker.MacroClosingDealchecker;
-import com.finance.check.strategy.dataHolder.DataOfDeal;
-import com.finance.check.strategy.dataHolder.DataOfStrategy;
-import com.finance.check.strategy.dataHolder.StatisticsDataOfStrategy;
 import com.finance.check.strategy.dealManagement.closingDealManagement.ClosingDealManager;
 import com.finance.check.strategy.dealManagement.openingDealManagement.OpeningDealManager;
 import com.finance.check.strategy.dealManagement.updatingDealManagement.UpdatingDealManager;
+import com.finance.dataHolder.DataOfDeal;
+import com.finance.dataHolder.DataOfStrategy;
+import com.finance.dataHolder.StatisticsDataOfStrategy;
 import lombok.AccessLevel;
 import lombok.experimental.FieldDefaults;
 import org.springframework.beans.factory.annotation.Qualifier;

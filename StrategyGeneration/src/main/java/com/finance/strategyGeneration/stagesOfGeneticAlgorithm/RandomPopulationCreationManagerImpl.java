@@ -1,8 +1,8 @@
 package com.finance.strategyGeneration.stagesOfGeneticAlgorithm;
 
-import com.finance.strategyGeneration.dataHolder.DataOfStrategy;
+import com.finance.dataHolder.DataOfStrategy;
+import com.finance.strategyDescriptionParameters.TypeOfDeal;
 import com.finance.strategyGeneration.random.RandomStrategyParams;
-import com.finance.strategyGeneration.strategyDescriptionParameters.TypeOfDeal;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;

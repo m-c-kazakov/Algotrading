@@ -1,10 +1,10 @@
 package com.finance.strategyGeneration.mutation.sumOfDeal;
 
-import com.finance.strategyGeneration.dataHolder.DataOfStrategy;
+import com.finance.dataHolder.DataOfStrategy;
+import com.finance.strategyDescriptionParameters.SumOfDealConfigurationKey;
+import com.finance.strategyDescriptionParameters.SumOfDealType;
 import com.finance.strategyGeneration.mutation.Mutation;
 import com.finance.strategyGeneration.random.RandomSumOfDeal;
-import com.finance.strategyGeneration.strategyDescriptionParameters.SumOfDealConfigurationKey;
-import com.finance.strategyGeneration.strategyDescriptionParameters.SumOfDealType;
 import org.springframework.stereotype.Component;
 
 import java.util.Map;

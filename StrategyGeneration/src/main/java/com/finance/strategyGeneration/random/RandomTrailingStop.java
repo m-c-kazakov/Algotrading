@@ -1,8 +1,8 @@
 package com.finance.strategyGeneration.random;
 
-import com.finance.strategyGeneration.dataHolder.DataOfStrategy;
-import com.finance.strategyGeneration.strategyDescriptionParameters.TrailingStopConfigurationKey;
-import com.finance.strategyGeneration.strategyDescriptionParameters.TrailingStopType;
+import com.finance.dataHolder.DataOfStrategy;
+import com.finance.strategyDescriptionParameters.TrailingStopConfigurationKey;
+import com.finance.strategyDescriptionParameters.TrailingStopType;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;

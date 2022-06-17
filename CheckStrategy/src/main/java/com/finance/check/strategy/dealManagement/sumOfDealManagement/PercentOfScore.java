@@ -1,8 +1,8 @@
 package com.finance.check.strategy.dealManagement.sumOfDealManagement;
 
-import com.finance.check.strategy.dataHolder.DataOfDeal;
-import com.finance.check.strategy.dataHolder.DataOfStrategy;
-import com.finance.check.strategy.strategyDescriptionParameters.SumOfDealConfigurationKey;
+import com.finance.dataHolder.DataOfDeal;
+import com.finance.dataHolder.DataOfStrategy;
+import com.finance.strategyDescriptionParameters.SumOfDealConfigurationKey;
 import org.springframework.stereotype.Component;
 
 import java.util.Optional;

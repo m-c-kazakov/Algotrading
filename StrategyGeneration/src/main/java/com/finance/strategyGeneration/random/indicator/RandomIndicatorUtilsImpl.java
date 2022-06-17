@@ -1,9 +1,9 @@
 package com.finance.strategyGeneration.random.indicator;
 
-import com.finance.strategyGeneration.strategyDescriptionParameters.CurrencyPair;
-import com.finance.strategyGeneration.strategyDescriptionParameters.TimeFrame;
-import com.finance.strategyGeneration.strategyDescriptionParameters.indicators.Indicator;
-import com.finance.strategyGeneration.strategyDescriptionParameters.indicators.IndicatorType;
+import com.finance.strategyDescriptionParameters.CurrencyPair;
+import com.finance.strategyDescriptionParameters.TimeFrame;
+import com.finance.strategyDescriptionParameters.indicators.Indicator;
+import com.finance.strategyDescriptionParameters.indicators.IndicatorType;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;

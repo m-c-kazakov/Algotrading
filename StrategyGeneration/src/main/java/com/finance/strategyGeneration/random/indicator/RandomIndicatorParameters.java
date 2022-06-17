@@ -1,6 +1,6 @@
 package com.finance.strategyGeneration.random.indicator;
 
-import com.finance.strategyGeneration.strategyDescriptionParameters.indicators.IndicatorType;
+import com.finance.strategyDescriptionParameters.indicators.IndicatorType;
 
 import java.util.Map;
 

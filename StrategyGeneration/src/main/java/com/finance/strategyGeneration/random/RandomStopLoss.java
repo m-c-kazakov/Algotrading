@@ -1,8 +1,8 @@
 package com.finance.strategyGeneration.random;
 
-import com.finance.strategyGeneration.dataHolder.DataOfStrategy;
-import com.finance.strategyGeneration.strategyDescriptionParameters.StopLossConfigurationKey;
-import com.finance.strategyGeneration.strategyDescriptionParameters.StopLossType;
+import com.finance.dataHolder.DataOfStrategy;
+import com.finance.strategyDescriptionParameters.StopLossConfigurationKey;
+import com.finance.strategyDescriptionParameters.StopLossType;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.experimental.FieldDefaults;
@@ -27,22 +27,25 @@ public class RandomStopLoss implements RandomStrategyParams {
             StopLossType.class);
 
     static {
-        mapWithSupplierGeneratedRandomParams.put(StopLossType.FIXED, () -> Map.of(StopLossConfigurationKey.FIXED, ThreadLocalRandom.current()
-                .nextInt(1, 100)));
+        mapWithSupplierGeneratedRandomParams.put(StopLossType.FIXED,
+                () -> Map.of(StopLossConfigurationKey.FIXED, ThreadLocalRandom.current()
+                        .nextInt(1, 100)));
     }
 
     static {
         stopLossTypeConsumerMap.put(StopLossType.FIXED, dataOfStrategyBuilder -> {
             dataOfStrategyBuilder.stopLossType(StopLossType.FIXED);
             dataOfStrategyBuilder.stopLossConfigurationData(
-                    mapWithSupplierGeneratedRandomParams.get(StopLossType.FIXED).get());
+                    mapWithSupplierGeneratedRandomParams.get(StopLossType.FIXED)
+                            .get());
         });
     }
 
     @Override
     public void add(DataOfStrategy.DataOfStrategyBuilder dataOfStrategyBuilder) {
 
-        stopLossTypeConsumerMap.get(StopLossType.getRandomStopLossType()).accept(dataOfStrategyBuilder);
+        stopLossTypeConsumerMap.get(StopLossType.getRandomStopLossType())
+                .accept(dataOfStrategyBuilder);
 
 
     }

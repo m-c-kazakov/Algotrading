@@ -1,9 +1,9 @@
 package com.finance.check.strategy.dealManagement.stopLossManagement;
 
-import com.finance.check.strategy.dataHolder.DataOfDeal;
-import com.finance.check.strategy.dataHolder.DataOfStrategy;
-import com.finance.check.strategy.strategyDescriptionParameters.StopLossConfigurationKey;
-import com.finance.check.strategy.strategyDescriptionParameters.TypeOfDeal;
+import com.finance.dataHolder.DataOfDeal;
+import com.finance.dataHolder.DataOfStrategy;
+import com.finance.strategyDescriptionParameters.StopLossConfigurationKey;
+import com.finance.strategyDescriptionParameters.TypeOfDeal;
 import org.springframework.stereotype.Component;
 
 @Component("FIXED")

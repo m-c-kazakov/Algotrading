@@ -1,6 +1,6 @@
 package com.finance.strategyGeneration.populationSelection;
 
-import com.finance.strategyGeneration.dataHolder.DataOfStrategy;
+import com.finance.dataHolder.DataOfStrategy;
 
 import java.util.List;
 

@@ -1,9 +1,9 @@
 package com.finance.strategyGeneration.mutation.stopLoss;
 
-import com.finance.strategyGeneration.dataHolder.DataOfStrategy;
+import com.finance.dataHolder.DataOfStrategy;
+import com.finance.strategyDescriptionParameters.StopLossConfigurationKey;
 import com.finance.strategyGeneration.mutation.Mutation;
 import com.finance.strategyGeneration.random.RandomStopLoss;
-import com.finance.strategyGeneration.strategyDescriptionParameters.StopLossConfigurationKey;
 import org.springframework.stereotype.Component;
 
 import java.util.Map;

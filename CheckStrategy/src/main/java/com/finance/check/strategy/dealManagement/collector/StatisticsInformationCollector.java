@@ -1,6 +1,6 @@
 package com.finance.check.strategy.dealManagement.collector;
 
-import com.finance.check.strategy.dataHolder.StatisticsDataOfStrategy;
+import com.finance.dataHolder.StatisticsDataOfStrategy;
 
 public interface StatisticsInformationCollector {
 

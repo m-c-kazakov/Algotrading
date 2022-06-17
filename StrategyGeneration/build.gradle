@@ -22,6 +22,9 @@ dependencies {
     // https://mvnrepository.com/artifact/com.google.guava/guava
     implementation("com.google.guava:guava:31.1-jre")
 
+    implementation project(":StrategyDescriptionParameters")
+    implementation project(":DataHolder")
+
 }
 
 tasks.named('test') {

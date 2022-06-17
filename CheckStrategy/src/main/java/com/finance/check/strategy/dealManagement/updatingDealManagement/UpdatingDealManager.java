@@ -1,7 +1,8 @@
 package com.finance.check.strategy.dealManagement.updatingDealManagement;
 
-import com.finance.check.strategy.dataHolder.DataOfDeal;
-import com.finance.check.strategy.dataHolder.DataOfStrategy;
+
+import com.finance.dataHolder.DataOfDeal;
+import com.finance.dataHolder.DataOfStrategy;
 
 public interface UpdatingDealManager {
 

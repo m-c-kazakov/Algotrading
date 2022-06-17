@@ -1,10 +1,10 @@
 package com.finance.strategyGeneration.mutation.takeProfitType;
 
-import com.finance.strategyGeneration.dataHolder.DataOfStrategy;
+import com.finance.dataHolder.DataOfStrategy;
+import com.finance.strategyDescriptionParameters.TakeProfitConfigurationKey;
+import com.finance.strategyDescriptionParameters.TakeProfitType;
 import com.finance.strategyGeneration.mutation.Mutation;
 import com.finance.strategyGeneration.random.RandomTakeProfit;
-import com.finance.strategyGeneration.strategyDescriptionParameters.TakeProfitConfigurationKey;
-import com.finance.strategyGeneration.strategyDescriptionParameters.TakeProfitType;
 import org.springframework.stereotype.Component;
 
 import java.util.Map;

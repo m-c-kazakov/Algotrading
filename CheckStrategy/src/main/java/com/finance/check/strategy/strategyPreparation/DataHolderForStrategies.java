@@ -1,9 +1,9 @@
 package com.finance.check.strategy.strategyPreparation;
 
-import com.finance.check.strategy.dataHolder.Candle;
-import com.finance.check.strategy.strategyDescriptionParameters.CandlesInformation;
-import com.finance.check.strategy.strategyDescriptionParameters.DescriptionToCloseADeal;
-import com.finance.check.strategy.strategyDescriptionParameters.DescriptionToOpenADeal;
+import com.finance.dataHolder.Candle;
+import com.finance.strategyDescriptionParameters.CandlesInformation;
+import com.finance.strategyDescriptionParameters.DescriptionToCloseADeal;
+import com.finance.strategyDescriptionParameters.DescriptionToOpenADeal;
 
 public interface DataHolderForStrategies {
 
