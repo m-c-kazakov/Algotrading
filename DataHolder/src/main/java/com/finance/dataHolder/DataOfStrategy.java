@@ -98,7 +98,7 @@ public class DataOfStrategy {
     }
 
     public List<Indicator> getIndicatorsDescriptionToOpenADeal() {
-        return descriptionToOpenADeal.getIndicators();
+        return descriptionToOpenADeal.getIndicators().stream().map(Indicator::copy).toList();
     }
 
     public List<Indicator> getIndicatorsDescriptionToCloseADeal() {

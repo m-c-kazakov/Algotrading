@@ -4,6 +4,7 @@ import com.finance.strategyDescriptionParameters.indicators.Indicator;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Getter
@@ -11,7 +12,10 @@ import java.util.List;
 @RequiredArgsConstructor
 @EqualsAndHashCode
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
-public class DescriptionToCloseADeal {
+public class DescriptionToCloseADeal implements DealDescription {
 
     List<Indicator> indicators;
+    public List<Indicator> getIndicators() {
+        return new ArrayList<>(indicators);
+    }
 }

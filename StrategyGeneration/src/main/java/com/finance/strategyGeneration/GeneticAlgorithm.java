@@ -40,6 +40,9 @@ public class GeneticAlgorithm {
                 .flatMap(List::stream)
                 .toList();
 
+        // TODO ПОСЛЕ КАЖДЛГО ИЗМЕНЕНИЯ ИНДИКАТОРА ПРОВЕРИТЬ является ли TimeFrame у CurrencyPair минимальным из возможных
+
+
         // Скрещивание
         List<DataOfStrategy> populationAfterCrossing = populationCrossingManager.execute(population);
 

@@ -4,13 +4,17 @@ import lombok.*;
 import lombok.experimental.FieldDefaults;
 
 @Getter
-@ToString
 @EqualsAndHashCode
+@With
 @RequiredArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class CandlesInformation {
 
-    CurrencyPair currencyPair;
+    private final CurrencyPair currencyPair;
 
-    TimeFrame timeFrame;
+    private final TimeFrame timeFrame;
+
+    public String toString() {
+        return "CandlesInformation(currencyPair=" + this.getCurrencyPair() + ", timeFrame=" + this.getTimeFrame() + ")";
+    }
 }

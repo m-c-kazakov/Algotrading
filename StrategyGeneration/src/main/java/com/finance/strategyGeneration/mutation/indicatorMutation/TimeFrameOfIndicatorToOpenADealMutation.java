@@ -33,8 +33,11 @@ public class TimeFrameOfIndicatorToOpenADealMutation implements Mutation {
                     .nextInt(indicators.size());
             Indicator indicator = indicators.get(replacedIndex)
                     .copy();
-            indicators.set(replacedIndex, indicator.withTimeFrame(TIME_FRAMES.get(ThreadLocalRandom.current()
-                    .nextInt(TIME_FRAMES.size()))));
+
+            TimeFrame timeFrame = TIME_FRAMES.get(ThreadLocalRandom.current()
+                    .nextInt(TIME_FRAMES.size()));
+
+            indicators.set(replacedIndex, indicator.withTimeFrame(timeFrame));
         }
 
         DataOfStrategy dataOfStrategyAfterMutation = parentDataOfStrategy.withDescriptionToOpenADeal(

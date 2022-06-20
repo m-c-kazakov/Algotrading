@@ -36,8 +36,7 @@ public class IndicatorToOpeningDealParameterMutation implements Mutation {
             int replacedIndex = ThreadLocalRandom.current()
                     .nextInt(indicators.size());
 
-            Indicator indicatorForReplace = indicators.get(replacedIndex)
-                    .copy();
+            Indicator indicatorForReplace = indicators.get(replacedIndex).copy();
 
             IndicatorType indicatorType = indicatorForReplace.getIndicatorType();
 

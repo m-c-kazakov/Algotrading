@@ -14,7 +14,7 @@ import java.util.List;
 @EqualsAndHashCode
 @RequiredArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
-public class DescriptionToOpenADeal {
+public class DescriptionToOpenADeal implements DealDescription {
 
     List<Indicator> indicators;
 
