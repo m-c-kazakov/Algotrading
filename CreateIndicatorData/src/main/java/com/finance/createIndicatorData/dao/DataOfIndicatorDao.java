@@ -7,4 +7,5 @@ import java.util.Optional;
 public interface DataOfIndicatorDao {
     Optional<DataOfIndicator> getDataOfIndicator(String candlesInformationToString);
 
+    void add(DataOfIndicator dataOfIndicator);
 }

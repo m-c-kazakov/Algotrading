@@ -10,9 +10,9 @@ import lombok.experimental.FieldDefaults;
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public enum TimeFrame {
 
-    M1(1),
-    H1(2),
-    D(3);
+    M1(1, 30),
+    H1(2, 24);
 
-    int size;
+    int order;
+    int batchSize;
 }

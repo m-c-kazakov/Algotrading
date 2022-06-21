@@ -4,6 +4,7 @@ import com.finance.createIndicatorData.dao.DataOfIndicatorDao;
 import com.finance.createIndicatorData.model.DataOfCurrencyPair;
 import com.finance.createIndicatorData.model.DataOfIndicator;
 import com.finance.createIndicatorData.service.converterToDataOfIndicator.ConverterToDataOfIndicator;
+import com.finance.strategyDescriptionParameters.TypeOfDeal;
 import com.finance.strategyDescriptionParameters.indicators.Indicator;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
@@ -22,18 +23,14 @@ public class IndicatorDataGeneratorImpl implements IndicatorDataGenerator {
     DataOfIndicatorDao dataOfIndicatorDao;
 
     @Override
-    public DataOfIndicator generate(Indicator indicator, DataOfCurrencyPair dataOfCurrencyPair) {
-
-        // поискать данные в БД
-        // если данных нет то
-        // По типу нужно найти обработчик данных по индикатору
-        // вызвать обработчик и получить DataOfIndicator
-
+    public DataOfIndicator generate(Indicator indicator, TypeOfDeal typeOfDeal, DataOfCurrencyPair dataOfCurrencyPair) {
         return dataOfIndicatorDao.getDataOfIndicator(indicator.candlesInformationToString())
                 .orElseGet(() -> {
                     ConverterToDataOfIndicator converterToDataOfIndicator = converterToDataOfIndicatorMap.get(
                             indicator.getIndicatorType().name());
-                    return converterToDataOfIndicator.convert(indicator, dataOfCurrencyPair);
+                    DataOfIndicator dataOfIndicator = converterToDataOfIndicator.convert(indicator, typeOfDeal, dataOfCurrencyPair);
+                    dataOfIndicatorDao.add(dataOfIndicator);
+                    return dataOfIndicator;
                 });
 
 

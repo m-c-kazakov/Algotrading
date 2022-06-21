@@ -6,10 +6,9 @@ import com.finance.strategyDescriptionParameters.TimeFrame;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
-
-
 
 @With
 @Getter
@@ -23,14 +22,25 @@ public class Indicator {
     CandlesInformation candlesInformation;
     Map<String, String> parameters;
 
+    @Builder
+    public Indicator(IndicatorType indicatorType, TimeFrame timeFrame, CurrencyPair currencyPair,
+                     Map<String, String> parameters) {
+        this.indicatorType = indicatorType;
+        this.candlesInformation = new CandlesInformation(currencyPair, timeFrame);
+        this.parameters = Collections.unmodifiableMap(parameters);
+    }
+
     public Map<String, String> getParameters() {
         return new HashMap<>(parameters);
+    }
+
+    public String getValueFromParametersByKey(String key) {
+        return parameters.get(key);
     }
 
     public String candlesInformationToString() {
         return this.candlesInformation.toString();
     }
-
 
     public Indicator copy() {
         return new Indicator(indicatorType, candlesInformation, getParameters());
@@ -46,13 +56,5 @@ public class Indicator {
 
     public Indicator withTimeFrame(TimeFrame timeFrame) {
         return new Indicator(indicatorType, this.candlesInformation.withTimeFrame(timeFrame), getParameters());
-    }
-
-
-    @Builder
-    public Indicator(IndicatorType indicatorType, TimeFrame timeFrame, CurrencyPair currencyPair, Map<String, String> parameters){
-        this.indicatorType = indicatorType;
-        this.candlesInformation = new CandlesInformation(currencyPair, timeFrame);
-        this.parameters = parameters;
     }
 }

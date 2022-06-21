@@ -14,6 +14,8 @@ import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.stream.Stream;
 
+import static org.springframework.util.CollectionUtils.isEmpty;
+
 @Component
 @RequiredArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
@@ -42,11 +44,11 @@ public class RandomDescriptionToOpenAndCloseADealImpl implements RandomStrategyP
     private TimeFrame findMinimalTimeFrame(List<Indicator> descriptionToOpenADeal,
                                            List<Indicator> descriptionToCloseADeal) {
         return Stream.of(descriptionToOpenADeal, descriptionToCloseADeal)
+                .filter(indicators -> !isEmpty(indicators))
                 .flatMap(List::stream)
                 .map(Indicator::getTimeFrame)
-                .sorted(Comparator.comparing(TimeFrame::getSize))
-                .findFirst()
-                .get();
+                .min(Comparator.comparing(TimeFrame::getOrder))
+                .orElseThrow(() -> new RuntimeException("Предоставленные коллекции не содержать элементов."));
     }
 
     private List<Indicator> getDescriptionToADeal(CurrencyPair currencyPair) {

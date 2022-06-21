@@ -9,4 +9,9 @@ public class DataOfIndicatorDaoImpl implements DataOfIndicatorDao {
     public Optional<DataOfIndicator> getDataOfIndicator(String candlesInformationToString) {
         return Optional.empty();
     }
+
+    @Override
+    public void add(DataOfIndicator dataOfIndicator) {
+        // TODO
+    }
 }
