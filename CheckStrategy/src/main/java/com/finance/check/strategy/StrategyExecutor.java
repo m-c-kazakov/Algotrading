@@ -46,7 +46,7 @@ public class StrategyExecutor implements Runnable {
 
             // TODO можно переделать в конечный автомат, он же паттерн состояние
             if (orderIsOpen) {
-                // Сохранить максимально значение по тренду, чтобы понять на сколько вовремя сделка закрылась
+                // TODO Сохранить максимально значение по тренду, чтобы понять на сколько вовремя сделка закрылась
                 if (macroClosingDealchecker.isNeedClosingDeal(dataOfStrategy, cursor, dataOfDeal)) {
                     closingDealManager.execute(dataOfStrategy, cursor, dataOfDeal, statisticsDataOfStrategy);
                     if (statisticsDataOfStrategy.isNeedToBreakStrategy()) {

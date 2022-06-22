@@ -9,7 +9,6 @@ import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import org.springframework.stereotype.Component;
 
-import java.util.Comparator;
 import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.stream.Stream;
@@ -43,12 +42,13 @@ public class RandomDescriptionToOpenAndCloseADealImpl implements RandomStrategyP
 
     private TimeFrame findMinimalTimeFrame(List<Indicator> descriptionToOpenADeal,
                                            List<Indicator> descriptionToCloseADeal) {
-        return Stream.of(descriptionToOpenADeal, descriptionToCloseADeal)
+        List<TimeFrame> timeFrames = Stream.of(descriptionToOpenADeal, descriptionToCloseADeal)
                 .filter(indicators -> !isEmpty(indicators))
                 .flatMap(List::stream)
                 .map(Indicator::getTimeFrame)
-                .min(Comparator.comparing(TimeFrame::getOrder))
-                .orElseThrow(() -> new RuntimeException("Предоставленные коллекции не содержать элементов."));
+                .toList();
+
+        return TimeFrame.getMinimalTimeFrame(timeFrames);
     }
 
     private List<Indicator> getDescriptionToADeal(CurrencyPair currencyPair) {

@@ -6,6 +6,6 @@ import com.finance.createIndicatorData.model.DataOfCurrencyPair;
 import java.util.Map;
 
 public interface DealDecisionService {
-    byte[] makeDecisionOnOpeningDeal(RequestDataOfStrategy request,
+    Byte[] makeDecisionOnOpeningDeal(RequestDataOfStrategy request,
                                      Map<String, DataOfCurrencyPair> dataOfCurrencyPairMap);
 }
