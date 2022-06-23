@@ -20,11 +20,11 @@ dependencies {
     compileOnly 'org.projectlombok:lombok'
     annotationProcessor 'org.projectlombok:lombok'
 
+    // https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-web
+    implementation("org.springframework.boot:spring-boot-starter-web")
+
+
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
-
-    // https://mvnrepository.com/artifact/org.ta4j/ta4j-core
-    implementation("org.ta4j:ta4j-core:0.14")
-
 
     implementation project(":StrategyDescriptionParameters")
     implementation project(":DataHolder")
@@ -32,5 +32,16 @@ dependencies {
 
 tasks.named('test') {
     useJUnitPlatform()
+}
+
+jar {
+    manifest {
+        attributes "Main-Class": "com.finance.createIndicatorData.CreateIndicatorDataApplication"
+    }
+
+    from {
+        duplicatesStrategy(DuplicatesStrategy.EXCLUDE)
+        configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) }
+    }
 }
 
