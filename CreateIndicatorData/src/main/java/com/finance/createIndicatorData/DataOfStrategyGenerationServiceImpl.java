@@ -37,7 +37,7 @@ public class DataOfStrategyGenerationServiceImpl implements DataOfStrategyGenera
 
         // Отдать данные валютных пар на обработку индикаторам
         // свести результат работы индикаторов к 1 массиву
-        byte[] decisionOnOpeningDeal = dealDecisionService.makeDecisionOnOpeningDeal(request, dataOfCurrencyPairMap);
+        Byte[] decisionOnOpeningDeal = dealDecisionService.makeDecisionOnOpeningDeal(request, dataOfCurrencyPairMap);
 
 
         // собрать response

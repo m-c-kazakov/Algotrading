@@ -2,6 +2,8 @@ package com.finance.createIndicatorData.service;
 
 import com.finance.strategyDescriptionParameters.TimeFrame;
 import lombok.AccessLevel;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import org.springframework.stereotype.Component;
 import org.springframework.util.Assert;
@@ -95,6 +97,11 @@ public class DataOfIndicatorConverterToAnotherTimeFrameImpl implements DataOfInd
 
     }
 
-    record ConvertedResult(TimeFrame timeFrame, List<String> binaryStringIndicatorDecisions) {
+    @Getter
+    @RequiredArgsConstructor
+    @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
+    class ConvertedResult {
+        TimeFrame timeFrame;
+        List<String> binaryStringIndicatorDecisions;
     }
 }
