@@ -1,4 +1,4 @@
-package com.finance.createIndicatorData;
+package com.finance.createIndicatorData.controller;
 
 
 import com.finance.dataHolder.Candle;

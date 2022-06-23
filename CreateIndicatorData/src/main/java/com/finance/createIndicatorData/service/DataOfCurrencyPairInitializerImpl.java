@@ -1,6 +1,6 @@
 package com.finance.createIndicatorData.service;
 
-import com.finance.createIndicatorData.RequestDataOfStrategy;
+import com.finance.createIndicatorData.dto.RequestDataOfStrategy;
 import com.finance.createIndicatorData.model.DataOfCurrencyPair;
 import com.finance.strategyDescriptionParameters.CandlesInformation;
 import com.finance.strategyDescriptionParameters.DealDescription;

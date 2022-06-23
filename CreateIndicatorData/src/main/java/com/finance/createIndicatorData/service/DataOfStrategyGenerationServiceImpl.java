@@ -1,9 +1,9 @@
-package com.finance.createIndicatorData;
+package com.finance.createIndicatorData.service;
 
 import com.finance.createIndicatorData.dao.DataOfCurrencyPairDao;
+import com.finance.createIndicatorData.dto.RequestDataOfStrategy;
+import com.finance.createIndicatorData.dto.ResponseDataOfStrategy;
 import com.finance.createIndicatorData.model.DataOfCurrencyPair;
-import com.finance.createIndicatorData.service.DataOfCurrencyPairInitializer;
-import com.finance.createIndicatorData.service.DealDecisionService;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;

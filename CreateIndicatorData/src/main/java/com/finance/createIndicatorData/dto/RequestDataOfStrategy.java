@@ -1,4 +1,4 @@
-package com.finance.createIndicatorData;
+package com.finance.createIndicatorData.dto;
 
 import com.finance.strategyDescriptionParameters.*;
 import com.finance.strategyDescriptionParameters.indicators.Indicator;
