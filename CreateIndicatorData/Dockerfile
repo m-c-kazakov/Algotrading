@@ -8,7 +8,7 @@ WORKDIR /opt/app
 
 # это инструкция, которая определяет переменную для передачи Docker’у во время сборки
 # Переменной JAR_FILE присваивается путь к jar- архиву
-ARG JAR_FILE=build/libs/CreateIndicatorData-0.0.1-SNAPSHOT-plain.jar
+ARG JAR_FILE=build/libs/CreateIndicatorData-0.0.1-SNAPSHOT.jar
 
 # это инструкция, которая копирует файлы и директории в контейнер
 # Наш jar-файл, указанный в JAR_FILE, копируется в папку app, и копии задаётся имя app.jar
@@ -24,4 +24,4 @@ ENTRYPOINT ["java","-jar","app.jar"]
 # docker run -d -p 8080:8080 -t create-indicator-data:0.0.1
 
 # Посмотреть логи
-# docker logs -f 99f7915d81e4
+# docker logs -f imageId
