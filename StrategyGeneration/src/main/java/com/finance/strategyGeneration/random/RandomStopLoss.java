@@ -27,16 +27,16 @@ public class RandomStopLoss implements RandomStrategyParams {
             StopLossType.class);
 
     static {
-        mapWithSupplierGeneratedRandomParams.put(StopLossType.FIXED,
+        mapWithSupplierGeneratedRandomParams.put(StopLossType.FIXED_STOP_LOSS,
                 () -> Map.of(StopLossConfigurationKey.FIXED, ThreadLocalRandom.current()
                         .nextInt(1, 100)));
     }
 
     static {
-        stopLossTypeConsumerMap.put(StopLossType.FIXED, dataOfStrategyBuilder -> {
-            dataOfStrategyBuilder.stopLossType(StopLossType.FIXED);
+        stopLossTypeConsumerMap.put(StopLossType.FIXED_STOP_LOSS, dataOfStrategyBuilder -> {
+            dataOfStrategyBuilder.stopLossType(StopLossType.FIXED_STOP_LOSS);
             dataOfStrategyBuilder.stopLossConfigurationData(
-                    mapWithSupplierGeneratedRandomParams.get(StopLossType.FIXED)
+                    mapWithSupplierGeneratedRandomParams.get(StopLossType.FIXED_STOP_LOSS)
                             .get());
         });
     }

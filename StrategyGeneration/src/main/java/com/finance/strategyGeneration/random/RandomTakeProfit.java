@@ -29,16 +29,16 @@ public class RandomTakeProfit implements RandomStrategyParams {
             TakeProfitType.class);
 
     static {
-        mapWithSupplierGeneratedRandomParams.put(TakeProfitType.FIXED,
+        mapWithSupplierGeneratedRandomParams.put(TakeProfitType.FIXED_TAKE_PROFIT,
                 () -> Map.of(TakeProfitConfigurationKey.FIXED, ThreadLocalRandom.current()
                         .nextInt(0, 300)));
     }
 
     static {
-        takeProfitTypeConsumerMap.put(TakeProfitType.FIXED, dataOfStrategyBuilder -> {
-            dataOfStrategyBuilder.takeProfitType(TakeProfitType.FIXED);
+        takeProfitTypeConsumerMap.put(TakeProfitType.FIXED_TAKE_PROFIT, dataOfStrategyBuilder -> {
+            dataOfStrategyBuilder.takeProfitType(TakeProfitType.FIXED_TAKE_PROFIT);
             dataOfStrategyBuilder.takeProfitConfigurationData(
-                    mapWithSupplierGeneratedRandomParams.get(TakeProfitType.FIXED)
+                    mapWithSupplierGeneratedRandomParams.get(TakeProfitType.FIXED_TAKE_PROFIT)
                             .get());
         });
     }

@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
 
 public enum TakeProfitType {
-    FIXED;
+    FIXED_TAKE_PROFIT;
 
     public static List<TakeProfitType> getTakeProfitTypes() {
         return List.of(TakeProfitType.values());

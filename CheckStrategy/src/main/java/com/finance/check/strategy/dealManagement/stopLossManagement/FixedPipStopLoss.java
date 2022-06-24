@@ -6,7 +6,7 @@ import com.finance.strategyDescriptionParameters.StopLossConfigurationKey;
 import com.finance.strategyDescriptionParameters.TypeOfDeal;
 import org.springframework.stereotype.Component;
 
-@Component("FIXED")
+@Component("FIXED_STOP_LOSS")
 public class FixedPipStopLoss implements StopLossManager {
     @Override
     public void create(DataOfStrategy dataOfStrategy, DataOfDeal dataOfDeal, int cursor) {

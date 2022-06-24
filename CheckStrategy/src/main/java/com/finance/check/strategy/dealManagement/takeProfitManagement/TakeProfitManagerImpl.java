@@ -6,7 +6,7 @@ import com.finance.strategyDescriptionParameters.TakeProfitConfigurationKey;
 import com.finance.strategyDescriptionParameters.TypeOfDeal;
 import org.springframework.stereotype.Component;
 
-@Component("FIXED")
+@Component("FIXED_TAKE_PROFIT")
 public class TakeProfitManagerImpl implements TakeProfitManager {
 
     @Override

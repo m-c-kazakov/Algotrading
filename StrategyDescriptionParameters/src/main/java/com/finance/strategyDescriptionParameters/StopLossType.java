@@ -5,7 +5,7 @@ import java.util.concurrent.ThreadLocalRandom;
 
 public enum StopLossType {
 
-    FIXED;
+    FIXED_STOP_LOSS;
 
     public static List<StopLossType> getStopLossTypes() {
         return List.of(StopLossType.values());
