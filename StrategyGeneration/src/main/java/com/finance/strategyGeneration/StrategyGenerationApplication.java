@@ -8,10 +8,5 @@ public class StrategyGenerationApplication {
 
     public static void main(String[] args) {
         SpringApplication.run(StrategyGenerationApplication.class, args);
-
-        // Создание популяции
-
-
     }
-
 }

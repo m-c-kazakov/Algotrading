@@ -1,0 +1,17 @@
+version: "3.9"
+services:
+  # Название сервиса
+  candles-db:
+    # Название image, который нужно поднять
+    image: postgres:14.4
+    # Имя контейнера, то же что и --name
+    container_name: candles-db
+    environment:
+      POSTGRES_USER: algotrading
+      POSTGRES_PASSWORD: parol
+      POSTGRES_DB: candles-db
+    ports:
+      - "5433:5433"
+#    volumes:
+
+
