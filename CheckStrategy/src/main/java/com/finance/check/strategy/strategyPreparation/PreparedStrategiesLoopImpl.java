@@ -1,12 +1,11 @@
 package com.finance.check.strategy.strategyPreparation;
 
-import com.finance.check.strategy.StrategyExecutor;
+import com.finance.check.strategy.service.StrategyExecutor;
 import lombok.AccessLevel;
 import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
-import javax.annotation.PostConstruct;
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -26,19 +25,20 @@ public class PreparedStrategiesLoopImpl implements PreparedStrategiesLoop {
         strategies.offer(strategy);
     }
 
+    // TODO Придумать способ запуска стратегий
 
-    @PostConstruct
-    private void startEventLoop() {
-        while (true) {
-            singleThreadExecutor.execute(() -> {
-                try {
-                    Runnable runnable = strategies.take();
-                    executorService.execute(runnable);
-                } catch (Exception e) {
-                    log.error("Ошибка при запуске стратегии", e);
-                }
-            });
-        }
-    }
+//    @PostConstruct
+//    private void startEventLoop() {
+//        while (true) {
+//            singleThreadExecutor.execute(() -> {
+//                try {
+//                    Runnable runnable = strategies.take();
+//                    executorService.execute(runnable);
+//                } catch (Exception e) {
+//                    log.error("Ошибка при запуске стратегии", e);
+//                }
+//            });
+//        }
+//    }
 
 }

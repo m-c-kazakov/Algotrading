@@ -1,10 +1,10 @@
 package com.finance.check.strategy.strategyPreparation;
 
-import com.finance.check.strategy.StrategyExecutor;
 import com.finance.check.strategy.checker.MacroClosingDealchecker;
 import com.finance.check.strategy.dealManagement.closingDealManagement.ClosingDealManager;
 import com.finance.check.strategy.dealManagement.openingDealManagement.OpeningDealManager;
 import com.finance.check.strategy.dealManagement.updatingDealManagement.UpdatingDealManager;
+import com.finance.check.strategy.service.StrategyExecutor;
 import com.finance.dataHolder.DataOfStrategy;
 import com.finance.dataHolder.StatisticsDataOfStrategy;
 import org.springframework.beans.factory.annotation.Qualifier;

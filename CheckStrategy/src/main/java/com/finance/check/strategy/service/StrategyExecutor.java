@@ -1,4 +1,4 @@
-package com.finance.check.strategy;
+package com.finance.check.strategy.service;
 
 import com.finance.check.strategy.checker.MacroClosingDealchecker;
 import com.finance.check.strategy.dealManagement.closingDealManagement.ClosingDealManager;
