@@ -1,4 +1,4 @@
-package com.finance.strategyGeneration;
+package com.finance.strategyGeneration.service;
 
 import com.finance.dataHolder.DataOfStrategy;
 import lombok.AccessLevel;
