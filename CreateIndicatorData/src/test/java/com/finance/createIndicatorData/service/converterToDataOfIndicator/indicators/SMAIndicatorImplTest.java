@@ -20,4 +20,16 @@ class SMAIndicatorImplTest {
         assertEquals(1, sma);
 
     }
+
+    @Test
+    void sequentialGenerationSmaResult() {
+    }
+
+    @Test
+    void parallelGenerationSmaResult() {
+    }
+
+    @Test
+    void getDecision() {
+    }
 }
