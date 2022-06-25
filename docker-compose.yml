@@ -1,6 +1,8 @@
 version: "3.9"
 services:
   # Название сервиса
+  # SET datestyle = DMY;
+  # COPY candles FROM '/var/lib/candles-data/EURUSD_220531_220531.csv' DELIMITER ';' CSV HEADER;
   candles-db:
     # Название image, который нужно поднять
     image: postgres:14.4
@@ -14,6 +16,8 @@ services:
       - "5433:5432"
     volumes: # /var/lib/postgresql/data - volume по умолчанию в Postgerss
       - /home/maxim/Yandex.Disk/algotrading/data/candles-db:/var/lib/postgresql/data
+      - /home/maxim/Yandex.Disk/algotrading/data/candles-data:/var/lib/candles-data
+#      - /home/maxim/Yandex.Disk/algotrading/data/candler-init-script:/docker-entrypoint-initdb.d
   indicator-data-db:
     image: postgres:14.4
     container_name: indicator-data-db
