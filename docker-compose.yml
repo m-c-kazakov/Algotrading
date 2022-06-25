@@ -11,7 +11,53 @@ services:
       POSTGRES_PASSWORD: parol
       POSTGRES_DB: candles-db
     ports:
-      - "5433:5433"
-#    volumes:
+      - "5433:5432"
+    volumes: # /var/lib/postgresql/data - volume по умолчанию в Postgerss
+      - /home/maxim/Yandex.Disk/algotrading/data/candles-db:/var/lib/postgresql/data
+  indicator-data-db:
+    image: postgres:14.4
+    container_name: indicator-data-db
+    environment:
+      POSTGRES_USER: algotrading
+      POSTGRES_PASSWORD: parol
+      POSTGRES_DB: indicator-data-db
+    ports:
+      - "5434:5432"
+    volumes:
+      - /home/maxim/Yandex.Disk/algotrading/data/indicator-data-db:/var/lib/postgresql/data
+  strategies-db:
+    image: postgres:14.4
+    container_name: strategies-db
+    environment:
+      POSTGRES_USER: algotrading
+      POSTGRES_PASSWORD: parol
+      POSTGRES_DB: strategies-db
+    ports:
+      - "5435:5432"
+    volumes:
+      - /home/maxim/Yandex.Disk/algotrading/data/strategies-db:/var/lib/postgresql/data
+  check-strategy:
+    build: CheckStrategy/
+    container_name: check-strategy
+    ports:
+      - "8080:8080"
+  create-indicator-data:
+    build: CreateIndicatorData/
+    container_name: create-indicator-data
+    ports:
+      - "8081:8080"
+    depends_on:
+      - indicator-data-db
+      - candles-db
+  strategy-generation:
+    build: StrategyGeneration/
+    container_name: strategy-generation
+    ports:
+      - "8082:8080"
+    depends_on:
+      - strategies-db
+
+
+
 
 
