@@ -1,4 +1,4 @@
-package com.finance.createIndicatorData.model;
+package com.finance.createIndicatorData.dto;
 
 import com.finance.strategyDescriptionParameters.CandlesInformation;
 import com.finance.strategyDescriptionParameters.CurrencyPair;

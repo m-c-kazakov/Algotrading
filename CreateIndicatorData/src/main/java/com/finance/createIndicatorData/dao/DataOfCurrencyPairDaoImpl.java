@@ -1,6 +1,6 @@
 package com.finance.createIndicatorData.dao;
 
-import com.finance.createIndicatorData.model.DataOfCurrencyPair;
+import com.finance.createIndicatorData.dto.DataOfCurrencyPair;
 import org.springframework.stereotype.Component;
 
 @Component

@@ -1,7 +1,7 @@
 package com.finance.createIndicatorData.service;
 
 import com.finance.createIndicatorData.dao.DataOfIndicatorDao;
-import com.finance.createIndicatorData.model.DataOfCurrencyPair;
+import com.finance.createIndicatorData.dto.DataOfCurrencyPair;
 import com.finance.createIndicatorData.model.DataOfIndicator;
 import com.finance.createIndicatorData.service.converterToDataOfIndicator.ConverterToDataOfIndicator;
 import com.finance.strategyDescriptionParameters.TypeOfDeal;

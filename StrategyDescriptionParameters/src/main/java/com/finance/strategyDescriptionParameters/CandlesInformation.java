@@ -10,9 +10,9 @@ import lombok.experimental.FieldDefaults;
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class CandlesInformation {
 
-    private final CurrencyPair currencyPair;
+    CurrencyPair currencyPair;
 
-    private final TimeFrame timeFrame;
+    TimeFrame timeFrame;
 
     public String toString() {
         return "CandlesInformation(currencyPair=" + this.getCurrencyPair() + ", timeFrame=" + this.getTimeFrame() + ")";
