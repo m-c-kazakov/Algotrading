@@ -16,13 +16,19 @@ configurations {
 
 dependencies {
 
-    implementation 'org.springframework.boot:spring-boot-starter'
     compileOnly 'org.projectlombok:lombok'
     annotationProcessor 'org.projectlombok:lombok'
 
-    // https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-web
-    implementation("org.springframework.boot:spring-boot-starter-web")
 
+    implementation 'org.springframework.boot:spring-boot-starter-data-jdbc'
+
+    implementation 'com.zaxxer:HikariCP'
+    implementation 'org.postgresql:postgresql'
+
+//    implementation 'org.flywaydb:flyway-core'
+
+    testImplementation 'org.testcontainers:junit-jupiter'
+    testImplementation 'org.testcontainers:postgresql'
 
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
 

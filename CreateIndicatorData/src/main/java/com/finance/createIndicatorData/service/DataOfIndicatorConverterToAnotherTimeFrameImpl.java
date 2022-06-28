@@ -42,7 +42,7 @@ public class DataOfIndicatorConverterToAnotherTimeFrameImpl implements DataOfInd
 
         List<String> convertedResultList = List.of(binaryStringIndicatorDecisions);
 
-        for (int i = 0; i < currentTimeFrame.getOrder(); i++) {
+        for (int i = 0; i < currentTimeFrame.getPer(); i++) {
             if (desiredTimeFrame == currentTimeFrame) {
                 break;
             }

@@ -1,22 +1,47 @@
 plugins {
+    id 'idea'
     id 'java'
+    id 'io.spring.dependency-management' version '1.0.11.RELEASE'
+}
+
+idea {
+    project {
+        languageLevel = 17
+    }
+    module {
+        downloadJavadoc = true
+        downloadSources = true
+    }
 }
 
 allprojects {
     group 'org.finance'
 
     repositories {
+        mavenLocal()
         mavenCentral()
+    }
+
+    apply plugin: "io.spring.dependency-management"
+    dependencyManagement {
+        dependencies {
+            imports {
+                mavenBom("org.springframework.boot:spring-boot-dependencies:${Versions.springBootDependencies}")
+            }
+
+            dependency("org.testcontainers:junit-jupiter:${Versions.testcontainers}")
+            dependency("org.testcontainers:postgresql:${Versions.testcontainers}")
+            dependency("org.junit.jupiter:junit-jupiter-api:${Versions.junitJupiterApi}")
+            dependency("org.junit.jupiter:junit-jupiter-engine:${Versions.junitJupiterEngine}")
+
+//            implementation("org.flywaydb:flyway-core:8.5.13")
+        }
     }
 
 }
 
 version '1.0-SNAPSHOT'
 
-dependencies {
-    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.2'
-    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.2'
-}
 
 test {
     useJUnitPlatform()

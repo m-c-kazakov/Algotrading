@@ -1,6 +1,5 @@
 package com.finance.createIndicatorData.service;
 
-import com.finance.createIndicatorData.dao.DataOfCurrencyPairDao;
 import com.finance.createIndicatorData.dto.DataOfCurrencyPair;
 import com.finance.createIndicatorData.dto.RequestDataOfStrategy;
 import com.finance.createIndicatorData.dto.ResponseDataOfStrategy;
@@ -19,8 +18,9 @@ import java.util.stream.Collectors;
 public class DataOfStrategyGenerationServiceImpl implements DataOfStrategyGenerationService {
 
     DataOfCurrencyPairInitializer dataOfCurrencyPairInitializer;
-    DataOfCurrencyPairDao dataOfCurrencyPairDao;
-    private DealDecisionService dealDecisionService;
+    DealDecisionService dealDecisionService;
+    DataOfCurrencyPairService dataOfCurrencyPairService;
+
 
     @Override
     public ResponseDataOfStrategy generate(RequestDataOfStrategy request) {
@@ -30,9 +30,10 @@ public class DataOfStrategyGenerationServiceImpl implements DataOfStrategyGenera
 
         // Получить необходимые данные
         Map<String, DataOfCurrencyPair> dataOfCurrencyPairMap = dataOfCurrencyPairs.stream()
-                .map(dataOfCurrencyPairDao::getDataOfCurrencyPair)
-                .collect(
-                        Collectors.toUnmodifiableMap(DataOfCurrencyPair::candlesInformationToString, value -> value));
+                .map(dataOfCurrencyPairService::getCurrencyPair)
+                .collect(Collectors.toUnmodifiableMap(
+                        DataOfCurrencyPair::candlesInformationToString,
+                        dataOfCurrencyPair -> dataOfCurrencyPair));
 
 
         // Отдать данные валютных пар на обработку индикаторам

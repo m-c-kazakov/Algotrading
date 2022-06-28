@@ -9,6 +9,7 @@ import lombok.experimental.FieldDefaults;
 @RequiredArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class Candle {
+    // TODO Удалить использование класса
 
     int closingPrice;
     int lowPrice;

@@ -17,16 +17,14 @@ import java.util.Map;
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class DataOfCurrencyPair {
 
-    Long id;
     CandlesInformation candlesInformation;
     @EqualsAndHashCode.Exclude
     Map<TypeOfBar, List<Integer>> candles;
 
     @Builder
-    public DataOfCurrencyPair(Long id, CurrencyPair currencyPair, TimeFrame timeFrame,
+    public DataOfCurrencyPair(CurrencyPair currencyPair, TimeFrame timeFrame,
                               List<Integer> closingPrices, List<Integer> openingPrices,
                               List<Integer> lowPrices, List<Integer> highPrices) {
-        this.id = id;
         this.candlesInformation = new CandlesInformation(currencyPair, timeFrame);
         this.candles = Map.of(
                 TypeOfBar.CLOSE, closingPrices,
@@ -46,6 +44,10 @@ public class DataOfCurrencyPair {
 
     public TimeFrame getTimeFrame() {
         return this.candlesInformation.getTimeFrame();
+    }
+
+    public int getPer() {
+        return this.getTimeFrame().getPer();
     }
 
 
