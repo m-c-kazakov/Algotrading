@@ -1,8 +1,8 @@
 version: "3.9"
 services:
-  # Название сервиса
   # SET datestyle = DMY;
   # COPY candles FROM '/var/lib/candles-data/EURUSD_220531_220531.csv' DELIMITER ';' CSV HEADER;
+  # Название сервиса
   candles-db:
     # Название image, который нужно поднять
     image: postgres:14.4

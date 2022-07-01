@@ -11,3 +11,13 @@ create table candles
     CLOSE numeric not null,
     VOL integer not null
 )
+
+-- create table dataOfIndicators
+-- (
+--     id serial PRIMARY KEY,
+--     decisionByDeal integer[],
+--     indicatorType varchar(50),
+--     currencyPair varchar(50),
+--     timeFrame varchar(50)
+--
+-- )

@@ -9,7 +9,7 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.relational.core.mapping.Table;
 
 import java.math.BigDecimal;
-import java.sql.Timestamp;
+import java.sql.Time;
 import java.util.Date;
 
 @Getter
@@ -23,7 +23,7 @@ public class Candle {
     CurrencyPair ticker;
     int per;
     Date date;
-    Timestamp time;
+    Time time;
     BigDecimal open;
     BigDecimal high;
     BigDecimal low;

@@ -14,10 +14,8 @@ class CandleConverterImplTest {
 
     CandleConverterImpl candleConverter = new CandleConverterImpl();
 
-
     @Test
     void convertBigDecimalPriceToIntPrice() {
-        System.out.println("hashCode: " + this.hashCode());
         BigDecimal price = new BigDecimal("1.00001");
         CurrencyPair currencyPair = CurrencyPair.EURUSD;
 

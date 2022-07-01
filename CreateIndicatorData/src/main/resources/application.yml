@@ -1,0 +1,8 @@
+spring:
+    datasource:
+        url: jdbc:postgresql://localhost:5433/candles-db
+        username: algotrading
+        password: parol
+        driver-class-name: org.postgresql.Driver
+
+
