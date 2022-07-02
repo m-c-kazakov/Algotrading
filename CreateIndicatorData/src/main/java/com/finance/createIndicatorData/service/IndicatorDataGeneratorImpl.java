@@ -1,8 +1,8 @@
 package com.finance.createIndicatorData.service;
 
-import com.finance.createIndicatorData.dao.DataOfIndicatorDao;
 import com.finance.createIndicatorData.dto.DataOfCurrencyPair;
 import com.finance.createIndicatorData.model.DataOfIndicator;
+import com.finance.createIndicatorData.repository.DataOfIndicatorRepository;
 import com.finance.createIndicatorData.service.converterToDataOfIndicator.ConverterToDataOfIndicator;
 import com.finance.strategyDescriptionParameters.TypeOfDeal;
 import com.finance.strategyDescriptionParameters.indicators.Indicator;
@@ -20,16 +20,19 @@ public class IndicatorDataGeneratorImpl implements IndicatorDataGenerator {
 
     Map<String, ConverterToDataOfIndicator> converterToDataOfIndicatorMap;
 
-    DataOfIndicatorDao dataOfIndicatorDao;
+    DataOfIndicatorRepository dataOfIndicatorRepository;
 
     @Override
     public DataOfIndicator generate(Indicator indicator, TypeOfDeal typeOfDeal, DataOfCurrencyPair dataOfCurrencyPair) {
-        return dataOfIndicatorDao.getDataOfIndicator(indicator.candlesInformationToString())
+        return dataOfIndicatorRepository.getDataOfIndicatorByIndicatorTypeAndAndCurrencyPairAndTimeFrame(
+                indicator.getIndicatorType().name(),
+                dataOfCurrencyPair.getCurrencyPair().name(),
+                dataOfCurrencyPair.getTimeFrame().name())
                 .orElseGet(() -> {
                     ConverterToDataOfIndicator converterToDataOfIndicator = converterToDataOfIndicatorMap.get(
                             indicator.getIndicatorType().name());
                     DataOfIndicator dataOfIndicator = converterToDataOfIndicator.convert(indicator, typeOfDeal, dataOfCurrencyPair);
-                    dataOfIndicatorDao.add(dataOfIndicator);
+                    dataOfIndicatorRepository.save(dataOfIndicator);
                     return dataOfIndicator;
                 });
 
