@@ -1,3 +1,14 @@
+
+logging:
+#   Сохранить логи в файл
+#    file:
+#        name: createIndicatorData.log
+#        path: /
+    level:
+        root: INFO
+        com.dmdev.spring.database.pool: INFO
+        org.springframework.jdbc.core: TRACE
+
 spring:
     datasource:
         url: jdbc:postgresql://localhost:5433/candles-db

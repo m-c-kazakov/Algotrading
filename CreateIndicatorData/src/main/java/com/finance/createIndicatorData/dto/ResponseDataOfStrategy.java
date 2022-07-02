@@ -1,17 +1,11 @@
 package com.finance.createIndicatorData.dto;
 
-import com.finance.dataHolder.Candle;
-import lombok.AccessLevel;
-import lombok.Getter;
-import lombok.RequiredArgsConstructor;
-import lombok.experimental.FieldDefaults;
+import lombok.Value;
 
-@Getter
-@RequiredArgsConstructor
-@FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
+@Value(staticConstructor = "of")
 public class ResponseDataOfStrategy {
 
-    Candle[] candles;
-    byte[] decisionToOpenADeal;
-    byte[] decisionToCloseADeal;
+    DataOfCurrencyPair dataOfCurrencyPair;
+    Byte[] decisionToOpenADeal;
+    Byte[] decisionToCloseADeal;
 }

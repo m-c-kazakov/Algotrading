@@ -1,4 +1,6 @@
+--liquibase formatted sql
 
+--changeset kazakov:1
 create table candles
 (
     id   serial PRIMARY KEY,
@@ -12,14 +14,15 @@ create table candles
     CLOSE  numeric     not null,
     VOL    integer     not null
 );
---
--- create table dataOfIndicators
--- (
---     id serial PRIMARY KEY,
---     decisionByDeal integer[],
---     indicatorType varchar(50),
---     currencyPair varchar(50),
---     timeFrame varchar(50)
---
--- )
+
+--changeset kazakov:2
+create table data_of_indicators
+(
+    id serial PRIMARY KEY,
+    decision_by_deal integer[],
+    indicator_type varchar(50),
+    currency_pair varchar(50),
+    time_frame varchar(50)
+
+)
 

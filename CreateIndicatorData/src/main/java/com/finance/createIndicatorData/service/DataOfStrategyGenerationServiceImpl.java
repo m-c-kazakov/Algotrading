@@ -9,6 +9,7 @@ import lombok.experimental.FieldDefaults;
 import org.springframework.stereotype.Component;
 
 import java.util.Map;
+import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -40,8 +41,13 @@ public class DataOfStrategyGenerationServiceImpl implements DataOfStrategyGenera
         // свести результат работы индикаторов к 1 массиву
         Byte[] decisionOnOpeningDeal = dealDecisionService.makeDecisionOnOpeningDeal(request, dataOfCurrencyPairMap);
 
-
+        String candleWithSmallestTimeFrame = request.getCandlesInformation().toString();
+        DataOfCurrencyPair dataOfCurrencyPair = Optional.ofNullable(
+                dataOfCurrencyPairMap.get(candleWithSmallestTimeFrame)).orElseThrow(
+                () -> new RuntimeException("Не найдены данные свечи с параметрами=" + candleWithSmallestTimeFrame));
         // собрать response
-        return null;
+
+        // TODO Добавить решения по закрытию сделки
+        return ResponseDataOfStrategy.of(dataOfCurrencyPair, decisionOnOpeningDeal, new Byte[]{});
     }
 }

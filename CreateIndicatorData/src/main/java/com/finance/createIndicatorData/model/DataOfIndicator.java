@@ -7,6 +7,7 @@ import com.finance.strategyDescriptionParameters.indicators.IndicatorType;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.relational.core.mapping.Table;
@@ -15,7 +16,8 @@ import java.util.List;
 
 @Getter
 @Builder
-@Table("dataOfIndicators")
+@RequiredArgsConstructor
+@Table("data_of_indicators")
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class DataOfIndicator {
 
