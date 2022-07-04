@@ -1,5 +1,6 @@
 package com.finance.strategyGeneration.random.indicator;
 
+import com.finance.strategyDescriptionParameters.CandlesInformation;
 import com.finance.strategyDescriptionParameters.CurrencyPair;
 import com.finance.strategyDescriptionParameters.TimeFrame;
 import com.finance.strategyDescriptionParameters.indicators.Indicator;
@@ -35,8 +36,7 @@ public class RandomIndicatorUtilsImpl implements RandomIndicatorUtils {
 
         return Indicator.builder()
                 .indicatorType(indicatorType)
-                .timeFrame(timeFrame)
-                .currencyPair(currencyPair)
+                .candlesInformation(CandlesInformation.builder().timeFrame(timeFrame).currencyPair(currencyPair).build())
                 .parameters(parameters)
                 .build();
     }

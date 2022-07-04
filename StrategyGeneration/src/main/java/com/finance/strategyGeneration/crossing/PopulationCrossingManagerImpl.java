@@ -60,10 +60,10 @@ public class PopulationCrossingManagerImpl implements PopulationCrossingManager 
                 secondIndicators, firstIndicators, separator);
 
         DescriptionOfStrategy firstChild = firstParent
-                .withDescriptionToCloseADeal(new DescriptionToCloseADeal(firstDescriptionToCloseADeal));
+                .withDescriptionToCloseADeal(DescriptionToCloseADeal.builder().indicators(firstDescriptionToCloseADeal).build());
 
         DescriptionOfStrategy secondChild = secondParent
-                .withDescriptionToCloseADeal(new DescriptionToCloseADeal(secondDescriptionToCloseADeal));
+                .withDescriptionToCloseADeal(DescriptionToCloseADeal.builder().indicators(secondDescriptionToCloseADeal).build());
 
         return List.of(firstParent, secondParent, firstChild, secondChild);
     }
@@ -87,10 +87,10 @@ public class PopulationCrossingManagerImpl implements PopulationCrossingManager 
                 secondIndicators, firstIndicators, separator);
 
         DescriptionOfStrategy firstChild = firstParent
-                .withDescriptionToOpenADeal(new DescriptionToOpenADeal(firstDescriptionToOpenADeal));
+                .withDescriptionToOpenADeal(DescriptionToOpenADeal.builder().indicators(firstDescriptionToOpenADeal).build());
 
         DescriptionOfStrategy secondChild = secondParent
-                .withDescriptionToOpenADeal(new DescriptionToOpenADeal(secondDescriptionToOpenADeal));
+                .withDescriptionToOpenADeal(DescriptionToOpenADeal.builder().indicators(secondDescriptionToOpenADeal).build());
 
         return List.of(firstParent, secondParent, firstChild, secondChild);
     }

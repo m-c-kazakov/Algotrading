@@ -19,7 +19,7 @@ import java.util.function.Supplier;
 public class RandomStopLoss implements RandomStrategyParams {
 
     // TODO Вынести паля и статические блоки инициализации
-    static Map<StopLossType, Consumer<DescriptionOfStrategy.DataOfStrategyBuilder>> stopLossTypeConsumerMap = new EnumMap<>(
+    static Map<StopLossType, Consumer<DescriptionOfStrategy.DescriptionOfStrategyBuilder>> stopLossTypeConsumerMap = new EnumMap<>(
             StopLossType.class);
 
     @Getter
@@ -42,7 +42,7 @@ public class RandomStopLoss implements RandomStrategyParams {
     }
 
     @Override
-    public void add(DescriptionOfStrategy.DataOfStrategyBuilder dataOfStrategyBuilder) {
+    public void add(DescriptionOfStrategy.DescriptionOfStrategyBuilder dataOfStrategyBuilder) {
 
         stopLossTypeConsumerMap.get(StopLossType.getRandomStopLossType())
                 .accept(dataOfStrategyBuilder);

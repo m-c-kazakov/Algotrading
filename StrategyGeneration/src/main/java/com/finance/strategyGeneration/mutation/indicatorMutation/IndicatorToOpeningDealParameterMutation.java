@@ -60,7 +60,7 @@ public class IndicatorToOpeningDealParameterMutation implements Mutation {
         }
 
         DescriptionOfStrategy descriptionOfStrategyAfterMutation = parentDescriptionOfStrategy.withDescriptionToOpenADeal(
-                new DescriptionToOpenADeal(indicators));
+                DescriptionToOpenADeal.builder().indicators(indicators).build());
 
         return Stream.of(parentDescriptionOfStrategy, descriptionOfStrategyAfterMutation);
     }

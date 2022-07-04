@@ -21,7 +21,7 @@ import java.util.function.Supplier;
 public class RandomSumOfDeal implements RandomStrategyParams {
 
     // TODO Вынести паля и статические блоки инициализации
-    static Map<SumOfDealType, Consumer<DescriptionOfStrategy.DataOfStrategyBuilder>> sumOfDealTypeConsumerMap = new EnumMap<>(
+    static Map<SumOfDealType, Consumer<DescriptionOfStrategy.DescriptionOfStrategyBuilder>> sumOfDealTypeConsumerMap = new EnumMap<>(
             SumOfDealType.class);
 
     @Getter
@@ -44,7 +44,7 @@ public class RandomSumOfDeal implements RandomStrategyParams {
     }
 
     @Override
-    public void add(DescriptionOfStrategy.DataOfStrategyBuilder dataOfStrategyBuilder) {
+    public void add(DescriptionOfStrategy.DescriptionOfStrategyBuilder dataOfStrategyBuilder) {
 
         sumOfDealTypeConsumerMap.get(SumOfDealType.getRandomSumOfDealType())
                 .accept(dataOfStrategyBuilder);

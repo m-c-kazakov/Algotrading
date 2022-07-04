@@ -24,7 +24,7 @@ public class RandomDescriptionToOpenAndCloseADealImpl implements RandomStrategyP
     RandomIndicatorUtils randomIndicatorUtils;
 
     @Override
-    public void add(DescriptionOfStrategy.DataOfStrategyBuilder dataOfStrategyBuilder) {
+    public void add(DescriptionOfStrategy.DescriptionOfStrategyBuilder dataOfStrategyBuilder) {
 
         CurrencyPair currencyPair = currencyPairs.get(ThreadLocalRandom.current()
                 .nextInt(currencyPairs.size()));

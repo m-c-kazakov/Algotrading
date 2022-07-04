@@ -25,7 +25,7 @@ public class RandomPopulationCreationManagerImpl implements RandomPopulationCrea
     @Override
     public DescriptionOfStrategy execute() {
 
-        DescriptionOfStrategy.DataOfStrategyBuilder dataOfStrategyBuilder = DescriptionOfStrategy.builder()
+        DescriptionOfStrategy.DescriptionOfStrategyBuilder dataOfStrategyBuilder = DescriptionOfStrategy.builder()
                 .startScore(startScore)
                 .acceptableRisk(acceptableRisk)
                 .typeOfDeal(getTypeOfDeal());
