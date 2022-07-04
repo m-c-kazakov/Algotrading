@@ -1,6 +1,6 @@
 package com.finance.strategyGeneration.mutation.sumOfDeal;
 
-import com.finance.dataHolder.DataOfStrategy;
+import com.finance.dataHolder.DescriptionOfStrategy;
 import com.finance.strategyDescriptionParameters.SumOfDealConfigurationKey;
 import com.finance.strategyDescriptionParameters.SumOfDealType;
 import com.finance.strategyGeneration.mutation.Mutation;
@@ -14,16 +14,16 @@ import java.util.stream.Stream;
 public class SumOfDealTypeMutation implements Mutation {
 
     @Override
-    public Stream<DataOfStrategy> execute(DataOfStrategy parentDataOfStrategy) {
+    public Stream<DescriptionOfStrategy> execute(DescriptionOfStrategy parentDescriptionOfStrategy) {
         SumOfDealType randomSumOfDealType = SumOfDealType.getRandomSumOfDealType();
         Map<SumOfDealConfigurationKey, Object> randomParamsForSumOfDeal = RandomSumOfDeal.getMapWithSupplierGeneratedRandomParams()
                 .get(randomSumOfDealType)
                 .get();
 
-        DataOfStrategy childDataOfStrategy = parentDataOfStrategy
+        DescriptionOfStrategy childDescriptionOfStrategy = parentDescriptionOfStrategy
                 .withSumOfDealType(randomSumOfDealType)
                 .withSumOfDealConfigurationData(randomParamsForSumOfDeal);
 
-        return Stream.of(parentDataOfStrategy, childDataOfStrategy);
+        return Stream.of(parentDescriptionOfStrategy, childDescriptionOfStrategy);
     }
 }

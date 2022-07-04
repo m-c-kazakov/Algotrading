@@ -1,6 +1,6 @@
 package com.finance.strategyGeneration.mutation.indicatorMutation;
 
-import com.finance.dataHolder.DataOfStrategy;
+import com.finance.dataHolder.DescriptionOfStrategy;
 import com.finance.strategyDescriptionParameters.DescriptionToOpenADeal;
 import com.finance.strategyDescriptionParameters.TimeFrame;
 import com.finance.strategyDescriptionParameters.indicators.Indicator;
@@ -20,9 +20,9 @@ public class TimeFrameOfIndicatorToOpenADealMutation implements Mutation {
     static List<TimeFrame> TIME_FRAMES = List.of(TimeFrame.values());
 
     @Override
-    public Stream<DataOfStrategy> execute(DataOfStrategy parentDataOfStrategy) {
+    public Stream<DescriptionOfStrategy> execute(DescriptionOfStrategy parentDescriptionOfStrategy) {
 
-        List<Indicator> indicators = parentDataOfStrategy.getIndicatorsDescriptionToOpenADeal();
+        List<Indicator> indicators = parentDescriptionOfStrategy.getIndicatorsDescriptionToOpenADeal();
 
         int numberOfReplacedItems = Math.max(ThreadLocalRandom.current()
                 .nextInt(indicators.size() / 2), 1);
@@ -40,9 +40,9 @@ public class TimeFrameOfIndicatorToOpenADealMutation implements Mutation {
             indicators.set(replacedIndex, indicator.withTimeFrame(timeFrame));
         }
 
-        DataOfStrategy dataOfStrategyAfterMutation = parentDataOfStrategy.withDescriptionToOpenADeal(
+        DescriptionOfStrategy descriptionOfStrategyAfterMutation = parentDescriptionOfStrategy.withDescriptionToOpenADeal(
                 new DescriptionToOpenADeal(indicators));
 
-        return Stream.of(parentDataOfStrategy, dataOfStrategyAfterMutation);
+        return Stream.of(parentDescriptionOfStrategy, descriptionOfStrategyAfterMutation);
     }
 }

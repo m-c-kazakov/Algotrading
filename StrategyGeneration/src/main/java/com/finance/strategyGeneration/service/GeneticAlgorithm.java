@@ -1,6 +1,6 @@
 package com.finance.strategyGeneration.service;
 
-import com.finance.dataHolder.DataOfStrategy;
+import com.finance.dataHolder.DescriptionOfStrategy;
 import com.finance.strategyGeneration.crossing.PopulationCrossingManager;
 import com.finance.strategyGeneration.mutation.MutationOfIndividual;
 import com.finance.strategyGeneration.populationSelection.PopulationSelection;
@@ -29,14 +29,14 @@ public class GeneticAlgorithm {
 
     PopulationSelection populationSelection;
 
-    public List<DataOfStrategy> execute() {
+    public List<DescriptionOfStrategy> execute() {
 
 
         // Создать популяцию
-        List<DataOfStrategy> randomPopulation = createRandomPopulation(NUMBER_OF_RANDOM_INDIVIDUALS);
-        List<DataOfStrategy> theBestIndividual = populationService.findTheBestIndividual(
+        List<DescriptionOfStrategy> randomPopulation = createRandomPopulation(NUMBER_OF_RANDOM_INDIVIDUALS);
+        List<DescriptionOfStrategy> theBestIndividual = populationService.findTheBestIndividual(
                 NUMBER_OF_THE_BEST_INDIVIDUALS);
-        List<DataOfStrategy> population = Stream.of(randomPopulation, theBestIndividual)
+        List<DescriptionOfStrategy> population = Stream.of(randomPopulation, theBestIndividual)
                 .flatMap(List::stream)
                 .toList();
 
@@ -44,22 +44,22 @@ public class GeneticAlgorithm {
 
 
         // Скрещивание
-        List<DataOfStrategy> populationAfterCrossing = populationCrossingManager.execute(population);
+        List<DescriptionOfStrategy> populationAfterCrossing = populationCrossingManager.execute(population);
 
         // Мутация
-        List<DataOfStrategy> populationAfterMutation = mutationOfIndividual.execute(populationAfterCrossing);
+        List<DescriptionOfStrategy> populationAfterMutation = mutationOfIndividual.execute(populationAfterCrossing);
 
         // Эволюция
         // TODO Добавить блок с эволюцией
 
         // Отбор
-        List<DataOfStrategy> populationAfterSelection = populationSelection.execute(populationAfterMutation);
+        List<DescriptionOfStrategy> populationAfterSelection = populationSelection.execute(populationAfterMutation);
 
         return populationAfterSelection;
 
     }
 
-    private List<DataOfStrategy> createRandomPopulation(int numberOfIndividuals) {
+    private List<DescriptionOfStrategy> createRandomPopulation(int numberOfIndividuals) {
         return Stream.iterate(0, integer -> integer < numberOfIndividuals, integer -> integer + 1)
                 .map(integer -> randomPopulationCreationManager.execute())
                 .toList();

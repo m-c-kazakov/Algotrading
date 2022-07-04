@@ -1,6 +1,6 @@
 package com.finance.strategyGeneration.random;
 
-import com.finance.dataHolder.DataOfStrategy;
+import com.finance.dataHolder.DescriptionOfStrategy;
 import com.finance.strategyDescriptionParameters.SumOfDealConfigurationKey;
 import com.finance.strategyDescriptionParameters.SumOfDealType;
 import lombok.AccessLevel;
@@ -21,7 +21,7 @@ import java.util.function.Supplier;
 public class RandomSumOfDeal implements RandomStrategyParams {
 
     // TODO Вынести паля и статические блоки инициализации
-    static Map<SumOfDealType, Consumer<DataOfStrategy.DataOfStrategyBuilder>> sumOfDealTypeConsumerMap = new EnumMap<>(
+    static Map<SumOfDealType, Consumer<DescriptionOfStrategy.DataOfStrategyBuilder>> sumOfDealTypeConsumerMap = new EnumMap<>(
             SumOfDealType.class);
 
     @Getter
@@ -44,7 +44,7 @@ public class RandomSumOfDeal implements RandomStrategyParams {
     }
 
     @Override
-    public void add(DataOfStrategy.DataOfStrategyBuilder dataOfStrategyBuilder) {
+    public void add(DescriptionOfStrategy.DataOfStrategyBuilder dataOfStrategyBuilder) {
 
         sumOfDealTypeConsumerMap.get(SumOfDealType.getRandomSumOfDealType())
                 .accept(dataOfStrategyBuilder);

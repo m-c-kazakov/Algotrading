@@ -1,6 +1,6 @@
 package com.finance.strategyGeneration.mutation.indicatorMutation;
 
-import com.finance.dataHolder.DataOfStrategy;
+import com.finance.dataHolder.DescriptionOfStrategy;
 import com.finance.strategyDescriptionParameters.DescriptionToOpenADeal;
 import com.finance.strategyDescriptionParameters.indicators.Indicator;
 import com.finance.strategyDescriptionParameters.indicators.IndicatorType;
@@ -24,9 +24,9 @@ public class IndicatorToOpeningDealParameterMutation implements Mutation {
     Map<String, RandomIndicatorParametersGenerator> randomParameters;
 
     @Override
-    public Stream<DataOfStrategy> execute(DataOfStrategy parentDataOfStrategy) {
+    public Stream<DescriptionOfStrategy> execute(DescriptionOfStrategy parentDescriptionOfStrategy) {
 
-        List<Indicator> indicators = parentDataOfStrategy.getIndicatorsDescriptionToOpenADeal();
+        List<Indicator> indicators = parentDescriptionOfStrategy.getIndicatorsDescriptionToOpenADeal();
 
         int numberOfReplacedItems = Math.max(ThreadLocalRandom.current()
                 .nextInt(indicators.size() / 2), 1);
@@ -59,10 +59,10 @@ public class IndicatorToOpeningDealParameterMutation implements Mutation {
             indicators.set(replacedIndex, indicatorForReplace);
         }
 
-        DataOfStrategy dataOfStrategyAfterMutation = parentDataOfStrategy.withDescriptionToOpenADeal(
+        DescriptionOfStrategy descriptionOfStrategyAfterMutation = parentDescriptionOfStrategy.withDescriptionToOpenADeal(
                 new DescriptionToOpenADeal(indicators));
 
-        return Stream.of(parentDataOfStrategy, dataOfStrategyAfterMutation);
+        return Stream.of(parentDescriptionOfStrategy, descriptionOfStrategyAfterMutation);
     }
 
 }

@@ -1,46 +1,38 @@
 package com.finance.check.strategy.strategyPreparation;
 
 import com.finance.check.strategy.service.StrategyExecutor;
-import com.finance.dataHolder.DataOfStrategy;
+import com.finance.dataHolder.DescriptionOfStrategy;
 import com.finance.dataHolder.StatisticsDataOfStrategy;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
+import org.springframework.stereotype.Component;
 
+@Component
 @RequiredArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
-public class StrategyPreparationManagerImpl {
+public class StrategyPreparationManagerImpl implements StrategyPreparationManager {
 
-    PreparedStrategiesLoop preparedStrategiesLoop;
     StrategyExecutorConfiguration strategyExecutorConfiguration;
-    DataHolderForStrategies dataHolderForStrategies;
+    DataOfStrategyGeneratorService dataOfStrategyGeneratorService;
 
+    @Override
+    public StrategyExecutor prepare(DescriptionOfStrategy descriptionOfStrategy) {
 
-    public void prepare(DataOfStrategy dataOfStrategy) {
+        DescriptionOfStrategy descriptionOfStrategyWithCandleAndIndicatorData = dataOfStrategyGeneratorService.generateDataOfIndicators(descriptionOfStrategy);
 
         StatisticsDataOfStrategy statisticsDataOfStrategy = StatisticsDataOfStrategy.builder()
-                .strategyId(dataOfStrategy.getId())
-                .score(dataOfStrategy.getStartScore())
-                .valueOfAcceptableRisk(generateValueOfAcceptableRisk(dataOfStrategy))
+                .strategyId(descriptionOfStrategyWithCandleAndIndicatorData.getId())
+                .score(descriptionOfStrategyWithCandleAndIndicatorData.getStartScore())
+                .valueOfAcceptableRisk(generateValueOfAcceptableRisk(descriptionOfStrategyWithCandleAndIndicatorData))
                 .build();
 
-
-        DataOfStrategy readyDataOfStrategy = dataOfStrategy
-                .withDataOfCandles(dataHolderForStrategies.getDataOfCandles(dataOfStrategy.getCandlesInformation()))
-                .withDecisionToOpenADeal(
-                        dataHolderForStrategies.getDecisionToOpenADeal(dataOfStrategy.getDescriptionToOpenADeal()))
-                .withDecisionToCloseADeal(
-                        dataHolderForStrategies.getDecisionToCloseADeal(dataOfStrategy.getDescriptionToCloseADeal()));
-
-        StrategyExecutor strategyExecutor = strategyExecutorConfiguration.configurate(readyDataOfStrategy,
+        return strategyExecutorConfiguration.configurate(descriptionOfStrategyWithCandleAndIndicatorData,
                 statisticsDataOfStrategy);
-        preparedStrategiesLoop.addStrategy(strategyExecutor);
-
-
     }
 
-    private int generateValueOfAcceptableRisk(DataOfStrategy dataOfStrategy) {
-        return (int) (dataOfStrategy.getStartScore() * dataOfStrategy.getAcceptableRisk() / 100);
+    private int generateValueOfAcceptableRisk(DescriptionOfStrategy descriptionOfStrategy) {
+        return (int) (descriptionOfStrategy.getStartScore() * descriptionOfStrategy.getAcceptableRisk() / 100);
     }
 
 }

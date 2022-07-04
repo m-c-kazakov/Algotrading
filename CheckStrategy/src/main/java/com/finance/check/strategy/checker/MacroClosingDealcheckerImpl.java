@@ -1,14 +1,14 @@
 package com.finance.check.strategy.checker;
 
 import com.finance.dataHolder.DataOfDeal;
-import com.finance.dataHolder.DataOfStrategy;
+import com.finance.dataHolder.DescriptionOfStrategy;
 import com.finance.strategyDescriptionParameters.TypeOfDeal;
 import lombok.AccessLevel;
 import lombok.experimental.FieldDefaults;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
-@Component(value = "macroClosingDealcheckerImpl")
+@Component(value = "macroClosingDealchecker")
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class MacroClosingDealcheckerImpl implements MacroClosingDealchecker {
 
@@ -22,18 +22,18 @@ public class MacroClosingDealcheckerImpl implements MacroClosingDealchecker {
     }
 
     @Override
-    public boolean isNeedClosingDeal(DataOfStrategy dataOfStrategy, int cursor, DataOfDeal dataOfDeal) {
+    public boolean isNeedClosingDeal(DescriptionOfStrategy descriptionOfStrategy, int cursor, DataOfDeal dataOfDeal) {
 
-        if (dataOfStrategy.getDecisionToClosingADeal(cursor)) {
+        if (descriptionOfStrategy.getDecisionToClosingADeal(cursor)) {
             return true;
         }
 
-        if (dataOfStrategy.getTypeOfDeal() == TypeOfDeal.BUY) {
-            return buyDealchecker.isNeedClosingDeal(dataOfStrategy, cursor, dataOfDeal);
-        } else if (dataOfStrategy.getTypeOfDeal() == TypeOfDeal.SELL) {
-            return sellDealchecker.isNeedClosingDeal(dataOfStrategy, cursor, dataOfDeal);
+        if (descriptionOfStrategy.getTypeOfDeal() == TypeOfDeal.BUY) {
+            return buyDealchecker.isNeedClosingDeal(descriptionOfStrategy, cursor, dataOfDeal);
+        } else if (descriptionOfStrategy.getTypeOfDeal() == TypeOfDeal.SELL) {
+            return sellDealchecker.isNeedClosingDeal(descriptionOfStrategy, cursor, dataOfDeal);
         } else {
-            throw new RuntimeException("Некорректно определен тип TypeOfDeal=" + dataOfStrategy.getTypeOfDeal());
+            throw new RuntimeException("Некорректно определен тип TypeOfDeal=" + descriptionOfStrategy.getTypeOfDeal());
         }
 
     }

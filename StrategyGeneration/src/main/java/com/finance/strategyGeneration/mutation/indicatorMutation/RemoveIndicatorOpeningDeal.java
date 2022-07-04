@@ -1,6 +1,6 @@
 package com.finance.strategyGeneration.mutation.indicatorMutation;
 
-import com.finance.dataHolder.DataOfStrategy;
+import com.finance.dataHolder.DescriptionOfStrategy;
 import com.finance.strategyDescriptionParameters.DescriptionToOpenADeal;
 import com.finance.strategyDescriptionParameters.indicators.Indicator;
 import com.finance.strategyGeneration.mutation.Mutation;
@@ -14,8 +14,8 @@ import java.util.stream.Stream;
 public class RemoveIndicatorOpeningDeal implements Mutation {
 
     @Override
-    public Stream<DataOfStrategy> execute(DataOfStrategy parentDataOfStrategy) {
-        List<Indicator> indicators = parentDataOfStrategy.getIndicatorsDescriptionToOpenADeal();
+    public Stream<DescriptionOfStrategy> execute(DescriptionOfStrategy parentDescriptionOfStrategy) {
+        List<Indicator> indicators = parentDescriptionOfStrategy.getIndicatorsDescriptionToOpenADeal();
 
         int numberOfDeletedItems = indicators.size() / 2;
 
@@ -29,9 +29,9 @@ public class RemoveIndicatorOpeningDeal implements Mutation {
         }
 
 
-        DataOfStrategy dataOfStrategyAfterMutation = parentDataOfStrategy.withDescriptionToOpenADeal(
+        DescriptionOfStrategy descriptionOfStrategyAfterMutation = parentDescriptionOfStrategy.withDescriptionToOpenADeal(
                 new DescriptionToOpenADeal(indicators));
 
-        return Stream.of(parentDataOfStrategy, dataOfStrategyAfterMutation);
+        return Stream.of(parentDescriptionOfStrategy, descriptionOfStrategyAfterMutation);
     }
 }

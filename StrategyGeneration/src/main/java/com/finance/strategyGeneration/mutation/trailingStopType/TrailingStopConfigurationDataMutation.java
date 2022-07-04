@@ -1,6 +1,6 @@
 package com.finance.strategyGeneration.mutation.trailingStopType;
 
-import com.finance.dataHolder.DataOfStrategy;
+import com.finance.dataHolder.DescriptionOfStrategy;
 import com.finance.strategyDescriptionParameters.TrailingStopConfigurationKey;
 import com.finance.strategyGeneration.mutation.Mutation;
 import com.finance.strategyGeneration.random.RandomTrailingStop;
@@ -12,15 +12,15 @@ import java.util.stream.Stream;
 @Component
 public class TrailingStopConfigurationDataMutation implements Mutation {
     @Override
-    public Stream<DataOfStrategy> execute(DataOfStrategy parentDataOfStrategy) {
+    public Stream<DescriptionOfStrategy> execute(DescriptionOfStrategy parentDescriptionOfStrategy) {
 
         Map<TrailingStopConfigurationKey, Object> randomParamsForStopLoss = RandomTrailingStop.getMapWithSupplierGeneratedRandomParams()
-                .get(parentDataOfStrategy.getTrailingStopType())
+                .get(parentDescriptionOfStrategy.getTrailingStopType())
                 .get();
 
-        DataOfStrategy childDataOfStrategy = parentDataOfStrategy
+        DescriptionOfStrategy childDescriptionOfStrategy = parentDescriptionOfStrategy
                 .withTrailingStopConfigurationData(randomParamsForStopLoss);
 
-        return Stream.of(parentDataOfStrategy, childDataOfStrategy);
+        return Stream.of(parentDescriptionOfStrategy, childDescriptionOfStrategy);
     }
 }

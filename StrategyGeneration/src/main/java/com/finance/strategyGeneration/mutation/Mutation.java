@@ -1,10 +1,10 @@
 package com.finance.strategyGeneration.mutation;
 
-import com.finance.dataHolder.DataOfStrategy;
+import com.finance.dataHolder.DescriptionOfStrategy;
 
 import java.util.stream.Stream;
 
 public interface Mutation {
 
-    Stream<DataOfStrategy> execute(DataOfStrategy parentDataOfStrategy);
+    Stream<DescriptionOfStrategy> execute(DescriptionOfStrategy parentDescriptionOfStrategy);
 }

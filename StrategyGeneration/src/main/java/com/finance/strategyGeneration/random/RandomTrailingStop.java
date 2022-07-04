@@ -1,6 +1,6 @@
 package com.finance.strategyGeneration.random;
 
-import com.finance.dataHolder.DataOfStrategy;
+import com.finance.dataHolder.DescriptionOfStrategy;
 import com.finance.strategyDescriptionParameters.TrailingStopConfigurationKey;
 import com.finance.strategyDescriptionParameters.TrailingStopType;
 import lombok.AccessLevel;
@@ -21,7 +21,7 @@ import java.util.function.Supplier;
 public class RandomTrailingStop implements RandomStrategyParams {
 
     // TODO Вынести паля и статические блоки инициализации
-    static Map<TrailingStopType, Consumer<DataOfStrategy.DataOfStrategyBuilder>> trailingStopTypeConsumerMap = new EnumMap<>(
+    static Map<TrailingStopType, Consumer<DescriptionOfStrategy.DataOfStrategyBuilder>> trailingStopTypeConsumerMap = new EnumMap<>(
             TrailingStopType.class);
 
     @Getter
@@ -44,7 +44,7 @@ public class RandomTrailingStop implements RandomStrategyParams {
     }
 
     @Override
-    public void add(DataOfStrategy.DataOfStrategyBuilder dataOfStrategyBuilder) {
+    public void add(DescriptionOfStrategy.DataOfStrategyBuilder dataOfStrategyBuilder) {
 
         trailingStopTypeConsumerMap.get(TrailingStopType.getRandomTrailingStopType())
                 .accept(dataOfStrategyBuilder);

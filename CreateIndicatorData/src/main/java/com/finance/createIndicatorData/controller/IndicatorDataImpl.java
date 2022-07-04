@@ -1,5 +1,6 @@
 package com.finance.createIndicatorData.controller;
 
+import com.finance.createIndicatorData.IndicatorDataApi;
 import com.finance.createIndicatorData.dto.RequestDataOfStrategy;
 import com.finance.createIndicatorData.dto.ResponseDataOfStrategy;
 import com.finance.createIndicatorData.service.DataOfStrategyGenerationService;
@@ -13,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequiredArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
-public class IndicatorDataController {
+public class IndicatorDataImpl implements IndicatorDataApi {
 
     DataOfStrategyGenerationService dataOfStrategyGenerationService;
 

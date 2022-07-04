@@ -1,9 +1,9 @@
 package com.finance.check.strategy.dealManagement.trailingStopManagement;
 
 import com.finance.dataHolder.DataOfDeal;
-import com.finance.dataHolder.DataOfStrategy;
+import com.finance.dataHolder.DescriptionOfStrategy;
 
 public interface TrailingStopManager {
 
-    void update(DataOfStrategy dataOfStrategy, DataOfDeal dataOfDeal, int cursor);
+    void update(DescriptionOfStrategy descriptionOfStrategy, DataOfDeal dataOfDeal, int cursor);
 }

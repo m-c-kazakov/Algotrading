@@ -1,6 +1,6 @@
 package com.finance.strategyGeneration.random;
 
-import com.finance.dataHolder.DataOfStrategy;
+import com.finance.dataHolder.DescriptionOfStrategy;
 import com.finance.strategyDescriptionParameters.*;
 import com.finance.strategyDescriptionParameters.indicators.Indicator;
 import com.finance.strategyGeneration.random.indicator.RandomIndicatorUtils;
@@ -24,7 +24,7 @@ public class RandomDescriptionToOpenAndCloseADealImpl implements RandomStrategyP
     RandomIndicatorUtils randomIndicatorUtils;
 
     @Override
-    public void add(DataOfStrategy.DataOfStrategyBuilder dataOfStrategyBuilder) {
+    public void add(DescriptionOfStrategy.DataOfStrategyBuilder dataOfStrategyBuilder) {
 
         CurrencyPair currencyPair = currencyPairs.get(ThreadLocalRandom.current()
                 .nextInt(currencyPairs.size()));

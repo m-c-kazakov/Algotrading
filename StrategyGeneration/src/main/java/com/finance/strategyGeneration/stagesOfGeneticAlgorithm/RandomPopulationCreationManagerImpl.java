@@ -1,6 +1,6 @@
 package com.finance.strategyGeneration.stagesOfGeneticAlgorithm;
 
-import com.finance.dataHolder.DataOfStrategy;
+import com.finance.dataHolder.DescriptionOfStrategy;
 import com.finance.strategyDescriptionParameters.TypeOfDeal;
 import com.finance.strategyGeneration.random.RandomStrategyParams;
 import lombok.AccessLevel;
@@ -23,9 +23,9 @@ public class RandomPopulationCreationManagerImpl implements RandomPopulationCrea
     List<RandomStrategyParams> randomStrategyParams;
 
     @Override
-    public DataOfStrategy execute() {
+    public DescriptionOfStrategy execute() {
 
-        DataOfStrategy.DataOfStrategyBuilder dataOfStrategyBuilder = DataOfStrategy.builder()
+        DescriptionOfStrategy.DataOfStrategyBuilder dataOfStrategyBuilder = DescriptionOfStrategy.builder()
                 .startScore(startScore)
                 .acceptableRisk(acceptableRisk)
                 .typeOfDeal(getTypeOfDeal());

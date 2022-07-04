@@ -22,7 +22,7 @@ import static java.util.Optional.ofNullable;
 @Builder
 @RequiredArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
-public class DataOfStrategy {
+public class DescriptionOfStrategy {
 
 
     long id;
@@ -45,40 +45,40 @@ public class DataOfStrategy {
 
     TypeOfDeal typeOfDeal;
     @Getter(AccessLevel.NONE)
-    DataOfCandle[] dataOfCandles;
+    List<DataOfCandle> dataOfCandles;
     CandlesInformation candlesInformation;
 
     @Getter(AccessLevel.NONE)
-    byte[] decisionToOpenADeal;
+    List<Byte> decisionToOpenADeal;
     DescriptionToOpenADeal descriptionToOpenADeal;
 
     @Getter(AccessLevel.NONE)
-    byte[] decisionToCloseADeal;
+    List<Byte> decisionToCloseADeal;
     DescriptionToCloseADeal descriptionToCloseADeal;
 
 
     public boolean getDecisionToOpenADeal(int cursor) {
-        return decisionToOpenADeal[cursor] == 1;
+        return decisionToOpenADeal.get(cursor) == 1;
     }
 
     public boolean getDecisionToClosingADeal(int cursor) {
-        return decisionToCloseADeal.length != 0 && decisionToCloseADeal[cursor] == 1;
+        return !decisionToCloseADeal.isEmpty() && decisionToCloseADeal.get(cursor) == 1;
     }
 
     public int getDataLength() {
-        return dataOfCandles.length;
+        return dataOfCandles.size();
     }
 
     public int getClosingPrice(int cursor) {
-        return dataOfCandles[cursor].getClosingPrices();
+        return dataOfCandles.get(cursor).getClosingPrices();
     }
 
     public int getLowPrice(int cursor) {
-        return dataOfCandles[cursor].getLowPrices();
+        return dataOfCandles.get(cursor).getLowPrices();
     }
 
     public int getHighPrice(int cursor) {
-        return dataOfCandles[cursor].getHighPrices();
+        return dataOfCandles.get(cursor).getHighPrices();
     }
 
     public Optional<Object> getFromSumOfDealConfigurationData(SumOfDealConfigurationKey key) {

@@ -5,7 +5,7 @@ import com.finance.check.strategy.dealManagement.closingDealManagement.ClosingDe
 import com.finance.check.strategy.dealManagement.openingDealManagement.OpeningDealManager;
 import com.finance.check.strategy.dealManagement.updatingDealManagement.UpdatingDealManager;
 import com.finance.dataHolder.DataOfDeal;
-import com.finance.dataHolder.DataOfStrategy;
+import com.finance.dataHolder.DescriptionOfStrategy;
 import com.finance.dataHolder.StatisticsDataOfStrategy;
 import lombok.AccessLevel;
 import lombok.experimental.FieldDefaults;
@@ -14,7 +14,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class StrategyExecutor implements Runnable {
 
-    DataOfStrategy dataOfStrategy;
+    DescriptionOfStrategy descriptionOfStrategy;
 
     StatisticsDataOfStrategy statisticsDataOfStrategy;
 
@@ -24,11 +24,11 @@ public class StrategyExecutor implements Runnable {
 
     OpeningDealManager openingDealManager;
 
-    public StrategyExecutor(DataOfStrategy dataOfStrategy, StatisticsDataOfStrategy statisticsDataOfStrategy,
-                            @Qualifier(value = "macroClosingDealcheckerImpl") MacroClosingDealchecker macroClosingDealchecker,
+    public StrategyExecutor(DescriptionOfStrategy descriptionOfStrategy, StatisticsDataOfStrategy statisticsDataOfStrategy,
+                            @Qualifier(value = "macroClosingDealchecker") MacroClosingDealchecker macroClosingDealchecker,
                             ClosingDealManager closingDealManager,
                             UpdatingDealManager updatingDealManager, OpeningDealManager openingDealManager) {
-        this.dataOfStrategy = dataOfStrategy;
+        this.descriptionOfStrategy = descriptionOfStrategy;
         this.statisticsDataOfStrategy = statisticsDataOfStrategy;
         this.macroClosingDealchecker = macroClosingDealchecker;
         this.closingDealManager = closingDealManager;
@@ -42,13 +42,13 @@ public class StrategyExecutor implements Runnable {
         boolean orderIsOpen = false;
 
         DataOfDeal dataOfDeal = new DataOfDeal();
-        for (int cursor = 0; cursor < dataOfStrategy.getDataLength(); cursor++) {
+        for (int cursor = 0; cursor < descriptionOfStrategy.getDataLength(); cursor++) {
 
             // TODO можно переделать в конечный автомат, он же паттерн состояние
             if (orderIsOpen) {
                 // TODO Сохранить максимально значение по тренду, чтобы понять на сколько вовремя сделка закрылась
-                if (macroClosingDealchecker.isNeedClosingDeal(dataOfStrategy, cursor, dataOfDeal)) {
-                    closingDealManager.execute(dataOfStrategy, cursor, dataOfDeal, statisticsDataOfStrategy);
+                if (macroClosingDealchecker.isNeedClosingDeal(descriptionOfStrategy, cursor, dataOfDeal)) {
+                    closingDealManager.execute(descriptionOfStrategy, cursor, dataOfDeal, statisticsDataOfStrategy);
                     if (statisticsDataOfStrategy.isNeedToBreakStrategy()) {
                         break;
                     }
@@ -59,16 +59,19 @@ public class StrategyExecutor implements Runnable {
                     // нужно для того чтобы при закрытии сделки посчитать сколько могли бы заработать если бы закрыли раньше
                     // т.е. измерить эффективность закрытия сделки
 
-                    updatingDealManager.update(dataOfStrategy, dataOfDeal, cursor);
+                    updatingDealManager.update(descriptionOfStrategy, dataOfDeal, cursor);
                 }
             } else {
 
-                if (dataOfStrategy.getDecisionToOpenADeal(cursor)) {
-                    dataOfDeal = openingDealManager.open(dataOfStrategy, statisticsDataOfStrategy, cursor);
+                if (descriptionOfStrategy.getDecisionToOpenADeal(cursor)) {
+                    dataOfDeal = openingDealManager.open(descriptionOfStrategy, statisticsDataOfStrategy, cursor);
                     orderIsOpen = true;
                 }
 
             }
         }
+
+
+
     }
 }

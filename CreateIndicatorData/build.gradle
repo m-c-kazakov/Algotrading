@@ -41,6 +41,7 @@ dependencies {
 
     implementation project(":StrategyDescriptionParameters")
     implementation project(":DataHolder")
+    implementation project(":CreateIndicatorDataApi")
 }
 
 

@@ -1,9 +1,9 @@
 package com.finance.check.strategy.dealManagement.sumOfDealManagement;
 
 import com.finance.dataHolder.DataOfDeal;
-import com.finance.dataHolder.DataOfStrategy;
+import com.finance.dataHolder.DescriptionOfStrategy;
 
 public interface SumOfDealManger {
 
-    void determineSumOfDeal(DataOfStrategy dataOfStrategy, DataOfDeal dataOfDeal, int cursor, long score);
+    void determineSumOfDeal(DescriptionOfStrategy descriptionOfStrategy, DataOfDeal dataOfDeal, int cursor, long score);
 }

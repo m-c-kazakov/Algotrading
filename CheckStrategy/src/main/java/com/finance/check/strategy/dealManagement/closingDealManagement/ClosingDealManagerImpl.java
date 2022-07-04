@@ -2,7 +2,7 @@ package com.finance.check.strategy.dealManagement.closingDealManagement;
 
 import com.finance.check.strategy.dealManagement.collector.StatisticsInformationCollector;
 import com.finance.dataHolder.DataOfDeal;
-import com.finance.dataHolder.DataOfStrategy;
+import com.finance.dataHolder.DescriptionOfStrategy;
 import com.finance.dataHolder.StatisticsDataOfStrategy;
 import com.finance.strategyDescriptionParameters.TypeOfDeal;
 import lombok.AccessLevel;
@@ -18,10 +18,10 @@ public class ClosingDealManagerImpl implements ClosingDealManager {
     StatisticsInformationCollector statisticsInformationCollector;
 
     @Override
-    public void execute(DataOfStrategy dataOfStrategy, int cursor, DataOfDeal dataOfDeal,
+    public void execute(DescriptionOfStrategy descriptionOfStrategy, int cursor, DataOfDeal dataOfDeal,
                         StatisticsDataOfStrategy statisticsDataOfStrategy) {
 
-        int pipResult = createPipResult(dataOfStrategy.getTypeOfDeal(), dataOfStrategy.getClosingPrice(cursor),
+        int pipResult = createPipResult(descriptionOfStrategy.getTypeOfDeal(), descriptionOfStrategy.getClosingPrice(cursor),
                 dataOfDeal.getOpeningPrice());
         long resultOfDeal = pipResult * dataOfDeal.getSumOfDeal();
 
@@ -29,7 +29,7 @@ public class ClosingDealManagerImpl implements ClosingDealManager {
         long newStateOfScore = oldStateOfScore + resultOfDeal;
         statisticsDataOfStrategy.setScore(newStateOfScore);
 
-        statisticsInformationCollector.toCollect(statisticsDataOfStrategy, dataOfStrategy.getStartScore(),
+        statisticsInformationCollector.toCollect(statisticsDataOfStrategy, descriptionOfStrategy.getStartScore(),
                 oldStateOfScore, newStateOfScore);
     }
 

@@ -1,7 +1,7 @@
 package com.finance.check.strategy.checker;
 
 import com.finance.dataHolder.DataOfDeal;
-import com.finance.dataHolder.DataOfStrategy;
+import com.finance.dataHolder.DescriptionOfStrategy;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
@@ -20,13 +20,13 @@ public class BuyDealchecker implements MacroClosingDealchecker {
     TakeProfitChecker takeProfitChecker;
 
     @Override
-    public boolean isNeedClosingDeal(DataOfStrategy dataOfStrategy, int cursor, DataOfDeal dataOfDeal) {
+    public boolean isNeedClosingDeal(DescriptionOfStrategy descriptionOfStrategy, int cursor, DataOfDeal dataOfDeal) {
         Supplier<Boolean> stopLossCheck = executeCheckOnBuy(dataOfDeal.getStopLoss(),
-                dataOfStrategy.getLowPrice(cursor), stopLossChecker);
+                descriptionOfStrategy.getLowPrice(cursor), stopLossChecker);
         Supplier<Boolean> trailingStopCheck = executeCheckOnBuy(dataOfDeal.getTrailingStop(),
-                dataOfStrategy.getLowPrice(cursor), trailingStopChecker);
+                descriptionOfStrategy.getLowPrice(cursor), trailingStopChecker);
         Supplier<Boolean> takeProfitCheck = executeCheckOnBuy(dataOfDeal.getTakeProfit(),
-                dataOfStrategy.getHighPrice(cursor), takeProfitChecker);
+                descriptionOfStrategy.getHighPrice(cursor), takeProfitChecker);
 
         return Stream.of(stopLossCheck, trailingStopCheck, takeProfitCheck)
                 .anyMatch(Supplier::get);

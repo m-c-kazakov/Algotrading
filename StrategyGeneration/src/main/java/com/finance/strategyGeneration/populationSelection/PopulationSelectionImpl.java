@@ -1,6 +1,6 @@
 package com.finance.strategyGeneration.populationSelection;
 
-import com.finance.dataHolder.DataOfStrategy;
+import com.finance.dataHolder.DescriptionOfStrategy;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
@@ -16,9 +16,9 @@ public class PopulationSelectionImpl implements PopulationSelection {
     СheckingTheUniquenessOfStrategies сheckingTheUniquenessOfStrategies;
 
     @Override
-    public List<DataOfStrategy> execute(List<DataOfStrategy> populationAfterMutation) {
+    public List<DescriptionOfStrategy> execute(List<DescriptionOfStrategy> populationAfterMutation) {
 
-        List<DataOfStrategy> populationAfterCheckingTheUniqueness = сheckingTheUniquenessOfStrategies.execute(
+        List<DescriptionOfStrategy> populationAfterCheckingTheUniqueness = сheckingTheUniquenessOfStrategies.execute(
                 populationAfterMutation);
 
         // TODO Проверка на отсутствие уже ранее проверенных стратегий в базе

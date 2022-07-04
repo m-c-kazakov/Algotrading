@@ -1,7 +1,7 @@
 package com.finance.check.strategy.dealManagement.sumOfDealManagement;
 
 import com.finance.dataHolder.DataOfDeal;
-import com.finance.dataHolder.DataOfStrategy;
+import com.finance.dataHolder.DescriptionOfStrategy;
 import com.finance.strategyDescriptionParameters.SumOfDealConfigurationKey;
 import org.springframework.stereotype.Component;
 
@@ -11,11 +11,11 @@ import java.util.Optional;
 public class PercentOfScore implements SumOfDealManger {
 
     @Override
-    public void determineSumOfDeal(DataOfStrategy dataOfStrategy, DataOfDeal dataOfDeal, int cursor, long score) {
+    public void determineSumOfDeal(DescriptionOfStrategy descriptionOfStrategy, DataOfDeal dataOfDeal, int cursor, long score) {
 
 
         Optional.ofNullable(
-                        dataOfStrategy.getFromSumOfDealConfigurationData(SumOfDealConfigurationKey.PERCENT_OF_SCORE))
+                        descriptionOfStrategy.getFromSumOfDealConfigurationData(SumOfDealConfigurationKey.PERCENT_OF_SCORE))
                 .map(int.class::cast)
                 .ifPresent(percentOfScore -> {
                     // TODO при тестировании отрефакторить. Вынести функцию получения суммы сделки в отдельный метод и отдельно протестировать.

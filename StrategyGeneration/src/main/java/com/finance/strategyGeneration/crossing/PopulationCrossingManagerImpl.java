@@ -1,6 +1,6 @@
 package com.finance.strategyGeneration.crossing;
 
-import com.finance.dataHolder.DataOfStrategy;
+import com.finance.dataHolder.DescriptionOfStrategy;
 import com.finance.strategyDescriptionParameters.DescriptionToCloseADeal;
 import com.finance.strategyDescriptionParameters.DescriptionToOpenADeal;
 import com.finance.strategyDescriptionParameters.TypeOfDeal;
@@ -27,7 +27,7 @@ import java.util.function.UnaryOperator;
 public class PopulationCrossingManagerImpl implements PopulationCrossingManager {
 
 
-    static List<Function<Set<DataOfStrategy>, List<DataOfStrategy>>> functions = new ArrayList<>();
+    static List<Function<Set<DescriptionOfStrategy>, List<DescriptionOfStrategy>>> functions = new ArrayList<>();
 
     static {
         functions.add(PopulationCrossingManagerImpl::exchangeSymOfDealType);
@@ -41,14 +41,14 @@ public class PopulationCrossingManagerImpl implements PopulationCrossingManager 
         functions.add(PopulationCrossingManagerImpl::exchangeIndicatorsToCloseADeal);
     }
 
-    private static List<DataOfStrategy> exchangeIndicatorsToCloseADeal(Set<DataOfStrategy> dataOfStrategies) {
-        List<DataOfStrategy> dataOfStrategyElements = dataOfStrategies.stream()
+    private static List<DescriptionOfStrategy> exchangeIndicatorsToCloseADeal(Set<DescriptionOfStrategy> dataOfStrategies) {
+        List<DescriptionOfStrategy> descriptionOfStrategyElements = dataOfStrategies.stream()
                 .toList();
 
-        DataOfStrategy firstParent = dataOfStrategyElements.get(0);
+        DescriptionOfStrategy firstParent = descriptionOfStrategyElements.get(0);
         List<Indicator> firstIndicators = firstParent.getIndicatorsDescriptionToCloseADeal();
 
-        DataOfStrategy secondParent = dataOfStrategyElements.get(1);
+        DescriptionOfStrategy secondParent = descriptionOfStrategyElements.get(1);
         List<Indicator> secondIndicators = secondParent.getIndicatorsDescriptionToCloseADeal();
 
         int separator = createSeparator(firstIndicators, secondIndicators);
@@ -59,23 +59,23 @@ public class PopulationCrossingManagerImpl implements PopulationCrossingManager 
         List<Indicator> secondDescriptionToCloseADeal = TypesOfCrosses.singlePointCrossing(
                 secondIndicators, firstIndicators, separator);
 
-        DataOfStrategy firstChild = firstParent
+        DescriptionOfStrategy firstChild = firstParent
                 .withDescriptionToCloseADeal(new DescriptionToCloseADeal(firstDescriptionToCloseADeal));
 
-        DataOfStrategy secondChild = secondParent
+        DescriptionOfStrategy secondChild = secondParent
                 .withDescriptionToCloseADeal(new DescriptionToCloseADeal(secondDescriptionToCloseADeal));
 
         return List.of(firstParent, secondParent, firstChild, secondChild);
     }
 
-    private static List<DataOfStrategy> exchangeIndicatorsToOpenADeal(Set<DataOfStrategy> dataOfStrategies) {
-        List<DataOfStrategy> dataOfStrategyElements = dataOfStrategies.stream()
+    private static List<DescriptionOfStrategy> exchangeIndicatorsToOpenADeal(Set<DescriptionOfStrategy> dataOfStrategies) {
+        List<DescriptionOfStrategy> descriptionOfStrategyElements = dataOfStrategies.stream()
                 .toList();
 
-        DataOfStrategy firstParent = dataOfStrategyElements.get(0);
+        DescriptionOfStrategy firstParent = descriptionOfStrategyElements.get(0);
         List<Indicator> firstIndicators = firstParent.getIndicatorsDescriptionToOpenADeal();
 
-        DataOfStrategy secondParent = dataOfStrategyElements.get(1);
+        DescriptionOfStrategy secondParent = descriptionOfStrategyElements.get(1);
         List<Indicator> secondIndicators = secondParent.getIndicatorsDescriptionToOpenADeal();
 
         int separator = createSeparator(firstIndicators, secondIndicators);
@@ -86,10 +86,10 @@ public class PopulationCrossingManagerImpl implements PopulationCrossingManager 
         List<Indicator> secondDescriptionToOpenADeal = TypesOfCrosses.singlePointCrossing(
                 secondIndicators, firstIndicators, separator);
 
-        DataOfStrategy firstChild = firstParent
+        DescriptionOfStrategy firstChild = firstParent
                 .withDescriptionToOpenADeal(new DescriptionToOpenADeal(firstDescriptionToOpenADeal));
 
-        DataOfStrategy secondChild = secondParent
+        DescriptionOfStrategy secondChild = secondParent
                 .withDescriptionToOpenADeal(new DescriptionToOpenADeal(secondDescriptionToOpenADeal));
 
         return List.of(firstParent, secondParent, firstChild, secondChild);
@@ -108,125 +108,125 @@ public class PopulationCrossingManagerImpl implements PopulationCrossingManager 
         }
     }
 
-    private static List<DataOfStrategy> exchangeDescriptionToCloseADeal(Set<DataOfStrategy> dataOfStrategies) {
-        List<DataOfStrategy> dataOfStrategyElements = dataOfStrategies.stream()
+    private static List<DescriptionOfStrategy> exchangeDescriptionToCloseADeal(Set<DescriptionOfStrategy> dataOfStrategies) {
+        List<DescriptionOfStrategy> descriptionOfStrategyElements = dataOfStrategies.stream()
                 .toList();
 
-        DataOfStrategy firstParent = dataOfStrategyElements.get(0);
-        DataOfStrategy secondParent = dataOfStrategyElements.get(1);
+        DescriptionOfStrategy firstParent = descriptionOfStrategyElements.get(0);
+        DescriptionOfStrategy secondParent = descriptionOfStrategyElements.get(1);
 
-        DataOfStrategy firstChild = firstParent
+        DescriptionOfStrategy firstChild = firstParent
                 .withDescriptionToCloseADeal(secondParent.getDescriptionToCloseADeal());
 
-        DataOfStrategy secondChild = secondParent
+        DescriptionOfStrategy secondChild = secondParent
                 .withDescriptionToCloseADeal(firstParent.getDescriptionToCloseADeal());
 
         return List.of(firstParent, secondParent, firstChild, secondChild);
     }
 
-    private static List<DataOfStrategy> exchangeDescriptionToOpenADeal(Set<DataOfStrategy> dataOfStrategies) {
-        List<DataOfStrategy> dataOfStrategyElements = dataOfStrategies.stream()
+    private static List<DescriptionOfStrategy> exchangeDescriptionToOpenADeal(Set<DescriptionOfStrategy> dataOfStrategies) {
+        List<DescriptionOfStrategy> descriptionOfStrategyElements = dataOfStrategies.stream()
                 .toList();
 
-        DataOfStrategy firstParent = dataOfStrategyElements.get(0);
-        DataOfStrategy secondParent = dataOfStrategyElements.get(1);
+        DescriptionOfStrategy firstParent = descriptionOfStrategyElements.get(0);
+        DescriptionOfStrategy secondParent = descriptionOfStrategyElements.get(1);
 
-        DataOfStrategy firstChild = firstParent
+        DescriptionOfStrategy firstChild = firstParent
                 .withDescriptionToOpenADeal(secondParent.getDescriptionToOpenADeal());
 
-        DataOfStrategy secondChild = secondParent
+        DescriptionOfStrategy secondChild = secondParent
                 .withDescriptionToOpenADeal(firstParent.getDescriptionToOpenADeal());
 
         return List.of(firstParent, secondParent, firstChild, secondChild);
     }
 
-    private static List<DataOfStrategy> exchangeTypeOfDeal(Set<DataOfStrategy> dataOfStrategies) {
-        List<DataOfStrategy> dataOfStrategyElements = dataOfStrategies.stream()
+    private static List<DescriptionOfStrategy> exchangeTypeOfDeal(Set<DescriptionOfStrategy> dataOfStrategies) {
+        List<DescriptionOfStrategy> descriptionOfStrategyElements = dataOfStrategies.stream()
                 .toList();
 
-        DataOfStrategy firstParent = dataOfStrategyElements.get(0);
-        DataOfStrategy secondParent = dataOfStrategyElements.get(1);
+        DescriptionOfStrategy firstParent = descriptionOfStrategyElements.get(0);
+        DescriptionOfStrategy secondParent = descriptionOfStrategyElements.get(1);
 
         UnaryOperator<TypeOfDeal> opposite = typeOfDeal -> typeOfDeal == TypeOfDeal.BUY ?
                 TypeOfDeal.SELL :
                 TypeOfDeal.BUY;
 
-        DataOfStrategy firstChild = firstParent
+        DescriptionOfStrategy firstChild = firstParent
                 .withTypeOfDeal(opposite.apply(firstParent.getTypeOfDeal()));
 
-        DataOfStrategy secondChild = secondParent
+        DescriptionOfStrategy secondChild = secondParent
                 .withTypeOfDeal(opposite.apply(secondParent.getTypeOfDeal()));
 
         return List.of(firstParent, secondParent, firstChild, secondChild);
     }
 
-    private static List<DataOfStrategy> exchangeTakeProfit(Set<DataOfStrategy> dataOfStrategies) {
-        List<DataOfStrategy> dataOfStrategyElements = dataOfStrategies.stream()
+    private static List<DescriptionOfStrategy> exchangeTakeProfit(Set<DescriptionOfStrategy> dataOfStrategies) {
+        List<DescriptionOfStrategy> descriptionOfStrategyElements = dataOfStrategies.stream()
                 .toList();
 
-        DataOfStrategy firstParent = dataOfStrategyElements.get(0);
-        DataOfStrategy secondParent = dataOfStrategyElements.get(1);
+        DescriptionOfStrategy firstParent = descriptionOfStrategyElements.get(0);
+        DescriptionOfStrategy secondParent = descriptionOfStrategyElements.get(1);
 
-        DataOfStrategy firstChild = firstParent
+        DescriptionOfStrategy firstChild = firstParent
                 .withTakeProfitType(secondParent.getTakeProfitType())
                 .withTakeProfitConfigurationData(secondParent.getTakeProfitConfigurationData());
 
-        DataOfStrategy secondChild = secondParent
+        DescriptionOfStrategy secondChild = secondParent
                 .withTakeProfitType(firstParent.getTakeProfitType())
                 .withTakeProfitConfigurationData(firstParent.getTakeProfitConfigurationData());
 
         return List.of(firstParent, secondParent, firstChild, secondChild);
     }
 
-    private static List<DataOfStrategy> exchangeTrailingStop(Set<DataOfStrategy> dataOfStrategies) {
-        List<DataOfStrategy> dataOfStrategyElements = dataOfStrategies.stream()
+    private static List<DescriptionOfStrategy> exchangeTrailingStop(Set<DescriptionOfStrategy> dataOfStrategies) {
+        List<DescriptionOfStrategy> descriptionOfStrategyElements = dataOfStrategies.stream()
                 .toList();
 
-        DataOfStrategy firstParent = dataOfStrategyElements.get(0);
-        DataOfStrategy secondParent = dataOfStrategyElements.get(1);
+        DescriptionOfStrategy firstParent = descriptionOfStrategyElements.get(0);
+        DescriptionOfStrategy secondParent = descriptionOfStrategyElements.get(1);
 
-        DataOfStrategy firstChild = firstParent
+        DescriptionOfStrategy firstChild = firstParent
                 .withTrailingStopType(secondParent.getTrailingStopType())
                 .withTrailingStopConfigurationData(secondParent.getTrailingStopConfigurationData());
 
-        DataOfStrategy secondChild = secondParent
+        DescriptionOfStrategy secondChild = secondParent
                 .withTrailingStopType(firstParent.getTrailingStopType())
                 .withTrailingStopConfigurationData(firstParent.getTrailingStopConfigurationData());
 
         return List.of(firstParent, secondParent, firstChild, secondChild);
     }
 
-    private static List<DataOfStrategy> exchangeStopLoss(Set<DataOfStrategy> dataOfStrategies) {
-        List<DataOfStrategy> dataOfStrategyElements = dataOfStrategies.stream()
+    private static List<DescriptionOfStrategy> exchangeStopLoss(Set<DescriptionOfStrategy> dataOfStrategies) {
+        List<DescriptionOfStrategy> descriptionOfStrategyElements = dataOfStrategies.stream()
                 .toList();
 
-        DataOfStrategy firstParent = dataOfStrategyElements.get(0);
-        DataOfStrategy secondParent = dataOfStrategyElements.get(1);
+        DescriptionOfStrategy firstParent = descriptionOfStrategyElements.get(0);
+        DescriptionOfStrategy secondParent = descriptionOfStrategyElements.get(1);
 
-        DataOfStrategy firstChild = firstParent
+        DescriptionOfStrategy firstChild = firstParent
                 .withStopLossType(secondParent.getStopLossType())
                 .withStopLossConfigurationData(secondParent.getStopLossConfigurationData());
 
-        DataOfStrategy secondChild = secondParent
+        DescriptionOfStrategy secondChild = secondParent
                 .withStopLossType(firstParent.getStopLossType())
                 .withStopLossConfigurationData(firstParent.getStopLossConfigurationData());
 
         return List.of(firstParent, secondParent, firstChild, secondChild);
     }
 
-    private static List<DataOfStrategy> exchangeSymOfDealType(Set<DataOfStrategy> dataOfStrategies) {
+    private static List<DescriptionOfStrategy> exchangeSymOfDealType(Set<DescriptionOfStrategy> dataOfStrategies) {
 
-        List<DataOfStrategy> dataOfStrategyElements = dataOfStrategies.stream()
+        List<DescriptionOfStrategy> descriptionOfStrategyElements = dataOfStrategies.stream()
                 .toList();
 
-        DataOfStrategy firstParent = dataOfStrategyElements.get(0);
-        DataOfStrategy secondParent = dataOfStrategyElements.get(1);
+        DescriptionOfStrategy firstParent = descriptionOfStrategyElements.get(0);
+        DescriptionOfStrategy secondParent = descriptionOfStrategyElements.get(1);
 
-        DataOfStrategy firstChild = firstParent
+        DescriptionOfStrategy firstChild = firstParent
                 .withSumOfDealType(secondParent.getSumOfDealType())
                 .withSumOfDealConfigurationData(secondParent.getSumOfDealConfigurationData());
 
-        DataOfStrategy secondChild = secondParent
+        DescriptionOfStrategy secondChild = secondParent
                 .withSumOfDealType(firstParent.getSumOfDealType())
                 .withSumOfDealConfigurationData(firstParent.getSumOfDealConfigurationData());
 
@@ -234,7 +234,7 @@ public class PopulationCrossingManagerImpl implements PopulationCrossingManager 
     }
 
     @Override
-    public List<DataOfStrategy> execute(List<DataOfStrategy> population) {
+    public List<DescriptionOfStrategy> execute(List<DescriptionOfStrategy> population) {
         return Sets.combinations(Sets.newHashSet(population), 2)
                 .stream()
                 .flatMap(dataOfStrategies -> functions.stream()

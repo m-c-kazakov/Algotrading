@@ -2,6 +2,7 @@ rootProject.name = 'AlgotradingProject'
 
 
 include 'CreateIndicatorData'
+include 'CreateIndicatorDataApi'
 include 'CheckStrategy'
 include 'StrategyGeneration'
 include 'DataHolder'

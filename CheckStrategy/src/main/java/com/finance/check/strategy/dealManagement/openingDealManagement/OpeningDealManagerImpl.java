@@ -5,7 +5,7 @@ import com.finance.check.strategy.dealManagement.sumOfDealManagement.SumOfDealMa
 import com.finance.check.strategy.dealManagement.takeProfitManagement.TakeProfitManager;
 import com.finance.check.strategy.dealManagement.trailingStopManagement.TrailingStopManager;
 import com.finance.dataHolder.DataOfDeal;
-import com.finance.dataHolder.DataOfStrategy;
+import com.finance.dataHolder.DescriptionOfStrategy;
 import com.finance.dataHolder.StatisticsDataOfStrategy;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
@@ -27,29 +27,29 @@ public class OpeningDealManagerImpl implements OpeningDealManager {
     Map<String, TakeProfitManager> takeProfitManagement;
 
     @Override
-    public DataOfDeal open(DataOfStrategy dataOfStrategy, StatisticsDataOfStrategy statisticsDataOfStrategy,
+    public DataOfDeal open(DescriptionOfStrategy descriptionOfStrategy, StatisticsDataOfStrategy statisticsDataOfStrategy,
                            int cursor) {
 
         DataOfDeal dataOfDeal = new DataOfDeal();
 
-        dataOfDeal.setOpeningPrice(dataOfStrategy.getClosingPrice(cursor));
+        dataOfDeal.setOpeningPrice(descriptionOfStrategy.getClosingPrice(cursor));
 
-        ofNullable(trailingStopManagement.get(dataOfStrategy.getTrailingStopType()
+        ofNullable(trailingStopManagement.get(descriptionOfStrategy.getTrailingStopType()
                 .name()))
-                .ifPresent(trailingStopManager -> trailingStopManager.update(dataOfStrategy, dataOfDeal, cursor));
+                .ifPresent(trailingStopManager -> trailingStopManager.update(descriptionOfStrategy, dataOfDeal, cursor));
 
-        ofNullable(sumOfDealManagement.get(dataOfStrategy.getSumOfDealType()
+        ofNullable(sumOfDealManagement.get(descriptionOfStrategy.getSumOfDealType()
                 .name()))
-                .ifPresent(sumOfDealManger -> sumOfDealManger.determineSumOfDeal(dataOfStrategy, dataOfDeal, cursor,
+                .ifPresent(sumOfDealManger -> sumOfDealManger.determineSumOfDeal(descriptionOfStrategy, dataOfDeal, cursor,
                         statisticsDataOfStrategy.getScore()));
 
-        ofNullable(stopLossManagement.get(dataOfStrategy.getStopLossType()
+        ofNullable(stopLossManagement.get(descriptionOfStrategy.getStopLossType()
                 .name()))
-                .ifPresent(stopLossManager -> stopLossManager.create(dataOfStrategy, dataOfDeal, cursor));
+                .ifPresent(stopLossManager -> stopLossManager.create(descriptionOfStrategy, dataOfDeal, cursor));
 
-        ofNullable(takeProfitManagement.get(dataOfStrategy.getTakeProfitType()
+        ofNullable(takeProfitManagement.get(descriptionOfStrategy.getTakeProfitType()
                 .name()))
-                .ifPresent(takeProfitManager -> takeProfitManager.create(dataOfStrategy, dataOfDeal, cursor));
+                .ifPresent(takeProfitManager -> takeProfitManager.create(descriptionOfStrategy, dataOfDeal, cursor));
         return dataOfDeal;
     }
 }

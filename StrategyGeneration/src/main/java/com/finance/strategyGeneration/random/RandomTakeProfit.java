@@ -1,6 +1,6 @@
 package com.finance.strategyGeneration.random;
 
-import com.finance.dataHolder.DataOfStrategy;
+import com.finance.dataHolder.DescriptionOfStrategy;
 import com.finance.strategyDescriptionParameters.TakeProfitConfigurationKey;
 import com.finance.strategyDescriptionParameters.TakeProfitType;
 import lombok.AccessLevel;
@@ -21,7 +21,7 @@ import java.util.function.Supplier;
 public class RandomTakeProfit implements RandomStrategyParams {
 
     // TODO Вынести паля и статические блоки инициализации
-    static Map<TakeProfitType, Consumer<DataOfStrategy.DataOfStrategyBuilder>> takeProfitTypeConsumerMap = new EnumMap<>(
+    static Map<TakeProfitType, Consumer<DescriptionOfStrategy.DataOfStrategyBuilder>> takeProfitTypeConsumerMap = new EnumMap<>(
             TakeProfitType.class);
 
     @Getter
@@ -44,7 +44,7 @@ public class RandomTakeProfit implements RandomStrategyParams {
     }
 
     @Override
-    public void add(DataOfStrategy.DataOfStrategyBuilder dataOfStrategyBuilder) {
+    public void add(DescriptionOfStrategy.DataOfStrategyBuilder dataOfStrategyBuilder) {
 
         takeProfitTypeConsumerMap.get(TakeProfitType.getRandomTakeProfitType())
                 .accept(dataOfStrategyBuilder);

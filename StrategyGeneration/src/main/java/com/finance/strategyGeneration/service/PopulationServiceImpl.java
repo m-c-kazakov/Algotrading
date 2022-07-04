@@ -1,6 +1,6 @@
 package com.finance.strategyGeneration.service;
 
-import com.finance.dataHolder.DataOfStrategy;
+import com.finance.dataHolder.DescriptionOfStrategy;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
@@ -16,7 +16,7 @@ public class PopulationServiceImpl implements PopulationService {
     PopulationDao populationDao;
 
     @Override
-    public List<DataOfStrategy> findTheBestIndividual(int numberOfIndividuals) {
+    public List<DescriptionOfStrategy> findTheBestIndividual(int numberOfIndividuals) {
         return populationDao.findTheBestIndividual(numberOfIndividuals);
     }
 }

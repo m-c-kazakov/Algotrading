@@ -5,22 +5,36 @@ import com.finance.check.strategy.dealManagement.closingDealManagement.ClosingDe
 import com.finance.check.strategy.dealManagement.openingDealManagement.OpeningDealManager;
 import com.finance.check.strategy.dealManagement.updatingDealManagement.UpdatingDealManager;
 import com.finance.check.strategy.service.StrategyExecutor;
-import com.finance.dataHolder.DataOfStrategy;
+import com.finance.dataHolder.DescriptionOfStrategy;
 import com.finance.dataHolder.StatisticsDataOfStrategy;
+import lombok.AccessLevel;
+import lombok.experimental.FieldDefaults;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Component;
 
+@Component
+@FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class StrategyExecutorConfigurationImpl implements StrategyExecutorConfiguration {
 
-    @Qualifier(value = "macroClosingDealcheckerImpl")
     MacroClosingDealchecker macroClosingDealchecker;
     ClosingDealManager closingDealManager;
     UpdatingDealManager updatingDealManager;
     OpeningDealManager openingDealManager;
 
-    public StrategyExecutor configurate(DataOfStrategy readyDataOfStrategy,
+    public StrategyExecutorConfigurationImpl(@Qualifier(value = "macroClosingDealchecker") MacroClosingDealchecker macroClosingDealchecker,
+                                             ClosingDealManager closingDealManager,
+                                             UpdatingDealManager updatingDealManager,
+                                             OpeningDealManager openingDealManager) {
+        this.macroClosingDealchecker = macroClosingDealchecker;
+        this.closingDealManager = closingDealManager;
+        this.updatingDealManager = updatingDealManager;
+        this.openingDealManager = openingDealManager;
+    }
+
+    public StrategyExecutor configurate(DescriptionOfStrategy readyDescriptionOfStrategy,
                                         StatisticsDataOfStrategy statisticsDataOfStrategy) {
 
-        return new StrategyExecutor(readyDataOfStrategy, statisticsDataOfStrategy,
+        return new StrategyExecutor(readyDescriptionOfStrategy, statisticsDataOfStrategy,
                 macroClosingDealchecker, closingDealManager, updatingDealManager, openingDealManager);
     }
 }

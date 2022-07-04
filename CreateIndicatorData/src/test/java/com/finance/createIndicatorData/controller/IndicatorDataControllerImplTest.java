@@ -26,8 +26,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @AutoConfigureMockMvc
 @RequiredArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
-class IndicatorDataControllerTest extends IntegrationTestBased {
-
+class IndicatorDataControllerImplTest extends IntegrationTestBased {
 
     ObjectMapper objectMapper;
     MockMvc mockMvc;

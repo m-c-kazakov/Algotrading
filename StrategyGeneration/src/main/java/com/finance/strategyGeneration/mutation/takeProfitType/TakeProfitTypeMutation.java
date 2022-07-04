@@ -1,6 +1,6 @@
 package com.finance.strategyGeneration.mutation.takeProfitType;
 
-import com.finance.dataHolder.DataOfStrategy;
+import com.finance.dataHolder.DescriptionOfStrategy;
 import com.finance.strategyDescriptionParameters.TakeProfitConfigurationKey;
 import com.finance.strategyDescriptionParameters.TakeProfitType;
 import com.finance.strategyGeneration.mutation.Mutation;
@@ -13,17 +13,17 @@ import java.util.stream.Stream;
 @Component
 public class TakeProfitTypeMutation implements Mutation {
     @Override
-    public Stream<DataOfStrategy> execute(DataOfStrategy parentDataOfStrategy) {
+    public Stream<DescriptionOfStrategy> execute(DescriptionOfStrategy parentDescriptionOfStrategy) {
 
         TakeProfitType randomTakeProfitType = TakeProfitType.getRandomTakeProfitType();
         Map<TakeProfitConfigurationKey, Object> randomParamsForTakeProfit = RandomTakeProfit.getMapWithSupplierGeneratedRandomParams()
                 .get(randomTakeProfitType)
                 .get();
 
-        DataOfStrategy childDataOfStrategy = parentDataOfStrategy
+        DescriptionOfStrategy childDescriptionOfStrategy = parentDescriptionOfStrategy
                 .withTakeProfitType(randomTakeProfitType)
                 .withTakeProfitConfigurationData(randomParamsForTakeProfit);
 
-        return Stream.of(parentDataOfStrategy, childDataOfStrategy);
+        return Stream.of(parentDescriptionOfStrategy, childDescriptionOfStrategy);
     }
 }

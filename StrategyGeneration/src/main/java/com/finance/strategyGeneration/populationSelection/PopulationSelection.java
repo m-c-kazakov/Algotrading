@@ -1,9 +1,9 @@
 package com.finance.strategyGeneration.populationSelection;
 
-import com.finance.dataHolder.DataOfStrategy;
+import com.finance.dataHolder.DescriptionOfStrategy;
 
 import java.util.List;
 
 public interface PopulationSelection {
-    List<DataOfStrategy> execute(List<DataOfStrategy> populationAfterMutation);
+    List<DescriptionOfStrategy> execute(List<DescriptionOfStrategy> populationAfterMutation);
 }

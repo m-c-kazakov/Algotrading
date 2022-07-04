@@ -1,6 +1,6 @@
 package com.finance.strategyGeneration.mutation.stopLoss;
 
-import com.finance.dataHolder.DataOfStrategy;
+import com.finance.dataHolder.DescriptionOfStrategy;
 import com.finance.strategyDescriptionParameters.StopLossConfigurationKey;
 import com.finance.strategyDescriptionParameters.StopLossType;
 import com.finance.strategyGeneration.mutation.Mutation;
@@ -15,7 +15,7 @@ public class StopLossMutation implements Mutation {
 
 
     @Override
-    public Stream<DataOfStrategy> execute(DataOfStrategy parentDataOfStrategy) {
+    public Stream<DescriptionOfStrategy> execute(DescriptionOfStrategy parentDescriptionOfStrategy) {
 
         StopLossType randomStopLossType = StopLossType.getRandomStopLossType();
         Map<StopLossConfigurationKey, Object> randomParamsForStopLoss = RandomStopLoss.getMapWithSupplierGeneratedRandomParams()
@@ -23,10 +23,10 @@ public class StopLossMutation implements Mutation {
                 .get();
 
 
-        DataOfStrategy childDataOfStrategy = parentDataOfStrategy
+        DescriptionOfStrategy childDescriptionOfStrategy = parentDescriptionOfStrategy
                 .withStopLossType(randomStopLossType)
                 .withStopLossConfigurationData(randomParamsForStopLoss);
 
-        return Stream.of(parentDataOfStrategy, childDataOfStrategy);
+        return Stream.of(parentDescriptionOfStrategy, childDescriptionOfStrategy);
     }
 }

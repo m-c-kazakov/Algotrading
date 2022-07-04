@@ -1,9 +1,9 @@
 package com.finance.strategyGeneration.mutation;
 
-import com.finance.dataHolder.DataOfStrategy;
+import com.finance.dataHolder.DescriptionOfStrategy;
 
 import java.util.List;
 
 public interface MutationOfIndividual {
-    List<DataOfStrategy> execute(List<DataOfStrategy> populationAfterCrossing);
+    List<DescriptionOfStrategy> execute(List<DescriptionOfStrategy> populationAfterCrossing);
 }

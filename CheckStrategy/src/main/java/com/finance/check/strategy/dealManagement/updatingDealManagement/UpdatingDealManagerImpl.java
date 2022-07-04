@@ -2,7 +2,7 @@ package com.finance.check.strategy.dealManagement.updatingDealManagement;
 
 import com.finance.check.strategy.dealManagement.trailingStopManagement.TrailingStopManager;
 import com.finance.dataHolder.DataOfDeal;
-import com.finance.dataHolder.DataOfStrategy;
+import com.finance.dataHolder.DescriptionOfStrategy;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
@@ -23,11 +23,11 @@ public class UpdatingDealManagerImpl implements UpdatingDealManager {
 
 
     @Override
-    public void update(DataOfStrategy dataOfStrategy, DataOfDeal dataOfDeal, int cursor) {
+    public void update(DescriptionOfStrategy descriptionOfStrategy, DataOfDeal dataOfDeal, int cursor) {
 
-        ofNullable(trailingStopManagement.get(dataOfStrategy.getTrailingStopType()
+        ofNullable(trailingStopManagement.get(descriptionOfStrategy.getTrailingStopType()
                 .name())).ifPresent(
-                trailingStopManager -> trailingStopManager.update(dataOfStrategy, dataOfDeal, cursor));
+                trailingStopManager -> trailingStopManager.update(descriptionOfStrategy, dataOfDeal, cursor));
 
     }
 }

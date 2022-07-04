@@ -11,6 +11,7 @@
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/CheckStrategy" />
             <option value="$PROJECT_DIR$/CreateIndicatorData" />
+            <option value="$PROJECT_DIR$/CreateIndicatorDataApi" />
             <option value="$PROJECT_DIR$/DataHolder" />
             <option value="$PROJECT_DIR$/StrategyDescriptionParameters" />
             <option value="$PROJECT_DIR$/StrategyGeneration" />
