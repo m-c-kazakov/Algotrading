@@ -3,6 +3,7 @@ package com.finance.createIndicatorData.service;
 import com.finance.createIndicatorData.dto.DataOfCurrencyPair;
 import com.finance.createIndicatorData.dto.RequestDataOfStrategy;
 import com.finance.createIndicatorData.dto.ResponseDataOfStrategy;
+import com.finance.dataHolder.DataOfCandle;
 import com.finance.strategyDescriptionParameters.CandlesInformation;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
@@ -23,6 +24,7 @@ public class DataOfStrategyGenerationServiceImpl implements DataOfStrategyGenera
     DataOfCurrencyPairInitializer dataOfCurrencyPairInitializer;
     DealDecisionService dealDecisionService;
     DataOfCurrencyPairService dataOfCurrencyPairService;
+    DataOfCandleMapper dataOfCandleMapper;
 
 
     @Override
@@ -49,7 +51,8 @@ public class DataOfStrategyGenerationServiceImpl implements DataOfStrategyGenera
                 () -> new RuntimeException("Не найдены данные свечи с параметрами=" + candleWithSmallestTimeFrame));
         // собрать response
 
+        List<DataOfCandle> candles = dataOfCandleMapper.mapTo(dataOfCurrencyPair.getCandles());
         // TODO Добавить решения по закрытию сделки
-        return ResponseDataOfStrategy.of(dataOfCurrencyPair, decisionOnOpeningDeal, List.of());
+        return ResponseDataOfStrategy.of(dataOfCurrencyPair.getCandlesInformation(), candles, decisionOnOpeningDeal, List.of());
     }
 }

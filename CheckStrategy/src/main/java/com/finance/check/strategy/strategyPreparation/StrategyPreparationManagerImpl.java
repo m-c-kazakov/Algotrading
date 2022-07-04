@@ -26,7 +26,7 @@ public class StrategyPreparationManagerImpl {
 
 
         DataOfStrategy readyDataOfStrategy = dataOfStrategy
-                .withCandles(dataHolderForStrategies.getDataOfCandles(dataOfStrategy.getCandlesInformation()))
+                .withDataOfCandles(dataHolderForStrategies.getDataOfCandles(dataOfStrategy.getCandlesInformation()))
                 .withDecisionToOpenADeal(
                         dataHolderForStrategies.getDecisionToOpenADeal(dataOfStrategy.getDescriptionToOpenADeal()))
                 .withDecisionToCloseADeal(

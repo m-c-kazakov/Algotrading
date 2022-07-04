@@ -7,12 +7,14 @@ import com.finance.strategyDescriptionParameters.TypeOfBar;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
+import lombok.Getter;
 import lombok.experimental.FieldDefaults;
 
 import java.util.List;
 import java.util.Map;
 
 
+@Getter
 @EqualsAndHashCode
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class DataOfCurrencyPair {
@@ -45,11 +47,6 @@ public class DataOfCurrencyPair {
     public TimeFrame getTimeFrame() {
         return this.candlesInformation.getTimeFrame();
     }
-
-    public int getPer() {
-        return this.getTimeFrame().getPer();
-    }
-
 
     public List<Integer> getDataByTypeOfBar(String typeOfBar) {
         TypeOfBar key = TypeOfBar.valueOf(typeOfBar);

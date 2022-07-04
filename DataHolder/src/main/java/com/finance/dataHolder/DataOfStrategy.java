@@ -45,7 +45,7 @@ public class DataOfStrategy {
 
     TypeOfDeal typeOfDeal;
     @Getter(AccessLevel.NONE)
-    Candle[] candles;
+    DataOfCandle[] dataOfCandles;
     CandlesInformation candlesInformation;
 
     @Getter(AccessLevel.NONE)
@@ -66,19 +66,19 @@ public class DataOfStrategy {
     }
 
     public int getDataLength() {
-        return candles.length;
+        return dataOfCandles.length;
     }
 
     public int getClosingPrice(int cursor) {
-        return candles[cursor].getClosingPrice();
+        return dataOfCandles[cursor].getClosingPrices();
     }
 
     public int getLowPrice(int cursor) {
-        return candles[cursor].getLowPrice();
+        return dataOfCandles[cursor].getLowPrices();
     }
 
     public int getHighPrice(int cursor) {
-        return candles[cursor].getHighPrice();
+        return dataOfCandles[cursor].getHighPrices();
     }
 
     public Optional<Object> getFromSumOfDealConfigurationData(SumOfDealConfigurationKey key) {
