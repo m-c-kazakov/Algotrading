@@ -25,7 +25,7 @@ public class DataOfCurrencyPair {
     public DataOfCurrencyPair(CurrencyPair currencyPair, TimeFrame timeFrame,
                               List<Integer> closingPrices, List<Integer> openingPrices,
                               List<Integer> lowPrices, List<Integer> highPrices) {
-        this.candlesInformation = new CandlesInformation(currencyPair, timeFrame);
+        this.candlesInformation = CandlesInformation.builder().currencyPair(currencyPair).timeFrame(timeFrame).build();
         this.candles = Map.of(
                 TypeOfBar.CLOSE, closingPrices,
                 TypeOfBar.OPEN, openingPrices,

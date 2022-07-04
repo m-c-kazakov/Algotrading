@@ -32,11 +32,11 @@ public class RandomDescriptionToOpenAndCloseADealImpl implements RandomStrategyP
 
         List<Indicator> descriptionToOpenADeal = getDescriptionToADeal(currencyPair);
         List<Indicator> descriptionToCloseADeal = getDescriptionToADeal(currencyPair);
-        dataOfStrategyBuilder.descriptionToOpenADeal(new DescriptionToOpenADeal(descriptionToOpenADeal));
-        dataOfStrategyBuilder.descriptionToCloseADeal(new DescriptionToCloseADeal(descriptionToCloseADeal));
+        dataOfStrategyBuilder.descriptionToOpenADeal(DescriptionToOpenADeal.builder().indicators(descriptionToOpenADeal).build());
+        dataOfStrategyBuilder.descriptionToCloseADeal(DescriptionToCloseADeal.builder().indicators(descriptionToCloseADeal).build());
 
         TimeFrame timeFrame = findMinimalTimeFrame(descriptionToOpenADeal, descriptionToCloseADeal);
-        dataOfStrategyBuilder.candlesInformation(new CandlesInformation(currencyPair, timeFrame));
+        dataOfStrategyBuilder.candlesInformation(CandlesInformation.builder().currencyPair(currencyPair).timeFrame(timeFrame).build());
 
     }
 

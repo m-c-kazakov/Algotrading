@@ -2,16 +2,18 @@ package com.finance.createIndicatorData.dto;
 
 import com.finance.strategyDescriptionParameters.*;
 import com.finance.strategyDescriptionParameters.indicators.Indicator;
-import lombok.AccessLevel;
-import lombok.Getter;
-import lombok.RequiredArgsConstructor;
-import lombok.experimental.FieldDefaults;
+import lombok.Builder;
+import lombok.Value;
+import lombok.extern.jackson.Jacksonized;
 
 import java.util.List;
 
-@Getter
-@RequiredArgsConstructor
-@FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
+//@Getter
+//@RequiredArgsConstructor
+//@FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
+@Value
+@Jacksonized
+@Builder
 public class RequestDataOfStrategy {
 
     TypeOfDeal typeOfDeal;
@@ -26,6 +28,7 @@ public class RequestDataOfStrategy {
     public List<Indicator> getIndicatorsOfDescriptionToOpenADeal() {
         return descriptionToOpenADeal.getIndicators();
     }
+
     public List<Indicator> getIndicatorsOfDescriptionToCloseADeal() {
         return descriptionToCloseADeal.getIndicators();
     }

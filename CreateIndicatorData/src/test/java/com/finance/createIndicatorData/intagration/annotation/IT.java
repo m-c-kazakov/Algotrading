@@ -1,6 +1,7 @@
 package com.finance.createIndicatorData.intagration.annotation;
 
 
+import com.finance.createIndicatorData.config.TestConfig;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.transaction.annotation.Transactional;
@@ -14,6 +15,6 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 @ActiveProfiles("test")
 @Transactional
-@SpringBootTest()
+@SpringBootTest(classes = TestConfig.class)
 public @interface IT {
 }

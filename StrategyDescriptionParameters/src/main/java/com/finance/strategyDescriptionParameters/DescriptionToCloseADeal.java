@@ -1,17 +1,16 @@
 package com.finance.strategyDescriptionParameters;
 
 import com.finance.strategyDescriptionParameters.indicators.Indicator;
-import lombok.*;
-import lombok.experimental.FieldDefaults;
+import lombok.Builder;
+import lombok.Value;
+import lombok.extern.jackson.Jacksonized;
 
 import java.util.ArrayList;
 import java.util.List;
 
-@Getter
-@ToString
-@RequiredArgsConstructor
-@EqualsAndHashCode
-@FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
+@Value
+@Jacksonized
+@Builder
 public class DescriptionToCloseADeal implements DealDescription {
 
     List<Indicator> indicators;

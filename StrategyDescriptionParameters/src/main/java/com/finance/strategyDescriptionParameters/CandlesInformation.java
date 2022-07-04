@@ -1,13 +1,14 @@
 package com.finance.strategyDescriptionParameters;
 
-import lombok.*;
-import lombok.experimental.FieldDefaults;
+import lombok.Builder;
+import lombok.Value;
+import lombok.With;
+import lombok.extern.jackson.Jacksonized;
 
-@Getter
-@EqualsAndHashCode
 @With
-@RequiredArgsConstructor
-@FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
+@Jacksonized
+@Value
+@Builder
 public class CandlesInformation {
 
     CurrencyPair currencyPair;

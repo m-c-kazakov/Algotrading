@@ -26,7 +26,7 @@ public class Indicator {
     public Indicator(IndicatorType indicatorType, TimeFrame timeFrame, CurrencyPair currencyPair,
                      Map<String, String> parameters) {
         this.indicatorType = indicatorType;
-        this.candlesInformation = new CandlesInformation(currencyPair, timeFrame);
+        this.candlesInformation = CandlesInformation.builder().currencyPair(currencyPair).timeFrame(timeFrame).build();
         this.parameters = Collections.unmodifiableMap(parameters);
     }
 

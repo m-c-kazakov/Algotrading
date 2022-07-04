@@ -7,6 +7,7 @@ import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -17,7 +18,7 @@ public class IndicatorDataController {
     DataOfStrategyGenerationService dataOfStrategyGenerationService;
 
     @PostMapping("/generateDataOfIndicators")
-    public ResponseDataOfStrategy generateDataOfIndicators(RequestDataOfStrategy request) {
+    public ResponseDataOfStrategy generateDataOfIndicators(@RequestBody RequestDataOfStrategy request) {
         return dataOfStrategyGenerationService.generate(request);
     }
 }
