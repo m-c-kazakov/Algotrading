@@ -8,9 +8,7 @@ import lombok.extern.jackson.Jacksonized;
 
 import java.util.List;
 
-//@Getter
-//@RequiredArgsConstructor
-//@FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
+
 @Value
 @Jacksonized
 @Builder

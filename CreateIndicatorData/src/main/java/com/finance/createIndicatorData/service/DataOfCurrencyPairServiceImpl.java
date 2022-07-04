@@ -4,6 +4,7 @@ import com.finance.createIndicatorData.converter.DataOfCurrencyPairConverter;
 import com.finance.createIndicatorData.dto.DataOfCurrencyPair;
 import com.finance.createIndicatorData.model.Candle;
 import com.finance.createIndicatorData.repository.CandleRepository;
+import com.finance.strategyDescriptionParameters.CandlesInformation;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
@@ -20,10 +21,10 @@ public class DataOfCurrencyPairServiceImpl implements DataOfCurrencyPairService 
     DataOfCurrencyPairConverter dataOfCurrencyPairConverter;
 
     @Override
-    public DataOfCurrencyPair getCurrencyPair(DataOfCurrencyPair dataOfCurrencyPair) {
+    public DataOfCurrencyPair getCurrencyPair(CandlesInformation candlesInformation) {
 
-        List<Candle> candles = candleRepository.findAllByTickerAndPer(dataOfCurrencyPair.getCurrencyPair(),
-                dataOfCurrencyPair.getPer());
+        List<Candle> candles = candleRepository.findAllByTickerAndPer(candlesInformation.getCurrencyPair(),
+                candlesInformation.getPer());
 
         return dataOfCurrencyPairConverter.convertToDataOfCurrencyPair(candles);
     }

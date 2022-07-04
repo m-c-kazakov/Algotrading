@@ -15,6 +15,10 @@ public class CandlesInformation {
 
     TimeFrame timeFrame;
 
+    public int getPer() {
+        return timeFrame.getPer();
+    }
+
     public String toString() {
         return "CandlesInformation(currencyPair=" + this.getCurrencyPair() + ", timeFrame=" + this.getTimeFrame() + ")";
     }

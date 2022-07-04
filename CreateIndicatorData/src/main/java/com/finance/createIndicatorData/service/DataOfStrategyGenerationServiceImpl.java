@@ -3,11 +3,13 @@ package com.finance.createIndicatorData.service;
 import com.finance.createIndicatorData.dto.DataOfCurrencyPair;
 import com.finance.createIndicatorData.dto.RequestDataOfStrategy;
 import com.finance.createIndicatorData.dto.ResponseDataOfStrategy;
+import com.finance.strategyDescriptionParameters.CandlesInformation;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
@@ -27,7 +29,7 @@ public class DataOfStrategyGenerationServiceImpl implements DataOfStrategyGenera
     public ResponseDataOfStrategy generate(RequestDataOfStrategy request) {
 
         // Определить данные какой валютной пары с каким таймфреймом нужны
-        Set<DataOfCurrencyPair> dataOfCurrencyPairs = dataOfCurrencyPairInitializer.execute(request);
+        Set<CandlesInformation> dataOfCurrencyPairs = dataOfCurrencyPairInitializer.execute(request);
 
         // Получить необходимые данные
         Map<String, DataOfCurrencyPair> dataOfCurrencyPairMap = dataOfCurrencyPairs.stream()
@@ -39,7 +41,7 @@ public class DataOfStrategyGenerationServiceImpl implements DataOfStrategyGenera
 
         // Отдать данные валютных пар на обработку индикаторам
         // свести результат работы индикаторов к 1 массиву
-        Byte[] decisionOnOpeningDeal = dealDecisionService.makeDecisionOnOpeningDeal(request, dataOfCurrencyPairMap);
+        List<Byte> decisionOnOpeningDeal = dealDecisionService.makeDecisionOnOpeningDeal(request, dataOfCurrencyPairMap);
 
         String candleWithSmallestTimeFrame = request.getCandlesInformation().toString();
         DataOfCurrencyPair dataOfCurrencyPair = Optional.ofNullable(
@@ -48,6 +50,6 @@ public class DataOfStrategyGenerationServiceImpl implements DataOfStrategyGenera
         // собрать response
 
         // TODO Добавить решения по закрытию сделки
-        return ResponseDataOfStrategy.of(dataOfCurrencyPair, decisionOnOpeningDeal, new Byte[]{});
+        return ResponseDataOfStrategy.of(dataOfCurrencyPair, decisionOnOpeningDeal, List.of());
     }
 }

@@ -6,6 +6,9 @@ import com.finance.createIndicatorData.model.DataOfIndicator;
 import com.finance.createIndicatorData.service.converterToDataOfIndicator.BinaryInteger;
 import com.finance.strategyDescriptionParameters.TimeFrame;
 import com.finance.strategyDescriptionParameters.indicators.Indicator;
+import lombok.AccessLevel;
+import lombok.RequiredArgsConstructor;
+import lombok.experimental.FieldDefaults;
 import org.springframework.stereotype.Component;
 
 import java.util.EnumMap;
@@ -15,6 +18,8 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 @Component
+@RequiredArgsConstructor
+@FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class FinalSolutionGeneratorImpl implements FinalSolutionGenerator {
 
 
@@ -52,7 +57,7 @@ public class FinalSolutionGeneratorImpl implements FinalSolutionGenerator {
 
     @Override
     public List<Integer> generateFinalDecision(List<List<Integer>> indicatorDecisions) {
-        List<Integer> decisions = Stream
+        return Stream
                 .iterate(0, index -> index < indicatorDecisions.get(0)
                         .size(), index -> index + 1)
                 .map(index -> indicatorDecisions.stream()
@@ -61,7 +66,6 @@ public class FinalSolutionGeneratorImpl implements FinalSolutionGenerator {
                         .orElseThrow(
                                 () -> new RuntimeException("Не сформирован итоговой результат работы индикаторов")))
                 .toList();
-        return decisions;
     }
 
     @Override

@@ -17,11 +17,12 @@ import java.util.Map;
 @RequiredArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class DealDecisionServiceImpl implements DealDecisionService {
+
     FinalSolutionGenerator finalSolutionGenerator;
 
     @Override
-    public Byte[] makeDecisionOnOpeningDeal(RequestDataOfStrategy request,
-                                            Map<String, DataOfCurrencyPair> dataOfCurrencyPairMap) {
+    public List<Byte> makeDecisionOnOpeningDeal(RequestDataOfStrategy request,
+                                                Map<String, DataOfCurrencyPair> dataOfCurrencyPairMap) {
 
         // получить коллецию всех индикаторов на открытие сделки
         List<Indicator> indicatorsOfDescriptionToOpenADeal = request.getIndicatorsOfDescriptionToOpenADeal();
@@ -49,10 +50,9 @@ public class DealDecisionServiceImpl implements DealDecisionService {
         List<Integer> finalDecision = finalSolutionGenerator.generateFinalDecision(timeFrameListMap);
 
         // создать итоговое решение в byte
-        return (Byte[]) finalDecision.stream()
+        return finalDecision.stream()
                 .map(Integer::toBinaryString)
                 .flatMap(binaryStringInt -> Arrays.stream(binaryStringInt.split("")))
-                .map(Byte::parseByte)
-                .toArray();
+                .map(Byte::parseByte).toList();
     }
 }
