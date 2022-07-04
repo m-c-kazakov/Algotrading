@@ -1,7 +1,9 @@
 package com.finance.check.strategy.strategyPreparation;
 
+import com.finance.check.strategy.feign.GeneticAlgorithmFeign;
 import com.finance.check.strategy.service.StrategyExecutor;
 import com.finance.dataHolder.DescriptionOfStrategy;
+import com.finance.dataHolder.StatisticsDataOfStrategy;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
@@ -13,6 +15,8 @@ import org.springframework.stereotype.Component;
 public class DescriptionOfStrategyConsumerImpl implements DescriptionOfStrategyConsumer {
 
     StrategyPreparationManager strategyPreparationManager;
+    GeneticAlgorithmFeign geneticAlgorithmFeign;
+
 
     // TODO Подключить Kafka
 
@@ -21,6 +25,8 @@ public class DescriptionOfStrategyConsumerImpl implements DescriptionOfStrategyC
 
         StrategyExecutor strategyExecutor = strategyPreparationManager.prepare(descriptionOfStrategy);
 
-        strategyExecutor.run();
+        StatisticsDataOfStrategy statisticsDataOfStrategy = strategyExecutor.perform();
+
+        geneticAlgorithmFeign.saveStatisticsDataOfStrategy(statisticsDataOfStrategy);
     }
 }

@@ -29,6 +29,7 @@ dependencies {
     implementation project(":StrategyDescriptionParameters")
     implementation project(":DataHolder")
     implementation project(":CreateIndicatorDataApi")
+    implementation project(":StrategyGenerationApi")
 }
 
 tasks.named('test') {

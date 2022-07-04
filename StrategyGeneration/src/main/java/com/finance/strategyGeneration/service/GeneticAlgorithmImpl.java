@@ -16,10 +16,11 @@ import java.util.stream.Stream;
 @Component
 @RequiredArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
-public class GeneticAlgorithm {
+public class GeneticAlgorithmImpl implements GeneticAlgorit {
 
     static int NUMBER_OF_RANDOM_INDIVIDUALS = 10; // TODO вынести в property
     static int NUMBER_OF_THE_BEST_INDIVIDUALS = 10; // TODO вынести в property
+
     RandomPopulationCreationManager randomPopulationCreationManager;
     PopulationService populationService;
 
@@ -29,7 +30,10 @@ public class GeneticAlgorithm {
 
     PopulationSelection populationSelection;
 
+
+    @Override
     public List<DescriptionOfStrategy> execute() {
+        // TODO Использовать если В кафке нет готовых стратегий
 
 
         // Создать популяцию

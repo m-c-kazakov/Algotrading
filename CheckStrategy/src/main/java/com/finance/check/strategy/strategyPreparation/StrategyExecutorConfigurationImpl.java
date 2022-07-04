@@ -4,7 +4,7 @@ import com.finance.check.strategy.checker.MacroClosingDealchecker;
 import com.finance.check.strategy.dealManagement.closingDealManagement.ClosingDealManager;
 import com.finance.check.strategy.dealManagement.openingDealManagement.OpeningDealManager;
 import com.finance.check.strategy.dealManagement.updatingDealManagement.UpdatingDealManager;
-import com.finance.check.strategy.service.StrategyExecutor;
+import com.finance.check.strategy.service.StrategyExecutorImpl;
 import com.finance.dataHolder.DescriptionOfStrategy;
 import com.finance.dataHolder.StatisticsDataOfStrategy;
 import lombok.AccessLevel;
@@ -31,10 +31,10 @@ public class StrategyExecutorConfigurationImpl implements StrategyExecutorConfig
         this.openingDealManager = openingDealManager;
     }
 
-    public StrategyExecutor configurate(DescriptionOfStrategy readyDescriptionOfStrategy,
-                                        StatisticsDataOfStrategy statisticsDataOfStrategy) {
+    public StrategyExecutorImpl configurate(DescriptionOfStrategy readyDescriptionOfStrategy,
+                                            StatisticsDataOfStrategy statisticsDataOfStrategy) {
 
-        return new StrategyExecutor(readyDescriptionOfStrategy, statisticsDataOfStrategy,
+        return new StrategyExecutorImpl(readyDescriptionOfStrategy, statisticsDataOfStrategy,
                 macroClosingDealchecker, closingDealManager, updatingDealManager, openingDealManager);
     }
 }

@@ -1,6 +1,6 @@
 package com.finance.check.strategy.strategyPreparation;
 
-import com.finance.check.strategy.service.StrategyExecutor;
+import com.finance.check.strategy.service.StrategyExecutorImpl;
 import com.finance.dataHolder.DescriptionOfStrategy;
 import com.finance.dataHolder.StatisticsDataOfStrategy;
 import lombok.AccessLevel;
@@ -17,7 +17,7 @@ public class StrategyPreparationManagerImpl implements StrategyPreparationManage
     DataOfStrategyGeneratorService dataOfStrategyGeneratorService;
 
     @Override
-    public StrategyExecutor prepare(DescriptionOfStrategy descriptionOfStrategy) {
+    public StrategyExecutorImpl prepare(DescriptionOfStrategy descriptionOfStrategy) {
 
         DescriptionOfStrategy descriptionOfStrategyWithCandleAndIndicatorData = dataOfStrategyGeneratorService.generateDataOfIndicators(descriptionOfStrategy);
 

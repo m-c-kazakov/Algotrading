@@ -26,6 +26,7 @@ dependencies {
     implementation("com.google.guava:guava:31.1-jre")
 
     implementation project(":StrategyDescriptionParameters")
+    implementation project(":StrategyGenerationApi")
     implementation project(":DataHolder")
 
 }
