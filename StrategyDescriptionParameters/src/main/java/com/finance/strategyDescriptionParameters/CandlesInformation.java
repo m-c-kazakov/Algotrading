@@ -1,14 +1,16 @@
 package com.finance.strategyDescriptionParameters;
 
 import lombok.Builder;
+import lombok.EqualsAndHashCode;
 import lombok.Value;
 import lombok.With;
 import lombok.extern.jackson.Jacksonized;
 
 @With
-@Jacksonized
 @Value
 @Builder
+@Jacksonized
+@EqualsAndHashCode
 public class CandlesInformation {
 
     CurrencyPair currencyPair;

@@ -2,6 +2,7 @@ package com.finance.strategyDescriptionParameters;
 
 import com.finance.strategyDescriptionParameters.indicators.Indicator;
 import lombok.Builder;
+import lombok.EqualsAndHashCode;
 import lombok.Value;
 import lombok.extern.jackson.Jacksonized;
 
@@ -11,6 +12,7 @@ import java.util.List;
 @Value
 @Jacksonized
 @Builder
+@EqualsAndHashCode
 public class DescriptionToCloseADeal implements DealDescription {
 
     List<Indicator> indicators;

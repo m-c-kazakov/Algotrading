@@ -20,6 +20,7 @@ import static java.util.Optional.ofNullable;
 @Getter
 @With
 @Builder
+@EqualsAndHashCode
 @RequiredArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class DescriptionOfStrategy {

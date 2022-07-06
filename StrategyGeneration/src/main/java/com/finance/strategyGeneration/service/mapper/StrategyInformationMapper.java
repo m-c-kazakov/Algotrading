@@ -21,4 +21,6 @@ public interface StrategyInformationMapper {
     @Mapping(target = "decisionToOpenADeal", ignore = true)
     @Mapping(target = "decisionToCloseADeal", ignore = true)
     SpecificationOfStrategy mapTo(DescriptionOfStrategy descriptionOfStrategy);
+
+    DescriptionOfStrategy mapTo(SpecificationOfStrategy specificationOfStrategy);
 }

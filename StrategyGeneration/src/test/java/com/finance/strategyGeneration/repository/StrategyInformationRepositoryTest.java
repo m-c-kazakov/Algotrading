@@ -9,7 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 class StrategyInformationRepositoryTest extends IntegrationTestBased {
 
 //    @Autowired
-    StrategyInformationRepository repository;
+//    StrategyInformationRepository repository;
 
     @Autowired
     RandomPopulationCreationManager randomPopulationCreationManager;

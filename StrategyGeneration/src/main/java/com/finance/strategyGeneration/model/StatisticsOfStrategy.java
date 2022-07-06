@@ -7,6 +7,8 @@ import lombok.Value;
 @Value
 public class StatisticsOfStrategy {
 
+    long id;
+    long specificationOfStrategyId;
     long score;
     int valueOfAcceptableRisk;
     long maximumPercentDrawdownFromStartScore;

@@ -10,6 +10,9 @@ import org.testcontainers.containers.PostgreSQLContainer;
 
 
 @IT
+//@Sql({
+//        "classpath:sql/data.sql"
+//})
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public abstract class IntegrationTestBased {
 

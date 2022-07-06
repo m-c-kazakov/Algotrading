@@ -2,6 +2,8 @@ package com.finance.strategyGeneration.service;
 
 import com.finance.dataHolder.StatisticsDataOfStrategy;
 import com.finance.strategyGeneration.model.StatisticsOfStrategy;
+import com.finance.strategyGeneration.repository.SpecificationOfStrategyRepository;
+import com.finance.strategyGeneration.repository.StatisticsOfStrategyRepository;
 import com.finance.strategyGeneration.service.mapper.StrategyInformationMapper;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
@@ -14,7 +16,8 @@ import org.springframework.stereotype.Component;
 public class StatisticsDataOfStrategyServiceImpl implements StatisticsDataOfStrategyService {
 
     StrategyInformationMapper strategyDescriptionMapper;
-//    StrategyStatisticsInformationRepository strategyStatisticsInformationRepository;
+    StatisticsOfStrategyRepository statisticsOfStrategyRepository;
+    SpecificationOfStrategyRepository specificationOfStrategyRepository;
 
     @Override
     public void save(StatisticsDataOfStrategy statisticsDataOfStrategy) {
@@ -22,13 +25,9 @@ public class StatisticsDataOfStrategyServiceImpl implements StatisticsDataOfStra
         StatisticsOfStrategy statisticsOfStrategy = strategyDescriptionMapper.mapTo(
                 statisticsDataOfStrategy);
 
-//        strategyStatisticsInformationRepository.save(strategyStatisticsInformation);
+        StatisticsOfStrategy statisticsOfStrategyWithId = statisticsOfStrategyRepository.save(statisticsOfStrategy);
 
-        // TODO Получить с минимальное значение прибыли от 10% стратегий
-
-        // TODO Если текущая стратегия Выше минимального значения, то запусти генерацию новых стратегий
-
-
-
+        specificationOfStrategyRepository.updateStatisticsOfStrategyId(
+                statisticsOfStrategyWithId.getSpecificationOfStrategyId(), statisticsOfStrategyWithId.getId());
     }
 }

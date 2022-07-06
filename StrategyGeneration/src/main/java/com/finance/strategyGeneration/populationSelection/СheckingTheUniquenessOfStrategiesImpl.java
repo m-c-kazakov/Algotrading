@@ -7,6 +7,7 @@ import java.util.List;
 
 @Component
 public class СheckingTheUniquenessOfStrategiesImpl implements СheckingTheUniquenessOfStrategies {
+
     @Override
     public List<DescriptionOfStrategy> execute(List<DescriptionOfStrategy> populationAfterMutation) {
         return populationAfterMutation.stream()

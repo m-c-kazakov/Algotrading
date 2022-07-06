@@ -1,16 +1,22 @@
 package com.finance.strategyGeneration.model;
 
-import com.finance.dataHolder.DataOfCandle;
 import com.finance.strategyDescriptionParameters.*;
 import lombok.Builder;
+import lombok.EqualsAndHashCode;
 import lombok.Value;
 
-import java.util.List;
 import java.util.Map;
 
-@Builder
 @Value
+@Builder
+@EqualsAndHashCode
 public class SpecificationOfStrategy {
+
+    long id;
+
+    long strategyInformationId;
+
+    long hashCode;
 
     long startScore;
 
@@ -30,12 +36,7 @@ public class SpecificationOfStrategy {
 
     TypeOfDeal typeOfDeal;
 
-    List<DataOfCandle> dataOfCandles;
     CandlesInformation candlesInformation;
-
-    List<Byte> decisionToOpenADeal;
     DescriptionToOpenADeal descriptionToOpenADeal;
-
-    List<Byte> decisionToCloseADeal;
     DescriptionToCloseADeal descriptionToCloseADeal;
 }
