@@ -3,41 +3,30 @@ services:
   # SET datestyle = DMY;
   # COPY candles FROM '/var/lib/candles-data/EURUSD_220531_220531.csv' DELIMITER ';' CSV HEADER;
   # Название сервиса
+  # TODO Переделать название теперь тут данные индикаторов тоже лежат
   candles-db:
     # Название image, который нужно поднять
     image: postgres:14.4
     # Имя контейнера, то же что и --name
     container_name: candles-db
     environment:
+      POSTGRES_DB: candles-db
       POSTGRES_USER: algotrading
       POSTGRES_PASSWORD: parol
-      POSTGRES_DB: candles-db
     ports:
       - "5433:5432"
     volumes: # /var/lib/postgresql/data - volume по умолчанию в Postgerss
       - /home/maxim/Yandex.Disk/algotrading/data/candles-db:/var/lib/postgresql/data
       - /home/maxim/Yandex.Disk/algotrading/data/candles-data:/var/lib/candles-data
-#      - /home/maxim/Yandex.Disk/algotrading/data/candler-init-script:/docker-entrypoint-initdb.d
-  indicator-data-db:
-    image: postgres:14.4
-    container_name: indicator-data-db
-    environment:
-      POSTGRES_USER: algotrading
-      POSTGRES_PASSWORD: parol
-      POSTGRES_DB: indicator-data-db
-    ports:
-      - "5434:5432"
-    volumes:
-      - /home/maxim/Yandex.Disk/algotrading/data/indicator-data-db:/var/lib/postgresql/data
   strategies-db:
     image: postgres:14.4
     container_name: strategies-db
     environment:
+      POSTGRES_DB: strategies-db
       POSTGRES_USER: algotrading
       POSTGRES_PASSWORD: parol
-      POSTGRES_DB: strategies-db
     ports:
-      - "5435:5432"
+      - "5434:5432"
     volumes:
       - /home/maxim/Yandex.Disk/algotrading/data/strategies-db:/var/lib/postgresql/data
   check-strategy:
@@ -51,7 +40,7 @@ services:
     ports:
       - "8081:8080"
     depends_on:
-      - indicator-data-db
+      - strategies-db
       - candles-db
   strategy-generation:
     build: StrategyGeneration/

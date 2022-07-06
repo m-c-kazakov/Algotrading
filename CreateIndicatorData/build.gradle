@@ -17,27 +17,20 @@ configurations {
 
 dependencies {
 
-    implementation 'org.springframework.boot:spring-boot-starter'
-
     compileOnly 'org.projectlombok:lombok'
     annotationProcessor 'org.projectlombok:lombok'
 
-    implementation 'org.liquibase:liquibase-core'
-
+    implementation 'org.springframework.boot:spring-boot-starter'
+    implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.springframework.boot:spring-boot-starter-data-jdbc'
-
+    implementation 'org.liquibase:liquibase-core'
     implementation 'org.postgresql:postgresql'
 
-    // https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-web
-    implementation("org.springframework.boot:spring-boot-starter-web")
 
-
-    testImplementation 'org.testcontainers:junit-jupiter'
     testImplementation "org.testcontainers:postgresql"
-
-
-
+    testImplementation 'org.testcontainers:junit-jupiter'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
+
 
     implementation project(":StrategyDescriptionParameters")
     implementation project(":DataHolder")

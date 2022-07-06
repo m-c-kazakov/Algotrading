@@ -1,0 +1,8 @@
+spring:
+  data:
+    mongodb:
+      database: strategies-mongo-db
+      username: algotrading
+      password: parol
+      host: localhost
+      port: 5435

@@ -31,10 +31,12 @@ allprojects {
 
             dependency("org.testcontainers:junit-jupiter:${Versions.testcontainers}")
             dependency("org.testcontainers:postgresql:${Versions.testcontainers}")
+            dependency("org.testcontainers:mongodb:${Versions.testcontainers}")
             dependency("org.junit.jupiter:junit-jupiter-api:${Versions.junitJupiterApi}")
             dependency("org.junit.jupiter:junit-jupiter-engine:${Versions.junitJupiterEngine}")
-
-//            implementation("org.flywaydb:flyway-core:8.5.13")
+            dependency("com.google.guava:guava:${Versions.guava}")
+            dependency("org.mapstruct:mapstruct:${Versions.mapstruct}")
+            dependency("org.mapstruct:mapstruct-processor:${Versions.mapstruct}")
         }
     }
 
