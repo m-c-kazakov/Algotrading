@@ -30,7 +30,7 @@ public class GeneticAlgorithmImpl implements GeneticAlgorit {
 
     PopulationSelection populationSelection;
 
-    SpecificationOfStrategyServise specificationOfStrategyServise;
+    SpecificationOfStrategyService specificationOfStrategyService;
 
 
     @Override
@@ -57,7 +57,7 @@ public class GeneticAlgorithmImpl implements GeneticAlgorit {
         // Отбор
         List<DescriptionOfStrategy> populationAfterSelection = populationSelection.execute(populationAfterMutation);
 
-        specificationOfStrategyServise.saveAll(populationAfterSelection);
+        specificationOfStrategyService.saveAll(populationAfterSelection);
 
 
         return populationAfterSelection;

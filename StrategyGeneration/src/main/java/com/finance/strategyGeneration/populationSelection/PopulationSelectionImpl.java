@@ -18,13 +18,12 @@ public class PopulationSelectionImpl implements PopulationSelection {
     СheckingTheUniquenessOfStrategies сheckingTheUniquenessOfStrategies;
 
     SpecificationOfStrategyRepository specificationOfStrategyRepository;
+    StrategyInformationMapper mapper;
 
 
 
     @Override
     public List<DescriptionOfStrategy> execute(List<DescriptionOfStrategy> populationAfterMutation) {
-
-        StrategyInformationMapper mapper = StrategyInformationMapper.INSTANCE;
 
         return сheckingTheUniquenessOfStrategies.execute(populationAfterMutation)
                 .stream()

@@ -14,14 +14,13 @@ import java.util.List;
 @Component
 @RequiredArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
-public class SpecificationOfStrategyServiseImpl implements SpecificationOfStrategyServise {
+public class SpecificationOfStrategyServiceImpl implements SpecificationOfStrategyService {
 
     SpecificationOfStrategyRepository specificationOfStrategyRepository;
+    StrategyInformationMapper mapper;
 
     @Override
     public void saveAll(List<DescriptionOfStrategy> populationAfterSelection) {
-
-        StrategyInformationMapper mapper = StrategyInformationMapper.INSTANCE;
 
         List<SpecificationOfStrategy> specificationOfStrategies = populationAfterSelection.stream().map(mapper::mapTo)
                 .toList();

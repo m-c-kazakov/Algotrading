@@ -16,11 +16,12 @@ import java.util.List;
 public class PopulationServiceImpl implements PopulationService {
 
     SpecificationOfStrategyRepository specificationOfStrategyRepository;
+    StrategyInformationMapper mapper;
 
     @Override
     public List<DescriptionOfStrategy> findTheBestIndividual(int numberOfIndividuals) {
 
         return specificationOfStrategyRepository.findTheBestStrategy(100).stream()
-                .map(StrategyInformationMapper.INSTANCE::mapTo).toList();
+                .map(mapper::mapTo).toList();
     }
 }
