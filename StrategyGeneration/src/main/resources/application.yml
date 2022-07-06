@@ -1,8 +1,15 @@
+
+logging:
+  level:
+    root: INFO
+    org.springframework.jdbc.core: TRACE
+
 spring:
-  data:
-    mongodb:
-      database: strategies-mongo-db
-      username: algotrading
-      password: parol
-      host: localhost
-      port: 5435
+  datasource:
+    url: jdbc:postgresql://localhost:5433/candles-db
+    username: algotrading
+    password: parol
+    driver-class-name: org.postgresql.Driver
+    jpa:
+      # Транзакции не будет созданы на уровне контроллеров если стоит аннотация @Transactional
+      open-in-view: false

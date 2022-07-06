@@ -21,15 +21,16 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter'
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'com.google.guava:guava'
-    implementation 'org.springframework.boot:spring-boot-starter-data-mongodb'
 
     implementation 'org.mapstruct:mapstruct'
     annotationProcessor 'org.mapstruct:mapstruct-processor'
 
+    implementation 'org.springframework.boot:spring-boot-starter-data-jdbc'
+//    implementation 'org.liquibase:liquibase-core'
+    implementation 'org.postgresql:postgresql'
 
 
-
-    testImplementation 'org.testcontainers:mongodb'
+    testImplementation "org.testcontainers:postgresql"
     testImplementation 'org.testcontainers:junit-jupiter'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
 

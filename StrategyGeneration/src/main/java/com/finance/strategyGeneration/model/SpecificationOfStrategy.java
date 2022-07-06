@@ -4,12 +4,10 @@ import com.finance.dataHolder.DataOfCandle;
 import com.finance.strategyDescriptionParameters.*;
 import lombok.Builder;
 import lombok.Value;
-import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.List;
 import java.util.Map;
 
-@Document
 @Builder
 @Value
 public class SpecificationOfStrategy {

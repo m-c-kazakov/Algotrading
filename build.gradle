@@ -31,7 +31,6 @@ allprojects {
 
             dependency("org.testcontainers:junit-jupiter:${Versions.testcontainers}")
             dependency("org.testcontainers:postgresql:${Versions.testcontainers}")
-            dependency("org.testcontainers:mongodb:${Versions.testcontainers}")
             dependency("org.junit.jupiter:junit-jupiter-api:${Versions.junitJupiterApi}")
             dependency("org.junit.jupiter:junit-jupiter-engine:${Versions.junitJupiterEngine}")
             dependency("com.google.guava:guava:${Versions.guava}")

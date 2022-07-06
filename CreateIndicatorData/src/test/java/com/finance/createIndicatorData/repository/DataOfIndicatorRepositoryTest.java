@@ -22,8 +22,6 @@ class DataOfIndicatorRepositoryTest extends IntegrationTestBased {
     @Test
     void getDataOfIndicatorByIndicatorTypeAndAndCurrencyPairAndTimeFrame() {
 
-
-
         assertThat(dataOfIndicatorRepository.getDataOfIndicatorByIndicatorTypeAndAndCurrencyPairAndTimeFrame(
                 IndicatorType.SMA.name(), CurrencyPair.EURUSD.name(), TimeFrame.M1.name()))
                 .isPresent()

@@ -1,7 +1,6 @@
 package com.finance.strategyGeneration.service;
 
 import com.finance.dataHolder.DescriptionOfStrategy;
-import com.finance.strategyGeneration.repository.StrategyInformationRepository;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
@@ -16,14 +15,14 @@ import java.util.List;
 public class PopulationServiceImpl implements PopulationService {
 
 
-    StrategyInformationRepository repository;
+//    StrategyInformationRepository repository;
 
     @Override
     public List<DescriptionOfStrategy> findTheBestIndividual(int numberOfIndividuals) {
 
 
         Sort by = Sort.by(Sort.Direction.DESC, "score").ascending();
-        repository.findAll(by);
+//        repository.findAll(by);
 
         return List.of();
     }
