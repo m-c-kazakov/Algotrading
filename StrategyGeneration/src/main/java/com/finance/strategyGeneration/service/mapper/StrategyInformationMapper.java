@@ -11,7 +11,6 @@ import org.mapstruct.MappingConstants;
 @Mapper(componentModel = MappingConstants.ComponentModel.SPRING)
 public interface StrategyInformationMapper {
 
-//    StrategyInformationMapper INSTANCE = Mappers.getMapper(StrategyInformationMapper.class );
 
     @Mapping(target = "id", ignore = true)
     StatisticsOfStrategy mapTo(StatisticsDataOfStrategy statisticsDataOfStrategy);
