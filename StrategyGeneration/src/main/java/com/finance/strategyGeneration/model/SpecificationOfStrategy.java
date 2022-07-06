@@ -14,7 +14,7 @@ public class SpecificationOfStrategy {
 
     long id;
 
-    long strategyInformationId;
+    long statisticsOfStrategyId;
 
     long hashCode;
 

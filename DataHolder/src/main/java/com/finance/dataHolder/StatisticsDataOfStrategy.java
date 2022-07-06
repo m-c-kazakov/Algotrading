@@ -12,7 +12,7 @@ import lombok.experimental.FieldDefaults;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class StatisticsDataOfStrategy {
 
-    Long strategyInformationId;
+    Long specificationOfStrategyId;
     @Setter
     long score;
 

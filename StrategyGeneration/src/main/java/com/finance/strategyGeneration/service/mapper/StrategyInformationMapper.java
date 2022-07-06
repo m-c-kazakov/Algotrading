@@ -14,13 +14,15 @@ public interface StrategyInformationMapper {
 
     StrategyInformationMapper INSTANCE = Mappers.getMapper(StrategyInformationMapper.class );
 
-
+    @Mapping(target = "id", ignore = true)
     StatisticsOfStrategy mapTo(StatisticsDataOfStrategy statisticsDataOfStrategy);
+
+    @Mapping(target = "hashCode", ignore = true)
+    @Mapping(target = "statisticsOfStrategyId", ignore = true)
+    SpecificationOfStrategy mapTo(DescriptionOfStrategy descriptionOfStrategy);
 
     @Mapping(target = "dataOfCandles", ignore = true)
     @Mapping(target = "decisionToOpenADeal", ignore = true)
     @Mapping(target = "decisionToCloseADeal", ignore = true)
-    SpecificationOfStrategy mapTo(DescriptionOfStrategy descriptionOfStrategy);
-
     DescriptionOfStrategy mapTo(SpecificationOfStrategy specificationOfStrategy);
 }

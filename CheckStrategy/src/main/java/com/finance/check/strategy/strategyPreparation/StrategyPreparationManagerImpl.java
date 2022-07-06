@@ -22,7 +22,7 @@ public class StrategyPreparationManagerImpl implements StrategyPreparationManage
         DescriptionOfStrategy descriptionOfStrategyWithCandleAndIndicatorData = dataOfStrategyGeneratorService.generateDataOfIndicators(descriptionOfStrategy);
 
         StatisticsDataOfStrategy statisticsDataOfStrategy = StatisticsDataOfStrategy.builder()
-                .strategyInformationId(descriptionOfStrategyWithCandleAndIndicatorData.getId())
+                .specificationOfStrategyId(descriptionOfStrategyWithCandleAndIndicatorData.getId())
                 .score(descriptionOfStrategyWithCandleAndIndicatorData.getStartScore())
                 .valueOfAcceptableRisk(generateValueOfAcceptableRisk(descriptionOfStrategyWithCandleAndIndicatorData))
                 .build();
