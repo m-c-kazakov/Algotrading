@@ -29,16 +29,16 @@ public class RandomTrailingStop implements RandomStrategyParams {
             TrailingStopType.class);
 
     static {
-        mapWithSupplierGeneratedRandomParams.put(TrailingStopType.FIXED,
+        mapWithSupplierGeneratedRandomParams.put(TrailingStopType.FIXED_TRAILING_STOP_TYPE,
                 () -> Map.of(TrailingStopConfigurationKey.FIXED, ThreadLocalRandom.current()
                         .nextInt(1, 100)));
     }
 
     static {
-        trailingStopTypeConsumerMap.put(TrailingStopType.FIXED, dataOfStrategyBuilder -> {
-            dataOfStrategyBuilder.trailingStopType(TrailingStopType.FIXED);
+        trailingStopTypeConsumerMap.put(TrailingStopType.FIXED_TRAILING_STOP_TYPE, dataOfStrategyBuilder -> {
+            dataOfStrategyBuilder.trailingStopType(TrailingStopType.FIXED_TRAILING_STOP_TYPE);
             dataOfStrategyBuilder.trailingStopConfigurationData(
-                    mapWithSupplierGeneratedRandomParams.get(TrailingStopType.FIXED)
+                    mapWithSupplierGeneratedRandomParams.get(TrailingStopType.FIXED_TRAILING_STOP_TYPE)
                             .get());
         });
     }

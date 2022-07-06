@@ -6,6 +6,8 @@ import org.springframework.data.jdbc.repository.query.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
 
+import java.util.List;
+
 public interface SpecificationOfStrategyRepository extends CrudRepository<SpecificationOfStrategy, Long> {
 
 
@@ -14,4 +16,10 @@ public interface SpecificationOfStrategyRepository extends CrudRepository<Specif
     boolean updateStatisticsOfStrategyId(@Param("id") Long id, @Param("statisticsOfStrategyId") Long statisticsOfStrategyId);
 
     Boolean existsByHashCode(Integer hashCode);
+
+    @Query("""
+            SELECT * FROM specification_of_strategy spec WHERE spec.id IN 
+                (SELECT stat.specification_of_strategy_id FROM statistics_of_strategy stat ORDER BY score DESC LIMIT :count)
+            """)
+    List<SpecificationOfStrategy> findTheBestStrategy(@Param("count") int count);
 }

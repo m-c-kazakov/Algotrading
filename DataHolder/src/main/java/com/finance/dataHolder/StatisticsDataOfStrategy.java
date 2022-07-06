@@ -5,10 +5,11 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.FieldDefaults;
+import lombok.extern.jackson.Jacksonized;
 
 @Getter
-
 @Builder
+@Jacksonized
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class StatisticsDataOfStrategy {
 
@@ -24,7 +25,6 @@ public class StatisticsDataOfStrategy {
     long averagePercentDrawdownOfScore;
     @Setter
     long maximumValueFromScore;
-
 
     Integer numberOfWinningDeals;
     Integer numberOfLosingDeals;

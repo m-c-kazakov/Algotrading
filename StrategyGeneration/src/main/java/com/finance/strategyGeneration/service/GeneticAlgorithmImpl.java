@@ -30,11 +30,11 @@ public class GeneticAlgorithmImpl implements GeneticAlgorit {
 
     PopulationSelection populationSelection;
 
+    SpecificationOfStrategyServise specificationOfStrategyServise;
+
 
     @Override
     public List<DescriptionOfStrategy> execute() {
-        // TODO Использовать если В кафке нет готовых стратегий
-
 
         // Создать популяцию
         List<DescriptionOfStrategy> randomPopulation = createRandomPopulation(NUMBER_OF_RANDOM_INDIVIDUALS);
@@ -43,8 +43,6 @@ public class GeneticAlgorithmImpl implements GeneticAlgorit {
         List<DescriptionOfStrategy> population = Stream.of(randomPopulation, theBestIndividual)
                 .flatMap(List::stream)
                 .toList();
-
-        // TODO ПОСЛЕ КАЖДЛГО ИЗМЕНЕНИЯ ИНДИКАТОРА ПРОВЕРИТЬ является ли TimeFrame у CurrencyPair минимальным из возможных
 
 
         // Скрещивание
@@ -58,6 +56,9 @@ public class GeneticAlgorithmImpl implements GeneticAlgorit {
 
         // Отбор
         List<DescriptionOfStrategy> populationAfterSelection = populationSelection.execute(populationAfterMutation);
+
+        specificationOfStrategyServise.saveAll(populationAfterSelection);
+
 
         return populationAfterSelection;
 

@@ -1,22 +1,20 @@
 package com.finance.strategyGeneration.intagration;
 
 import com.finance.strategyGeneration.intagration.annotation.IT;
-import lombok.AccessLevel;
-import lombok.experimental.FieldDefaults;
 import org.junit.jupiter.api.BeforeAll;
 import org.springframework.test.context.DynamicPropertyRegistry;
 import org.springframework.test.context.DynamicPropertySource;
+import org.springframework.test.context.jdbc.Sql;
 import org.testcontainers.containers.PostgreSQLContainer;
 
 
 @IT
-//@Sql({
-//        "classpath:sql/data.sql"
-//})
-@FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
+@Sql({
+        "classpath:sql/data.sql"
+})
 public abstract class IntegrationTestBased {
 
-    static PostgreSQLContainer<?> container = new PostgreSQLContainer<>("postgres:14.4");
+    private static final PostgreSQLContainer<?> container = new PostgreSQLContainer<>("postgres:14.4");
 
     @BeforeAll
     static void runContainer() {
@@ -27,4 +25,5 @@ public abstract class IntegrationTestBased {
     static void postgresProperties(DynamicPropertyRegistry registry) {
         registry.add("spring.datasource.url", container::getJdbcUrl);
     }
+
 }

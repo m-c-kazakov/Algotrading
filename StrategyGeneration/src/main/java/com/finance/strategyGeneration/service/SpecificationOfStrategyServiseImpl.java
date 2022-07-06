@@ -1,6 +1,7 @@
 package com.finance.strategyGeneration.service;
 
 import com.finance.dataHolder.DescriptionOfStrategy;
+import com.finance.strategyGeneration.model.SpecificationOfStrategy;
 import com.finance.strategyGeneration.repository.SpecificationOfStrategyRepository;
 import com.finance.strategyGeneration.service.mapper.StrategyInformationMapper;
 import lombok.AccessLevel;
@@ -13,14 +14,18 @@ import java.util.List;
 @Component
 @RequiredArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
-public class PopulationServiceImpl implements PopulationService {
+public class SpecificationOfStrategyServiseImpl implements SpecificationOfStrategyServise {
 
     SpecificationOfStrategyRepository specificationOfStrategyRepository;
 
     @Override
-    public List<DescriptionOfStrategy> findTheBestIndividual(int numberOfIndividuals) {
+    public void saveAll(List<DescriptionOfStrategy> populationAfterSelection) {
 
-        return specificationOfStrategyRepository.findTheBestStrategy(100).stream()
-                .map(StrategyInformationMapper.INSTANCE::mapTo).toList();
+        StrategyInformationMapper mapper = StrategyInformationMapper.INSTANCE;
+
+        List<SpecificationOfStrategy> specificationOfStrategies = populationAfterSelection.stream().map(mapper::mapTo)
+                .toList();
+
+        specificationOfStrategyRepository.saveAll(specificationOfStrategies);
     }
 }

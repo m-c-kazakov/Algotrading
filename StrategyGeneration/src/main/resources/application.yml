@@ -1,12 +1,19 @@
-
 logging:
+  #   Сохранить логи в файл
+  #    file:
+  #        name: createIndicatorData.log
+  #        path: /
   level:
     root: INFO
     org.springframework.jdbc.core: TRACE
 
 spring:
+  mvc:
+    format:
+      # Устанавливает формат для конвертации дат в формат iso
+      date: iso
   datasource:
-    url: jdbc:postgresql://localhost:5433/candles-db
+    url: jdbc:postgresql://localhost:5434/strategies-db
     username: algotrading
     password: parol
     driver-class-name: org.postgresql.Driver

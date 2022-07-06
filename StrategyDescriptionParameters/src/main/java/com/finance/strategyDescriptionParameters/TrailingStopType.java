@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
 
 public enum TrailingStopType {
-    FIXED;
+    FIXED_TRAILING_STOP_TYPE;
 
     public static List<TrailingStopType> getTrailingStopTypes() {
         return List.of(TrailingStopType.values());

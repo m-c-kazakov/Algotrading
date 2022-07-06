@@ -51,7 +51,8 @@ class IndicatorDataControllerImplTest extends IntegrationTestBased {
 
         String request = objectMapper.writeValueAsString(requestDataOfStrategy);
         mockMvc.perform(
-                        post("/generateDataOfIndicators").contentType(ContentType.APPLICATION_JSON.getMimeType())
+                        post("/generateDataOfIndicators")
+                                .contentType(ContentType.APPLICATION_JSON.getMimeType())
                                 .content(request)).
                 andExpectAll(
                         status().is2xxSuccessful(),
