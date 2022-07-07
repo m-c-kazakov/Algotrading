@@ -23,7 +23,7 @@ create table specification_of_strategy
 
     id                               serial PRIMARY KEY,
     statistics_of_strategy_id        integer,
-    hash_code                         integer     not null,
+    hash_code                        integer     not null,
     start_score                      integer     not null,
     acceptable_risk                  integer     not null,
     sum_of_deal_type                 varchar(50) not null,

@@ -40,13 +40,13 @@ class IndicatorDataControllerImplTest extends IntegrationTestBased {
                 .candlesInformation(
                         CandlesInformation.builder().currencyPair(CurrencyPair.EURUSD).timeFrame(TimeFrame.M1).build())
                 // TODO валидацию полей
-                .descriptionToOpenADeal(DescriptionToOpenADeal.builder().indicators(List.of(Indicator
-                        .builder()
-                        .indicatorType(IndicatorType.SMA)
-                        .candlesInformation(CandlesInformation.builder().timeFrame(TimeFrame.M1).currencyPair(CurrencyPair.EURUSD).build())
-                        .parameters(Map.of(SmaParameters.CALCULATE_BY.name(), TypeOfBar.CLOSE.name(), SmaParameters.PERIOD.name(), "2"))
-                        .build())).build())
-                .descriptionToCloseADeal(DescriptionToCloseADeal.builder().indicators(List.of()).build())
+                .descriptionToOpenADeal(List.of(
+                        Indicator.builder()
+                                .indicatorType(IndicatorType.SMA)
+                                .candlesInformation(CandlesInformation.builder().timeFrame(TimeFrame.M1).currencyPair(CurrencyPair.EURUSD).build())
+                                .parameters(Map.of(SmaParameters.CALCULATE_BY.name(), TypeOfBar.CLOSE.name(), SmaParameters.PERIOD.name(), "2"))
+                                .build()))
+                .descriptionToCloseADeal(List.of())
                 .build();
 
         String request = objectMapper.writeValueAsString(requestDataOfStrategy);

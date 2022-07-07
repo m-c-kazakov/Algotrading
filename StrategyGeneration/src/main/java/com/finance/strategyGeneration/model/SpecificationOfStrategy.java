@@ -1,17 +1,23 @@
 package com.finance.strategyGeneration.model;
 
 import com.finance.strategyDescriptionParameters.*;
-import lombok.Builder;
-import lombok.EqualsAndHashCode;
-import lombok.Value;
+import lombok.*;
+import lombok.experimental.FieldDefaults;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.relational.core.mapping.Table;
 
+import java.util.List;
 import java.util.Map;
 
-@Value
+@Getter
 @Builder
+@RequiredArgsConstructor
+@Table("specification_of_strategy")
 @EqualsAndHashCode
+@FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class SpecificationOfStrategy {
 
+    @Id
     long id;
 
     long statisticsOfStrategyId;
@@ -36,7 +42,8 @@ public class SpecificationOfStrategy {
 
     TypeOfDeal typeOfDeal;
 
-    CandlesInformation candlesInformation;
-    DescriptionToOpenADeal descriptionToOpenADeal;
-    DescriptionToCloseADeal descriptionToCloseADeal;
+    // TODO В базе хранятся ID а тут объекты
+    Long candlesInformationId;
+    List<Long> descriptionToOpenADeal;
+    List<Long> descriptionToCloseADeal;
 }

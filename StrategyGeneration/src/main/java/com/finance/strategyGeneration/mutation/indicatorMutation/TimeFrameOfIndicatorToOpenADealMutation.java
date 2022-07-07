@@ -1,7 +1,6 @@
 package com.finance.strategyGeneration.mutation.indicatorMutation;
 
 import com.finance.dataHolder.DescriptionOfStrategy;
-import com.finance.strategyDescriptionParameters.DescriptionToOpenADeal;
 import com.finance.strategyDescriptionParameters.TimeFrame;
 import com.finance.strategyDescriptionParameters.indicators.Indicator;
 import com.finance.strategyGeneration.mutation.Mutation;
@@ -43,7 +42,7 @@ public class TimeFrameOfIndicatorToOpenADealMutation implements Mutation {
         }
 
         DescriptionOfStrategy descriptionOfStrategyAfterMutation = parentDescriptionOfStrategy.withDescriptionToOpenADeal(
-                DescriptionToOpenADeal.builder().indicators(indicators).build());
+                indicators);
 
         return Stream.of(parentDescriptionOfStrategy, descriptionOfStrategyAfterMutation);
     }

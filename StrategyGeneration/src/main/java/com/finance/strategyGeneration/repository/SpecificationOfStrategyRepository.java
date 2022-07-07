@@ -13,13 +13,10 @@ public interface SpecificationOfStrategyRepository extends CrudRepository<Specif
 
     @Modifying
     @Query("UPDATE specification_of_strategy SET statistics_of_strategy_id= :statisticsOfStrategyId WHERE id= :id")
-    boolean updateStatisticsOfStrategyId(@Param("id") Long id, @Param("statisticsOfStrategyId") Long statisticsOfStrategyId);
+    void updateStatisticsOfStrategyId(@Param("id") Long id, @Param("statisticsOfStrategyId") Long statisticsOfStrategyId);
 
-    Boolean existsByHashCode(Integer hashCode);
+    Boolean existsByHashCode(long hashCode);
 
-    @Query("""
-            SELECT * FROM specification_of_strategy spec WHERE spec.id IN 
-                (SELECT stat.specification_of_strategy_id FROM statistics_of_strategy stat ORDER BY score DESC LIMIT :count)
-            """)
+    @Query("SELECT * FROM specification_of_strategy spec WHERE spec.id IN (SELECT stat.specification_of_strategy_id FROM statistics_of_strategy stat ORDER BY score DESC LIMIT :count)")
     List<SpecificationOfStrategy> findTheBestStrategy(@Param("count") int count);
 }

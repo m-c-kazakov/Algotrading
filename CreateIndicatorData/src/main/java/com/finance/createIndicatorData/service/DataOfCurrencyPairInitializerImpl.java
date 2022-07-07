@@ -2,11 +2,11 @@ package com.finance.createIndicatorData.service;
 
 import com.finance.createIndicatorData.dto.RequestDataOfStrategy;
 import com.finance.strategyDescriptionParameters.CandlesInformation;
-import com.finance.strategyDescriptionParameters.DealDescription;
 import com.finance.strategyDescriptionParameters.indicators.Indicator;
 import org.springframework.stereotype.Component;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Component
@@ -26,9 +26,8 @@ public class DataOfCurrencyPairInitializerImpl implements DataOfCurrencyPairInit
     }
 
     private void addBasedOnInformationAboutDealDescription(Set<CandlesInformation> dataOfCurrencyPairs,
-                                                           DealDescription dealDescription) {
+                                                           List<Indicator> dealDescription) {
         dealDescription
-                .getIndicators()
                 .stream().map(Indicator::getCandlesInformation)
                 .forEach(dataOfCurrencyPairs::add);
 

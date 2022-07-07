@@ -51,11 +51,11 @@ public class DescriptionOfStrategy {
 
     @Getter(AccessLevel.NONE)
     List<Byte> decisionToOpenADeal;
-    DescriptionToOpenADeal descriptionToOpenADeal;
+    List<Indicator> descriptionToOpenADeal;
 
     @Getter(AccessLevel.NONE)
     List<Byte> decisionToCloseADeal;
-    DescriptionToCloseADeal descriptionToCloseADeal;
+    List<Indicator> descriptionToCloseADeal;
 
 
     public boolean getDecisionToOpenADeal(int cursor) {
@@ -99,10 +99,10 @@ public class DescriptionOfStrategy {
     }
 
     public List<Indicator> getIndicatorsDescriptionToOpenADeal() {
-        return descriptionToOpenADeal.getIndicators().stream().map(Indicator::copy).toList();
+        return descriptionToOpenADeal.stream().map(Indicator::copy).toList();
     }
 
     public List<Indicator> getIndicatorsDescriptionToCloseADeal() {
-        return descriptionToCloseADeal.getIndicators();
+        return descriptionToCloseADeal.stream().map(Indicator::copy).toList();
     }
 }

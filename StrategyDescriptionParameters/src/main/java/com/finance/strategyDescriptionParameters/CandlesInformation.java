@@ -13,6 +13,8 @@ import lombok.extern.jackson.Jacksonized;
 @EqualsAndHashCode
 public class CandlesInformation {
 
+    Long id;
+
     CurrencyPair currencyPair;
 
     TimeFrame timeFrame;

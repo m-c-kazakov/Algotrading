@@ -1,7 +1,9 @@
 package com.finance.strategyGeneration.random;
 
 import com.finance.dataHolder.DescriptionOfStrategy;
-import com.finance.strategyDescriptionParameters.*;
+import com.finance.strategyDescriptionParameters.CandlesInformation;
+import com.finance.strategyDescriptionParameters.CurrencyPair;
+import com.finance.strategyDescriptionParameters.TimeFrame;
 import com.finance.strategyDescriptionParameters.indicators.Indicator;
 import com.finance.strategyGeneration.random.indicator.RandomIndicatorUtils;
 import lombok.AccessLevel;
@@ -32,8 +34,8 @@ public class RandomDescriptionToOpenAndCloseADealImpl implements RandomStrategyP
 
         List<Indicator> descriptionToOpenADeal = getDescriptionToADeal(currencyPair);
         List<Indicator> descriptionToCloseADeal = getDescriptionToADeal(currencyPair);
-        dataOfStrategyBuilder.descriptionToOpenADeal(DescriptionToOpenADeal.builder().indicators(descriptionToOpenADeal).build());
-        dataOfStrategyBuilder.descriptionToCloseADeal(DescriptionToCloseADeal.builder().indicators(descriptionToCloseADeal).build());
+        dataOfStrategyBuilder.descriptionToOpenADeal(descriptionToOpenADeal);
+        dataOfStrategyBuilder.descriptionToCloseADeal(descriptionToCloseADeal);
 
         TimeFrame timeFrame = findMinimalTimeFrame(descriptionToOpenADeal, descriptionToCloseADeal);
         dataOfStrategyBuilder.candlesInformation(CandlesInformation.builder().currencyPair(currencyPair).timeFrame(timeFrame).build());

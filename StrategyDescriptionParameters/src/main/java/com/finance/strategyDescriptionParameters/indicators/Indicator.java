@@ -17,6 +17,7 @@ import java.util.Map;
 @Jacksonized
 public class Indicator {
 
+    Long id;
     IndicatorType indicatorType;
     CandlesInformation candlesInformation;
     Map<String, String> parameters;

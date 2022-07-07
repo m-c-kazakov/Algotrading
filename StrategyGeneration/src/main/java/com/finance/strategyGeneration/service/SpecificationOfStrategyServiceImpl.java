@@ -27,4 +27,5 @@ public class SpecificationOfStrategyServiceImpl implements SpecificationOfStrate
 
         specificationOfStrategyRepository.saveAll(specificationOfStrategies);
     }
+
 }

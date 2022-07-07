@@ -1,6 +1,8 @@
 package com.finance.createIndicatorData.dto;
 
-import com.finance.strategyDescriptionParameters.*;
+import com.finance.strategyDescriptionParameters.CandlesInformation;
+import com.finance.strategyDescriptionParameters.TimeFrame;
+import com.finance.strategyDescriptionParameters.TypeOfDeal;
 import com.finance.strategyDescriptionParameters.indicators.Indicator;
 import lombok.Builder;
 import lombok.Value;
@@ -16,18 +18,18 @@ public class RequestDataOfStrategy {
 
     TypeOfDeal typeOfDeal;
     CandlesInformation candlesInformation;
-    DescriptionToOpenADeal descriptionToOpenADeal;
-    DescriptionToCloseADeal descriptionToCloseADeal;
+    List<Indicator> descriptionToOpenADeal;
+    List<Indicator> descriptionToCloseADeal;
 
     public TimeFrame getTheSmallestTimeFrame() {
         return candlesInformation.getTimeFrame();
     }
 
     public List<Indicator> getIndicatorsOfDescriptionToOpenADeal() {
-        return descriptionToOpenADeal.getIndicators();
+        return descriptionToOpenADeal;
     }
 
     public List<Indicator> getIndicatorsOfDescriptionToCloseADeal() {
-        return descriptionToCloseADeal.getIndicators();
+        return descriptionToCloseADeal;
     }
 }

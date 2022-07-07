@@ -1,8 +1,6 @@
 package com.finance.strategyGeneration.crossing;
 
 import com.finance.dataHolder.DescriptionOfStrategy;
-import com.finance.strategyDescriptionParameters.DescriptionToCloseADeal;
-import com.finance.strategyDescriptionParameters.DescriptionToOpenADeal;
 import com.finance.strategyDescriptionParameters.TypeOfDeal;
 import com.finance.strategyDescriptionParameters.indicators.Indicator;
 import com.google.common.collect.Sets;
@@ -60,10 +58,10 @@ public class PopulationCrossingManagerImpl implements PopulationCrossingManager 
                 secondIndicators, firstIndicators, separator);
 
         DescriptionOfStrategy firstChild = firstParent
-                .withDescriptionToCloseADeal(DescriptionToCloseADeal.builder().indicators(firstDescriptionToCloseADeal).build());
+                .withDescriptionToCloseADeal(firstDescriptionToCloseADeal);
 
         DescriptionOfStrategy secondChild = secondParent
-                .withDescriptionToCloseADeal(DescriptionToCloseADeal.builder().indicators(secondDescriptionToCloseADeal).build());
+                .withDescriptionToCloseADeal(secondDescriptionToCloseADeal);
 
         return List.of(firstParent, secondParent, firstChild, secondChild);
     }
@@ -87,10 +85,10 @@ public class PopulationCrossingManagerImpl implements PopulationCrossingManager 
                 secondIndicators, firstIndicators, separator);
 
         DescriptionOfStrategy firstChild = firstParent
-                .withDescriptionToOpenADeal(DescriptionToOpenADeal.builder().indicators(firstDescriptionToOpenADeal).build());
+                .withDescriptionToOpenADeal(firstDescriptionToOpenADeal);
 
         DescriptionOfStrategy secondChild = secondParent
-                .withDescriptionToOpenADeal(DescriptionToOpenADeal.builder().indicators(secondDescriptionToOpenADeal).build());
+                .withDescriptionToOpenADeal(secondDescriptionToOpenADeal);
 
         return List.of(firstParent, secondParent, firstChild, secondChild);
     }

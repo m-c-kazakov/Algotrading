@@ -2,7 +2,6 @@ package com.finance.strategyGeneration.mutation.indicatorMutation;
 
 import com.finance.dataHolder.DescriptionOfStrategy;
 import com.finance.strategyDescriptionParameters.CurrencyPair;
-import com.finance.strategyDescriptionParameters.DescriptionToOpenADeal;
 import com.finance.strategyDescriptionParameters.indicators.Indicator;
 import com.finance.strategyGeneration.mutation.Mutation;
 import com.finance.strategyGeneration.random.indicator.RandomIndicatorUtils;
@@ -30,23 +29,20 @@ public class ReplacedIndicatorToOpeningDeal implements Mutation {
         List<Indicator> indicators = new ArrayList<>(parentDescriptionOfStrategy.getIndicatorsDescriptionToOpenADeal());
 
         int bound = Math.max(indicators.size() / 2, 1);
-        int numberOfReplacedItems = Math.max(ThreadLocalRandom.current()
-                .nextInt(bound), 1);
+        int numberOfReplacedItems = Math.max(ThreadLocalRandom.current().nextInt(bound), 1);
 
         for (int i = 0; i < numberOfReplacedItems; i++) {
 
-            int replacedIndex = ThreadLocalRandom.current()
-                    .nextInt(indicators.size());
+            int replacedIndex = ThreadLocalRandom.current().nextInt(indicators.size());
             // TODO Добавить ограничение на стратегии где для анализа используется только 1 валюта
             Indicator randomIndicator = randomIndicatorUtils.getRandomIndicator(
-                    CURRENCY_PAIRS.get(ThreadLocalRandom.current()
-                            .nextInt(CURRENCY_PAIRS.size())));
+                    CURRENCY_PAIRS.get(ThreadLocalRandom.current().nextInt(CURRENCY_PAIRS.size())));
             indicators.set(replacedIndex, randomIndicator);
         }
 
 
         DescriptionOfStrategy descriptionOfStrategyAfterMutation = parentDescriptionOfStrategy.withDescriptionToOpenADeal(
-                DescriptionToOpenADeal.builder().indicators(indicators).build());
+                indicators);
 
         return Stream.of(parentDescriptionOfStrategy, descriptionOfStrategyAfterMutation);
     }
