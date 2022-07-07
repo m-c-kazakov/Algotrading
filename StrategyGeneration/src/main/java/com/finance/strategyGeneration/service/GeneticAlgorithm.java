@@ -4,6 +4,6 @@ import com.finance.dataHolder.DescriptionOfStrategy;
 
 import java.util.List;
 
-public interface GeneticAlgorit {
+public interface GeneticAlgorithm {
     List<DescriptionOfStrategy> execute();
 }

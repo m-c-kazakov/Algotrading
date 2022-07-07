@@ -16,7 +16,7 @@ import java.util.stream.Stream;
 @Component
 @RequiredArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
-public class GeneticAlgorithmImpl implements GeneticAlgorit {
+public class GeneticAlgorithmImpl implements GeneticAlgorithm {
 
     static int NUMBER_OF_RANDOM_INDIVIDUALS = 10; // TODO вынести в property
     static int NUMBER_OF_THE_BEST_INDIVIDUALS = 10; // TODO вынести в property

@@ -96,15 +96,13 @@ public class PopulationCrossingManagerImpl implements PopulationCrossingManager 
     }
 
     private static int createSeparator(List<Indicator> firstIndicators, List<Indicator> secondIndicators) {
-        int firstListSize = firstIndicators.size();
-        int secondListSize = secondIndicators.size();
 
-        if (firstListSize < secondListSize) {
-            return ThreadLocalRandom.current()
-                    .nextInt(1, firstListSize);
+        int bound = Math.min(firstIndicators.size(), secondIndicators.size());
+
+        if (bound == 1) {
+            return 1;
         } else {
-            return ThreadLocalRandom.current()
-                    .nextInt(1, secondListSize);
+            return ThreadLocalRandom.current().nextInt(1, bound);
         }
     }
 

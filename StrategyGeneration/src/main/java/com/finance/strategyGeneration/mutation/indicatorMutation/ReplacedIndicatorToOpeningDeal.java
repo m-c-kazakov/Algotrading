@@ -11,6 +11,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.stream.Stream;
@@ -26,10 +27,11 @@ public class ReplacedIndicatorToOpeningDeal implements Mutation {
 
     @Override
     public Stream<DescriptionOfStrategy> execute(DescriptionOfStrategy parentDescriptionOfStrategy) {
-        List<Indicator> indicators = parentDescriptionOfStrategy.getIndicatorsDescriptionToOpenADeal();
+        List<Indicator> indicators = new ArrayList<>(parentDescriptionOfStrategy.getIndicatorsDescriptionToOpenADeal());
 
+        int bound = Math.max(indicators.size() / 2, 1);
         int numberOfReplacedItems = Math.max(ThreadLocalRandom.current()
-                .nextInt(indicators.size() / 2), 1);
+                .nextInt(bound), 1);
 
         for (int i = 0; i < numberOfReplacedItems; i++) {
 

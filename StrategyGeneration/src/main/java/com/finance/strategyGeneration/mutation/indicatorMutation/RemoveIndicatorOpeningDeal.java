@@ -6,6 +6,7 @@ import com.finance.strategyDescriptionParameters.indicators.Indicator;
 import com.finance.strategyGeneration.mutation.Mutation;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.stream.Stream;
@@ -15,7 +16,7 @@ public class RemoveIndicatorOpeningDeal implements Mutation {
 
     @Override
     public Stream<DescriptionOfStrategy> execute(DescriptionOfStrategy parentDescriptionOfStrategy) {
-        List<Indicator> indicators = parentDescriptionOfStrategy.getIndicatorsDescriptionToOpenADeal();
+        List<Indicator> indicators = new ArrayList<>(parentDescriptionOfStrategy.getIndicatorsDescriptionToOpenADeal());
 
         int numberOfDeletedItems = indicators.size() / 2;
 
