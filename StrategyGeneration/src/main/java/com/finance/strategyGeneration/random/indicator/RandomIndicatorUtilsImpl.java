@@ -5,6 +5,8 @@ import com.finance.strategyDescriptionParameters.CurrencyPair;
 import com.finance.strategyDescriptionParameters.TimeFrame;
 import com.finance.strategyDescriptionParameters.indicators.Indicator;
 import com.finance.strategyDescriptionParameters.indicators.IndicatorType;
+import com.finance.strategyGeneration.service.CandlesInformationService;
+import com.finance.strategyGeneration.service.InformationOfIndicatorService;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
@@ -23,6 +25,8 @@ public class RandomIndicatorUtilsImpl implements RandomIndicatorUtils {
     static List<TimeFrame> timeFrames = List.of(TimeFrame.values());
 
     RandomIndicatorParameters randomParametersByIndicatorType;
+    CandlesInformationService candlesInformationService;
+    InformationOfIndicatorService informationOfIndicatorService;
 
     @Override
     public Indicator getRandomIndicator(CurrencyPair currencyPair) {
@@ -34,10 +38,16 @@ public class RandomIndicatorUtilsImpl implements RandomIndicatorUtils {
         Map<String, String> parameters = randomParametersByIndicatorType.getRandomParametersByIndicatorType(
                 indicatorType);
 
-        return Indicator.builder()
+        CandlesInformation candlesInformation = candlesInformationService.save(
+                CandlesInformation.builder().timeFrame(timeFrame).currencyPair(currencyPair).build());
+
+
+        Indicator indicator = Indicator.builder()
                 .indicatorType(indicatorType)
-                .candlesInformation(CandlesInformation.builder().timeFrame(timeFrame).currencyPair(currencyPair).build())
+                .candlesInformation(candlesInformation)
                 .parameters(parameters)
                 .build();
+
+        return informationOfIndicatorService.save(indicator);
     }
 }

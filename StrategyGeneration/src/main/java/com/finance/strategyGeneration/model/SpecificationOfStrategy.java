@@ -17,10 +17,11 @@ import java.util.List;
 public class SpecificationOfStrategy {
 
     @Id
+    @EqualsAndHashCode.Exclude
     long id;
-
+    @EqualsAndHashCode.Exclude
     long statisticsOfStrategyId;
-
+    @EqualsAndHashCode.Exclude
     long hashCode;
 
     long startScore;
@@ -43,7 +44,6 @@ public class SpecificationOfStrategy {
 
     TypeOfDeal typeOfDeal;
 
-    // TODO В базе хранятся ID а тут объекты
     Long informationOfCandlesId;
     List<Long> descriptionToOpenADeal;
     List<Long> descriptionToCloseADeal;

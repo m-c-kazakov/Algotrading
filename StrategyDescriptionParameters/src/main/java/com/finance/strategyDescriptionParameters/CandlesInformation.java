@@ -13,6 +13,7 @@ import lombok.extern.jackson.Jacksonized;
 @EqualsAndHashCode
 public class CandlesInformation {
 
+    @EqualsAndHashCode.Exclude
     Long id;
 
     CurrencyPair currencyPair;

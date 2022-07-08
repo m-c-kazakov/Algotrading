@@ -1,6 +1,7 @@
 package com.finance.strategyGeneration.service;
 
 import com.finance.dataHolder.DescriptionOfStrategy;
+import com.finance.strategyDescriptionParameters.indicators.Indicator;
 import com.finance.strategyGeneration.repository.SpecificationOfStrategyRepository;
 import com.finance.strategyGeneration.service.mapper.StrategyInformationMapper;
 import lombok.AccessLevel;
@@ -17,11 +18,28 @@ public class PopulationServiceImpl implements PopulationService {
 
     SpecificationOfStrategyRepository specificationOfStrategyRepository;
     StrategyInformationMapper mapper;
+    InformationOfIndicatorService informationOfIndicatorService;
 
     @Override
     public List<DescriptionOfStrategy> findTheBestIndividual(int numberOfIndividuals) {
 
-        return specificationOfStrategyRepository.findTheBestStrategy(100).stream()
-                .map(mapper::mapTo).toList();
+        return specificationOfStrategyRepository.findTheBestStrategy(100)
+                .stream()
+                .map(mapper::mapTo)
+                .map(descriptionOfStrategy -> descriptionOfStrategy
+                        .withDescriptionToOpenADeal(
+                                this.addInformationOfIndicator(descriptionOfStrategy.getDescriptionToOpenADeal()))
+                        .withDescriptionToCloseADeal(
+                                this.addInformationOfIndicator(descriptionOfStrategy.getDescriptionToCloseADeal()))
+                )
+                .toList();
+    }
+
+    private List<Indicator> addInformationOfIndicator(List<Indicator> indicators) {
+        return indicators
+                .stream()
+                .map(Indicator::getId)
+                .map(informationOfIndicatorService::findById)
+                .toList();
     }
 }

@@ -25,6 +25,7 @@ public interface StrategyInformationMapper {
     @Mapping(target = "descriptionToOpenADeal", source = "descriptionToOpenADeal", qualifiedByName = "indicatorToId")
     @Mapping(target = "descriptionToCloseADeal", source = "descriptionToCloseADeal", qualifiedByName = "indicatorToId")
     @Mapping(target = "informationOfCandlesId", source = "candlesInformation", qualifiedByName = "candlesInformationToId")
+    @Mapping(target = "sumOfDealConfigurationData", source = "sumOfDealConfigurationData", qualifiedByName = "sumOfDealMapConverter")
     @Mapping(target = "stopLossConfigurationData", source = "stopLossConfigurationData", qualifiedByName = "stopLossMapConverter")
     @Mapping(target = "trailingStopConfigurationData", source = "trailingStopConfigurationData", qualifiedByName = "trailingStopMapConverter")
     @Mapping(target = "takeProfitConfigurationData", source = "takeProfitConfigurationData", qualifiedByName = "takeProfitMapConverter")
@@ -79,6 +80,11 @@ public interface StrategyInformationMapper {
     @Named("takeProfitConfigurationDataConverter")
     static Map<TakeProfitConfigurationKey, Object> takeProfitConfigurationDataConverter(ConfigurationStorage<TakeProfitConfigurationKey> configuration) {
         return configuration.getConfigurationData();
+    }
+
+    @Named("sumOfDealMapConverter")
+    static ConfigurationStorage<SumOfDealConfigurationKey> sumOfDealMapConverter(Map<SumOfDealConfigurationKey, Object> configuration) {
+        return new ConfigurationStorage<>(configuration);
     }
 
     @Named("stopLossMapConverter")

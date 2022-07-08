@@ -3,11 +3,11 @@ TRUNCATE information_of_indicator;
 TRUNCATE statistics_of_strategy;
 TRUNCATE specification_of_strategy;
 
-INSERT INTO information_of_candles(id, currencypair, timeframe)
-VALUES (1, 'EURUSD', 'M1');
+INSERT INTO information_of_candles(id, hash_code, currency_pair, time_frame)
+VALUES (1, 3, 'EURUSD', 'M1');
 
-INSERT INTO information_of_indicator(id, indicatortype, information_of_candles_id, parameters) VALUES (1, 'SMA', 1, '{"CALCULATE_BY":"OPEN", "PERIOD":5}');
-INSERT INTO information_of_indicator(id, indicatortype, information_of_candles_id, parameters) VALUES (2, 'SMA', 2, '{"CALCULATE_BY":"OPEN", "PERIOD":10}');
+INSERT INTO information_of_indicator(id, hash_code, indicator_type, information_of_candles_id, parameters) VALUES (1, 3, 'SMA', 1, '{"CALCULATE_BY":"OPEN", "PERIOD":5}');
+INSERT INTO information_of_indicator(id, hash_code, indicator_type, information_of_candles_id, parameters) VALUES (2, 4, 'SMA', 2, '{"CALCULATE_BY":"OPEN", "PERIOD":10}');
 
 INSERT INTO statistics_of_strategy(id, specification_of_strategy_id, score, value_of_acceptable_risk,
                                    maximum_percent_drawdown_from_start_score, average_percent_drawdown_of_score,

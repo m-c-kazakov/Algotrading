@@ -4,15 +4,17 @@
 create table information_of_candles
 (
     id           serial PRIMARY KEY,
-    currencyPair varchar(50),
-    timeFrame    varchar(50)
+    hash_code    integer not null,
+    currency_pair varchar(50),
+    time_frame    varchar(50)
 );
 
 --changeset kazakov:2
 create table information_of_indicator
 (
     id                        serial PRIMARY KEY,
-    indicatorType             varchar(50) not null,
+    hash_code                 integer     not null,
+    indicator_type             varchar(50) not null,
     information_of_candles_id integer     not null,
     parameters                jsonb
 );

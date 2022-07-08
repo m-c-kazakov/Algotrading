@@ -15,7 +15,10 @@ import org.springframework.data.relational.core.mapping.Table;
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class InformationOfCandles {
     @Id
+    @EqualsAndHashCode.Exclude
     long id;
+    @EqualsAndHashCode.Exclude
+    long hashCode;
     CurrencyPair currencyPair;
     TimeFrame timeFrame;
 }

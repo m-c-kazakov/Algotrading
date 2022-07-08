@@ -23,7 +23,9 @@ public class JdbcConfiguration extends AbstractJdbcConfiguration {
                 new TakeProfitConfigurationStorageToJsonConverter(objectMapper),
                 new TakeProfitJsonToConfigurationStorageConverter(objectMapper),
                 new TrailingStopConfigurationStorageToJsonConverter(objectMapper),
-                new TrailingStopJsonToConfigurationStorageConverter(objectMapper)
+                new TrailingStopJsonToConfigurationStorageConverter(objectMapper),
+                new IndicatorParametersConfigurationStorageToJsonConverter(objectMapper),
+                new JsonToIndicatorParameterConfigurationStorageConverter(objectMapper)
         );
     }
 }
