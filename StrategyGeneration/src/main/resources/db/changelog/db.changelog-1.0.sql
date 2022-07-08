@@ -40,7 +40,7 @@ create table specification_of_strategy
     take_profit_type                 varchar(50)    not null,
     take_profit_configuration_data   jsonb          not null,
 
-    type_of_deal                     varchar(50),
+    type_of_deal                     varchar(50)    not null,
 
     information_of_candles_id        integer        not null,
 

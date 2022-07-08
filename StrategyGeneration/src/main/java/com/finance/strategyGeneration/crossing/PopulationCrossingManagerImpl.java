@@ -24,22 +24,22 @@ import java.util.function.UnaryOperator;
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class PopulationCrossingManagerImpl implements PopulationCrossingManager {
 
+    List<Function<Set<DescriptionOfStrategy>, List<DescriptionOfStrategy>>> functions = new ArrayList<>();
+    TypesOfCrossesImpl typesOfCrosses;
 
-    static List<Function<Set<DescriptionOfStrategy>, List<DescriptionOfStrategy>>> functions = new ArrayList<>();
-
-    static {
-        functions.add(PopulationCrossingManagerImpl::exchangeSymOfDealType);
-        functions.add(PopulationCrossingManagerImpl::exchangeStopLoss);
-        functions.add(PopulationCrossingManagerImpl::exchangeTrailingStop);
-        functions.add(PopulationCrossingManagerImpl::exchangeTakeProfit);
-        functions.add(PopulationCrossingManagerImpl::exchangeTypeOfDeal);
-        functions.add(PopulationCrossingManagerImpl::exchangeDescriptionToOpenADeal);
-        functions.add(PopulationCrossingManagerImpl::exchangeIndicatorsToOpenADeal);
-        functions.add(PopulationCrossingManagerImpl::exchangeDescriptionToCloseADeal);
-        functions.add(PopulationCrossingManagerImpl::exchangeIndicatorsToCloseADeal);
+    {
+        functions.add(this::exchangeSymOfDealType);
+        functions.add(this::exchangeStopLoss);
+        functions.add(this::exchangeTrailingStop);
+        functions.add(this::exchangeTakeProfit);
+        functions.add(this::exchangeTypeOfDeal);
+        functions.add(this::exchangeDescriptionToOpenADeal);
+        functions.add(this::exchangeIndicatorsToOpenADeal);
+        functions.add(this::exchangeDescriptionToCloseADeal);
+        functions.add(this::exchangeIndicatorsToCloseADeal);
     }
 
-    private static List<DescriptionOfStrategy> exchangeIndicatorsToCloseADeal(Set<DescriptionOfStrategy> dataOfStrategies) {
+    private List<DescriptionOfStrategy> exchangeIndicatorsToCloseADeal(Set<DescriptionOfStrategy> dataOfStrategies) {
         List<DescriptionOfStrategy> descriptionOfStrategyElements = dataOfStrategies.stream()
                 .toList();
 
@@ -49,24 +49,28 @@ public class PopulationCrossingManagerImpl implements PopulationCrossingManager 
         DescriptionOfStrategy secondParent = descriptionOfStrategyElements.get(1);
         List<Indicator> secondIndicators = secondParent.getIndicatorsDescriptionToCloseADeal();
 
-        int separator = createSeparator(firstIndicators, secondIndicators);
+        if (!firstIndicators.isEmpty() && !secondIndicators.isEmpty()) {
+            int separator = createSeparator(firstIndicators, secondIndicators);
 
-        List<Indicator> firstDescriptionToCloseADeal = TypesOfCrosses.singlePointCrossing(firstIndicators,
-                secondIndicators, separator);
+            List<Indicator> firstDescriptionToCloseADeal = typesOfCrosses.singlePointCrossing(firstIndicators,
+                    secondIndicators, separator);
 
-        List<Indicator> secondDescriptionToCloseADeal = TypesOfCrosses.singlePointCrossing(
-                secondIndicators, firstIndicators, separator);
+            List<Indicator> secondDescriptionToCloseADeal = typesOfCrosses.singlePointCrossing(
+                    secondIndicators, firstIndicators, separator);
 
-        DescriptionOfStrategy firstChild = firstParent
-                .withDescriptionToCloseADeal(firstDescriptionToCloseADeal);
+            DescriptionOfStrategy firstChild = firstParent
+                    .withDescriptionToCloseADeal(firstDescriptionToCloseADeal);
 
-        DescriptionOfStrategy secondChild = secondParent
-                .withDescriptionToCloseADeal(secondDescriptionToCloseADeal);
+            DescriptionOfStrategy secondChild = secondParent
+                    .withDescriptionToCloseADeal(secondDescriptionToCloseADeal);
 
-        return List.of(firstParent, secondParent, firstChild, secondChild);
+            return List.of(firstParent, secondParent, firstChild, secondChild);
+        }
+
+        return List.of(firstParent, secondParent);
     }
 
-    private static List<DescriptionOfStrategy> exchangeIndicatorsToOpenADeal(Set<DescriptionOfStrategy> dataOfStrategies) {
+    private List<DescriptionOfStrategy> exchangeIndicatorsToOpenADeal(Set<DescriptionOfStrategy> dataOfStrategies) {
         List<DescriptionOfStrategy> descriptionOfStrategyElements = dataOfStrategies.stream()
                 .toList();
 
@@ -78,10 +82,10 @@ public class PopulationCrossingManagerImpl implements PopulationCrossingManager 
 
         int separator = createSeparator(firstIndicators, secondIndicators);
 
-        List<Indicator> firstDescriptionToOpenADeal = TypesOfCrosses.singlePointCrossing(firstIndicators,
+        List<Indicator> firstDescriptionToOpenADeal = typesOfCrosses.singlePointCrossing(firstIndicators,
                 secondIndicators, separator);
 
-        List<Indicator> secondDescriptionToOpenADeal = TypesOfCrosses.singlePointCrossing(
+        List<Indicator> secondDescriptionToOpenADeal = typesOfCrosses.singlePointCrossing(
                 secondIndicators, firstIndicators, separator);
 
         DescriptionOfStrategy firstChild = firstParent
@@ -93,18 +97,18 @@ public class PopulationCrossingManagerImpl implements PopulationCrossingManager 
         return List.of(firstParent, secondParent, firstChild, secondChild);
     }
 
-    private static int createSeparator(List<Indicator> firstIndicators, List<Indicator> secondIndicators) {
+    private int createSeparator(List<Indicator> firstIndicators, List<Indicator> secondIndicators) {
 
         int bound = Math.min(firstIndicators.size(), secondIndicators.size());
 
-        if (bound == 1) {
+        if (bound <= 1) {
             return 1;
         } else {
             return ThreadLocalRandom.current().nextInt(1, bound);
         }
     }
 
-    private static List<DescriptionOfStrategy> exchangeDescriptionToCloseADeal(Set<DescriptionOfStrategy> dataOfStrategies) {
+    private List<DescriptionOfStrategy> exchangeDescriptionToCloseADeal(Set<DescriptionOfStrategy> dataOfStrategies) {
         List<DescriptionOfStrategy> descriptionOfStrategyElements = dataOfStrategies.stream()
                 .toList();
 
@@ -120,7 +124,7 @@ public class PopulationCrossingManagerImpl implements PopulationCrossingManager 
         return List.of(firstParent, secondParent, firstChild, secondChild);
     }
 
-    private static List<DescriptionOfStrategy> exchangeDescriptionToOpenADeal(Set<DescriptionOfStrategy> dataOfStrategies) {
+    private List<DescriptionOfStrategy> exchangeDescriptionToOpenADeal(Set<DescriptionOfStrategy> dataOfStrategies) {
         List<DescriptionOfStrategy> descriptionOfStrategyElements = dataOfStrategies.stream()
                 .toList();
 
@@ -136,7 +140,7 @@ public class PopulationCrossingManagerImpl implements PopulationCrossingManager 
         return List.of(firstParent, secondParent, firstChild, secondChild);
     }
 
-    private static List<DescriptionOfStrategy> exchangeTypeOfDeal(Set<DescriptionOfStrategy> dataOfStrategies) {
+    private List<DescriptionOfStrategy> exchangeTypeOfDeal(Set<DescriptionOfStrategy> dataOfStrategies) {
         List<DescriptionOfStrategy> descriptionOfStrategyElements = dataOfStrategies.stream()
                 .toList();
 
@@ -156,7 +160,7 @@ public class PopulationCrossingManagerImpl implements PopulationCrossingManager 
         return List.of(firstParent, secondParent, firstChild, secondChild);
     }
 
-    private static List<DescriptionOfStrategy> exchangeTakeProfit(Set<DescriptionOfStrategy> dataOfStrategies) {
+    private List<DescriptionOfStrategy> exchangeTakeProfit(Set<DescriptionOfStrategy> dataOfStrategies) {
         List<DescriptionOfStrategy> descriptionOfStrategyElements = dataOfStrategies.stream()
                 .toList();
 
@@ -174,7 +178,7 @@ public class PopulationCrossingManagerImpl implements PopulationCrossingManager 
         return List.of(firstParent, secondParent, firstChild, secondChild);
     }
 
-    private static List<DescriptionOfStrategy> exchangeTrailingStop(Set<DescriptionOfStrategy> dataOfStrategies) {
+    private List<DescriptionOfStrategy> exchangeTrailingStop(Set<DescriptionOfStrategy> dataOfStrategies) {
         List<DescriptionOfStrategy> descriptionOfStrategyElements = dataOfStrategies.stream()
                 .toList();
 
@@ -192,7 +196,7 @@ public class PopulationCrossingManagerImpl implements PopulationCrossingManager 
         return List.of(firstParent, secondParent, firstChild, secondChild);
     }
 
-    private static List<DescriptionOfStrategy> exchangeStopLoss(Set<DescriptionOfStrategy> dataOfStrategies) {
+    private List<DescriptionOfStrategy> exchangeStopLoss(Set<DescriptionOfStrategy> dataOfStrategies) {
         List<DescriptionOfStrategy> descriptionOfStrategyElements = dataOfStrategies.stream()
                 .toList();
 
@@ -210,7 +214,7 @@ public class PopulationCrossingManagerImpl implements PopulationCrossingManager 
         return List.of(firstParent, secondParent, firstChild, secondChild);
     }
 
-    private static List<DescriptionOfStrategy> exchangeSymOfDealType(Set<DescriptionOfStrategy> dataOfStrategies) {
+    private List<DescriptionOfStrategy> exchangeSymOfDealType(Set<DescriptionOfStrategy> dataOfStrategies) {
 
         List<DescriptionOfStrategy> descriptionOfStrategyElements = dataOfStrategies.stream()
                 .toList();

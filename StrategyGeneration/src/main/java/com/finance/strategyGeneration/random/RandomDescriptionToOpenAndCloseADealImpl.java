@@ -1,11 +1,11 @@
 package com.finance.strategyGeneration.random;
 
 import com.finance.dataHolder.DescriptionOfStrategy;
-import com.finance.strategyDescriptionParameters.CandlesInformation;
 import com.finance.strategyDescriptionParameters.CurrencyPair;
 import com.finance.strategyDescriptionParameters.TimeFrame;
 import com.finance.strategyDescriptionParameters.indicators.Indicator;
 import com.finance.strategyGeneration.random.indicator.RandomIndicatorUtils;
+import com.finance.strategyGeneration.service.CandlesInformationService;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
@@ -24,6 +24,7 @@ public class RandomDescriptionToOpenAndCloseADealImpl implements RandomStrategyP
 
     static List<CurrencyPair> currencyPairs = List.of(CurrencyPair.values());
     RandomIndicatorUtils randomIndicatorUtils;
+    CandlesInformationService candlesInformationService;
 
     @Override
     public void add(DescriptionOfStrategy.DescriptionOfStrategyBuilder dataOfStrategyBuilder) {
@@ -39,7 +40,8 @@ public class RandomDescriptionToOpenAndCloseADealImpl implements RandomStrategyP
                 .descriptionToCloseADeal(descriptionToCloseADeal);
 
         TimeFrame timeFrame = findMinimalTimeFrame(descriptionToOpenADeal, descriptionToCloseADeal);
-        dataOfStrategyBuilder.candlesInformation(CandlesInformation.builder().currencyPair(currencyPair).timeFrame(timeFrame).build());
+
+        dataOfStrategyBuilder.candlesInformation(candlesInformationService.save(timeFrame, currencyPair));
 
     }
 

@@ -11,6 +11,7 @@ import lombok.experimental.FieldDefaults;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Stream;
 
 @Component
@@ -34,7 +35,7 @@ public class GeneticAlgorithmImpl implements GeneticAlgorithm {
 
 
     @Override
-    public List<DescriptionOfStrategy> execute() {
+    public Set<DescriptionOfStrategy> execute() {
 
         // Создать популяцию
         List<DescriptionOfStrategy> randomPopulation = createRandomPopulation(NUMBER_OF_RANDOM_INDIVIDUALS);
@@ -55,7 +56,7 @@ public class GeneticAlgorithmImpl implements GeneticAlgorithm {
         // TODO Добавить блок с эволюцией
 
         // Отбор
-        List<DescriptionOfStrategy> populationAfterSelection = populationSelection.execute(populationAfterMutation);
+        Set<DescriptionOfStrategy> populationAfterSelection = populationSelection.execute(populationAfterMutation);
 
         specificationOfStrategyService.saveAll(populationAfterSelection);
 

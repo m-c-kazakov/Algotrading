@@ -8,21 +8,30 @@ import lombok.EqualsAndHashCode;
 import lombok.Value;
 import lombok.With;
 import lombok.extern.jackson.Jacksonized;
+import org.springframework.lang.NonNull;
 
 import java.util.HashMap;
 import java.util.Map;
 
 @With
 @Value
-@Builder
+@Builder(toBuilder = true)
 @Jacksonized
 public class Indicator {
 
     @EqualsAndHashCode.Exclude
+    @NonNull
     Long id;
+    @NonNull
     IndicatorType indicatorType;
+    @NonNull
     CandlesInformation candlesInformation;
+    @NonNull
     Map<String, String> parameters;
+
+    public long getCandlesInformationId() {
+        return this.candlesInformation.getId();
+    }
 
     public Map<String, String> getParameters() {
         return new HashMap<>(parameters);
@@ -37,10 +46,7 @@ public class Indicator {
     }
 
     public Indicator copy() {
-        return Indicator.builder().indicatorType(indicatorType)
-                .candlesInformation(candlesInformation)
-                .parameters(this.getParameters())
-                .build();
+        return this.toBuilder().build();
     }
 
     public TimeFrame getTimeFrame() {
@@ -52,9 +58,6 @@ public class Indicator {
     }
 
     public Indicator withTimeFrame(TimeFrame timeFrame) {
-        return Indicator.builder().indicatorType(indicatorType)
-                .candlesInformation(CandlesInformation.builder().timeFrame(timeFrame).currencyPair(this.candlesInformation.getCurrencyPair()).build())
-                .parameters(this.getParameters())
-                .build();
+        return this.withCandlesInformation(this.candlesInformation.withTimeFrame(timeFrame));
     }
 }

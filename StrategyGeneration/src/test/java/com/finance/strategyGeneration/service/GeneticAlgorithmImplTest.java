@@ -7,7 +7,7 @@ import lombok.experimental.FieldDefaults;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import java.util.List;
+import java.util.Set;
 
 @FieldDefaults(level = AccessLevel.PRIVATE)
 class GeneticAlgorithmImplTest extends IntegrationTestBased {
@@ -18,7 +18,7 @@ class GeneticAlgorithmImplTest extends IntegrationTestBased {
     @Test
     void execute() {
 
-        List<DescriptionOfStrategy> execute = geneticAlgorithm.execute();
+        Set<DescriptionOfStrategy> execute = geneticAlgorithm.execute();
         System.out.println("!!!!!!!!!!!!!!!");
     }
 }

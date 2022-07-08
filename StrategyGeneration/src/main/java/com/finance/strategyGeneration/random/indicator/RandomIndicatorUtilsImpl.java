@@ -38,16 +38,15 @@ public class RandomIndicatorUtilsImpl implements RandomIndicatorUtils {
         Map<String, String> parameters = randomParametersByIndicatorType.getRandomParametersByIndicatorType(
                 indicatorType);
 
-        CandlesInformation candlesInformation = candlesInformationService.save(
-                CandlesInformation.builder().timeFrame(timeFrame).currencyPair(currencyPair).build());
+        CandlesInformation candlesInformation = candlesInformationService.save(timeFrame, currencyPair);
 
+// todo delete
+//        Indicator indicator = Indicator.builder()
+//                .indicatorType(indicatorType)
+//                .candlesInformation(candlesInformation)
+//                .parameters(parameters)
+//                .build();
 
-        Indicator indicator = Indicator.builder()
-                .indicatorType(indicatorType)
-                .candlesInformation(candlesInformation)
-                .parameters(parameters)
-                .build();
-
-        return informationOfIndicatorService.save(indicator);
+        return informationOfIndicatorService.save(indicatorType, candlesInformation, parameters);
     }
 }

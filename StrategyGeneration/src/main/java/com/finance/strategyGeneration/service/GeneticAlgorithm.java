@@ -2,8 +2,8 @@ package com.finance.strategyGeneration.service;
 
 import com.finance.dataHolder.DescriptionOfStrategy;
 
-import java.util.List;
+import java.util.Set;
 
 public interface GeneticAlgorithm {
-    List<DescriptionOfStrategy> execute();
+    Set<DescriptionOfStrategy> execute();
 }

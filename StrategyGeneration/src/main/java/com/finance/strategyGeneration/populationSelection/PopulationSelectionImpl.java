@@ -7,6 +7,7 @@ import lombok.experimental.FieldDefaults;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.Set;
 
 @Component
 @RequiredArgsConstructor
@@ -17,7 +18,7 @@ public class PopulationSelectionImpl implements PopulationSelection {
 
 
     @Override
-    public List<DescriptionOfStrategy> execute(List<DescriptionOfStrategy> populationAfterMutation) {
+    public Set<DescriptionOfStrategy> execute(List<DescriptionOfStrategy> populationAfterMutation) {
 
         return сheckingTheUniquenessOfStrategies.execute(populationAfterMutation);
     }

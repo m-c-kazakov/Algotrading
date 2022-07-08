@@ -5,6 +5,7 @@ import lombok.EqualsAndHashCode;
 import lombok.Value;
 import lombok.With;
 import lombok.extern.jackson.Jacksonized;
+import org.springframework.lang.NonNull;
 
 @With
 @Value
@@ -14,10 +15,11 @@ import lombok.extern.jackson.Jacksonized;
 public class CandlesInformation {
 
     @EqualsAndHashCode.Exclude
+    @NonNull
     Long id;
-
+    @NonNull
     CurrencyPair currencyPair;
-
+    @NonNull
     TimeFrame timeFrame;
 
     public int getPer() {

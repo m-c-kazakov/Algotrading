@@ -25,7 +25,7 @@ import static java.util.Optional.ofNullable;
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class DescriptionOfStrategy {
 
-
+    @EqualsAndHashCode.Exclude
     long id;
 
     // это базовое значение * на количество знаков после запятой, которое есть у Pip. Находится в валютной паре
@@ -46,14 +46,17 @@ public class DescriptionOfStrategy {
 
     TypeOfDeal typeOfDeal;
     @Getter(AccessLevel.NONE)
+    @EqualsAndHashCode.Exclude
     List<DataOfCandle> dataOfCandles;
     CandlesInformation candlesInformation;
 
     @Getter(AccessLevel.NONE)
+    @EqualsAndHashCode.Exclude
     List<Byte> decisionToOpenADeal;
     List<Indicator> descriptionToOpenADeal;
 
     @Getter(AccessLevel.NONE)
+    @EqualsAndHashCode.Exclude
     List<Byte> decisionToCloseADeal;
     List<Indicator> descriptionToCloseADeal;
 

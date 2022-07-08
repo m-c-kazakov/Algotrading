@@ -8,6 +8,7 @@ import org.springframework.data.relational.core.mapping.Table;
 
 @Getter
 @Builder
+@With
 @RequiredArgsConstructor
 @Table("information_of_indicator")
 @EqualsAndHashCode
