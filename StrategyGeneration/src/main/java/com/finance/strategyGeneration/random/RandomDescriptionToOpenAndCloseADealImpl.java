@@ -6,7 +6,6 @@ import com.finance.strategyDescriptionParameters.CurrencyPair;
 import com.finance.strategyDescriptionParameters.TimeFrame;
 import com.finance.strategyDescriptionParameters.indicators.Indicator;
 import com.finance.strategyGeneration.random.indicator.RandomIndicatorUtils;
-import com.finance.strategyGeneration.service.InformationOfIndicatorService;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
@@ -25,7 +24,6 @@ public class RandomDescriptionToOpenAndCloseADealImpl implements RandomStrategyP
 
     static List<CurrencyPair> currencyPairs = List.of(CurrencyPair.values());
     RandomIndicatorUtils randomIndicatorUtils;
-    InformationOfIndicatorService informationOfIndicatorService;
 
     @Override
     public void add(DescriptionOfStrategy.DescriptionOfStrategyBuilder dataOfStrategyBuilder) {
@@ -61,7 +59,6 @@ public class RandomDescriptionToOpenAndCloseADealImpl implements RandomStrategyP
                 .nextInt(1, 6);
         return Stream.iterate(0, integer -> integer < numberOfIndicators, integer -> integer + 1)
                 .map(integer -> randomIndicatorUtils.getRandomIndicator(currencyPair))
-                .map(informationOfIndicatorService::save)
                 .toList();
     }
 }

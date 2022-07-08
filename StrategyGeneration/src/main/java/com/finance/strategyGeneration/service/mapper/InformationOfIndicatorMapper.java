@@ -17,6 +17,7 @@ public interface InformationOfIndicatorMapper {
     Indicator mapTo(InformationOfIndicator informationOfIndicator);
 
     @Mapping(target = "parameters", source = "parameters", qualifiedByName = "mapToParametersObject")
+    @Mapping(target = "hashCode", source = "indicator", qualifiedByName = "hashCodeGenerator")
     InformationOfIndicator mapTo(Indicator indicator);
 
     @Named("parametersObjectToMap")
@@ -27,5 +28,10 @@ public interface InformationOfIndicatorMapper {
     @Named("mapToParametersObject")
     static IndicatorParametersConfigurationStorage mapToParametersObject(Map<String, String> parameters) {
         return new IndicatorParametersConfigurationStorage(parameters);
+    }
+
+    @Named("hashCodeGenerator")
+    static long mapToParametersObject(Indicator indicator) {
+        return indicator.hashCode();
     }
 }

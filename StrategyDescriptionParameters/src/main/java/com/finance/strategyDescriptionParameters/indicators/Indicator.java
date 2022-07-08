@@ -16,7 +16,6 @@ import java.util.Map;
 @Value
 @Builder
 @Jacksonized
-@EqualsAndHashCode
 public class Indicator {
 
     @EqualsAndHashCode.Exclude

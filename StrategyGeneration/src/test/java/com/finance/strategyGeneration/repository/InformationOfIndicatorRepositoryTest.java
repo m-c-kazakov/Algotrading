@@ -6,11 +6,13 @@ import com.finance.strategyGeneration.model.IndicatorParametersConfigurationStor
 import com.finance.strategyGeneration.model.InformationOfIndicator;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Map;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+@Transactional
 class InformationOfIndicatorRepositoryTest extends IntegrationTestBased {
 
     @Autowired
