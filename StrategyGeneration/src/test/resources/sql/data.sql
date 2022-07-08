@@ -1,4 +1,7 @@
--- insert into data_of_indicators(id, decision_by_deal, indicator_type, currency_pair, time_frame) values(1, '{99999, 7777777}', 'SMA', 'EURUSD', 'M1');
+TRUNCATE information_of_candles;
+TRUNCATE information_of_indicator;
+TRUNCATE statistics_of_strategy;
+TRUNCATE specification_of_strategy;
 
 INSERT INTO information_of_candles(id, currencypair, timeframe)
 VALUES (1, 'EURUSD', 'M1');
@@ -18,5 +21,5 @@ INSERT INTO specification_of_strategy(id, statistics_of_strategy_id, hash_code, 
                                       trailing_stop_configuration_data, take_profit_type,
                                       take_profit_configuration_data, type_of_deal, information_of_candles_id,
                                       description_to_open_a_deal, description_to_close_a_deal)
-VALUES (1, 1, 123123123, 100, 10, 'PERCENT_OF_SCORE', '{"PERCENT_OF_SCORE": 2}', 'FIXED_STOP_LOSS', '{"FIXED": 3}',
-        'FIXED', '{"FIXED": 5}', 'FIXED_TAKE_PROFIT', '{"FIXED": 5}', 'BUY', 1, '{1, 2}','{}' )
+VALUES (1, 1, 123123123, 100, 10, 'PERCENT_OF_SCORE', '{"PERCENT_OF_SCORE": 2}', 'FIXED_STOP_LOSS', '{"FIXED_STOP_LOSS": 3}',
+        'FIXED_TRAILING_STOP_TYPE', '{"FIXED_TRAILING_STOP": 5}', 'FIXED_TAKE_PROFIT', '{"FIXED_TAKE_PROFIT": 7}', 'BUY', 1, '{1, 2}','{}' )

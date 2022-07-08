@@ -7,11 +7,12 @@ import com.finance.strategyDescriptionParameters.TypeOfDeal;
 import org.springframework.remoting.RemoteTimeoutException;
 import org.springframework.stereotype.Component;
 
-@Component("FIXED")
+@Component("FIXED_TRAILING_STOP_TYPE")
 public class FixedPipTrailingStop implements TrailingStopManager {
     @Override
     public void update(DescriptionOfStrategy descriptionOfStrategy, DataOfDeal dataOfDeal, int cursor) {
-        descriptionOfStrategy.getFromTrailingStopConfigurationData(TrailingStopConfigurationKey.FIXED)
+
+        descriptionOfStrategy.getFromTrailingStopConfigurationData(TrailingStopConfigurationKey.FIXED_TRAILING_STOP)
                 .map(int.class::cast)
                 .ifPresent(fixedValue -> {
                     // TODO При написании теста отрефакторить. Слишком умного уровней вложенных if

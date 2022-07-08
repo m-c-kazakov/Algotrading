@@ -8,7 +8,7 @@ import lombok.experimental.FieldDefaults;
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public enum StopLossConfigurationKey {
 
-    FIXED("StopLoss будет формироваться на основе значения по этому ключу +/- цена закрытия");
+    FIXED_STOP_LOSS("StopLoss будет формироваться на основе значения по этому ключу +/- цена закрытия");
 
     String description;
 }

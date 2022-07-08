@@ -4,11 +4,9 @@ import com.finance.strategyDescriptionParameters.*;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 import org.springframework.data.annotation.Id;
-import org.springframework.data.relational.core.mapping.MappedCollection;
 import org.springframework.data.relational.core.mapping.Table;
 
 import java.util.List;
-import java.util.Map;
 
 @Getter
 @Builder
@@ -30,21 +28,18 @@ public class SpecificationOfStrategy {
     long acceptableRisk;
 
     SumOfDealType sumOfDealType;
-//    @ValueConverter()
-    Map<SumOfDealConfigurationKey, Object> sumOfDealConfigurationData;
+    //    @ValueConverter()
+    ConfigurationStorage<SumOfDealConfigurationKey> sumOfDealConfigurationData;
 
     StopLossType stopLossType;
     // https://stackoverflow.com/questions/68984665/persist-java-map-as-postgresql-jsonb-using-spring-data-jdbc
-    @MappedCollection
-    Map<StopLossConfigurationKey, Object> stopLossConfigurationData;
+    ConfigurationStorage<StopLossConfigurationKey> stopLossConfigurationData;
 
     TrailingStopType trailingStopType;
-    @MappedCollection
-    Map<TrailingStopConfigurationKey, Object> trailingStopConfigurationData;
+    ConfigurationStorage<TrailingStopConfigurationKey> trailingStopConfigurationData;
 
     TakeProfitType takeProfitType;
-    @MappedCollection
-    Map<TakeProfitConfigurationKey, Object> takeProfitConfigurationData;
+    ConfigurationStorage<TakeProfitConfigurationKey> takeProfitConfigurationData;
 
     TypeOfDeal typeOfDeal;
 

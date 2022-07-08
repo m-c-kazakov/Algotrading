@@ -12,7 +12,7 @@ public class TakeProfitManagerImpl implements TakeProfitManager {
     @Override
     public void create(DescriptionOfStrategy descriptionOfStrategy, DataOfDeal dataOfDeal, int cursor) {
         // TODO при написании теста отрефакторить. Много вложенных if
-        descriptionOfStrategy.getFromTakeProfitConfigurationData(TakeProfitConfigurationKey.FIXED)
+        descriptionOfStrategy.getFromTakeProfitConfigurationData(TakeProfitConfigurationKey.FIXED_TAKE_PROFIT)
                 .map(int.class::cast)
                 .ifPresent(fixedTakeProfit -> {
                     int takeProfit;

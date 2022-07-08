@@ -30,7 +30,7 @@ public class RandomTakeProfit implements RandomStrategyParams {
 
     static {
         mapWithSupplierGeneratedRandomParams.put(TakeProfitType.FIXED_TAKE_PROFIT,
-                () -> Map.of(TakeProfitConfigurationKey.FIXED, ThreadLocalRandom.current()
+                () -> Map.of(TakeProfitConfigurationKey.FIXED_TAKE_PROFIT, ThreadLocalRandom.current()
                         .nextInt(0, 300)));
     }
 

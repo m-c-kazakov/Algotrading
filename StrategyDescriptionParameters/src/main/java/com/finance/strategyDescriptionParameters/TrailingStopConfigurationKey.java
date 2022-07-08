@@ -8,7 +8,7 @@ import lombok.experimental.FieldDefaults;
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public enum TrailingStopConfigurationKey {
 
-    FIXED("TrailingStop будет формироваться на основе значения по этому ключу минус цена закрытия");
+    FIXED_TRAILING_STOP("TrailingStop будет формироваться на основе значения по этому ключу минус цена закрытия");
 
     String description;
 }

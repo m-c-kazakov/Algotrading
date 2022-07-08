@@ -30,7 +30,7 @@ public class RandomTrailingStop implements RandomStrategyParams {
 
     static {
         mapWithSupplierGeneratedRandomParams.put(TrailingStopType.FIXED_TRAILING_STOP_TYPE,
-                () -> Map.of(TrailingStopConfigurationKey.FIXED, ThreadLocalRandom.current()
+                () -> Map.of(TrailingStopConfigurationKey.FIXED_TRAILING_STOP, ThreadLocalRandom.current()
                         .nextInt(1, 100)));
     }
 
