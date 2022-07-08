@@ -29,7 +29,7 @@ create table specification_of_strategy
     sum_of_deal_type                 varchar(50) not null,
     sum_of_deal_configuration_data   jsonb       not null,
 
-    stop_toss_type                   varchar(50) not null,
+    stop_loss_type                   varchar(50) not null,
     stop_loss_configuration_data     jsonb       not null,
 
     trailing_stop_type               varchar(50) not null,

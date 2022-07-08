@@ -13,7 +13,7 @@ VALUES (1, 1, 5000, 5, 2, 2, 7000, 20, 20);
 
 
 INSERT INTO specification_of_strategy(id, statistics_of_strategy_id, hash_code, start_score, acceptable_risk,
-                                      sum_of_deal_type, sum_of_deal_configuration_data, stop_toss_type,
+                                      sum_of_deal_type, sum_of_deal_configuration_data, stop_loss_type,
                                       stop_loss_configuration_data, trailing_stop_type,
                                       trailing_stop_configuration_data, take_profit_type,
                                       take_profit_configuration_data, type_of_deal, information_of_candles_id,

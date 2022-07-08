@@ -6,26 +6,18 @@ import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import lombok.experimental.FieldDefaults;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestInstance;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.test.web.servlet.MockMvc;
 import org.testcontainers.shaded.com.fasterxml.jackson.databind.ObjectMapper;
 
 @AutoConfigureMockMvc
 @RequiredArgsConstructor
-@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 class GeneticAlgorithmControllerTest extends IntegrationTestBased {
 
     MockMvc mockMvc;
     ObjectMapper objectMapper;
-
-    @BeforeAll
-    public void beforeAll() {
-
-    }
 
     @Test
     @SneakyThrows

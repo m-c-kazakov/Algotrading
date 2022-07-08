@@ -22,7 +22,7 @@ public interface StrategyInformationMapper {
     @Mapping(target = "statisticsOfStrategyId", ignore = true)
     @Mapping(target = "descriptionToOpenADeal", source = "descriptionToOpenADeal", qualifiedByName = "indicatorToId")
     @Mapping(target = "descriptionToCloseADeal", source = "descriptionToCloseADeal", qualifiedByName = "indicatorToId")
-    @Mapping(target = "candlesInformationId", source = "candlesInformation", qualifiedByName = "candlesInformationToId")
+    @Mapping(target = "informationOfCandlesId", source = "candlesInformation", qualifiedByName = "candlesInformationToId")
     SpecificationOfStrategy mapTo(DescriptionOfStrategy descriptionOfStrategy);
 
     @Mapping(target = "dataOfCandles", ignore = true)
@@ -30,7 +30,7 @@ public interface StrategyInformationMapper {
     @Mapping(target = "decisionToCloseADeal", ignore = true)
     @Mapping(target = "descriptionToOpenADeal", source = "descriptionToOpenADeal", qualifiedByName = "idToIndicator")
     @Mapping(target = "descriptionToCloseADeal", source = "descriptionToCloseADeal", qualifiedByName = "idToIndicator")
-    @Mapping(target = "candlesInformation", source = "candlesInformationId", qualifiedByName = "idToCandlesInformation")
+    @Mapping(target = "candlesInformation", source = "informationOfCandlesId", qualifiedByName = "idToCandlesInformation")
     DescriptionOfStrategy mapTo(SpecificationOfStrategy specificationOfStrategy);
 
     @Named("indicatorToId")
