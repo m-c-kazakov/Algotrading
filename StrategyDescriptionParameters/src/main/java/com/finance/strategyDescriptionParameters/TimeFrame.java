@@ -5,9 +5,9 @@ import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 
-import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
+import java.util.concurrent.ThreadLocalRandom;
 
 @Getter
 @RequiredArgsConstructor
@@ -20,12 +20,12 @@ public enum TimeFrame {
     int per;
     int batchSize;
 
-    public static TimeFrame[] getTimeFrames() {
-        return TimeFrame.values();
+    public static List<TimeFrame> getTimeFrames() {
+        return List.of(TimeFrame.values());
     }
 
     public static TimeFrame getTimeFrameByPer(int per) {
-        return Arrays.stream(getTimeFrames()).filter(timeFrame -> timeFrame.getPer() == per).findFirst()
+        return getTimeFrames().stream().filter(timeFrame -> timeFrame.getPer() == per).findFirst()
                 .orElseThrow(() -> new RuntimeException("Не возможно определить TimeFrame по per==" + per));
     }
 
@@ -35,6 +35,9 @@ public enum TimeFrame {
                 .orElseThrow(() -> new RuntimeException("Не возможно определить минимальный TimeFrame из переданной коллекции: " + timeFrames));
     }
 
-
-
+    public static TimeFrame getRandomTimeFrame() {
+        List<TimeFrame> timeFrames = getTimeFrames();
+        return timeFrames.get(ThreadLocalRandom.current()
+                .nextInt(timeFrames.size()));
+    }
 }

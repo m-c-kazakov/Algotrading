@@ -23,6 +23,7 @@ import java.util.Map;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public abstract class StrategyInformationMapper {
 
+    // TODO УДалить лишние методы используя более правильные названия для a.b для того чтобы mapstruct понимал откуда брать
     @Autowired
     InformationOfIndicatorService informationOfIndicatorService;
     @Autowired

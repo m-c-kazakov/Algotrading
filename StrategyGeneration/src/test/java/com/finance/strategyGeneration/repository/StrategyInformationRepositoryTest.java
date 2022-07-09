@@ -1,7 +1,7 @@
 package com.finance.strategyGeneration.repository;
 
 import com.finance.strategyGeneration.intagration.IntegrationTestBased;
-import com.finance.strategyGeneration.stagesOfGeneticAlgorithm.RandomPopulationCreationManager;
+import com.finance.strategyGeneration.stagesOfGeneticAlgorithm.createPopulation.randomPopulation.RandomPopulationCreationManager;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
