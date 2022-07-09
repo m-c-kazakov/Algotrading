@@ -22,7 +22,7 @@ public class IndicatorParametersConfigurationStorageToJsonConverter implements C
     @SneakyThrows
     public PGobject convert(IndicatorParametersConfigurationStorage source) {
         PGobject pGobject = new PGobject();
-        pGobject.setType("jsonb");
+        pGobject.setType("json");
         pGobject.setValue(objectMapper.writeValueAsString(source.getParameters()));
         return pGobject;
     }

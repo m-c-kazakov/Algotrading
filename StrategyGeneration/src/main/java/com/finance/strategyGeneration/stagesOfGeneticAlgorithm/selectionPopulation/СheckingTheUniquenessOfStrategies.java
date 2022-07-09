@@ -3,8 +3,7 @@ package com.finance.strategyGeneration.stagesOfGeneticAlgorithm.selectionPopulat
 import com.finance.dataHolder.DescriptionOfStrategy;
 
 import java.util.List;
-import java.util.Set;
 
 public interface СheckingTheUniquenessOfStrategies {
-    Set<DescriptionOfStrategy> execute(List<DescriptionOfStrategy> populationAfterMutation);
+    List<DescriptionOfStrategy> execute(List<DescriptionOfStrategy> populationAfterMutation);
 }

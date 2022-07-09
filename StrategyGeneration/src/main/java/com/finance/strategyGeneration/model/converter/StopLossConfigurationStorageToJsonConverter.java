@@ -24,7 +24,7 @@ public class StopLossConfigurationStorageToJsonConverter implements Converter<Co
     @SneakyThrows
     public PGobject convert(ConfigurationStorage<StopLossConfigurationKey> source) {
         PGobject pGobject = new PGobject();
-        pGobject.setType("jsonb");
+        pGobject.setType("json");
         pGobject.setValue(objectMapper.writeValueAsString(source.getConfigurationData()));
         return pGobject;
     }

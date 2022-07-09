@@ -1,8 +1,9 @@
 package com.finance.strategyGeneration.stagesOfGeneticAlgorithm.createPopulation.randomPopulation.strategiesForCreatingRandomPopulations;
 
-import com.finance.dataHolder.DescriptionOfStrategy;
 import com.finance.strategyDescriptionParameters.SumOfDealConfigurationKey;
 import com.finance.strategyDescriptionParameters.SumOfDealType;
+import com.finance.strategyGeneration.model.ConfigurationStorage;
+import com.finance.strategyGeneration.model.SpecificationOfStrategy;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -21,33 +22,30 @@ import java.util.function.Supplier;
 public class SumOfDealRandomGenerator implements RandomStrategyParams {
 
     // TODO Вынести паля и статические блоки инициализации
-    Map<SumOfDealType, Consumer<DescriptionOfStrategy.DescriptionOfStrategyBuilder>> sumOfDealTypeConsumerMap = new EnumMap<>(
+    Map<SumOfDealType, Consumer<SpecificationOfStrategy.SpecificationOfStrategyBuilder>> sumOfDealTypeConsumerMap = new EnumMap<>(
             SumOfDealType.class);
 
     @Getter
-    Map<SumOfDealType, Supplier<Map<SumOfDealConfigurationKey, Object>>> mapWithSupplierGeneratedRandomParams = new EnumMap<>(
+    Map<SumOfDealType, Supplier<ConfigurationStorage<SumOfDealConfigurationKey>>> mapWithSupplierGeneratedRandomParams = new EnumMap<>(
             SumOfDealType.class);
 
     {
         mapWithSupplierGeneratedRandomParams.put(SumOfDealType.PERCENT_OF_SCORE,
-                () -> Map.of(SumOfDealConfigurationKey.PERCENT_OF_SCORE, ThreadLocalRandom.current()
-                        .nextInt(1, 5)));
+                () -> new ConfigurationStorage<>(
+                        Map.of(SumOfDealConfigurationKey.PERCENT_OF_SCORE, ThreadLocalRandom.current().nextInt(1, 5))));
     }
 
     {
         sumOfDealTypeConsumerMap.put(SumOfDealType.PERCENT_OF_SCORE, dataOfStrategyBuilder -> {
             dataOfStrategyBuilder.sumOfDealType(SumOfDealType.PERCENT_OF_SCORE);
             dataOfStrategyBuilder.sumOfDealConfigurationData(
-                    mapWithSupplierGeneratedRandomParams.get(SumOfDealType.PERCENT_OF_SCORE)
-                            .get());
+                    mapWithSupplierGeneratedRandomParams.get(SumOfDealType.PERCENT_OF_SCORE).get());
         });
     }
 
     @Override
-    public void add(DescriptionOfStrategy.DescriptionOfStrategyBuilder dataOfStrategyBuilder) {
+    public void add(SpecificationOfStrategy.SpecificationOfStrategyBuilder dataOfStrategyBuilder) {
 
-        sumOfDealTypeConsumerMap
-                .get(SumOfDealType.getRandomSumOfDealType())
-                .accept(dataOfStrategyBuilder);
+        sumOfDealTypeConsumerMap.get(SumOfDealType.getRandomSumOfDealType()).accept(dataOfStrategyBuilder);
     }
 }

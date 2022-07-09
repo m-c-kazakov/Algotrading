@@ -1,10 +1,10 @@
 package com.finance.strategyGeneration.stagesOfGeneticAlgorithm.mutatePopulation;
 
-import com.finance.dataHolder.DescriptionOfStrategy;
+import com.finance.strategyGeneration.model.SpecificationOfStrategy;
 
 import java.util.stream.Stream;
 
 public interface Mutation {
 
-    Stream<DescriptionOfStrategy> execute(DescriptionOfStrategy parentDescriptionOfStrategy);
+    Stream<SpecificationOfStrategy> execute(SpecificationOfStrategy parentSpecificationOfStrategy);
 }

@@ -3,8 +3,9 @@ package com.finance.strategyGeneration.service.mapper;
 import com.finance.strategyDescriptionParameters.CandlesInformation;
 import com.finance.strategyDescriptionParameters.indicators.Indicator;
 import com.finance.strategyGeneration.model.IndicatorParametersConfigurationStorage;
+import com.finance.strategyGeneration.model.InformationOfCandles;
 import com.finance.strategyGeneration.model.InformationOfIndicator;
-import com.finance.strategyGeneration.service.CandlesInformationService;
+import com.finance.strategyGeneration.service.InformationOfCandleService;
 import lombok.AccessLevel;
 import lombok.experimental.FieldDefaults;
 import org.mapstruct.Mapper;
@@ -20,7 +21,7 @@ import java.util.Map;
 public abstract class InformationOfIndicatorMapper {
 
     @Autowired
-    CandlesInformationService candlesInformationService;
+    InformationOfCandleService informationOfCandleService;
 
     @Mapping(target = "parameters", source = "parameters", qualifiedByName = "parametersObjectToMap")
     @Mapping(target = "candlesInformation", source = "informationOfCandlesId", qualifiedByName = "createCandlesInformation")
@@ -53,6 +54,11 @@ public abstract class InformationOfIndicatorMapper {
 
     @Named("createCandlesInformation")
     CandlesInformation createCandlesInformation(long informationOfCandlesId) {
-        return candlesInformationService.findById(informationOfCandlesId);
+        InformationOfCandles informationOfCandles = informationOfCandleService.findById(informationOfCandlesId);
+        return CandlesInformation.builder()
+                .id(informationOfCandles.getId())
+                .currencyPair(informationOfCandles.getCurrencyPair())
+                .timeFrame(informationOfCandles.getTimeFrame())
+                .build();
     }
 }

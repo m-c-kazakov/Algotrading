@@ -1,16 +1,20 @@
 package com.finance.strategyGeneration.service;
 
-import com.finance.strategyDescriptionParameters.CandlesInformation;
-import com.finance.strategyDescriptionParameters.indicators.Indicator;
 import com.finance.strategyDescriptionParameters.indicators.IndicatorType;
+import com.finance.strategyGeneration.model.InformationOfCandles;
+import com.finance.strategyGeneration.model.InformationOfIndicator;
 
+import java.util.List;
 import java.util.Map;
 
 public interface InformationOfIndicatorService {
 
-    Indicator findById(long id);
+    InformationOfIndicator findById(long id);
 
-    Indicator save(Indicator indicator);
+    List<InformationOfIndicator> findAllById(List<Long> ids);
 
-    Indicator save(IndicatorType indicatorType, CandlesInformation candlesInformation, Map<String, String> parameters);
+    InformationOfIndicator create(InformationOfIndicator informationOfIndicator);
+
+    InformationOfIndicator create(IndicatorType indicatorType, InformationOfCandles informationOfCandles, Map<String, String> parameters);
+
 }

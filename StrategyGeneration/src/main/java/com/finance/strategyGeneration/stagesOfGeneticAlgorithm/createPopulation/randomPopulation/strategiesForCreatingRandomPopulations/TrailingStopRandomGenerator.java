@@ -1,8 +1,9 @@
 package com.finance.strategyGeneration.stagesOfGeneticAlgorithm.createPopulation.randomPopulation.strategiesForCreatingRandomPopulations;
 
-import com.finance.dataHolder.DescriptionOfStrategy;
 import com.finance.strategyDescriptionParameters.TrailingStopConfigurationKey;
 import com.finance.strategyDescriptionParameters.TrailingStopType;
+import com.finance.strategyGeneration.model.ConfigurationStorage;
+import com.finance.strategyGeneration.model.SpecificationOfStrategy;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -21,17 +22,19 @@ import java.util.function.Supplier;
 public class TrailingStopRandomGenerator implements RandomStrategyParams {
 
     // TODO Вынести паля и статические блоки инициализации
-    Map<TrailingStopType, Consumer<DescriptionOfStrategy.DescriptionOfStrategyBuilder>> trailingStopTypeConsumerMap = new EnumMap<>(
+    Map<TrailingStopType, Consumer<SpecificationOfStrategy.SpecificationOfStrategyBuilder>> trailingStopTypeConsumerMap = new EnumMap<>(
             TrailingStopType.class);
 
     @Getter
-    Map<TrailingStopType, Supplier<Map<TrailingStopConfigurationKey, Object>>> mapWithSupplierGeneratedRandomParams = new EnumMap<>(
+    Map<TrailingStopType, Supplier<ConfigurationStorage<TrailingStopConfigurationKey>>> mapWithSupplierGeneratedRandomParams = new EnumMap<>(
             TrailingStopType.class);
 
     {
         mapWithSupplierGeneratedRandomParams.put(TrailingStopType.FIXED_TRAILING_STOP_TYPE,
-                () -> Map.of(TrailingStopConfigurationKey.FIXED_TRAILING_STOP, ThreadLocalRandom.current()
-                        .nextInt(1, 100)));
+                () -> new ConfigurationStorage<>(
+                        Map.of(TrailingStopConfigurationKey.FIXED_TRAILING_STOP, ThreadLocalRandom.current()
+                                .nextInt(1, 100)))
+        );
     }
 
     {
@@ -44,10 +47,10 @@ public class TrailingStopRandomGenerator implements RandomStrategyParams {
     }
 
     @Override
-    public void add(DescriptionOfStrategy.DescriptionOfStrategyBuilder dataOfStrategyBuilder) {
+    public void add(SpecificationOfStrategy.SpecificationOfStrategyBuilder specificationOfStrategyBuilder) {
 
         trailingStopTypeConsumerMap.get(TrailingStopType.getRandomTrailingStopType())
-                .accept(dataOfStrategyBuilder);
+                .accept(specificationOfStrategyBuilder);
 
     }
 }

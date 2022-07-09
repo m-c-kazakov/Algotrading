@@ -1,11 +1,9 @@
 package com.finance.strategyGeneration.service;
 
-import com.finance.strategyDescriptionParameters.CandlesInformation;
 import com.finance.strategyDescriptionParameters.CurrencyPair;
 import com.finance.strategyDescriptionParameters.TimeFrame;
 import com.finance.strategyGeneration.model.InformationOfCandles;
 import com.finance.strategyGeneration.repository.InformationOfCandlesRepository;
-import com.finance.strategyGeneration.service.mapper.InformationOfCandlesMapper;
 import com.google.common.base.Objects;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
@@ -19,29 +17,34 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional
 @RequiredArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
-public class CandlesInformationServiceImpl implements CandlesInformationService {
+public class InformationOfCandleServiceImpl implements InformationOfCandleService {
 
-    InformationOfCandlesMapper mapper;
     InformationOfCandlesRepository repository;
 
     @Override
-    public CandlesInformation findById(long candlesInformationId) {
+    public InformationOfCandles findById(long candlesInformationId) {
         return repository.findById(candlesInformationId)
-                .map(mapper::mapTo)
                 .orElseThrow(
                         () -> new RuntimeException("Не найден CandlesInformation для Id == " + candlesInformationId));
     }
 
     @Override
-    public CandlesInformation save(TimeFrame timeFrame, CurrencyPair currencyPair) {
+    public InformationOfCandles create(TimeFrame timeFrame, CurrencyPair currencyPair) {
         int hashCode = Objects.hashCode(timeFrame, currencyPair);
 
-        InformationOfCandles informationOfCandles = repository.findByHashCode(hashCode)
+        return repository.findByHashCode(hashCode)
                 .orElseGet(() -> repository.save(InformationOfCandles.builder()
                         .hashCode(hashCode)
                         .timeFrame(timeFrame)
                         .currencyPair(currencyPair)
                         .build()));
-        return mapper.mapTo(informationOfCandles);
+    }
+
+    @Override
+    public InformationOfCandles createWithNewTimeFrame(String informationOfCandlesId, TimeFrame timeFrame) {
+        InformationOfCandles informationOfCandles = repository.findById(Long.valueOf(informationOfCandlesId))
+                .orElseThrow(
+                        () -> new RuntimeException("Не найден CandlesInformation для Id == " + informationOfCandlesId));
+        return repository.save(informationOfCandles.withTimeFrame(timeFrame));
     }
 }

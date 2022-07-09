@@ -12,7 +12,6 @@ import lombok.experimental.FieldDefaults;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
-import java.util.Set;
 
 @Component
 @RequiredArgsConstructor
@@ -31,27 +30,47 @@ public class GeneticAlgorithmImpl implements GeneticAlgorithm {
 
 
     @Override
-    public Set<DescriptionOfStrategy> execute() {
+    public List<DescriptionOfStrategy> execute() {
+        return List.of();
+        // TODO
 
-        List<DescriptionOfStrategy> population = populationCreationManager.execute();
-
-
-        // Скрещивание
-        List<DescriptionOfStrategy> populationAfterCrossing = populationCrossingManager.execute(population);
-
-        // Мутация
-        List<DescriptionOfStrategy> populationAfterMutation = mutationOfIndividual.execute(populationAfterCrossing);
-
-        // Эволюция
-        // TODO Добавить блок с эволюцией
-
-        // Отбор
-        Set<DescriptionOfStrategy> populationAfterSelection = populationSelection.execute(populationAfterMutation);
-
-        specificationOfStrategyService.saveAll(populationAfterSelection);
-
-
-        return populationAfterSelection;
+//        return Stream.of(populationCreationManager.execute())
+//                .peek(descriptionOfStrategies -> {
+//                    descriptionOfStrategies.stream().forEach(descriptionOfStrategy -> {
+//                        if (descriptionOfStrategy.getStopLossConfigurationData().isEmpty()) {
+//                            throw new RuntimeException("Постая мапа конфигурации");
+//                        }
+//                    });
+//                })
+//                .map(populationCrossingManager::execute)
+//                .peek(descriptionOfStrategies -> {
+//                    descriptionOfStrategies.stream().forEach(descriptionOfStrategy -> {
+//                        if (descriptionOfStrategy.getStopLossConfigurationData().isEmpty()) {
+//                            throw new RuntimeException("Постая мапа конфигурации");
+//                        }
+//                    });
+//                })
+//                .map(mutationOfIndividual::execute)
+//                .peek(descriptionOfStrategies -> {
+//                    descriptionOfStrategies.stream().forEach(descriptionOfStrategy -> {
+//                        if (descriptionOfStrategy.getStopLossConfigurationData().isEmpty()) {
+//                            throw new RuntimeException("Постая мапа конфигурации");
+//                        }
+//                    });
+//                })
+//                // Эволюция
+//                // TODO Добавить блок с эволюцией
+//                .map(populationSelection::execute)
+//                .peek(descriptionOfStrategies -> {
+//                    descriptionOfStrategies.stream().forEach(descriptionOfStrategy -> {
+//                        if (descriptionOfStrategy.getStopLossConfigurationData().isEmpty()) {
+//                            throw new RuntimeException("Постая мапа конфигурации");
+//                        }
+//                    });
+//                })
+//                .peek(specificationOfStrategyService::saveAll)
+//                .findFirst()
+//                .orElseThrow(() -> new RuntimeException("Не созданы стратегии для проверки"));
 
     }
 

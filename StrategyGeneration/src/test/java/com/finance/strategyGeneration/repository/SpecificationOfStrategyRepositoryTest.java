@@ -13,9 +13,10 @@ import static org.assertj.core.api.Assertions.assertThat;
 @Transactional
 class SpecificationOfStrategyRepositoryTest extends IntegrationTestBased {
 
-    public static final long SPECIFICATION_ID = 1L;
     @Autowired
     SpecificationOfStrategyRepository repository;
+    @Autowired
+    StatisticsOfStrategyRepository statisticsOfStrategyRepository;
 
     @Test
     void existsByHashCode() {
@@ -25,17 +26,26 @@ class SpecificationOfStrategyRepositoryTest extends IntegrationTestBased {
     @Test
     void updateStatisticsOfStrategyId() {
         long statisticsOfStrategyId = 5L;
-        repository.updateStatisticsOfStrategyId(SPECIFICATION_ID, statisticsOfStrategyId);
-        Optional<SpecificationOfStrategy> specification = repository.findById(SPECIFICATION_ID);
-        assertThat(specification).isPresent();
-        specification.ifPresent(specificationOfStrategy ->
-                assertThat(specificationOfStrategy.getStatisticsOfStrategyId()).isEqualTo(statisticsOfStrategyId)
-        );
+        Optional<SpecificationOfStrategy> optionalSpecificationOfStrategy = repository.findAll().stream().findFirst();
+        assertThat(optionalSpecificationOfStrategy).isPresent();
+        optionalSpecificationOfStrategy.ifPresent(specificationOfStrategy -> {
 
+            repository.updateStatisticsOfStrategyId(specificationOfStrategy.getId(), statisticsOfStrategyId);
+            Optional<SpecificationOfStrategy> optionalSpecification = repository.findById(
+                    specificationOfStrategy.getId());
+
+            assertThat(optionalSpecification).isPresent();
+            optionalSpecification.ifPresent(specification ->
+                    assertThat(specification.getStatisticsOfStrategyId()).isEqualTo(statisticsOfStrategyId)
+            );
+        });
     }
 
     @Test
     void findTheBestStrategy() {
-        assertThat(repository.findTheBestStrategy(1)).hasSize(1);
+        assertThat(statisticsOfStrategyRepository.findAll()).isNotEmpty();
+        assertThat(repository.findAll()).isNotEmpty();
+        assertThat(repository.findTheBestStrategy(1))
+                .hasSize(1);
     }
 }

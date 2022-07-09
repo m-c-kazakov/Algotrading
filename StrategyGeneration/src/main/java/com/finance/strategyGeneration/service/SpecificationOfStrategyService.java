@@ -1,10 +1,13 @@
 package com.finance.strategyGeneration.service;
 
 import com.finance.dataHolder.DescriptionOfStrategy;
+import com.finance.strategyGeneration.model.SpecificationOfStrategy;
 
-import java.util.Set;
+import java.util.List;
 
 public interface SpecificationOfStrategyService {
-    void saveAll(Set<DescriptionOfStrategy> populationAfterSelection);
+    void save(SpecificationOfStrategy specificationOfStrategy);
+
+    void saveAll(List<DescriptionOfStrategy> populationAfterSelection);
 
 }

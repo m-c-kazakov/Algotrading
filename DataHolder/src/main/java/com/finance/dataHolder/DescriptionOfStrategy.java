@@ -5,6 +5,8 @@ import com.finance.strategyDescriptionParameters.indicators.Indicator;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -32,32 +34,41 @@ public class DescriptionOfStrategy {
     long startScore;
 
     long acceptableRisk;
+    @NotBlank
     SumOfDealType sumOfDealType;
+    @NotEmpty
     Map<SumOfDealConfigurationKey, Object> sumOfDealConfigurationData;
 
+    @NotBlank
     StopLossType stopLossType;
+    @NotEmpty
     Map<StopLossConfigurationKey, Object> stopLossConfigurationData;
-
+    @NotBlank
     TrailingStopType trailingStopType;
+    @NotEmpty
     Map<TrailingStopConfigurationKey, Object> trailingStopConfigurationData;
-
+    @NotBlank
     TakeProfitType takeProfitType;
+    @NotEmpty
     Map<TakeProfitConfigurationKey, Object> takeProfitConfigurationData;
-
+    @NotBlank
     TypeOfDeal typeOfDeal;
     @Getter(AccessLevel.NONE)
     @EqualsAndHashCode.Exclude
     List<DataOfCandle> dataOfCandles;
+    @NonNull
     CandlesInformation candlesInformation;
 
     @Getter(AccessLevel.NONE)
     @EqualsAndHashCode.Exclude
     List<Byte> decisionToOpenADeal;
+    @NotEmpty
     List<Indicator> descriptionToOpenADeal;
 
     @Getter(AccessLevel.NONE)
     @EqualsAndHashCode.Exclude
     List<Byte> decisionToCloseADeal;
+    @NotEmpty
     List<Indicator> descriptionToCloseADeal;
 
 

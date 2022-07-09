@@ -1,8 +1,9 @@
 package com.finance.strategyGeneration.stagesOfGeneticAlgorithm.createPopulation.randomPopulation.strategiesForCreatingRandomPopulations;
 
-import com.finance.dataHolder.DescriptionOfStrategy;
 import com.finance.strategyDescriptionParameters.TakeProfitConfigurationKey;
 import com.finance.strategyDescriptionParameters.TakeProfitType;
+import com.finance.strategyGeneration.model.ConfigurationStorage;
+import com.finance.strategyGeneration.model.SpecificationOfStrategy;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -21,33 +22,30 @@ import java.util.function.Supplier;
 public class TakeProfitRandomGenerator implements RandomStrategyParams {
 
     // TODO Вынести паля и статические блоки инициализации
-    Map<TakeProfitType, Consumer<DescriptionOfStrategy.DescriptionOfStrategyBuilder>> takeProfitTypeConsumerMap = new EnumMap<>(
+    Map<TakeProfitType, Consumer<SpecificationOfStrategy.SpecificationOfStrategyBuilder>> takeProfitTypeConsumerMap = new EnumMap<>(
             TakeProfitType.class);
 
     @Getter
-    Map<TakeProfitType, Supplier<Map<TakeProfitConfigurationKey, Object>>> mapWithSupplierGeneratedRandomParams = new EnumMap<>(
+    Map<TakeProfitType, Supplier<ConfigurationStorage<TakeProfitConfigurationKey>>> mapWithSupplierGeneratedRandomParams = new EnumMap<>(
             TakeProfitType.class);
 
     {
         mapWithSupplierGeneratedRandomParams.put(TakeProfitType.FIXED_TAKE_PROFIT,
-                () -> Map.of(TakeProfitConfigurationKey.FIXED_TAKE_PROFIT, ThreadLocalRandom.current()
-                        .nextInt(0, 300)));
+                () -> new ConfigurationStorage<>(Map.of(TakeProfitConfigurationKey.FIXED_TAKE_PROFIT,
+                        ThreadLocalRandom.current().nextInt(0, 300))));
     }
 
     {
         takeProfitTypeConsumerMap.put(TakeProfitType.FIXED_TAKE_PROFIT, dataOfStrategyBuilder -> {
             dataOfStrategyBuilder.takeProfitType(TakeProfitType.FIXED_TAKE_PROFIT);
             dataOfStrategyBuilder.takeProfitConfigurationData(
-                    mapWithSupplierGeneratedRandomParams.get(TakeProfitType.FIXED_TAKE_PROFIT)
-                            .get());
+                    mapWithSupplierGeneratedRandomParams.get(TakeProfitType.FIXED_TAKE_PROFIT).get());
         });
     }
 
     @Override
-    public void add(DescriptionOfStrategy.DescriptionOfStrategyBuilder dataOfStrategyBuilder) {
+    public void add(SpecificationOfStrategy.SpecificationOfStrategyBuilder dataOfStrategyBuilder) {
 
-        takeProfitTypeConsumerMap
-                .get(TakeProfitType.getRandomTakeProfitType())
-                .accept(dataOfStrategyBuilder);
+        takeProfitTypeConsumerMap.get(TakeProfitType.getRandomTakeProfitType()).accept(dataOfStrategyBuilder);
     }
 }

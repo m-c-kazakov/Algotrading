@@ -4,10 +4,8 @@ import com.finance.dataHolder.DescriptionOfStrategy;
 import com.finance.dataHolder.StatisticsDataOfStrategy;
 import com.finance.strategyDescriptionParameters.*;
 import com.finance.strategyDescriptionParameters.indicators.Indicator;
-import com.finance.strategyGeneration.model.ConfigurationStorage;
-import com.finance.strategyGeneration.model.SpecificationOfStrategy;
-import com.finance.strategyGeneration.model.StatisticsOfStrategy;
-import com.finance.strategyGeneration.service.CandlesInformationService;
+import com.finance.strategyGeneration.model.*;
+import com.finance.strategyGeneration.service.InformationOfCandleService;
 import com.finance.strategyGeneration.service.InformationOfIndicatorService;
 import lombok.AccessLevel;
 import lombok.experimental.FieldDefaults;
@@ -27,18 +25,18 @@ public abstract class StrategyInformationMapper {
     @Autowired
     InformationOfIndicatorService informationOfIndicatorService;
     @Autowired
-    CandlesInformationService candlesInformationService;
+    InformationOfCandleService informationOfCandleService;
 
     @Mapping(target = "id", ignore = true)
     public abstract StatisticsOfStrategy mapTo(StatisticsDataOfStrategy statisticsDataOfStrategy);
 
-    @Mapping(target = "hashCode", source = "descriptionOfStrategy", qualifiedByName = "getHashCode")
+    @Mapping(target = "hashCode", ignore = true)
     @Mapping(target = "statisticsOfStrategyId", ignore = true)
     @Mapping(target = "sumOfDealConfigurationData", source = "sumOfDealConfigurationData", qualifiedByName = "sumOfDealMapConverter")
     @Mapping(target = "stopLossConfigurationData", source = "stopLossConfigurationData", qualifiedByName = "stopLossMapConverter")
     @Mapping(target = "trailingStopConfigurationData", source = "trailingStopConfigurationData", qualifiedByName = "trailingStopMapConverter")
     @Mapping(target = "takeProfitConfigurationData", source = "takeProfitConfigurationData", qualifiedByName = "takeProfitMapConverter")
-    @Mapping(target = "informationOfCandlesId", source = "candlesInformation", qualifiedByName = "getInformationOfCandlesId")
+    @Mapping(target = "informationOfCandlesId", source = "candlesInformation.id")
     @Mapping(target = "descriptionToOpenADeal", source = "descriptionToOpenADeal", qualifiedByName = "indicatorToId")
     @Mapping(target = "descriptionToCloseADeal", source = "descriptionToCloseADeal", qualifiedByName = "indicatorToId")
     public abstract SpecificationOfStrategy mapTo(DescriptionOfStrategy descriptionOfStrategy);
@@ -55,11 +53,6 @@ public abstract class StrategyInformationMapper {
     @Mapping(target = "takeProfitConfigurationData", source = "takeProfitConfigurationData", qualifiedByName = "takeProfitConfigurationDataConverter")
     public abstract DescriptionOfStrategy mapTo(SpecificationOfStrategy specificationOfStrategy);
 
-    @Named("getHashCode")
-    static int getHashCode(DescriptionOfStrategy descriptionOfStrategy) {
-        return descriptionOfStrategy.hashCode();
-    }
-
     @Named("indicatorToId")
     static Long indicatorToId(Indicator indicator) {
         return indicator.getId();
@@ -67,17 +60,44 @@ public abstract class StrategyInformationMapper {
 
     @Named("idToIndicatorDescriptionToOpenADeal")
     Indicator idToIndicatorDescriptionToOpenADeal(Long id) {
-        return informationOfIndicatorService.findById(id);
+        InformationOfIndicator informationOfIndicator = informationOfIndicatorService.findById(id);
+        InformationOfCandles informationOfCandles = informationOfCandleService.findById(
+                Long.parseLong(informationOfIndicator.getInformationOfCandlesId()));
+        return Indicator.builder()
+                .id(Long.valueOf(informationOfIndicator.getId()))
+                .indicatorType(informationOfIndicator.getIndicatorType())
+                .candlesInformation(CandlesInformation.builder()
+                        .id(informationOfCandles.getId())
+                        .timeFrame(informationOfCandles.getTimeFrame())
+                        .currencyPair(informationOfCandles.getCurrencyPair())
+                        .build())
+                .build();
     }
 
     @Named("idToIndicatorDescriptionToCloseADeal")
     Indicator idToIndicatorDescriptionToCloseADeal(Long id) {
-        return informationOfIndicatorService.findById(id);
+        InformationOfIndicator informationOfIndicator = informationOfIndicatorService.findById(id);
+        InformationOfCandles informationOfCandles = informationOfCandleService.findById(
+                Long.parseLong(informationOfIndicator.getInformationOfCandlesId()));
+        return Indicator.builder()
+                .id(Long.valueOf(informationOfIndicator.getId()))
+                .indicatorType(informationOfIndicator.getIndicatorType())
+                .candlesInformation(CandlesInformation.builder()
+                        .id(informationOfCandles.getId())
+                        .timeFrame(informationOfCandles.getTimeFrame())
+                        .currencyPair(informationOfCandles.getCurrencyPair())
+                        .build())
+                .build();
     }
 
     @Named("idToCandlesInformation")
     CandlesInformation idToCandlesInformation(Long id) {
-        return candlesInformationService.findById(id);
+        InformationOfCandles informationOfCandles = informationOfCandleService.findById(id);
+        return CandlesInformation.builder()
+                .id(informationOfCandles.getId())
+                .currencyPair(informationOfCandles.getCurrencyPair())
+                .timeFrame(informationOfCandles.getTimeFrame())
+                .build();
     }
 
     @Named("sumOfDealConfigurationDataConverter")
@@ -117,11 +137,6 @@ public abstract class StrategyInformationMapper {
     @Named("takeProfitMapConverter")
     static ConfigurationStorage<TakeProfitConfigurationKey> takeProfitMapConverter(Map<TakeProfitConfigurationKey, Object> configuration) {
         return new ConfigurationStorage<>(configuration);
-    }
-
-    @Named("getInformationOfCandlesId")
-    static Long getInformationOfCandlesId(CandlesInformation candlesInformation) {
-        return candlesInformation.getId();
     }
 
 }

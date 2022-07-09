@@ -42,11 +42,11 @@ create table specification_of_strategy
 
     type_of_deal                     varchar(50)    not null,
 
-    information_of_candles_id        integer        not null,
+    information_of_candles_id        varchar        not null,
 
-    description_to_open_a_deal       integer[]      not null,
+    description_to_open_a_deal       varchar[]      not null,
 
-    description_to_close_a_deal      integer[]      not null
+    description_to_close_a_deal      varchar[]      not null
 
 );
 

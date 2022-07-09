@@ -7,7 +7,7 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.relational.core.mapping.Table;
 
 @Getter
-@Builder
+@Builder(toBuilder = true)
 @With
 @RequiredArgsConstructor
 @Table("information_of_indicator")
@@ -17,12 +17,11 @@ public class InformationOfIndicator {
 
     @Id
     @EqualsAndHashCode.Exclude
-    long id;
+    Long id;
     @EqualsAndHashCode.Exclude
-    long hashCode;
+    Integer hashCode;
     IndicatorType indicatorType;
-    long informationOfCandlesId;
+    String informationOfCandlesId;
     IndicatorParametersConfigurationStorage parameters;
-
 
 }

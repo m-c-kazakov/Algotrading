@@ -7,9 +7,13 @@ import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface SpecificationOfStrategyRepository extends CrudRepository<SpecificationOfStrategy, Long> {
 
+    List<SpecificationOfStrategy> findAll();
+
+    Optional<SpecificationOfStrategy> findByHashCode(long hashCode);
 
     @Modifying
     @Query("UPDATE specification_of_strategy SET statistics_of_strategy_id= :statisticsOfStrategyId WHERE id= :id")

@@ -9,6 +9,7 @@ import org.springframework.data.relational.core.mapping.Table;
 
 @Getter
 @Builder
+@With
 @RequiredArgsConstructor
 @Table("information_of_candles")
 @EqualsAndHashCode
@@ -16,9 +17,9 @@ import org.springframework.data.relational.core.mapping.Table;
 public class InformationOfCandles {
     @Id
     @EqualsAndHashCode.Exclude
-    long id;
+    Long id;
     @EqualsAndHashCode.Exclude
-    long hashCode;
+    Integer hashCode;
     CurrencyPair currencyPair;
     TimeFrame timeFrame;
 }

@@ -25,6 +25,7 @@ public class MutationOfIndividualImpl implements MutationOfIndividual {
         return populationAfterCrossing.stream()
                 .flatMap(dataOfStrategy -> mutations.stream()
                         .flatMap(mutation -> mutation.execute(dataOfStrategy)))
+                .distinct()
                 .toList();
     }
 }

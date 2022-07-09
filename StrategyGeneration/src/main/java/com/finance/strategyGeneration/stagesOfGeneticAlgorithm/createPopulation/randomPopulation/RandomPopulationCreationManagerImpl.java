@@ -1,7 +1,7 @@
 package com.finance.strategyGeneration.stagesOfGeneticAlgorithm.createPopulation.randomPopulation;
 
-import com.finance.dataHolder.DescriptionOfStrategy;
 import com.finance.strategyDescriptionParameters.TypeOfDeal;
+import com.finance.strategyGeneration.model.SpecificationOfStrategy;
 import com.finance.strategyGeneration.stagesOfGeneticAlgorithm.createPopulation.randomPopulation.strategiesForCreatingRandomPopulations.RandomStrategyParams;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
@@ -17,22 +17,23 @@ import java.util.concurrent.ThreadLocalRandom;
 public class RandomPopulationCreationManagerImpl implements RandomPopulationCreationManager {
 
     static long startScore = 1000; // TODO Вынести в Property
-    static long acceptableRisk = 20; // TODO Вынести в Property
+    static int acceptableRisk = 20; // TODO Вынести в Property
 
     static List<TypeOfDeal> typeOfDeals = List.of(TypeOfDeal.values());
 
     List<RandomStrategyParams> randomStrategyParams;
 
     @Override
-    public DescriptionOfStrategy execute() {
+    public SpecificationOfStrategy execute() {
 
-        DescriptionOfStrategy.DescriptionOfStrategyBuilder dataOfStrategyBuilder = DescriptionOfStrategy.builder()
+        SpecificationOfStrategy.SpecificationOfStrategyBuilder dataOfStrategyBuilder = SpecificationOfStrategy.builder()
                 .startScore(startScore)
                 .acceptableRisk(acceptableRisk)
                 .typeOfDeal(getTypeOfDeal());
 
         randomStrategyParams.forEach(randomStrategyParam -> randomStrategyParam.add(dataOfStrategyBuilder));
-        return dataOfStrategyBuilder.build();
+        SpecificationOfStrategy specificationOfStrategy = dataOfStrategyBuilder.build();
+        return specificationOfStrategy.withHashCode(specificationOfStrategy.hashCode());
     }
 
     private TypeOfDeal getTypeOfDeal() {

@@ -41,7 +41,8 @@ public class SmaGeneratorRandomParameters implements GeneratorRandomParametersBy
         Map<String, String> randomParameters = new HashMap<>();
 
         smaParameters.forEach(
-                smaParameter -> randomParameters.put(smaParameter.name(), parametersSupplierMap.get(smaParameter.name()).get()));
+                smaParameter -> randomParameters.put(smaParameter.name(),
+                        parametersSupplierMap.get(smaParameter.name()).get()));
 
 
         return randomParameters;

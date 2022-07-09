@@ -1,8 +1,9 @@
 package com.finance.strategyGeneration.stagesOfGeneticAlgorithm.mutatePopulation.trailingStopType;
 
-import com.finance.dataHolder.DescriptionOfStrategy;
 import com.finance.strategyDescriptionParameters.TrailingStopConfigurationKey;
 import com.finance.strategyDescriptionParameters.TrailingStopType;
+import com.finance.strategyGeneration.model.ConfigurationStorage;
+import com.finance.strategyGeneration.model.SpecificationOfStrategy;
 import com.finance.strategyGeneration.stagesOfGeneticAlgorithm.createPopulation.randomPopulation.strategiesForCreatingRandomPopulations.TrailingStopRandomGenerator;
 import com.finance.strategyGeneration.stagesOfGeneticAlgorithm.mutatePopulation.Mutation;
 import lombok.AccessLevel;
@@ -10,7 +11,6 @@ import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import org.springframework.stereotype.Component;
 
-import java.util.Map;
 import java.util.stream.Stream;
 
 @Component
@@ -21,19 +21,18 @@ public class TrailingStopTypeMutation implements Mutation {
     TrailingStopRandomGenerator trailingStopRandomGenerator;
 
     @Override
-    public Stream<DescriptionOfStrategy> execute(DescriptionOfStrategy parentDescriptionOfStrategy) {
+    public Stream<SpecificationOfStrategy> execute(SpecificationOfStrategy parentSpecificationOfStrategy) {
 
         TrailingStopType randomTrailingStopType = TrailingStopType.getRandomTrailingStopType();
 
-        Map<TrailingStopConfigurationKey, Object> randomParamsForTrailingStop = trailingStopRandomGenerator
+
+        ConfigurationStorage<TrailingStopConfigurationKey> randomParamsForTrailingStop = trailingStopRandomGenerator
                 .getMapWithSupplierGeneratedRandomParams()
-                .get(randomTrailingStopType)
-                .get();
+                .get(randomTrailingStopType).get();
 
-        DescriptionOfStrategy childDescriptionOfStrategy = parentDescriptionOfStrategy
-                .withTrailingStopType(randomTrailingStopType)
-                .withTrailingStopConfigurationData(randomParamsForTrailingStop);
+        SpecificationOfStrategy childSpecificationOfStrategy = parentSpecificationOfStrategy.withTrailingStopType(
+                randomTrailingStopType).withTrailingStopConfigurationData(randomParamsForTrailingStop);
 
-        return Stream.of(parentDescriptionOfStrategy, childDescriptionOfStrategy);
+        return Stream.of(parentSpecificationOfStrategy, childSpecificationOfStrategy);
     }
 }

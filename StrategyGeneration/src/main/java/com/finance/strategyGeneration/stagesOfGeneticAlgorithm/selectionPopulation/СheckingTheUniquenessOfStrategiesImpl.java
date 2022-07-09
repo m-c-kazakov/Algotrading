@@ -10,8 +10,6 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.Set;
-import java.util.stream.Collectors;
 
 @Component
 @Transactional
@@ -23,17 +21,14 @@ public class СheckingTheUniquenessOfStrategiesImpl implements СheckingTheUniqu
     StrategyInformationMapper mapper;
 
     @Override
-    public Set<DescriptionOfStrategy> execute(List<DescriptionOfStrategy> populationAfterMutation) {
+    public List<DescriptionOfStrategy> execute(List<DescriptionOfStrategy> populationAfterMutation) {
 
-
-        Set<DescriptionOfStrategy> collect = populationAfterMutation.stream()
-                .distinct()
+        return populationAfterMutation.stream()
                 .map(mapper::mapTo)
+                .distinct()
                 .filter(specificationOfStrategy -> !specificationOfStrategyRepository.existsByHashCode(
                         specificationOfStrategy.hashCode()))
                 .map(mapper::mapTo)
-                .collect(Collectors.toSet());
-
-        return collect;
+                .toList();
     }
 }

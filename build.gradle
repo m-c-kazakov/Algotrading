@@ -36,6 +36,7 @@ allprojects {
             dependency("com.google.guava:guava:${Versions.guava}")
             dependency("org.mapstruct:mapstruct:${Versions.mapstruct}")
             dependency("org.mapstruct:mapstruct-processor:${Versions.mapstruct}")
+            dependency("'org.springframework.boot:spring-boot-starter-validation:${Versions.springBootStarterValidation}")
         }
     }
 

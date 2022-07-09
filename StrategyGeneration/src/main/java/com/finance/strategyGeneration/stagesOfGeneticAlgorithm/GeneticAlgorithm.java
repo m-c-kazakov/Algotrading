@@ -2,8 +2,8 @@ package com.finance.strategyGeneration.stagesOfGeneticAlgorithm;
 
 import com.finance.dataHolder.DescriptionOfStrategy;
 
-import java.util.Set;
+import java.util.List;
 
 public interface GeneticAlgorithm {
-    Set<DescriptionOfStrategy> execute();
+    List<DescriptionOfStrategy> execute();
 }

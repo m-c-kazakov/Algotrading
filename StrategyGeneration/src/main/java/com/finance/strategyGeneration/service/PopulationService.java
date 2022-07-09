@@ -1,9 +1,9 @@
 package com.finance.strategyGeneration.service;
 
-import com.finance.dataHolder.DescriptionOfStrategy;
+import com.finance.strategyGeneration.model.SpecificationOfStrategy;
 
 import java.util.List;
 
 public interface PopulationService {
-    List<DescriptionOfStrategy> findTheBestIndividual(int numberOfIndividuals);
+    List<SpecificationOfStrategy> findTheBestIndividual(int numberOfIndividuals);
 }

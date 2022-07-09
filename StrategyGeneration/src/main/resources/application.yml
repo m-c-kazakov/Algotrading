@@ -8,6 +8,8 @@ logging:
     org.springframework.jdbc.core: TRACE
 
 spring:
+  main:
+    allow-circular-references: true
   mvc:
     format:
       # Устанавливает формат для конвертации дат в формат iso
