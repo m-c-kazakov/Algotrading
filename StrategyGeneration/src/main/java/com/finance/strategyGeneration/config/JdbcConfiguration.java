@@ -1,7 +1,20 @@
 package com.finance.strategyGeneration.config;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.finance.strategyGeneration.model.converter.*;
+import com.finance.strategyGeneration.model.converter.indicatorParametersConfigurationStorage.IndicatorParametersConfigurationStorageToJsonConverter;
+import com.finance.strategyGeneration.model.converter.indicatorParametersConfigurationStorage.JsonToIndicatorParameterConfigurationStorageConverter;
+import com.finance.strategyGeneration.model.converter.indicatorsDescriptionStorageConverter.IdsToIndicatorsDescriptionStorageConverter;
+import com.finance.strategyGeneration.model.converter.indicatorsDescriptionStorageConverter.IndicatorsDescriptionStorageToIdsConverter;
+import com.finance.strategyGeneration.model.converter.informationOfCandlesStorageConverter.IdToInformationOfCandlesStorageConverter;
+import com.finance.strategyGeneration.model.converter.informationOfCandlesStorageConverter.InformationOfCandlesStorageToIdConverter;
+import com.finance.strategyGeneration.model.converter.stopLoss.StopLossConfigurationStorageToJsonConverter;
+import com.finance.strategyGeneration.model.converter.stopLoss.StopLossJsonToConfigurationStorageConverter;
+import com.finance.strategyGeneration.model.converter.sumOfDeal.SumOfDealConfigurationStorageToJsonConverter;
+import com.finance.strategyGeneration.model.converter.sumOfDeal.SumOfDealJsonToConfigurationStorageConverter;
+import com.finance.strategyGeneration.model.converter.takeProfit.TakeProfitConfigurationStorageToJsonConverter;
+import com.finance.strategyGeneration.model.converter.takeProfit.TakeProfitJsonToConfigurationStorageConverter;
+import com.finance.strategyGeneration.model.converter.trailingStop.TrailingStopConfigurationStorageToJsonConverter;
+import com.finance.strategyGeneration.model.converter.trailingStop.TrailingStopJsonToConfigurationStorageConverter;
 import lombok.NonNull;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -68,8 +81,27 @@ public class JdbcConfiguration extends AbstractJdbcConfiguration {
         return new JsonToIndicatorParameterConfigurationStorageConverter(objectMapper());
     }
 
-    @Override
     @Bean
+    public IndicatorsDescriptionStorageToIdsConverter indicatorsDescriptionStorageToIdsConverter() {
+        return new IndicatorsDescriptionStorageToIdsConverter();
+    }
+
+    @Bean
+    public IdsToIndicatorsDescriptionStorageConverter indicatorsDescriptionStorageConverter() {
+        return new IdsToIndicatorsDescriptionStorageConverter();
+    }
+
+    @Bean
+    public IdToInformationOfCandlesStorageConverter idToInformationOfCandlesStorageConverter() {
+        return new IdToInformationOfCandlesStorageConverter();
+    }
+
+    @Bean
+    public InformationOfCandlesStorageToIdConverter informationOfCandlesStorageToIdConverter() {
+        return new InformationOfCandlesStorageToIdConverter();
+    }
+
+    @Override
     protected @NonNull List<?> userConverters() {
         return Arrays.asList(
                 stopLossConfigurationStorageToJsonConverter(),
@@ -81,7 +113,11 @@ public class JdbcConfiguration extends AbstractJdbcConfiguration {
                 trailingStopConfigurationStorageToJsonConverter(),
                 trailingStopJsonToConfigurationStorageConverter(),
                 indicatorParametersConfigurationStorageToJsonConverter(),
-                jsonToIndicatorParameterConfigurationStorageConverter()
+                jsonToIndicatorParameterConfigurationStorageConverter(),
+                indicatorsDescriptionStorageToIdsConverter(),
+                indicatorsDescriptionStorageConverter(),
+                idToInformationOfCandlesStorageConverter(),
+                informationOfCandlesStorageToIdConverter()
         );
     }
 }

@@ -1,9 +1,9 @@
 package com.finance.strategyGeneration.stagesOfGeneticAlgorithm.crossPopulation;
 
-import com.finance.dataHolder.DescriptionOfStrategy;
+import com.finance.strategyGeneration.model.SpecificationOfStrategy;
 
 import java.util.List;
 
 public interface PopulationCrossingManager {
-    List<DescriptionOfStrategy> execute(List<DescriptionOfStrategy> population);
+    List<SpecificationOfStrategy> execute(List<SpecificationOfStrategy> population);
 }

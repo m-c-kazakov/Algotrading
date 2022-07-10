@@ -1,6 +1,6 @@
 package com.finance.strategyGeneration.stagesOfGeneticAlgorithm.crossPopulation.exchangeManagers;
 
-import com.finance.dataHolder.DescriptionOfStrategy;
+import com.finance.strategyGeneration.model.SpecificationOfStrategy;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -11,17 +11,17 @@ import java.util.stream.Stream;
 public class DescriptionToCloseADealExchangeManager implements ExchangeManager {
 
     @Override
-    public Stream<DescriptionOfStrategy> execute(Set<DescriptionOfStrategy> dataOfStrategies) {
-        List<DescriptionOfStrategy> descriptionOfStrategyElements = dataOfStrategies.stream()
+    public Stream<SpecificationOfStrategy> execute(Set<SpecificationOfStrategy> dataOfStrategies) {
+        List<SpecificationOfStrategy> SpecificationOfStrategyElements = dataOfStrategies.stream()
                 .toList();
 
-        DescriptionOfStrategy firstParent = descriptionOfStrategyElements.get(0);
-        DescriptionOfStrategy secondParent = descriptionOfStrategyElements.get(1);
+        SpecificationOfStrategy firstParent = SpecificationOfStrategyElements.get(0);
+        SpecificationOfStrategy secondParent = SpecificationOfStrategyElements.get(1);
 
-        DescriptionOfStrategy firstChild = firstParent
+        SpecificationOfStrategy firstChild = firstParent
                 .withDescriptionToCloseADeal(secondParent.getDescriptionToCloseADeal());
 
-        DescriptionOfStrategy secondChild = secondParent
+        SpecificationOfStrategy secondChild = secondParent
                 .withDescriptionToCloseADeal(firstParent.getDescriptionToCloseADeal());
 
         return Stream.of(firstParent, secondParent, firstChild, secondChild);

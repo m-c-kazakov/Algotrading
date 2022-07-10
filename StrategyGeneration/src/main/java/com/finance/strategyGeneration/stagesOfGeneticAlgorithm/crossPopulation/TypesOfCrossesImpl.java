@@ -1,8 +1,9 @@
 package com.finance.strategyGeneration.stagesOfGeneticAlgorithm.crossPopulation;
 
-import com.finance.strategyDescriptionParameters.indicators.Indicator;
+import com.finance.strategyGeneration.model.InformationOfIndicator;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
+import org.springframework.util.Assert;
 
 import java.util.List;
 import java.util.stream.Stream;
@@ -16,15 +17,12 @@ import java.util.stream.Stream;
 public class TypesOfCrossesImpl implements TypesOfCrosses {
 
     @Override
-    public List<Indicator> singlePointCrossing(List<Indicator> first, List<Indicator> second, int separator) {
-        if (first.isEmpty()) {
-            throw new RuntimeException("first");
-        } else if (second.isEmpty()) {
-            throw new RuntimeException("second");
-        }
-        // TODO в тестах проверить что будет если придут коллекции с 0 и 1 количеством элементов
-        List<Indicator> firstSubList = first.subList(0, separator);
-        List<Indicator> secondSubList = second.subList(separator, second.size());
+    public List<InformationOfIndicator> singlePointCrossing(List<InformationOfIndicator> first, List<InformationOfIndicator> second, int separator) {
+        Assert.notEmpty(first, "Коллекция индикаторов first не может быть пустой");
+        Assert.notEmpty(second, "Коллекция индикаторов second не может быть пустой");
+
+        List<InformationOfIndicator> firstSubList = first.subList(0, separator);
+        List<InformationOfIndicator> secondSubList = second.subList(separator, second.size());
         return Stream.of(firstSubList, secondSubList).flatMap(List::stream).toList();
     }
 }

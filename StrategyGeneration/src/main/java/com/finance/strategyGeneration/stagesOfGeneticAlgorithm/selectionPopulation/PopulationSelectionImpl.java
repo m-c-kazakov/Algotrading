@@ -1,6 +1,6 @@
 package com.finance.strategyGeneration.stagesOfGeneticAlgorithm.selectionPopulation;
 
-import com.finance.dataHolder.DescriptionOfStrategy;
+import com.finance.strategyGeneration.model.SpecificationOfStrategy;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
@@ -17,7 +17,7 @@ public class PopulationSelectionImpl implements PopulationSelection {
 
 
     @Override
-    public List<DescriptionOfStrategy> execute(List<DescriptionOfStrategy> populationAfterMutation) {
+    public List<SpecificationOfStrategy> execute(List<SpecificationOfStrategy> populationAfterMutation) {
 
         return сheckingTheUniquenessOfStrategies.execute(populationAfterMutation);
     }

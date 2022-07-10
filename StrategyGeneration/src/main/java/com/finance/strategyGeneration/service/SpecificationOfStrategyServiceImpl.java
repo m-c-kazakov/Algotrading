@@ -1,79 +1,87 @@
 package com.finance.strategyGeneration.service;
 
-import com.finance.dataHolder.DescriptionOfStrategy;
+import com.finance.strategyGeneration.model.InformationOfIndicator;
 import com.finance.strategyGeneration.model.SpecificationOfStrategy;
 import com.finance.strategyGeneration.repository.SpecificationOfStrategyRepository;
-import com.finance.strategyGeneration.service.mapper.StrategyInformationMapper;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
-import lombok.experimental.NonFinal;
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @Component
-@Slf4j
+@Transactional
 @RequiredArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class SpecificationOfStrategyServiceImpl implements SpecificationOfStrategyService {
 
     SpecificationOfStrategyRepository repository;
-    StrategyInformationMapper mapper;
-    @NonFinal
-    @Autowired
-    SpecificationOfStrategyService self;
+    InformationOfIndicatorService informationOfIndicatorService;
 
     @Override
-    @Transactional
-    public void save(SpecificationOfStrategy specificationOfStrategy) {
-        repository.save(specificationOfStrategy);
-
-    }
-
-    @Override
-    public void saveAll(List<DescriptionOfStrategy> populationAfterSelection) {
-        log.info("START SAVE ALL");
-
-        Map<Integer, SpecificationOfStrategy> duplicateMap = new HashMap<>();
-        populationAfterSelection
-                .stream()
-                .map(mapper::mapTo)
-                .map(specificationOfStrategy -> specificationOfStrategy.withHashCode(specificationOfStrategy.hashCode()))
-                .distinct()
-                .forEach(specificationOfStrategy -> {
-                    try {
-                        // TODO убрать вызов self
-                        self.save(specificationOfStrategy);
-                    } catch (Exception exception) {
-                        log.error(
-                                "ОШИБКА={}, specificationOfStrategy.hashCode()={}; specificationOfStrategy.getHashCode()={}",
-                                exception.getMessage(), specificationOfStrategy.hashCode(), specificationOfStrategy.getHashCode());
-                        duplicateMap.put(specificationOfStrategy.hashCode(), specificationOfStrategy);
-                    }
-                });
-
-        System.out.println("END");
-        for (Map.Entry<Integer, SpecificationOfStrategy> node : duplicateMap.entrySet()) {
-            Optional<SpecificationOfStrategy> byHashCode = repository.findByHashCode(
-                    node.getKey());
-            if (byHashCode.isPresent()) {
-                log.warn("Найден дубликат по hashCode={}; Duplicate={}; Original={}", node.getKey().toString(), node.getValue().toString(),
-                        byHashCode.get().toString());
-            } else {
-                log.error("Сущность hashCode={} не найдена", node.getKey());
-                repository.save(node.getValue());
+    public List<SpecificationOfStrategy> saveAll(List<SpecificationOfStrategy> populationAfterSelection) {
+        Map<String, SpecificationOfStrategy> duplicate = new HashMap<>();
+        List<SpecificationOfStrategy> normal = new ArrayList<>();
+        for (SpecificationOfStrategy specificationOfStrategy : populationAfterSelection) {
+            try {
+                normal.add(repository.save(specificationOfStrategy));
+            } catch (Exception exception) {
+                duplicate.put(String.valueOf(specificationOfStrategy.getHashCode()), specificationOfStrategy);
             }
         }
 
-
-//        repository.saveAll(specificationOfStrategies);
+        System.out.println("asfd");
+        return normal;
     }
 
+    @Override
+    public List<SpecificationOfStrategy> findTheBestIndividual(int numberOfIndividuals) {
+
+        List<SpecificationOfStrategy> theBestStrategy = repository.findTheBestStrategy(100);
+        if (theBestStrategy.isEmpty()) {
+            return List.of();
+        }
+
+        List<String> indicatorsId =
+                theBestStrategy.stream()
+                        .flatMap(specificationOfStrategy -> Stream.of(
+                                specificationOfStrategy.getDescriptionToOpenADealStringIds(),
+                                specificationOfStrategy.getDescriptionToCloseADealStringIds()))
+                        .flatMap(List::stream)
+                        .toList();
+
+
+        Map<String, InformationOfIndicator> informationOfIndicatorMap = informationOfIndicatorService
+                .findAllById(indicatorsId)
+                .stream()
+                .collect(Collectors.toMap(InformationOfIndicator::getStringId,
+                        informationOfIndicator -> informationOfIndicator));
+
+
+        return theBestStrategy.stream()
+                .map(specificationOfStrategy -> {
+                    List<InformationOfIndicator> openADealIndicators = specificationOfStrategy
+                            .getDescriptionToOpenADealStringIds()
+                            .stream()
+                            .map(informationOfIndicatorMap::get)
+                            .toList();
+
+                    List<InformationOfIndicator> closeADealIndicators = specificationOfStrategy
+                            .getDescriptionToCloseADealIndicators()
+                            .stream()
+                            .map(informationOfIndicatorMap::get)
+                            .toList();
+
+                    return specificationOfStrategy
+                            .withDescriptionToOpenADealIndicators(openADealIndicators)
+                            .withDescriptionToCloseADealIndicators(closeADealIndicators);
+                }).toList();
+    }
 }

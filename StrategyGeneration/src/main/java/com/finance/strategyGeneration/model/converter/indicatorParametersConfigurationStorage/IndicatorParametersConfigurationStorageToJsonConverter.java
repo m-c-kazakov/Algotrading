@@ -1,4 +1,4 @@
-package com.finance.strategyGeneration.model.converter;
+package com.finance.strategyGeneration.model.converter.indicatorParametersConfigurationStorage;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.finance.strategyGeneration.model.IndicatorParametersConfigurationStorage;

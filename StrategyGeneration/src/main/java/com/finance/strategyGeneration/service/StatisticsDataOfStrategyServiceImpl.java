@@ -2,9 +2,9 @@ package com.finance.strategyGeneration.service;
 
 import com.finance.dataHolder.StatisticsDataOfStrategy;
 import com.finance.strategyGeneration.model.StatisticsOfStrategy;
+import com.finance.strategyGeneration.model.mapper.StatisticsOfStrategyMapper;
 import com.finance.strategyGeneration.repository.SpecificationOfStrategyRepository;
 import com.finance.strategyGeneration.repository.StatisticsOfStrategyRepository;
-import com.finance.strategyGeneration.service.mapper.StrategyInformationMapper;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
@@ -17,15 +17,14 @@ import org.springframework.transaction.annotation.Transactional;
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class StatisticsDataOfStrategyServiceImpl implements StatisticsDataOfStrategyService {
 
-    StrategyInformationMapper strategyDescriptionMapper;
+    StatisticsOfStrategyMapper mapper;
     StatisticsOfStrategyRepository statisticsOfStrategyRepository;
     SpecificationOfStrategyRepository specificationOfStrategyRepository;
 
     @Override
     public void save(StatisticsDataOfStrategy statisticsDataOfStrategy) {
 
-        StatisticsOfStrategy statisticsOfStrategy = strategyDescriptionMapper.mapTo(
-                statisticsDataOfStrategy);
+        StatisticsOfStrategy statisticsOfStrategy = mapper.mapTo(statisticsDataOfStrategy);
 
         StatisticsOfStrategy statisticsOfStrategyWithId = statisticsOfStrategyRepository.save(statisticsOfStrategy);
 

@@ -1,7 +1,7 @@
 package com.finance.strategyGeneration.stagesOfGeneticAlgorithm.crossPopulation.exchangeManagers;
 
-import com.finance.dataHolder.DescriptionOfStrategy;
-import com.finance.strategyDescriptionParameters.indicators.Indicator;
+import com.finance.strategyGeneration.model.InformationOfIndicator;
+import com.finance.strategyGeneration.model.SpecificationOfStrategy;
 import com.finance.strategyGeneration.stagesOfGeneticAlgorithm.crossPopulation.TypesOfCrosses;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
@@ -21,37 +21,36 @@ public class IndicatorsToOpenADealExchangeManager implements ExchangeManager {
     SeparatorCreator createSeparator;
 
     @Override
-    public Stream<DescriptionOfStrategy> execute(Set<DescriptionOfStrategy> dataOfStrategies) {
+    public Stream<SpecificationOfStrategy> execute(Set<SpecificationOfStrategy> dataOfStrategies) {
 
-        List<DescriptionOfStrategy> descriptionOfStrategyElements = dataOfStrategies.stream()
+        List<SpecificationOfStrategy> SpecificationOfStrategyElements = dataOfStrategies.stream()
                 .toList();
 
-        DescriptionOfStrategy firstParent = descriptionOfStrategyElements.get(0);
-        List<Indicator> firstIndicators = firstParent.getIndicatorsDescriptionToOpenADeal();
+        SpecificationOfStrategy firstParent = SpecificationOfStrategyElements.get(0);
+        List<InformationOfIndicator> firstIndicators = firstParent.getDescriptionToOpenADealIndicators();
 
-        DescriptionOfStrategy secondParent = descriptionOfStrategyElements.get(1);
-        List<Indicator> secondIndicators = secondParent.getIndicatorsDescriptionToOpenADeal();
+        SpecificationOfStrategy secondParent = SpecificationOfStrategyElements.get(1);
+        List<InformationOfIndicator> secondIndicators = secondParent.getDescriptionToOpenADealIndicators();
 
 
         if (!firstIndicators.isEmpty() && !secondIndicators.isEmpty()) {
 
             int separator = createSeparator.execute(firstIndicators, secondIndicators);
 
-            List<Indicator> firstDescriptionToOpenADeal = typesOfCrosses.singlePointCrossing(firstIndicators,
-                    secondIndicators, separator);
+            SpecificationOfStrategy firstChild = generateChild(firstIndicators, secondIndicators, separator, firstParent);
 
-            List<Indicator> secondDescriptionToOpenADeal = typesOfCrosses.singlePointCrossing(
-                    secondIndicators, firstIndicators, separator);
-
-            DescriptionOfStrategy firstChild = firstParent
-                    .withDescriptionToOpenADeal(firstDescriptionToOpenADeal);
-
-            DescriptionOfStrategy secondChild = secondParent
-                    .withDescriptionToOpenADeal(secondDescriptionToOpenADeal);
+            SpecificationOfStrategy secondChild = generateChild(secondIndicators, firstIndicators, separator, secondParent);
 
             return Stream.of(firstParent, secondParent, firstChild, secondChild);
         }
 
         return Stream.of(firstParent, secondParent);
+    }
+
+    private SpecificationOfStrategy generateChild(List<InformationOfIndicator> secondIndicators, List<InformationOfIndicator> firstIndicators, int separator, SpecificationOfStrategy parent) {
+        List<InformationOfIndicator> secondDescriptionToOpenADeal = typesOfCrosses
+                .singlePointCrossing(secondIndicators, firstIndicators, separator);
+
+        return parent.withDescriptionToOpenADealIndicators(secondDescriptionToOpenADeal);
     }
 }

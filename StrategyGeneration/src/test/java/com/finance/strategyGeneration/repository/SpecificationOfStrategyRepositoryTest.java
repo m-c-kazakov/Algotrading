@@ -4,12 +4,16 @@ import com.finance.strategyGeneration.intagration.IntegrationTestBased;
 import com.finance.strategyGeneration.model.SpecificationOfStrategy;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.jdbc.Sql;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+@Sql({
+        "classpath:sql/data.sql"
+})
 @Transactional
 class SpecificationOfStrategyRepositoryTest extends IntegrationTestBased {
 

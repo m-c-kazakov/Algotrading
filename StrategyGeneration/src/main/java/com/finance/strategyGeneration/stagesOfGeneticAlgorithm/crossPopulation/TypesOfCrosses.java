@@ -1,10 +1,10 @@
 package com.finance.strategyGeneration.stagesOfGeneticAlgorithm.crossPopulation;
 
-import com.finance.strategyDescriptionParameters.indicators.Indicator;
+import com.finance.strategyGeneration.model.InformationOfIndicator;
 
 import java.util.List;
 
 public interface TypesOfCrosses {
 
-    List<Indicator> singlePointCrossing(List<Indicator> first, List<Indicator> second, int separator);
+    List<InformationOfIndicator> singlePointCrossing(List<InformationOfIndicator> first, List<InformationOfIndicator> second, int separator);
 }

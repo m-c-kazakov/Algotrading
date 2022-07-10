@@ -1,7 +1,7 @@
-package com.finance.strategyGeneration.model.converter;
+package com.finance.strategyGeneration.model.converter.stopLoss;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.finance.strategyDescriptionParameters.TrailingStopConfigurationKey;
+import com.finance.strategyDescriptionParameters.StopLossConfigurationKey;
 import com.finance.strategyGeneration.model.ConfigurationStorage;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
@@ -15,13 +15,14 @@ import org.springframework.data.convert.WritingConverter;
 @WritingConverter
 @RequiredArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
-public class TrailingStopConfigurationStorageToJsonConverter implements Converter<ConfigurationStorage<TrailingStopConfigurationKey>, PGobject> {
+public class StopLossConfigurationStorageToJsonConverter implements Converter<ConfigurationStorage<StopLossConfigurationKey>, PGobject> {
 
     ObjectMapper objectMapper;
 
+
     @Override
     @SneakyThrows
-    public PGobject convert(ConfigurationStorage<TrailingStopConfigurationKey> source) {
+    public PGobject convert(ConfigurationStorage<StopLossConfigurationKey> source) {
         PGobject pGobject = new PGobject();
         pGobject.setType("json");
         pGobject.setValue(objectMapper.writeValueAsString(source.getConfigurationData()));

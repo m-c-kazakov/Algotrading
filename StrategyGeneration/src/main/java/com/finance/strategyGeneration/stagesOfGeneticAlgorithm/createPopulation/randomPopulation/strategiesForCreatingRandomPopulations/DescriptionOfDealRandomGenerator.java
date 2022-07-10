@@ -2,17 +2,20 @@ package com.finance.strategyGeneration.stagesOfGeneticAlgorithm.createPopulation
 
 import com.finance.strategyDescriptionParameters.CurrencyPair;
 import com.finance.strategyDescriptionParameters.TimeFrame;
-import com.finance.strategyGeneration.model.InformationOfCandles;
-import com.finance.strategyGeneration.model.InformationOfIndicator;
-import com.finance.strategyGeneration.model.SpecificationOfStrategy;
+import com.finance.strategyGeneration.model.*;
+import com.finance.strategyGeneration.model.creator.IndicatorsDescriptionStorageCreator;
+import com.finance.strategyGeneration.model.creator.InformationOfCandlesStorageCreator;
+import com.finance.strategyGeneration.repository.InformationOfCandlesRepository;
 import com.finance.strategyGeneration.service.InformationOfCandleService;
 import com.finance.strategyGeneration.stagesOfGeneticAlgorithm.createPopulation.randomPopulation.strategiesForCreatingRandomPopulations.generatorRandomIndicators.GeneratorOfRandomIndicators;
 import lombok.AccessLevel;
+import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.stream.Stream;
 
@@ -25,6 +28,7 @@ public class DescriptionOfDealRandomGenerator implements RandomStrategyParams {
 
     GeneratorOfRandomIndicators generatorOfRandomIndicators;
     InformationOfCandleService informationOfCandleService;
+    InformationOfCandlesRepository informationOfCandlesRepository;
 
     // TODO вынести в property
     Boolean isNeedToCreateDescriptionToCloseADeal = false;
@@ -35,43 +39,56 @@ public class DescriptionOfDealRandomGenerator implements RandomStrategyParams {
         CurrencyPair currencyPair = CurrencyPair.getRandomCurrencyPair();
 
 
-        List<InformationOfIndicator> descriptionToOpenADeal = generateIndicators(currencyPair);
-        List<InformationOfIndicator> descriptionToCloseADeal = isNeedToCreateDescriptionToCloseADeal ? generateIndicators(
-                currencyPair) : List.of();
+        IndicatorsDescriptionStorage descriptionToOpenADeal = generateIndicators(currencyPair);
+
+
+        IndicatorsDescriptionStorage descriptionToCloseADeal =
+                isNeedToCreateDescriptionToCloseADeal ? generateIndicators(
+                        currencyPair) : IndicatorsDescriptionStorageCreator.create();
+
         specificationOfStrategyBuilder
-                .descriptionToOpenADeal(getIndicatorsId(descriptionToOpenADeal))
-                .descriptionToCloseADeal(getIndicatorsId(descriptionToCloseADeal));
+                .descriptionToOpenADeal(descriptionToOpenADeal)
+                .descriptionToCloseADeal(descriptionToCloseADeal);
 
         TimeFrame timeFrame = findMinimalTimeFrame(descriptionToOpenADeal, descriptionToCloseADeal);
 
         InformationOfCandles informationOfCandles = informationOfCandleService.create(timeFrame, currencyPair);
-        specificationOfStrategyBuilder.informationOfCandlesId(String.valueOf(informationOfCandles.getId()));
+        specificationOfStrategyBuilder.informationOfCandles(
+                InformationOfCandlesStorageCreator.create(informationOfCandles));
 
     }
 
-    private List<String> getIndicatorsId(List<InformationOfIndicator> descriptionADeal) {
-        return descriptionADeal.stream().map(InformationOfIndicator::getId).map(String::valueOf).toList();
-    }
-
-    private TimeFrame findMinimalTimeFrame(List<InformationOfIndicator> descriptionToOpenADeal,
-                                           List<InformationOfIndicator> descriptionToCloseADeal) {
+    private TimeFrame findMinimalTimeFrame(IndicatorsDescriptionStorage descriptionToOpenADeal,
+                                           IndicatorsDescriptionStorage descriptionToCloseADeal) {
         List<TimeFrame> timeFrames = Stream.of(descriptionToOpenADeal, descriptionToCloseADeal)
+                .map(IndicatorsDescriptionStorage::getInformationOfIndicators)
                 .filter(indicators -> !isEmpty(indicators))
                 .flatMap(List::stream)
-                .map(InformationOfIndicator::getInformationOfCandlesId)
-                .map(Long::valueOf)
-                .map(informationOfCandleService::findById)
-                .map(InformationOfCandles::getTimeFrame)
+                .map(InformationOfIndicator::getInformationOfCandles)
+                .map(InformationOfCandlesStorage::getTimeFrame)
                 .toList();
 
         return TimeFrame.getMinimalTimeFrame(timeFrames);
     }
 
-    private List<InformationOfIndicator> generateIndicators(CurrencyPair currencyPair) {
+    private IndicatorsDescriptionStorage generateIndicators(@NonNull CurrencyPair currencyPair) {
         int numberOfIndicators = ThreadLocalRandom.current()
                 .nextInt(1, 6);
-        return Stream.iterate(0, integer -> integer < numberOfIndicators, integer -> integer + 1)
-                .map(integer -> generatorOfRandomIndicators.createRandomIndicator(currencyPair))
-                .toList();
+        List<InformationOfIndicator> informationOfIndicators =
+                Stream.iterate(0, integer -> integer < numberOfIndicators, integer -> integer + 1)
+                        .map(integer -> generatorOfRandomIndicators.createRandomIndicator(currencyPair))
+                        .toList();
+
+        boolean result = informationOfIndicators
+                .stream()
+                .map(InformationOfIndicator::getInformationOfCandles)
+                .map(InformationOfCandlesStorage::getInformationOfCandles)
+                .map(InformationOfCandles::getCurrencyPair)
+                .anyMatch(Objects::isNull);
+
+        if (result) {
+            System.out.println("asdf");
+        }
+        return IndicatorsDescriptionStorageCreator.create(informationOfIndicators);
     }
 }

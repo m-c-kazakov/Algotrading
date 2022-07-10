@@ -4,16 +4,15 @@ import com.finance.strategyGeneration.intagration.annotation.IT;
 import org.junit.jupiter.api.BeforeAll;
 import org.springframework.test.context.DynamicPropertyRegistry;
 import org.springframework.test.context.DynamicPropertySource;
-import org.springframework.test.context.jdbc.Sql;
 import org.testcontainers.containers.PostgreSQLContainer;
 import org.testcontainers.junit.jupiter.Testcontainers;
 
 
 @Testcontainers
 @IT
-@Sql({
-        "classpath:sql/data.sql"
-})
+//@Sql({
+//        "classpath:sql/data.sql"
+//})
 public abstract class IntegrationTestBased {
 
     private static final PostgreSQLContainer<?> container = new PostgreSQLContainer<>("postgres:14.4");

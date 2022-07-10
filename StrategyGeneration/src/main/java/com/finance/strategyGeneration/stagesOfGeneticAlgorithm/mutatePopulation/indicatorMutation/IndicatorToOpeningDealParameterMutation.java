@@ -4,6 +4,7 @@ import com.finance.strategyDescriptionParameters.indicators.IndicatorType;
 import com.finance.strategyGeneration.model.IndicatorParametersConfigurationStorage;
 import com.finance.strategyGeneration.model.InformationOfIndicator;
 import com.finance.strategyGeneration.model.SpecificationOfStrategy;
+import com.finance.strategyGeneration.model.creator.IndicatorsDescriptionStorageCreator;
 import com.finance.strategyGeneration.service.InformationOfIndicatorService;
 import com.finance.strategyGeneration.stagesOfGeneticAlgorithm.createPopulation.randomPopulation.strategiesForCreatingRandomPopulations.generatorRandomIndicators.generatorRandomParametersOfIndicators.generatorRandomParametersByIndicatorType.GeneratorRandomParametersByIndicatorType;
 import com.finance.strategyGeneration.stagesOfGeneticAlgorithm.mutatePopulation.Mutation;
@@ -33,7 +34,7 @@ public class IndicatorToOpeningDealParameterMutation implements Mutation {
     @Override
     public Stream<SpecificationOfStrategy> execute(SpecificationOfStrategy parentSpecificationOfStrategy) {
 
-        List<InformationOfIndicator> indicators = new ArrayList<>(informationOfIndicatorService.findAllById(parentSpecificationOfStrategy.getDescriptionToOpenADeal()));
+        List<InformationOfIndicator> indicators = new ArrayList<>(informationOfIndicatorService.findAllById(parentSpecificationOfStrategy.getDescriptionToOpenADealStringIds()));
 
         int bound = Math.max(indicators.size() / 2, 1);
         int numberOfReplacedItems = Math.max(ThreadLocalRandom.current()
@@ -70,7 +71,7 @@ public class IndicatorToOpeningDealParameterMutation implements Mutation {
         }
 
         SpecificationOfStrategy SpecificationOfStrategyAfterMutation =
-                parentSpecificationOfStrategy.withDescriptionToOpenADeal(indicators.stream().map(InformationOfIndicator::getId).map(String::valueOf).toList());
+                parentSpecificationOfStrategy.withDescriptionToOpenADeal(IndicatorsDescriptionStorageCreator.create(indicators));
 
         return Stream.of(parentSpecificationOfStrategy, SpecificationOfStrategyAfterMutation);
     }

@@ -3,6 +3,7 @@ package com.finance.strategyGeneration.stagesOfGeneticAlgorithm.createPopulation
 import com.finance.strategyDescriptionParameters.indicators.IndicatorType;
 import com.finance.strategyGeneration.stagesOfGeneticAlgorithm.createPopulation.randomPopulation.strategiesForCreatingRandomPopulations.generatorRandomIndicators.generatorRandomParametersOfIndicators.generatorRandomParametersByIndicatorType.GeneratorRandomParametersByIndicatorType;
 import lombok.AccessLevel;
+import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import org.springframework.stereotype.Component;
@@ -17,7 +18,7 @@ public class GeneratorRandomParametersOfIndicatorImpl implements GeneratorRandom
     Map<String, GeneratorRandomParametersByIndicatorType> randomParameters;
 
     @Override
-    public Map<String, String> getRandomParametersByIndicatorType(IndicatorType indicatorType) {
+    public Map<String, String> getRandomParametersByIndicatorType(@NonNull IndicatorType indicatorType) {
         return randomParameters.get(indicatorType.name())
                 .get();
     }

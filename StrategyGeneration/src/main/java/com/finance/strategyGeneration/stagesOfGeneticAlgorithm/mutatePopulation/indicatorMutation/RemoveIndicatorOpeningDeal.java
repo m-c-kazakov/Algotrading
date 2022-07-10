@@ -2,8 +2,12 @@ package com.finance.strategyGeneration.stagesOfGeneticAlgorithm.mutatePopulation
 
 import com.finance.strategyGeneration.model.InformationOfIndicator;
 import com.finance.strategyGeneration.model.SpecificationOfStrategy;
+import com.finance.strategyGeneration.model.creator.IndicatorsDescriptionStorageCreator;
 import com.finance.strategyGeneration.service.InformationOfIndicatorService;
 import com.finance.strategyGeneration.stagesOfGeneticAlgorithm.mutatePopulation.Mutation;
+import lombok.AccessLevel;
+import lombok.RequiredArgsConstructor;
+import lombok.experimental.FieldDefaults;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
@@ -12,6 +16,8 @@ import java.util.concurrent.ThreadLocalRandom;
 import java.util.stream.Stream;
 
 @Component
+@RequiredArgsConstructor
+@FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class RemoveIndicatorOpeningDeal implements Mutation {
 
     InformationOfIndicatorService informationOfIndicatorService;
@@ -21,7 +27,7 @@ public class RemoveIndicatorOpeningDeal implements Mutation {
 
         List<InformationOfIndicator> indicators =
                 new ArrayList<>(informationOfIndicatorService.findAllById(
-                        parentSpecificationOfStrategy.getDescriptionToOpenADeal()));
+                        parentSpecificationOfStrategy.getDescriptionToOpenADealStringIds()));
 
         int numberOfDeletedItems = indicators.size() / 2;
 
@@ -36,8 +42,7 @@ public class RemoveIndicatorOpeningDeal implements Mutation {
 
 
         SpecificationOfStrategy SpecificationOfStrategyAfterMutation =
-                parentSpecificationOfStrategy.withDescriptionToOpenADeal(
-                        indicators.stream().map(InformationOfIndicator::getId).map(String::valueOf).toList());
+                parentSpecificationOfStrategy.withDescriptionToOpenADeal(IndicatorsDescriptionStorageCreator.create(indicators));
 
         return Stream.of(parentSpecificationOfStrategy, SpecificationOfStrategyAfterMutation);
     }

@@ -1,4 +1,4 @@
-package com.finance.strategyGeneration.model.converter;
+package com.finance.strategyGeneration.model.converter.takeProfit;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.finance.strategyDescriptionParameters.TakeProfitConfigurationKey;

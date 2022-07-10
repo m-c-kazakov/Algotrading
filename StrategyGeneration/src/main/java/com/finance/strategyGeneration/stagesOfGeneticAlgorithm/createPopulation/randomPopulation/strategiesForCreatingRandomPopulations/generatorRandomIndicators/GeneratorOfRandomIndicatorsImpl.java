@@ -15,6 +15,7 @@ import lombok.experimental.FieldDefaults;
 import org.springframework.stereotype.Component;
 
 import java.util.Map;
+import java.util.Objects;
 
 @Component
 @RequiredArgsConstructor
@@ -24,7 +25,6 @@ public class GeneratorOfRandomIndicatorsImpl implements GeneratorOfRandomIndicat
     GeneratorRandomParametersOfIndicator randomParametersByIndicatorType;
     InformationOfCandleService informationOfCandleService;
     InformationOfIndicatorService informationOfIndicatorService;
-    InformationOfIndicatorCreator informationOfIndicatorCreator;
 
     @Override
     public InformationOfIndicator createRandomIndicator(CurrencyPair currencyPair) {
@@ -38,7 +38,14 @@ public class GeneratorOfRandomIndicatorsImpl implements GeneratorOfRandomIndicat
 
         InformationOfCandles informationOfCandles = informationOfCandleService.create(timeFrame, currencyPair);
 
-        ;
-        return informationOfIndicatorService.create(informationOfIndicatorCreator.create(indicatorType, informationOfCandles, parameters));
+
+        InformationOfIndicator informationOfIndicator = informationOfIndicatorService.create(
+                InformationOfIndicatorCreator.create(indicatorType, informationOfCandles, parameters));
+
+        if (Objects.isNull(
+                informationOfIndicator.getInformationOfCandles().getInformationOfCandles().getCurrencyPair())) {
+            System.out.println("asdf");
+        }
+        return informationOfIndicator;
     }
 }

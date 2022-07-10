@@ -4,9 +4,10 @@ import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
+import org.springframework.util.Assert;
 
-import java.util.Comparator;
 import java.util.List;
+import java.util.Objects;
 import java.util.concurrent.ThreadLocalRandom;
 
 @Getter
@@ -30,9 +31,23 @@ public enum TimeFrame {
     }
 
     public static TimeFrame getMinimalTimeFrame(List<TimeFrame> timeFrames) {
-        return timeFrames.stream()
-                .min(Comparator.comparing(TimeFrame::getPer))
-                .orElseThrow(() -> new RuntimeException("Не возможно определить минимальный TimeFrame из переданной коллекции: " + timeFrames));
+        try {
+            // TODO поправ
+            Assert.notEmpty(timeFrames, "Коллекция TimeFrames не может быть пустой.");
+            Assert.isTrue(timeFrames.stream().noneMatch(Objects::isNull),
+                    "Коллекция TimeFrames не может содержать null элементы.");
+
+
+            return timeFrames.stream()
+                    .distinct()
+                    .map(TimeFrame::getPer)
+                    .min(Integer::compare)
+                    .map(TimeFrame::getTimeFrameByPer)
+                    .orElseThrow(() -> new RuntimeException(
+                            "Не возможно определить минимальный TimeFrame из переданной коллекции: " + timeFrames));
+        } catch (Exception exception) {
+            return TimeFrame.M1;
+        }
     }
 
     public static TimeFrame getRandomTimeFrame() {

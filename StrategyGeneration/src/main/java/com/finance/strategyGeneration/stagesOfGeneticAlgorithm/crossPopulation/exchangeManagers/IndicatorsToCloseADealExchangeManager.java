@@ -1,7 +1,7 @@
 package com.finance.strategyGeneration.stagesOfGeneticAlgorithm.crossPopulation.exchangeManagers;
 
-import com.finance.dataHolder.DescriptionOfStrategy;
-import com.finance.strategyDescriptionParameters.indicators.Indicator;
+import com.finance.strategyGeneration.model.InformationOfIndicator;
+import com.finance.strategyGeneration.model.SpecificationOfStrategy;
 import com.finance.strategyGeneration.stagesOfGeneticAlgorithm.crossPopulation.TypesOfCrosses;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
@@ -22,35 +22,35 @@ public class IndicatorsToCloseADealExchangeManager implements ExchangeManager {
     SeparatorCreator createSeparator;
 
     @Override
-    public Stream<DescriptionOfStrategy> execute(Set<DescriptionOfStrategy> dataOfStrategies) {
+    public Stream<SpecificationOfStrategy> execute(Set<SpecificationOfStrategy> dataOfStrategies) {
 
-        List<DescriptionOfStrategy> descriptionOfStrategyElements = dataOfStrategies.stream()
+        List<SpecificationOfStrategy> SpecificationOfStrategyElements = dataOfStrategies.stream()
                 .toList();
 
-        DescriptionOfStrategy firstParent = descriptionOfStrategyElements.get(0);
-        List<Indicator> firstIndicators = firstParent.getIndicatorsDescriptionToCloseADeal();
+        SpecificationOfStrategy firstParent = SpecificationOfStrategyElements.get(0);
+        List<InformationOfIndicator> firstIndicators = firstParent.getDescriptionToCloseADealIndicators();
 
-        DescriptionOfStrategy secondParent = descriptionOfStrategyElements.get(1);
-        List<Indicator> secondIndicators = secondParent.getIndicatorsDescriptionToCloseADeal();
+        SpecificationOfStrategy secondParent = SpecificationOfStrategyElements.get(1);
+        List<InformationOfIndicator> secondIndicators = secondParent.getDescriptionToCloseADealIndicators();
 
         if (!firstIndicators.isEmpty() && !secondIndicators.isEmpty()) {
             int separator = createSeparator.execute(firstIndicators, secondIndicators);
 
-            List<Indicator> firstDescriptionToCloseADeal = typesOfCrosses.singlePointCrossing(firstIndicators,
-                    secondIndicators, separator);
+            SpecificationOfStrategy firstChild =
+                    generateSpecificationOfStrategy(firstIndicators, secondIndicators, separator, firstParent);
 
-            List<Indicator> secondDescriptionToCloseADeal = typesOfCrosses.singlePointCrossing(
-                    secondIndicators, firstIndicators, separator);
-
-            DescriptionOfStrategy firstChild = firstParent
-                    .withDescriptionToCloseADeal(firstDescriptionToCloseADeal);
-
-            DescriptionOfStrategy secondChild = secondParent
-                    .withDescriptionToCloseADeal(secondDescriptionToCloseADeal);
+            SpecificationOfStrategy secondChild =
+                    generateSpecificationOfStrategy(secondIndicators, firstIndicators, separator, secondParent);
 
             return Stream.of(firstParent, secondParent, firstChild, secondChild);
         }
 
         return Stream.of(firstParent, secondParent);
+    }
+
+    private SpecificationOfStrategy generateSpecificationOfStrategy(List<InformationOfIndicator> secondIndicators, List<InformationOfIndicator> firstIndicators, int separator, SpecificationOfStrategy parent) {
+        List<InformationOfIndicator> secondDescriptionToCloseADeal = typesOfCrosses.singlePointCrossing(
+                secondIndicators, firstIndicators, separator);
+        return parent.withDescriptionToCloseADealIndicators(secondDescriptionToCloseADeal);
     }
 }

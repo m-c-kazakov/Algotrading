@@ -1,9 +1,13 @@
 package com.finance.strategyGeneration.repository;
 
+import com.finance.strategyDescriptionParameters.CurrencyPair;
+import com.finance.strategyDescriptionParameters.TimeFrame;
 import com.finance.strategyDescriptionParameters.indicators.IndicatorType;
 import com.finance.strategyGeneration.intagration.IntegrationTestBased;
 import com.finance.strategyGeneration.model.IndicatorParametersConfigurationStorage;
+import com.finance.strategyGeneration.model.InformationOfCandles;
 import com.finance.strategyGeneration.model.InformationOfIndicator;
+import com.finance.strategyGeneration.model.creator.InformationOfCandlesStorageCreator;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
@@ -36,8 +40,9 @@ class InformationOfIndicatorRepositoryTest extends IntegrationTestBased {
                 "PERIOD", "10");
         repository.save(InformationOfIndicator.builder()
                 .indicatorType(IndicatorType.SMA)
-                        .informationOfCandlesId("15")
-                        .parameters(new IndicatorParametersConfigurationStorage(calculate_by))
+                .informationOfCandles(InformationOfCandlesStorageCreator.create(InformationOfCandles.builder().timeFrame(TimeFrame.M1).currencyPair(
+                        CurrencyPair.EURUSD).build()))
+                .parameters(new IndicatorParametersConfigurationStorage(calculate_by))
                 .build());
     }
 }

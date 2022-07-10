@@ -1,7 +1,7 @@
-package com.finance.strategyGeneration.model.converter;
+package com.finance.strategyGeneration.model.converter.stopLoss;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.finance.strategyDescriptionParameters.SumOfDealConfigurationKey;
+import com.finance.strategyDescriptionParameters.StopLossConfigurationKey;
 import com.finance.strategyGeneration.model.ConfigurationStorage;
 import lombok.AccessLevel;
 import lombok.NonNull;
@@ -19,15 +19,15 @@ import java.util.Map;
 @ReadingConverter
 @RequiredArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
-public class SumOfDealJsonToConfigurationStorageConverter implements Converter<PGobject, ConfigurationStorage<SumOfDealConfigurationKey>> {
+public class StopLossJsonToConfigurationStorageConverter implements Converter<PGobject, ConfigurationStorage<StopLossConfigurationKey>> {
 
     ObjectMapper objectMapper;
 
     @Override
     @SneakyThrows
-    public ConfigurationStorage<SumOfDealConfigurationKey> convert(@NonNull PGobject source) {
+    public ConfigurationStorage<StopLossConfigurationKey> convert(@NonNull PGobject source) {
         String json = source.getValue();
-        Map<SumOfDealConfigurationKey, Object> map = objectMapper.readValue(json, HashMap.class);
+        Map<StopLossConfigurationKey, Object> map = objectMapper.readValue(json, HashMap.class);
         return new ConfigurationStorage<>(map);
     }
 }

@@ -4,7 +4,6 @@ import com.finance.strategyDescriptionParameters.CurrencyPair;
 import com.finance.strategyDescriptionParameters.TimeFrame;
 import com.finance.strategyGeneration.model.InformationOfCandles;
 import com.finance.strategyGeneration.repository.InformationOfCandlesRepository;
-import com.google.common.base.Objects;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
@@ -30,21 +29,29 @@ public class InformationOfCandleServiceImpl implements InformationOfCandleServic
 
     @Override
     public InformationOfCandles create(TimeFrame timeFrame, CurrencyPair currencyPair) {
-        int hashCode = Objects.hashCode(timeFrame, currencyPair);
 
-        return repository.findByHashCode(hashCode)
-                .orElseGet(() -> repository.save(InformationOfCandles.builder()
-                        .hashCode(hashCode)
-                        .timeFrame(timeFrame)
-                        .currencyPair(currencyPair)
-                        .build()));
+        InformationOfCandles entity = InformationOfCandles.builder()
+                .timeFrame(timeFrame)
+                .currencyPair(currencyPair)
+                .build();
+
+        return create(entity);
     }
 
     @Override
     public InformationOfCandles createWithNewTimeFrame(String informationOfCandlesId, TimeFrame timeFrame) {
         InformationOfCandles informationOfCandles = repository.findById(Long.valueOf(informationOfCandlesId))
-                .orElseThrow(
-                        () -> new RuntimeException("Не найден CandlesInformation для Id == " + informationOfCandlesId));
-        return repository.save(informationOfCandles.withTimeFrame(timeFrame));
+                .orElseThrow(() -> new RuntimeException("Не найден CandlesInformation для Id == " + informationOfCandlesId));
+        return create(informationOfCandles.withTimeFrame(timeFrame));
+    }
+
+    @Override
+    public InformationOfCandles create(InformationOfCandles informationOfCandles) {
+        InformationOfCandles entity = informationOfCandles.withId(null).withHashCode(informationOfCandles.hashCode());
+
+        return repository
+                .findByHashCode(entity.getHashCode())
+                .orElseGet(() -> repository.save(entity));
+
     }
 }

@@ -1,7 +1,7 @@
 package com.finance.strategyGeneration.stagesOfGeneticAlgorithm.createPopulation;
 
 import com.finance.strategyGeneration.model.SpecificationOfStrategy;
-import com.finance.strategyGeneration.service.PopulationService;
+import com.finance.strategyGeneration.service.SpecificationOfStrategyService;
 import com.finance.strategyGeneration.stagesOfGeneticAlgorithm.createPopulation.randomPopulation.RandomPopulationCreationManager;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
@@ -20,13 +20,13 @@ public class PopulationCreationManagerImpl implements PopulationCreationManager 
     static int NUMBER_OF_THE_BEST_INDIVIDUALS = 10; // TODO вынести в property
 
     RandomPopulationCreationManager randomPopulationCreationManager;
-    PopulationService populationService;
+    SpecificationOfStrategyService specificationOfStrategyService;
 
     @Override
     public List<SpecificationOfStrategy> execute() {
 
         List<SpecificationOfStrategy> randomPopulation = createRandomPopulation(NUMBER_OF_RANDOM_INDIVIDUALS);
-        List<SpecificationOfStrategy> theBestIndividual = populationService.findTheBestIndividual(
+        List<SpecificationOfStrategy> theBestIndividual = specificationOfStrategyService.findTheBestIndividual(
                 NUMBER_OF_THE_BEST_INDIVIDUALS);
 
         return Stream.of(randomPopulation, theBestIndividual)

@@ -1,6 +1,6 @@
 package com.finance.strategyGeneration.stagesOfGeneticAlgorithm;
 
-import com.finance.dataHolder.DescriptionOfStrategy;
+import com.finance.strategyGeneration.model.SpecificationOfStrategy;
 import com.finance.strategyGeneration.service.SpecificationOfStrategyService;
 import com.finance.strategyGeneration.stagesOfGeneticAlgorithm.createPopulation.PopulationCreationManager;
 import com.finance.strategyGeneration.stagesOfGeneticAlgorithm.crossPopulation.PopulationCrossingManager;
@@ -12,6 +12,7 @@ import lombok.experimental.FieldDefaults;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.stream.Stream;
 
 @Component
 @RequiredArgsConstructor
@@ -30,47 +31,17 @@ public class GeneticAlgorithmImpl implements GeneticAlgorithm {
 
 
     @Override
-    public List<DescriptionOfStrategy> execute() {
-        return List.of();
-        // TODO
+    public List<SpecificationOfStrategy> execute() {
 
-//        return Stream.of(populationCreationManager.execute())
-//                .peek(descriptionOfStrategies -> {
-//                    descriptionOfStrategies.stream().forEach(descriptionOfStrategy -> {
-//                        if (descriptionOfStrategy.getStopLossConfigurationData().isEmpty()) {
-//                            throw new RuntimeException("Постая мапа конфигурации");
-//                        }
-//                    });
-//                })
-//                .map(populationCrossingManager::execute)
-//                .peek(descriptionOfStrategies -> {
-//                    descriptionOfStrategies.stream().forEach(descriptionOfStrategy -> {
-//                        if (descriptionOfStrategy.getStopLossConfigurationData().isEmpty()) {
-//                            throw new RuntimeException("Постая мапа конфигурации");
-//                        }
-//                    });
-//                })
-//                .map(mutationOfIndividual::execute)
-//                .peek(descriptionOfStrategies -> {
-//                    descriptionOfStrategies.stream().forEach(descriptionOfStrategy -> {
-//                        if (descriptionOfStrategy.getStopLossConfigurationData().isEmpty()) {
-//                            throw new RuntimeException("Постая мапа конфигурации");
-//                        }
-//                    });
-//                })
-//                // Эволюция
-//                // TODO Добавить блок с эволюцией
-//                .map(populationSelection::execute)
-//                .peek(descriptionOfStrategies -> {
-//                    descriptionOfStrategies.stream().forEach(descriptionOfStrategy -> {
-//                        if (descriptionOfStrategy.getStopLossConfigurationData().isEmpty()) {
-//                            throw new RuntimeException("Постая мапа конфигурации");
-//                        }
-//                    });
-//                })
-//                .peek(specificationOfStrategyService::saveAll)
-//                .findFirst()
-//                .orElseThrow(() -> new RuntimeException("Не созданы стратегии для проверки"));
+        return Stream.of(populationCreationManager.execute())
+                .map(populationCrossingManager::execute)
+                .map(mutationOfIndividual::execute)
+                // Эволюция
+                // TODO Добавить блок с эволюцией
+                .map(populationSelection::execute)
+                .map(specificationOfStrategyService::saveAll)
+                .findFirst()
+                .orElseThrow(() -> new RuntimeException("Не созданы стратегии для проверки"));
 
     }
 

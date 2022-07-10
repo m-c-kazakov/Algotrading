@@ -3,6 +3,7 @@ package com.finance.strategyGeneration.stagesOfGeneticAlgorithm.mutatePopulation
 import com.finance.strategyDescriptionParameters.CurrencyPair;
 import com.finance.strategyGeneration.model.InformationOfIndicator;
 import com.finance.strategyGeneration.model.SpecificationOfStrategy;
+import com.finance.strategyGeneration.model.creator.IndicatorsDescriptionStorageCreator;
 import com.finance.strategyGeneration.service.InformationOfIndicatorService;
 import com.finance.strategyGeneration.stagesOfGeneticAlgorithm.createPopulation.randomPopulation.strategiesForCreatingRandomPopulations.generatorRandomIndicators.GeneratorOfRandomIndicators;
 import com.finance.strategyGeneration.stagesOfGeneticAlgorithm.mutatePopulation.Mutation;
@@ -29,7 +30,7 @@ public class AddIndicatorToOpeningDeal implements Mutation {
     public Stream<SpecificationOfStrategy> execute(SpecificationOfStrategy parentSpecificationOfStrategy) {
 
         List<InformationOfIndicator> indicators = new ArrayList<>(
-                informationOfIndicatorService.findAllById(parentSpecificationOfStrategy.getDescriptionToOpenADeal()));
+                informationOfIndicatorService.findAllById(parentSpecificationOfStrategy.getDescriptionToOpenADealStringIds()));
 
         int bound = Math.max(indicators.size() / 3, 1);
         int numberOfAddedItems = Math.max(ThreadLocalRandom.current()
@@ -46,8 +47,7 @@ public class AddIndicatorToOpeningDeal implements Mutation {
 
 
         SpecificationOfStrategy SpecificationOfStrategyAfterMutation =
-                parentSpecificationOfStrategy.withDescriptionToOpenADeal(
-                        indicators.stream().map(InformationOfIndicator::getId).map(String::valueOf).toList());
+                parentSpecificationOfStrategy.withDescriptionToOpenADeal(IndicatorsDescriptionStorageCreator.create(indicators));
 
         return Stream.of(parentSpecificationOfStrategy, SpecificationOfStrategyAfterMutation);
     }

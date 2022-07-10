@@ -1,6 +1,6 @@
 package com.finance.strategyGeneration.stagesOfGeneticAlgorithm.crossPopulation.exchangeManagers;
 
-import com.finance.dataHolder.DescriptionOfStrategy;
+import com.finance.strategyGeneration.model.SpecificationOfStrategy;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -11,19 +11,19 @@ import java.util.stream.Stream;
 public class StopLossExchangeManager implements ExchangeManager {
 
     @Override
-    public Stream<DescriptionOfStrategy> execute(Set<DescriptionOfStrategy> dataOfStrategies) {
+    public Stream<SpecificationOfStrategy> execute(Set<SpecificationOfStrategy> dataOfStrategies) {
 
-        List<DescriptionOfStrategy> descriptionOfStrategyElements = dataOfStrategies.stream()
+        List<SpecificationOfStrategy> SpecificationOfStrategyElements = dataOfStrategies.stream()
                 .toList();
 
-        DescriptionOfStrategy firstParent = descriptionOfStrategyElements.get(0);
-        DescriptionOfStrategy secondParent = descriptionOfStrategyElements.get(1);
+        SpecificationOfStrategy firstParent = SpecificationOfStrategyElements.get(0);
+        SpecificationOfStrategy secondParent = SpecificationOfStrategyElements.get(1);
 
-        DescriptionOfStrategy firstChild = firstParent
+        SpecificationOfStrategy firstChild = firstParent
                 .withStopLossType(secondParent.getStopLossType())
                 .withStopLossConfigurationData(secondParent.getStopLossConfigurationData());
 
-        DescriptionOfStrategy secondChild = secondParent
+        SpecificationOfStrategy secondChild = secondParent
                 .withStopLossType(firstParent.getStopLossType())
                 .withStopLossConfigurationData(firstParent.getStopLossConfigurationData());
 

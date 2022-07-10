@@ -11,4 +11,6 @@ public interface InformationOfCandleService {
     InformationOfCandles create(TimeFrame timeFrame, CurrencyPair currencyPair);
 
     InformationOfCandles createWithNewTimeFrame(String informationOfCandlesId, TimeFrame timeFrame);
+
+    InformationOfCandles create(InformationOfCandles informationOfCandles);
 }

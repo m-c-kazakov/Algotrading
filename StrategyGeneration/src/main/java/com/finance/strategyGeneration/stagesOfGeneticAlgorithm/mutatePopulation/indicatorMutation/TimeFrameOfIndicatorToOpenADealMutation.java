@@ -4,6 +4,8 @@ import com.finance.strategyDescriptionParameters.TimeFrame;
 import com.finance.strategyGeneration.model.InformationOfCandles;
 import com.finance.strategyGeneration.model.InformationOfIndicator;
 import com.finance.strategyGeneration.model.SpecificationOfStrategy;
+import com.finance.strategyGeneration.model.creator.IndicatorsDescriptionStorageCreator;
+import com.finance.strategyGeneration.model.creator.InformationOfCandlesStorageCreator;
 import com.finance.strategyGeneration.service.InformationOfCandleService;
 import com.finance.strategyGeneration.service.InformationOfIndicatorService;
 import com.finance.strategyGeneration.stagesOfGeneticAlgorithm.mutatePopulation.Mutation;
@@ -11,6 +13,7 @@ import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import org.springframework.stereotype.Component;
+import org.springframework.util.Assert;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,8 +31,8 @@ public class TimeFrameOfIndicatorToOpenADealMutation implements Mutation {
     @Override
     public Stream<SpecificationOfStrategy> execute(SpecificationOfStrategy parentSpecificationOfStrategy) {
 
-        List<InformationOfIndicator> indicators = new ArrayList<>(informationOfIndicatorService.findAllById(parentSpecificationOfStrategy
-                        .getDescriptionToOpenADeal()));
+        List<InformationOfIndicator> indicators = new ArrayList<>(informationOfIndicatorService.findAllById(
+                parentSpecificationOfStrategy.getDescriptionToOpenADealStringIds()));
 
         int bound = Math.max(indicators.size() / 2, 1);
         int numberOfReplacedItems = Math.max(ThreadLocalRandom.current()
@@ -40,22 +43,25 @@ public class TimeFrameOfIndicatorToOpenADealMutation implements Mutation {
             int replacedIndex = ThreadLocalRandom.current()
                     .nextInt(indicators.size());
             InformationOfIndicator indicator = indicators.get(replacedIndex).toBuilder().build();
+            Assert.notNull(indicator.getCurrencyPair(), "CurrencyPair не может быть null");
+            Assert.notNull(indicator.getTimeFrame(), "TimeFrame не может быть null");
 
-            InformationOfCandles informationOfCandles =
-                    informationOfCandleService.createWithNewTimeFrame(indicator.getInformationOfCandlesId(),
-                            TimeFrame.getRandomTimeFrame());
+            InformationOfCandles informationOfCandles = informationOfCandleService.create(
+                    indicator
+                            .getInformationOfCandles()
+                            .withTimeFrame(TimeFrame.getRandomTimeFrame())
+                            .getInformationOfCandles());
 
             InformationOfIndicator informationOfIndicator =
                     informationOfIndicatorService.create(
-                            indicator.withInformationOfCandlesId(String.valueOf(informationOfCandles.getId())));
+                            indicator.withInformationOfCandles(InformationOfCandlesStorageCreator.create(informationOfCandles)));
 
             indicators.set(replacedIndex, informationOfIndicator);
         }
 
-        // TODO создать утилитарный класс для работы с индикаторами
-        List<String> indicatorsIds = indicators.stream().map(InformationOfIndicator::getId).map(String::valueOf).toList();
         SpecificationOfStrategy specificationOfStrategyAfterMutation =
-                parentSpecificationOfStrategy.withDescriptionToOpenADeal(indicatorsIds);
+                parentSpecificationOfStrategy.withDescriptionToOpenADeal(
+                        IndicatorsDescriptionStorageCreator.create(indicators));
 
         return Stream.of(parentSpecificationOfStrategy, specificationOfStrategyAfterMutation);
     }

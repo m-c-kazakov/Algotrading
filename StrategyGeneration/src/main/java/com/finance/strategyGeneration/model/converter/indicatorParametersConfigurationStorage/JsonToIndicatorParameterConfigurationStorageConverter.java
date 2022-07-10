@@ -1,8 +1,7 @@
-package com.finance.strategyGeneration.model.converter;
+package com.finance.strategyGeneration.model.converter.indicatorParametersConfigurationStorage;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.finance.strategyDescriptionParameters.StopLossConfigurationKey;
-import com.finance.strategyGeneration.model.ConfigurationStorage;
+import com.finance.strategyGeneration.model.IndicatorParametersConfigurationStorage;
 import lombok.AccessLevel;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
@@ -19,15 +18,15 @@ import java.util.Map;
 @ReadingConverter
 @RequiredArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
-public class StopLossJsonToConfigurationStorageConverter implements Converter<PGobject, ConfigurationStorage<StopLossConfigurationKey>> {
+public class JsonToIndicatorParameterConfigurationStorageConverter implements Converter<PGobject, IndicatorParametersConfigurationStorage> {
 
     ObjectMapper objectMapper;
 
     @Override
     @SneakyThrows
-    public ConfigurationStorage<StopLossConfigurationKey> convert(@NonNull PGobject source) {
+    public IndicatorParametersConfigurationStorage convert(@NonNull PGobject source) {
         String json = source.getValue();
-        Map<StopLossConfigurationKey, Object> map = objectMapper.readValue(json, HashMap.class);
-        return new ConfigurationStorage<>(map);
+        Map<String, String> map = objectMapper.readValue(json, HashMap.class);
+        return new IndicatorParametersConfigurationStorage(map);
     }
 }

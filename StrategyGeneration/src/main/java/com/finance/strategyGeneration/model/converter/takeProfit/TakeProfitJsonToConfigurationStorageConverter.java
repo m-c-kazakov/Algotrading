@@ -1,7 +1,7 @@
-package com.finance.strategyGeneration.model.converter;
+package com.finance.strategyGeneration.model.converter.takeProfit;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.finance.strategyDescriptionParameters.TrailingStopConfigurationKey;
+import com.finance.strategyDescriptionParameters.TakeProfitConfigurationKey;
 import com.finance.strategyGeneration.model.ConfigurationStorage;
 import lombok.AccessLevel;
 import lombok.NonNull;
@@ -19,15 +19,15 @@ import java.util.Map;
 @ReadingConverter
 @RequiredArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
-public class TrailingStopJsonToConfigurationStorageConverter implements Converter<PGobject, ConfigurationStorage<TrailingStopConfigurationKey>> {
+public class TakeProfitJsonToConfigurationStorageConverter implements Converter<PGobject, ConfigurationStorage<TakeProfitConfigurationKey>> {
 
     ObjectMapper objectMapper;
 
     @Override
     @SneakyThrows
-    public ConfigurationStorage<TrailingStopConfigurationKey> convert(@NonNull PGobject source) {
+    public ConfigurationStorage<TakeProfitConfigurationKey> convert(@NonNull PGobject source) {
         String json = source.getValue();
-        Map<TrailingStopConfigurationKey, Object> map = objectMapper.readValue(json, HashMap.class);
+        Map<TakeProfitConfigurationKey, Object> map = objectMapper.readValue(json, HashMap.class);
         return new ConfigurationStorage<>(map);
     }
 }

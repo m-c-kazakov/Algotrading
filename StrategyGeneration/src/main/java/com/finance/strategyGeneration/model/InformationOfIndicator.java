@@ -1,5 +1,7 @@
 package com.finance.strategyGeneration.model;
 
+import com.finance.strategyDescriptionParameters.CurrencyPair;
+import com.finance.strategyDescriptionParameters.TimeFrame;
 import com.finance.strategyDescriptionParameters.indicators.IndicatorType;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
@@ -21,7 +23,24 @@ public class InformationOfIndicator {
     @EqualsAndHashCode.Exclude
     Integer hashCode;
     IndicatorType indicatorType;
-    String informationOfCandlesId;
+    InformationOfCandlesStorage informationOfCandles;
     IndicatorParametersConfigurationStorage parameters;
 
+
+    public String getStringId() {
+        return String.valueOf(id);
+    }
+
+    public TimeFrame getTimeFrame() {
+        return informationOfCandles.getTimeFrame();
+    }
+
+    public CurrencyPair getCurrencyPair() {
+        return informationOfCandles.getCurrencyPair();
+    }
+
+
+    public long getInformationOfCandlesId() {
+        return informationOfCandles.getId();
+    }
 }

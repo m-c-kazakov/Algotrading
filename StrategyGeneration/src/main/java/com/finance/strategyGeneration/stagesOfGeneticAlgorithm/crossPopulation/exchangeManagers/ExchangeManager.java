@@ -1,11 +1,11 @@
 package com.finance.strategyGeneration.stagesOfGeneticAlgorithm.crossPopulation.exchangeManagers;
 
-import com.finance.dataHolder.DescriptionOfStrategy;
+import com.finance.strategyGeneration.model.SpecificationOfStrategy;
 
 import java.util.Set;
 import java.util.stream.Stream;
 
 public interface ExchangeManager {
 
-    Stream<DescriptionOfStrategy> execute(Set<DescriptionOfStrategy> dataOfStrategies);
+    Stream<SpecificationOfStrategy> execute(Set<SpecificationOfStrategy> dataOfStrategies);
 }
