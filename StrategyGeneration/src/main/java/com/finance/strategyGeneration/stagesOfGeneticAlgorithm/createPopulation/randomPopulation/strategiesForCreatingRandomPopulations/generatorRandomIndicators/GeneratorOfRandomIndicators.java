@@ -4,5 +4,5 @@ import com.finance.strategyDescriptionParameters.CurrencyPair;
 import com.finance.strategyGeneration.model.InformationOfIndicator;
 
 public interface GeneratorOfRandomIndicators {
-    InformationOfIndicator getRandomIndicator(CurrencyPair currencyPair);
+    InformationOfIndicator createRandomIndicator(CurrencyPair currencyPair);
 }

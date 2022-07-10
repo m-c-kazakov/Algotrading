@@ -27,14 +27,9 @@ public class TimeFrameOfIndicatorToOpenADealMutation implements Mutation {
 
     @Override
     public Stream<SpecificationOfStrategy> execute(SpecificationOfStrategy parentSpecificationOfStrategy) {
-        List<Long> indicatorsId = parentSpecificationOfStrategy
-                .getDescriptionToOpenADeal()
-                .stream()
-                .map(Long::valueOf)
-                .toList();
 
-        List<InformationOfIndicator> indicators =
-                new ArrayList<>(informationOfIndicatorService.findAllById(indicatorsId));
+        List<InformationOfIndicator> indicators = new ArrayList<>(informationOfIndicatorService.findAllById(parentSpecificationOfStrategy
+                        .getDescriptionToOpenADeal()));
 
         int bound = Math.max(indicators.size() / 2, 1);
         int numberOfReplacedItems = Math.max(ThreadLocalRandom.current()
@@ -57,9 +52,10 @@ public class TimeFrameOfIndicatorToOpenADealMutation implements Mutation {
             indicators.set(replacedIndex, informationOfIndicator);
         }
 
+        // TODO создать утилитарный класс для работы с индикаторами
+        List<String> indicatorsIds = indicators.stream().map(InformationOfIndicator::getId).map(String::valueOf).toList();
         SpecificationOfStrategy specificationOfStrategyAfterMutation =
-                parentSpecificationOfStrategy.withDescriptionToOpenADeal(
-                        indicators.stream().map(InformationOfIndicator::getId).map(String::valueOf).toList());
+                parentSpecificationOfStrategy.withDescriptionToOpenADeal(indicatorsIds);
 
         return Stream.of(parentSpecificationOfStrategy, specificationOfStrategyAfterMutation);
     }

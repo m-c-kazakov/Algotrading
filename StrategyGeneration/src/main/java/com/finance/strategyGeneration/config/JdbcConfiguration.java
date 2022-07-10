@@ -12,8 +12,13 @@ import java.util.List;
 @Configuration
 public class JdbcConfiguration extends AbstractJdbcConfiguration {
 
+
+
+
     @Override
+//    @Bean
     protected @NonNull List<?> userConverters() {
+        // TODO Попробовать инджектить бинами
         ObjectMapper objectMapper = new ObjectMapper();
         return Arrays.asList(
                 new StopLossConfigurationStorageToJsonConverter(objectMapper),

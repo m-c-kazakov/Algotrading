@@ -1,7 +1,8 @@
 package com.finance.strategyGeneration.stagesOfGeneticAlgorithm.mutatePopulation.indicatorMutation;
 
-import com.finance.dataHolder.DescriptionOfStrategy;
-import com.finance.strategyDescriptionParameters.indicators.Indicator;
+import com.finance.strategyGeneration.model.InformationOfIndicator;
+import com.finance.strategyGeneration.model.SpecificationOfStrategy;
+import com.finance.strategyGeneration.service.InformationOfIndicatorService;
 import com.finance.strategyGeneration.stagesOfGeneticAlgorithm.mutatePopulation.Mutation;
 import org.springframework.stereotype.Component;
 
@@ -13,9 +14,14 @@ import java.util.stream.Stream;
 @Component
 public class RemoveIndicatorOpeningDeal implements Mutation {
 
+    InformationOfIndicatorService informationOfIndicatorService;
+
     @Override
-    public Stream<DescriptionOfStrategy> execute(DescriptionOfStrategy parentDescriptionOfStrategy) {
-        List<Indicator> indicators = new ArrayList<>(parentDescriptionOfStrategy.getIndicatorsDescriptionToOpenADeal());
+    public Stream<SpecificationOfStrategy> execute(SpecificationOfStrategy parentSpecificationOfStrategy) {
+
+        List<InformationOfIndicator> indicators =
+                new ArrayList<>(informationOfIndicatorService.findAllById(
+                        parentSpecificationOfStrategy.getDescriptionToOpenADeal()));
 
         int numberOfDeletedItems = indicators.size() / 2;
 
@@ -29,9 +35,10 @@ public class RemoveIndicatorOpeningDeal implements Mutation {
         }
 
 
-        DescriptionOfStrategy descriptionOfStrategyAfterMutation = parentDescriptionOfStrategy.withDescriptionToOpenADeal(
-                indicators);
+        SpecificationOfStrategy SpecificationOfStrategyAfterMutation =
+                parentSpecificationOfStrategy.withDescriptionToOpenADeal(
+                        indicators.stream().map(InformationOfIndicator::getId).map(String::valueOf).toList());
 
-        return Stream.of(parentDescriptionOfStrategy, descriptionOfStrategyAfterMutation);
+        return Stream.of(parentSpecificationOfStrategy, SpecificationOfStrategyAfterMutation);
     }
 }

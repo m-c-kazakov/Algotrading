@@ -71,7 +71,7 @@ public class DescriptionOfDealRandomGenerator implements RandomStrategyParams {
         int numberOfIndicators = ThreadLocalRandom.current()
                 .nextInt(1, 6);
         return Stream.iterate(0, integer -> integer < numberOfIndicators, integer -> integer + 1)
-                .map(integer -> generatorOfRandomIndicators.getRandomIndicator(currencyPair))
+                .map(integer -> generatorOfRandomIndicators.createRandomIndicator(currencyPair))
                 .toList();
     }
 }

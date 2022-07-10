@@ -5,6 +5,7 @@ import com.finance.strategyDescriptionParameters.TimeFrame;
 import com.finance.strategyDescriptionParameters.indicators.IndicatorType;
 import com.finance.strategyGeneration.model.InformationOfCandles;
 import com.finance.strategyGeneration.model.InformationOfIndicator;
+import com.finance.strategyGeneration.model.creator.InformationOfIndicatorCreator;
 import com.finance.strategyGeneration.service.InformationOfCandleService;
 import com.finance.strategyGeneration.service.InformationOfIndicatorService;
 import com.finance.strategyGeneration.stagesOfGeneticAlgorithm.createPopulation.randomPopulation.strategiesForCreatingRandomPopulations.generatorRandomIndicators.generatorRandomParametersOfIndicators.GeneratorRandomParametersOfIndicator;
@@ -23,9 +24,10 @@ public class GeneratorOfRandomIndicatorsImpl implements GeneratorOfRandomIndicat
     GeneratorRandomParametersOfIndicator randomParametersByIndicatorType;
     InformationOfCandleService informationOfCandleService;
     InformationOfIndicatorService informationOfIndicatorService;
+    InformationOfIndicatorCreator informationOfIndicatorCreator;
 
     @Override
-    public InformationOfIndicator getRandomIndicator(CurrencyPair currencyPair) {
+    public InformationOfIndicator createRandomIndicator(CurrencyPair currencyPair) {
 
         IndicatorType indicatorType = IndicatorType.getRandomIndicatorType();
 
@@ -36,7 +38,7 @@ public class GeneratorOfRandomIndicatorsImpl implements GeneratorOfRandomIndicat
 
         InformationOfCandles informationOfCandles = informationOfCandleService.create(timeFrame, currencyPair);
 
-
-        return informationOfIndicatorService.create(indicatorType, informationOfCandles, parameters);
+        ;
+        return informationOfIndicatorService.create(informationOfIndicatorCreator.create(indicatorType, informationOfCandles, parameters));
     }
 }

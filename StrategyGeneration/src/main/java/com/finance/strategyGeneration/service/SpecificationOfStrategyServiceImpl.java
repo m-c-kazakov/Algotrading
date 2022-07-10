@@ -49,6 +49,7 @@ public class SpecificationOfStrategyServiceImpl implements SpecificationOfStrate
                 .distinct()
                 .forEach(specificationOfStrategy -> {
                     try {
+                        // TODO убрать вызов self
                         self.save(specificationOfStrategy);
                     } catch (Exception exception) {
                         log.error(

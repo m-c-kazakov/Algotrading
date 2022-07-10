@@ -36,7 +36,7 @@ class InformationOfIndicatorRepositoryTest extends IntegrationTestBased {
                 "PERIOD", "10");
         repository.save(InformationOfIndicator.builder()
                 .indicatorType(IndicatorType.SMA)
-                        .informationOfCandlesId(1)
+                        .informationOfCandlesId("15")
                         .parameters(new IndicatorParametersConfigurationStorage(calculate_by))
                 .build());
     }

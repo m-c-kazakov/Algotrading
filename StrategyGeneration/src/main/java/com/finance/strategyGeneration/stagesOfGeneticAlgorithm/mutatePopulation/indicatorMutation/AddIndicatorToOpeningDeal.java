@@ -1,8 +1,9 @@
 package com.finance.strategyGeneration.stagesOfGeneticAlgorithm.mutatePopulation.indicatorMutation;
 
-import com.finance.dataHolder.DescriptionOfStrategy;
 import com.finance.strategyDescriptionParameters.CurrencyPair;
-import com.finance.strategyDescriptionParameters.indicators.Indicator;
+import com.finance.strategyGeneration.model.InformationOfIndicator;
+import com.finance.strategyGeneration.model.SpecificationOfStrategy;
+import com.finance.strategyGeneration.service.InformationOfIndicatorService;
 import com.finance.strategyGeneration.stagesOfGeneticAlgorithm.createPopulation.randomPopulation.strategiesForCreatingRandomPopulations.generatorRandomIndicators.GeneratorOfRandomIndicators;
 import com.finance.strategyGeneration.stagesOfGeneticAlgorithm.mutatePopulation.Mutation;
 import lombok.AccessLevel;
@@ -22,10 +23,13 @@ import java.util.stream.Stream;
 public class AddIndicatorToOpeningDeal implements Mutation {
 
     GeneratorOfRandomIndicators generatorOfRandomIndicators;
+    InformationOfIndicatorService informationOfIndicatorService;
 
     @Override
-    public Stream<DescriptionOfStrategy> execute(DescriptionOfStrategy parentDescriptionOfStrategy) {
-        List<Indicator> indicators = new ArrayList<>(parentDescriptionOfStrategy.getIndicatorsDescriptionToOpenADeal());
+    public Stream<SpecificationOfStrategy> execute(SpecificationOfStrategy parentSpecificationOfStrategy) {
+
+        List<InformationOfIndicator> indicators = new ArrayList<>(
+                informationOfIndicatorService.findAllById(parentSpecificationOfStrategy.getDescriptionToOpenADeal()));
 
         int bound = Math.max(indicators.size() / 3, 1);
         int numberOfAddedItems = Math.max(ThreadLocalRandom.current()
@@ -34,16 +38,17 @@ public class AddIndicatorToOpeningDeal implements Mutation {
         for (int i = 0; i < numberOfAddedItems; i++) {
 
             if (indicators.size() < 6) {
-                // TODO Добавить ограничение на стратегии где для анализа используется только 1 валюта
-                Indicator randomIndicator = generatorOfRandomIndicators.getRandomIndicator(CurrencyPair.getRandomCurrencyPair());
+                InformationOfIndicator randomIndicator =
+                        generatorOfRandomIndicators.createRandomIndicator(CurrencyPair.getRandomCurrencyPair());
                 indicators.add(randomIndicator);
             }
         }
 
 
-        DescriptionOfStrategy descriptionOfStrategyAfterMutation = parentDescriptionOfStrategy.withDescriptionToOpenADeal(
-                indicators);
+        SpecificationOfStrategy SpecificationOfStrategyAfterMutation =
+                parentSpecificationOfStrategy.withDescriptionToOpenADeal(
+                        indicators.stream().map(InformationOfIndicator::getId).map(String::valueOf).toList());
 
-        return Stream.of(parentDescriptionOfStrategy, descriptionOfStrategyAfterMutation);
+        return Stream.of(parentSpecificationOfStrategy, SpecificationOfStrategyAfterMutation);
     }
 }

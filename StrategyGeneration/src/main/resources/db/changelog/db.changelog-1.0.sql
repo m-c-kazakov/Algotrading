@@ -15,7 +15,7 @@ create table information_of_indicator
     id                        serial PRIMARY KEY,
     hash_code                 integer unique not null,
     indicator_type            varchar(50)    not null,
-    information_of_candles_id integer        not null,
+    information_of_candles_id varchar        not null,
     parameters                jsonb
 );
 
@@ -24,7 +24,7 @@ create table specification_of_strategy
 (
 
     id                               serial PRIMARY KEY,
-    statistics_of_strategy_id        integer,
+    statistics_of_strategy_id        varchar,
     hash_code                        integer unique not null,
     start_score                      integer        not null,
     acceptable_risk                  integer        not null,

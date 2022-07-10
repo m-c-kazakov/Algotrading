@@ -17,6 +17,7 @@ import java.util.List;
 public class PopulationServiceImpl implements PopulationService {
 
     SpecificationOfStrategyRepository specificationOfStrategyRepository;
+
     @Override
     public List<SpecificationOfStrategy> findTheBestIndividual(int numberOfIndividuals) {
 

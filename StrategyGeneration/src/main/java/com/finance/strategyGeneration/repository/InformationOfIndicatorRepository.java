@@ -11,6 +11,6 @@ public interface InformationOfIndicatorRepository extends CrudRepository<Informa
     Boolean existsByHashCode(long hashCode);
     Optional<InformationOfIndicator> findByHashCode(long hashCode);
 
-    List<InformationOfIndicator> findAllById(List<Long> ids);
+    List<InformationOfIndicator> findAllByIdIn(List<Long> ids);
 
 }

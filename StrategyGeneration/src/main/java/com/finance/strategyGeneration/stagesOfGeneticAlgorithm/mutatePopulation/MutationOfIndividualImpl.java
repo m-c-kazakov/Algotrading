@@ -1,6 +1,6 @@
 package com.finance.strategyGeneration.stagesOfGeneticAlgorithm.mutatePopulation;
 
-import com.finance.dataHolder.DescriptionOfStrategy;
+import com.finance.strategyGeneration.model.SpecificationOfStrategy;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
@@ -19,7 +19,7 @@ public class MutationOfIndividualImpl implements MutationOfIndividual {
     List<Mutation> mutations;
 
     @Override
-    public List<DescriptionOfStrategy> execute(List<DescriptionOfStrategy> populationAfterCrossing) {
+    public List<SpecificationOfStrategy> execute(List<SpecificationOfStrategy> populationAfterCrossing) {
 
         // TODO при создании стратегий с descriptionToCloseADeal - добавить мутацию
         return populationAfterCrossing.stream()
