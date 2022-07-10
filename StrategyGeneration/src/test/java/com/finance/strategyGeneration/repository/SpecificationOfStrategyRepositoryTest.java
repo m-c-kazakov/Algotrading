@@ -2,6 +2,8 @@ package com.finance.strategyGeneration.repository;
 
 import com.finance.strategyGeneration.intagration.IntegrationTestBased;
 import com.finance.strategyGeneration.model.SpecificationOfStrategy;
+import com.finance.strategyGeneration.model.StatisticsOfStrategy;
+import com.finance.strategyGeneration.stagesOfGeneticAlgorithm.createPopulation.randomPopulation.RandomPopulationCreationManager;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.jdbc.Sql;
@@ -21,6 +23,8 @@ class SpecificationOfStrategyRepositoryTest extends IntegrationTestBased {
     SpecificationOfStrategyRepository repository;
     @Autowired
     StatisticsOfStrategyRepository statisticsOfStrategyRepository;
+    @Autowired
+    RandomPopulationCreationManager randomPopulationCreationManager;
 
     @Test
     void existsByHashCode() {
@@ -47,9 +51,25 @@ class SpecificationOfStrategyRepositoryTest extends IntegrationTestBased {
 
     @Test
     void findTheBestStrategy() {
-        assertThat(statisticsOfStrategyRepository.findAll()).isNotEmpty();
-        assertThat(repository.findAll()).isNotEmpty();
+        SpecificationOfStrategy execute = randomPopulationCreationManager.execute();
+
+        SpecificationOfStrategy entity = repository.save(execute.withHashCode(execute.hashCode()));
+
+        StatisticsOfStrategy statisticsOfStrategy = StatisticsOfStrategy
+                .builder()
+                .specificationOfStrategyId(entity.getId())
+                .score(123)
+                .valueOfAcceptableRisk(1)
+                .maximumPercentDrawdownFromStartScore(4)
+                .averagePercentDrawdownOfScore(3)
+                .maximumValueFromScore(4)
+                .numberOfWinningDeals(4)
+                .numberOfLosingDeals(4)
+                .build();
+
+        statisticsOfStrategyRepository.save(statisticsOfStrategy);
+
         assertThat(repository.findTheBestStrategy(1))
-                .hasSize(1);
+                .isNotEmpty();
     }
 }

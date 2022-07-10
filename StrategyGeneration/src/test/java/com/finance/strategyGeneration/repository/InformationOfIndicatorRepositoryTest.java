@@ -1,26 +1,26 @@
 package com.finance.strategyGeneration.repository;
 
 import com.finance.strategyDescriptionParameters.CurrencyPair;
-import com.finance.strategyDescriptionParameters.TimeFrame;
-import com.finance.strategyDescriptionParameters.indicators.IndicatorType;
 import com.finance.strategyGeneration.intagration.IntegrationTestBased;
-import com.finance.strategyGeneration.model.IndicatorParametersConfigurationStorage;
-import com.finance.strategyGeneration.model.InformationOfCandles;
 import com.finance.strategyGeneration.model.InformationOfIndicator;
-import com.finance.strategyGeneration.model.creator.InformationOfCandlesStorageCreator;
+import com.finance.strategyGeneration.stagesOfGeneticAlgorithm.createPopulation.randomPopulation.strategiesForCreatingRandomPopulations.generatorRandomIndicators.GeneratorOfRandomIndicators;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.jdbc.Sql;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.Map;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+@Sql({
+        "classpath:sql/data.sql"
+})
 @Transactional
 class InformationOfIndicatorRepositoryTest extends IntegrationTestBased {
 
     @Autowired
     InformationOfIndicatorRepository repository;
+    @Autowired
+    GeneratorOfRandomIndicators generatorOfRandomIndicators;
 
 
     @Test
@@ -35,14 +35,7 @@ class InformationOfIndicatorRepositoryTest extends IntegrationTestBased {
 
     @Test
     void save() {
-        Map<String, String> calculate_by = Map.of(
-                "CALCULATE_BY", "OPEN",
-                "PERIOD", "10");
-        repository.save(InformationOfIndicator.builder()
-                .indicatorType(IndicatorType.SMA)
-                .informationOfCandles(InformationOfCandlesStorageCreator.create(InformationOfCandles.builder().timeFrame(TimeFrame.M1).currencyPair(
-                        CurrencyPair.EURUSD).build()))
-                .parameters(new IndicatorParametersConfigurationStorage(calculate_by))
-                .build());
+        InformationOfIndicator randomIndicator = generatorOfRandomIndicators.createRandomIndicator(CurrencyPair.EURUSD);
+        assertThat(repository.save(randomIndicator)).isNotNull();
     }
 }
