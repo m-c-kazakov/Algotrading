@@ -2,9 +2,13 @@ package com.finance.strategyGeneration.stagesOfGeneticAlgorithm.createPopulation
 
 import com.finance.strategyDescriptionParameters.CurrencyPair;
 import com.finance.strategyDescriptionParameters.TimeFrame;
-import com.finance.strategyGeneration.model.*;
+import com.finance.strategyGeneration.model.InformationOfCandles;
+import com.finance.strategyGeneration.model.InformationOfIndicator;
+import com.finance.strategyGeneration.model.SpecificationOfStrategy;
 import com.finance.strategyGeneration.model.creator.IndicatorsDescriptionStorageCreator;
 import com.finance.strategyGeneration.model.creator.InformationOfCandlesStorageCreator;
+import com.finance.strategyGeneration.model.storage.IndicatorsDescriptionStorage;
+import com.finance.strategyGeneration.model.storage.InformationOfCandlesStorage;
 import com.finance.strategyGeneration.repository.InformationOfCandlesRepository;
 import com.finance.strategyGeneration.service.InformationOfCandleService;
 import com.finance.strategyGeneration.stagesOfGeneticAlgorithm.createPopulation.randomPopulation.strategiesForCreatingRandomPopulations.generatorRandomIndicators.GeneratorOfRandomIndicators;

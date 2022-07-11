@@ -1,8 +1,8 @@
 package com.finance.strategyGeneration.stagesOfGeneticAlgorithm.mutatePopulation.stopLoss;
 
 import com.finance.strategyDescriptionParameters.StopLossConfigurationKey;
-import com.finance.strategyGeneration.model.ConfigurationStorage;
 import com.finance.strategyGeneration.model.SpecificationOfStrategy;
+import com.finance.strategyGeneration.model.storage.ConfigurationStorage;
 import com.finance.strategyGeneration.stagesOfGeneticAlgorithm.createPopulation.randomPopulation.strategiesForCreatingRandomPopulations.StopLossRandomGenerator;
 import com.finance.strategyGeneration.stagesOfGeneticAlgorithm.mutatePopulation.Mutation;
 import lombok.AccessLevel;

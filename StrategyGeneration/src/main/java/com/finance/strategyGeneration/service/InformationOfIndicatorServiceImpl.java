@@ -3,6 +3,7 @@ package com.finance.strategyGeneration.service;
 import com.finance.strategyGeneration.model.InformationOfCandles;
 import com.finance.strategyGeneration.model.InformationOfIndicator;
 import com.finance.strategyGeneration.model.creator.InformationOfCandlesStorageCreator;
+import com.finance.strategyGeneration.model.creator.InformationOfIndicatorCreator;
 import com.finance.strategyGeneration.repository.InformationOfIndicatorRepository;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
@@ -52,12 +53,12 @@ public class InformationOfIndicatorServiceImpl implements InformationOfIndicator
 
     @Override
     public InformationOfIndicator create(InformationOfIndicator informationOfIndicator) {
-        InformationOfIndicator entity =
-                informationOfIndicator.withId(null).withHashCode(informationOfIndicator.hashCode());
+        InformationOfIndicator entity = InformationOfIndicatorCreator.createWithHashCode(informationOfIndicator);
 
         InformationOfIndicator informationOfIndicatorResult = repository
                 .findByHashCode(entity.getHashCode())
-                .orElseGet(() -> repository.save(entity));
+                .orElseGet(() -> repository.save(entity.withId(null)))
+                .withInformationOfCandles(informationOfIndicator.getInformationOfCandles());
 
         return addInformationOfCandles(informationOfIndicatorResult);
     }

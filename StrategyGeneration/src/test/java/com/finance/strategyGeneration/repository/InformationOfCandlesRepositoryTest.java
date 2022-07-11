@@ -19,11 +19,11 @@ class InformationOfCandlesRepositoryTest extends IntegrationTestBased {
 
     @Test
     void existsByHashCode() {
-        assertThat(repository.existsByHashCode(3)).isTrue();
+        assertThat(repository.existsByHashCode("3")).isTrue();
     }
 
     @Test
     void findByHashCode() {
-        assertThat(repository.findByHashCode(3)).isPresent();
+        assertThat(repository.findByHashCode("3")).isPresent();
     }
 }

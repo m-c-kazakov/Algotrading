@@ -1,7 +1,7 @@
 package com.finance.strategyGeneration.model.converter.indicatorParametersConfigurationStorage;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.finance.strategyGeneration.model.IndicatorParametersConfigurationStorage;
+import com.finance.strategyGeneration.model.storage.IndicatorParametersConfigurationStorage;
 import lombok.AccessLevel;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;

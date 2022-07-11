@@ -2,6 +2,9 @@ package com.finance.strategyGeneration.model;
 
 import com.finance.strategyDescriptionParameters.*;
 import com.finance.strategyGeneration.model.creator.IndicatorsDescriptionStorageCreator;
+import com.finance.strategyGeneration.model.storage.ConfigurationStorage;
+import com.finance.strategyGeneration.model.storage.IndicatorsDescriptionStorage;
+import com.finance.strategyGeneration.model.storage.InformationOfCandlesStorage;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 import org.springframework.data.annotation.Id;
@@ -24,12 +27,15 @@ import java.util.List;
 public class SpecificationOfStrategy {
 
     @Id
+    @ToString.Exclude
     @EqualsAndHashCode.Exclude
     Long id;
+    @ToString.Exclude
     @EqualsAndHashCode.Exclude
     Long statisticsOfStrategyId;
+    @ToString.Exclude
     @EqualsAndHashCode.Exclude
-    Integer hashCode;
+    String hashCode;
     @NotNull
     Long startScore;
     @NotNull
@@ -88,5 +94,21 @@ public class SpecificationOfStrategy {
 
     public List<String> getDescriptionToCloseADealStringIds() {
         return this.descriptionToCloseADeal.getStringIds();
+    }
+
+    public Integer getSumOfDealConfigurationDataHashCode() {
+        return this.sumOfDealConfigurationData.hashCode();
+    }
+
+    public Integer getStopLossConfigurationDataHashCode() {
+        return this.stopLossConfigurationData.hashCode();
+    }
+
+    public Integer getTrailingStopConfigurationDataHashCode() {
+        return this.trailingStopConfigurationData.hashCode();
+    }
+
+    public Integer getTakeProfitConfigurationDataHashCode() {
+        return this.takeProfitConfigurationData.hashCode();
     }
 }

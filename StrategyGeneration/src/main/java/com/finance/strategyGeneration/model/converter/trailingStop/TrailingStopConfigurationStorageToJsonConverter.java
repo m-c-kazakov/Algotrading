@@ -2,7 +2,7 @@ package com.finance.strategyGeneration.model.converter.trailingStop;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.finance.strategyDescriptionParameters.TrailingStopConfigurationKey;
-import com.finance.strategyGeneration.model.ConfigurationStorage;
+import com.finance.strategyGeneration.model.storage.ConfigurationStorage;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;

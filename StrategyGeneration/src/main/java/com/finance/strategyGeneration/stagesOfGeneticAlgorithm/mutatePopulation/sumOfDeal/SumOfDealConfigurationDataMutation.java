@@ -1,8 +1,8 @@
 package com.finance.strategyGeneration.stagesOfGeneticAlgorithm.mutatePopulation.sumOfDeal;
 
 import com.finance.strategyDescriptionParameters.SumOfDealConfigurationKey;
-import com.finance.strategyGeneration.model.ConfigurationStorage;
 import com.finance.strategyGeneration.model.SpecificationOfStrategy;
+import com.finance.strategyGeneration.model.storage.ConfigurationStorage;
 import com.finance.strategyGeneration.stagesOfGeneticAlgorithm.createPopulation.randomPopulation.strategiesForCreatingRandomPopulations.SumOfDealRandomGenerator;
 import com.finance.strategyGeneration.stagesOfGeneticAlgorithm.mutatePopulation.Mutation;
 import lombok.AccessLevel;

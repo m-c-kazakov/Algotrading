@@ -6,6 +6,8 @@ import com.finance.strategyGeneration.stagesOfGeneticAlgorithm.createPopulation.
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
+import lombok.experimental.NonFinal;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -15,9 +17,12 @@ import java.util.stream.Stream;
 @RequiredArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class PopulationCreationManagerImpl implements PopulationCreationManager {
-
-    static int NUMBER_OF_RANDOM_INDIVIDUALS = 10; // TODO вынести в property
-    static int NUMBER_OF_THE_BEST_INDIVIDUALS = 10; // TODO вынести в property
+    @NonFinal
+    @Value("${app.populationCreation.numberOfRandomIndividual}")
+    Integer NUMBER_OF_RANDOM_INDIVIDUALS;
+    @NonFinal
+    @Value("${app.populationCreation.numberOfTheBestIndividual}")
+    Integer NUMBER_OF_THE_BEST_INDIVIDUALS;
 
     RandomPopulationCreationManager randomPopulationCreationManager;
     SpecificationOfStrategyService specificationOfStrategyService;

@@ -1,7 +1,7 @@
 package com.finance.strategyGeneration.model.creator;
 
-import com.finance.strategyGeneration.model.IndicatorsDescriptionStorage;
 import com.finance.strategyGeneration.model.InformationOfIndicator;
+import com.finance.strategyGeneration.model.storage.IndicatorsDescriptionStorage;
 import lombok.NonNull;
 import org.springframework.util.Assert;
 
@@ -13,7 +13,7 @@ public class IndicatorsDescriptionStorageCreator {
 
     public static IndicatorsDescriptionStorage create(@NonNull List<InformationOfIndicator> informationOfIndicators) {
         Assert.notEmpty(informationOfIndicators.stream().filter(Objects::nonNull).toList(), "Коллекция informationOfIndicators не может быть пустой");
-        return new IndicatorsDescriptionStorage(informationOfIndicators);
+        return new IndicatorsDescriptionStorage(informationOfIndicators.stream().map(InformationOfIndicatorCreator::createWithHashCode).toList());
     }
 
     public static IndicatorsDescriptionStorage create(String... ids) {

@@ -1,7 +1,7 @@
 package com.finance.strategyGeneration.model.converter.informationOfCandlesStorageConverter;
 
-import com.finance.strategyGeneration.model.InformationOfCandlesStorage;
 import com.finance.strategyGeneration.model.creator.InformationOfCandlesStorageCreator;
+import com.finance.strategyGeneration.model.storage.InformationOfCandlesStorage;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.data.convert.ReadingConverter;
 

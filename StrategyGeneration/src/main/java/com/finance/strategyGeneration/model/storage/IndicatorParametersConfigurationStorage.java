@@ -1,4 +1,4 @@
-package com.finance.strategyGeneration.model;
+package com.finance.strategyGeneration.model.storage;
 
 import lombok.Value;
 

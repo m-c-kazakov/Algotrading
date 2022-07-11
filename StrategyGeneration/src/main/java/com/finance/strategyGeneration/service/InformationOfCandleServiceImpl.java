@@ -3,6 +3,7 @@ package com.finance.strategyGeneration.service;
 import com.finance.strategyDescriptionParameters.CurrencyPair;
 import com.finance.strategyDescriptionParameters.TimeFrame;
 import com.finance.strategyGeneration.model.InformationOfCandles;
+import com.finance.strategyGeneration.model.creator.InformationOfCandlesCreator;
 import com.finance.strategyGeneration.repository.InformationOfCandlesRepository;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
@@ -10,6 +11,8 @@ import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.Optional;
 
 @Component
 @Slf4j
@@ -47,11 +50,16 @@ public class InformationOfCandleServiceImpl implements InformationOfCandleServic
 
     @Override
     public InformationOfCandles create(InformationOfCandles informationOfCandles) {
-        InformationOfCandles entity = informationOfCandles.withId(null).withHashCode(informationOfCandles.hashCode());
+        InformationOfCandles entity = InformationOfCandlesCreator.createWithHashCode(informationOfCandles);
 
         return repository
                 .findByHashCode(entity.getHashCode())
-                .orElseGet(() -> repository.save(entity));
+                .orElseGet(() -> repository.save(entity.withId(null)));
 
+    }
+
+    @Override
+    public Optional<InformationOfCandles> findByHashCode(String hashCode) {
+        return repository.findByHashCode(hashCode);
     }
 }

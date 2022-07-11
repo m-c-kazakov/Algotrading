@@ -2,7 +2,7 @@ package com.finance.strategyGeneration.model.converter.takeProfit;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.finance.strategyDescriptionParameters.TakeProfitConfigurationKey;
-import com.finance.strategyGeneration.model.ConfigurationStorage;
+import com.finance.strategyGeneration.model.storage.ConfigurationStorage;
 import lombok.AccessLevel;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;

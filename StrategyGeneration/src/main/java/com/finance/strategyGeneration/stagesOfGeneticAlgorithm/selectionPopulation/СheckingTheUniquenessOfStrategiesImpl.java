@@ -1,6 +1,7 @@
 package com.finance.strategyGeneration.stagesOfGeneticAlgorithm.selectionPopulation;
 
 import com.finance.strategyGeneration.model.SpecificationOfStrategy;
+import com.finance.strategyGeneration.model.creator.SpecificationOfStrategyCreator;
 import com.finance.strategyGeneration.repository.SpecificationOfStrategyRepository;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
@@ -23,9 +24,7 @@ public class СheckingTheUniquenessOfStrategiesImpl implements СheckingTheUniqu
 
         return populationAfterMutation
                 .stream()
-                .map(specificationOfStrategy -> specificationOfStrategy
-                        .withId(null)
-                        .withHashCode(specificationOfStrategy.hashCode()))
+                .map(SpecificationOfStrategyCreator::createWithHashCode)
                 .distinct()
                 .filter(specificationOfStrategy -> !specificationOfStrategyRepository.existsByHashCode(
                         specificationOfStrategy.getHashCode()))

@@ -7,7 +7,7 @@ import java.util.Optional;
 
 public interface InformationOfCandlesRepository extends CrudRepository<InformationOfCandles, Long> {
 
-    Boolean existsByHashCode(long hashCode);
+    Boolean existsByHashCode(String hashCode);
 
-    Optional<InformationOfCandles> findByHashCode(long hashCode);
+    Optional<InformationOfCandles> findByHashCode(String hashCode);
 }

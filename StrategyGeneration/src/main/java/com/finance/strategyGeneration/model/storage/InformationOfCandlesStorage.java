@@ -1,12 +1,15 @@
-package com.finance.strategyGeneration.model;
+package com.finance.strategyGeneration.model.storage;
 
 import com.finance.strategyDescriptionParameters.CurrencyPair;
 import com.finance.strategyDescriptionParameters.TimeFrame;
+import com.finance.strategyGeneration.model.InformationOfCandles;
 import com.finance.strategyGeneration.model.creator.InformationOfCandlesStorageCreator;
 import lombok.EqualsAndHashCode;
+import lombok.ToString;
 import lombok.Value;
 
 @Value
+@ToString
 @EqualsAndHashCode
 public class InformationOfCandlesStorage {
 
@@ -30,5 +33,9 @@ public class InformationOfCandlesStorage {
 
     public InformationOfCandlesStorage withTimeFrame(TimeFrame timeFrame) {
         return InformationOfCandlesStorageCreator.create(informationOfCandles.withTimeFrame(timeFrame));
+    }
+
+    public String getHashCode() {
+        return this.informationOfCandles.getHashCode();
     }
 }

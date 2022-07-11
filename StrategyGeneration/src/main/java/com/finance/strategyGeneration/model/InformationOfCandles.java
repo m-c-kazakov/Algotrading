@@ -12,14 +12,17 @@ import org.springframework.data.relational.core.mapping.Table;
 @With
 @RequiredArgsConstructor
 @Table("information_of_candles")
+@ToString
 @EqualsAndHashCode
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class InformationOfCandles {
     @Id
+    @ToString.Exclude
     @EqualsAndHashCode.Exclude
     Long id;
+    @ToString.Exclude
     @EqualsAndHashCode.Exclude
-    Integer hashCode;
+    String hashCode;
     CurrencyPair currencyPair;
     TimeFrame timeFrame;
 }

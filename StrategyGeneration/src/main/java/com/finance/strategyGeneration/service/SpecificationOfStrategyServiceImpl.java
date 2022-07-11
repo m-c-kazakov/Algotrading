@@ -3,14 +3,16 @@ package com.finance.strategyGeneration.service;
 import com.finance.strategyGeneration.model.InformationOfIndicator;
 import com.finance.strategyGeneration.model.SpecificationOfStrategy;
 import com.finance.strategyGeneration.repository.SpecificationOfStrategyRepository;
+import com.google.common.collect.Lists;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
+import lombok.experimental.NonFinal;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -18,27 +20,28 @@ import java.util.stream.Stream;
 
 @Component
 @Transactional
+@Slf4j
 @RequiredArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class SpecificationOfStrategyServiceImpl implements SpecificationOfStrategyService {
 
     SpecificationOfStrategyRepository repository;
     InformationOfIndicatorService informationOfIndicatorService;
+    @Autowired
+    @NonFinal
+    SpecificationOfStrategyService self;
+
+    @Transactional
+    @Override
+    public SpecificationOfStrategy save(SpecificationOfStrategy specificationOfStrategy) {
+
+        return repository.save(specificationOfStrategy);
+    }
 
     @Override
     public List<SpecificationOfStrategy> saveAll(List<SpecificationOfStrategy> populationAfterSelection) {
-        Map<String, SpecificationOfStrategy> duplicate = new HashMap<>();
-        List<SpecificationOfStrategy> normal = new ArrayList<>();
-        for (SpecificationOfStrategy specificationOfStrategy : populationAfterSelection) {
-            try {
-                normal.add(repository.save(specificationOfStrategy));
-            } catch (Exception exception) {
-                duplicate.put(String.valueOf(specificationOfStrategy.getHashCode()), specificationOfStrategy);
-            }
-        }
-
-        System.out.println("asfd");
-        return normal;
+        // TODO сделать batch insert
+        return Lists.newArrayList(repository.saveAll(populationAfterSelection));
     }
 
     @Override
@@ -80,6 +83,7 @@ public class SpecificationOfStrategyServiceImpl implements SpecificationOfStrate
                             .toList();
 
                     return specificationOfStrategy
+                            .withId(null)
                             .withDescriptionToOpenADealIndicators(openADealIndicators)
                             .withDescriptionToCloseADealIndicators(closeADealIndicators);
                 }).toList();

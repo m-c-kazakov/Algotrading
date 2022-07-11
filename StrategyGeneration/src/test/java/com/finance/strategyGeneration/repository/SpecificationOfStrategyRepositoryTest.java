@@ -3,6 +3,7 @@ package com.finance.strategyGeneration.repository;
 import com.finance.strategyGeneration.intagration.IntegrationTestBased;
 import com.finance.strategyGeneration.model.SpecificationOfStrategy;
 import com.finance.strategyGeneration.model.StatisticsOfStrategy;
+import com.finance.strategyGeneration.model.creator.SpecificationOfStrategyCreator;
 import com.finance.strategyGeneration.stagesOfGeneticAlgorithm.createPopulation.randomPopulation.RandomPopulationCreationManager;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,7 +29,7 @@ class SpecificationOfStrategyRepositoryTest extends IntegrationTestBased {
 
     @Test
     void existsByHashCode() {
-        assertThat(repository.existsByHashCode(123123123)).isTrue();
+        assertThat(repository.existsByHashCode("123123123")).isTrue();
     }
 
     @Test
@@ -51,9 +52,9 @@ class SpecificationOfStrategyRepositoryTest extends IntegrationTestBased {
 
     @Test
     void findTheBestStrategy() {
-        SpecificationOfStrategy execute = randomPopulationCreationManager.execute();
+        SpecificationOfStrategy specificationOfStrategy = randomPopulationCreationManager.execute();
 
-        SpecificationOfStrategy entity = repository.save(execute.withHashCode(execute.hashCode()));
+        SpecificationOfStrategy entity = repository.save(SpecificationOfStrategyCreator.createWithHashCode(specificationOfStrategy));
 
         StatisticsOfStrategy statisticsOfStrategy = StatisticsOfStrategy
                 .builder()

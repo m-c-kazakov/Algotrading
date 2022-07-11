@@ -4,7 +4,7 @@
 create table information_of_candles
 (
     id            serial PRIMARY KEY,
-    hash_code     integer unique not null,
+    hash_code     text unique not null,
     currency_pair text           not null,
     time_frame    text           not null
 );
@@ -13,7 +13,7 @@ create table information_of_candles
 create table information_of_indicator
 (
     id                     serial PRIMARY KEY,
-    hash_code              integer unique not null,
+    hash_code              text unique not null,
     indicator_type         text           not null,
     information_of_candles text           not null,
     parameters             jsonb          not null
@@ -25,7 +25,7 @@ create table specification_of_strategy
 
     id                               serial PRIMARY KEY,
     statistics_of_strategy_id        text,
-    hash_code                        integer unique not null,
+    hash_code                        text unique not null,
     start_score                      integer        not null,
     acceptable_risk                  integer        not null,
     sum_of_deal_type                 text           not null,

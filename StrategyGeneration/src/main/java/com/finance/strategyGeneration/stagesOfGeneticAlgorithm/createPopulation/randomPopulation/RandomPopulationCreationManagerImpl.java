@@ -2,6 +2,7 @@ package com.finance.strategyGeneration.stagesOfGeneticAlgorithm.createPopulation
 
 import com.finance.strategyDescriptionParameters.TypeOfDeal;
 import com.finance.strategyGeneration.model.SpecificationOfStrategy;
+import com.finance.strategyGeneration.model.creator.SpecificationOfStrategyCreator;
 import com.finance.strategyGeneration.stagesOfGeneticAlgorithm.createPopulation.randomPopulation.strategiesForCreatingRandomPopulations.RandomStrategyParams;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
@@ -33,7 +34,7 @@ public class RandomPopulationCreationManagerImpl implements RandomPopulationCrea
 
         randomStrategyParams.forEach(randomStrategyParam -> randomStrategyParam.add(dataOfStrategyBuilder));
         SpecificationOfStrategy specificationOfStrategy = dataOfStrategyBuilder.build();
-        return specificationOfStrategy.withHashCode(specificationOfStrategy.hashCode());
+        return SpecificationOfStrategyCreator.createWithHashCode(specificationOfStrategy);
     }
 
     private TypeOfDeal getTypeOfDeal() {

@@ -25,7 +25,6 @@ class CandleConverterImplTest {
 
     @Test
     void convertToIntOpenPrice() {
-        System.out.println("hashCode: " + this.hashCode());
         BigDecimal price = new BigDecimal("1.00001");
         CurrencyPair currencyPair = CurrencyPair.EURUSD;
 
@@ -38,7 +37,6 @@ class CandleConverterImplTest {
 
     @Test
     void convertToIntClosePrice() {
-        System.out.println("hashCode: " + this.hashCode());
         BigDecimal price = new BigDecimal("1.00001");
         CurrencyPair currencyPair = CurrencyPair.EURUSD;
 
@@ -51,7 +49,6 @@ class CandleConverterImplTest {
 
     @Test
     void convertToIntHighPrice() {
-        System.out.println("hashCode: " + this.hashCode());
         BigDecimal price = new BigDecimal("1.00001");
         CurrencyPair currencyPair = CurrencyPair.EURUSD;
 
@@ -64,7 +61,6 @@ class CandleConverterImplTest {
 
     @Test
     void convertToIntLowPrice() {
-        System.out.println("hashCode: " + this.hashCode());
         BigDecimal price = new BigDecimal("1.00001");
         CurrencyPair currencyPair = CurrencyPair.EURUSD;
 

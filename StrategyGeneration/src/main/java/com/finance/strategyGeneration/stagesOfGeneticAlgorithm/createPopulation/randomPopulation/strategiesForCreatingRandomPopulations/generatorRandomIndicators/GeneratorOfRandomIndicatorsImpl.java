@@ -13,9 +13,9 @@ import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import org.springframework.stereotype.Component;
+import org.springframework.util.Assert;
 
 import java.util.Map;
-import java.util.Objects;
 
 @Component
 @RequiredArgsConstructor
@@ -39,13 +39,14 @@ public class GeneratorOfRandomIndicatorsImpl implements GeneratorOfRandomIndicat
         InformationOfCandles informationOfCandles = informationOfCandleService.create(timeFrame, currencyPair);
 
 
-        InformationOfIndicator informationOfIndicator = informationOfIndicatorService.create(
-                InformationOfIndicatorCreator.create(indicatorType, informationOfCandles, parameters));
+        InformationOfIndicator entity =
+                InformationOfIndicatorCreator.create(indicatorType, informationOfCandles, parameters);
 
-        if (Objects.isNull(
-                informationOfIndicator.getInformationOfCandles().getInformationOfCandles().getCurrencyPair())) {
-            System.out.println("asdf");
-        }
+        Assert.notNull(entity.getInformationOfCandlesId(), "InformationOfCandlesId не может быть null");
+
+        InformationOfIndicator informationOfIndicator = informationOfIndicatorService.create(
+                entity);
+
         return informationOfIndicator;
     }
 }

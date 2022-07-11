@@ -1,7 +1,7 @@
 package com.finance.strategyGeneration.model.creator;
 
 import com.finance.strategyGeneration.model.InformationOfCandles;
-import com.finance.strategyGeneration.model.InformationOfCandlesStorage;
+import com.finance.strategyGeneration.model.storage.InformationOfCandlesStorage;
 import lombok.NonNull;
 
 public class InformationOfCandlesStorageCreator {
@@ -13,6 +13,6 @@ public class InformationOfCandlesStorageCreator {
     }
 
     public static InformationOfCandlesStorage create(@NonNull InformationOfCandles informationOfCandles) {
-        return new InformationOfCandlesStorage(informationOfCandles.withHashCode(informationOfCandles.hashCode()));
+        return new InformationOfCandlesStorage(InformationOfCandlesCreator.createWithHashCode(informationOfCandles));
     }
 }

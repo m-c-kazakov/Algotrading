@@ -1,8 +1,8 @@
 package com.finance.strategyGeneration.stagesOfGeneticAlgorithm.mutatePopulation.trailingStopType;
 
 import com.finance.strategyDescriptionParameters.TrailingStopConfigurationKey;
-import com.finance.strategyGeneration.model.ConfigurationStorage;
 import com.finance.strategyGeneration.model.SpecificationOfStrategy;
+import com.finance.strategyGeneration.model.storage.ConfigurationStorage;
 import com.finance.strategyGeneration.stagesOfGeneticAlgorithm.createPopulation.randomPopulation.strategiesForCreatingRandomPopulations.TrailingStopRandomGenerator;
 import com.finance.strategyGeneration.stagesOfGeneticAlgorithm.mutatePopulation.Mutation;
 import lombok.AccessLevel;
