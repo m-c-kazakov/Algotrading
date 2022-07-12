@@ -24,7 +24,7 @@ public class СheckingTheUniquenessOfStrategiesImpl implements СheckingTheUniqu
 
         return populationAfterMutation
                 .stream()
-                .map(SpecificationOfStrategyCreator::createWithHashCode)
+                .map(SpecificationOfStrategyCreator::createWithHashCodeAndDataOfCreation)
                 .distinct()
                 .filter(specificationOfStrategy -> !specificationOfStrategyRepository.existsByHashCode(
                         specificationOfStrategy.getHashCode()))

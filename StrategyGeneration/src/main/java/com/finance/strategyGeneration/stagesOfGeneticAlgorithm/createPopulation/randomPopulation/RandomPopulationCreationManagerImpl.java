@@ -34,7 +34,7 @@ public class RandomPopulationCreationManagerImpl implements RandomPopulationCrea
 
         randomStrategyParams.forEach(randomStrategyParam -> randomStrategyParam.add(dataOfStrategyBuilder));
         SpecificationOfStrategy specificationOfStrategy = dataOfStrategyBuilder.build();
-        return SpecificationOfStrategyCreator.createWithHashCode(specificationOfStrategy);
+        return SpecificationOfStrategyCreator.createWithHashCodeAndDataOfCreation(specificationOfStrategy);
     }
 
     private TypeOfDeal getTypeOfDeal() {

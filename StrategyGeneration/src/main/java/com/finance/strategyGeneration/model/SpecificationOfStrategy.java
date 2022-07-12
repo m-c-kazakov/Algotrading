@@ -14,6 +14,7 @@ import org.springframework.util.Assert;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
+import java.util.Date;
 import java.util.List;
 
 @With
@@ -36,6 +37,7 @@ public class SpecificationOfStrategy {
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
     String hashCode;
+    Date dateOfCreation;
     @NotNull
     Long startScore;
     @NotNull

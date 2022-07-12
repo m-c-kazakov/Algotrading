@@ -54,7 +54,7 @@ class SpecificationOfStrategyRepositoryTest extends IntegrationTestBased {
     void findTheBestStrategy() {
         SpecificationOfStrategy specificationOfStrategy = randomPopulationCreationManager.execute();
 
-        SpecificationOfStrategy entity = repository.save(SpecificationOfStrategyCreator.createWithHashCode(specificationOfStrategy));
+        SpecificationOfStrategy entity = repository.save(SpecificationOfStrategyCreator.createWithHashCodeAndDataOfCreation(specificationOfStrategy));
 
         StatisticsOfStrategy statisticsOfStrategy = StatisticsOfStrategy
                 .builder()

@@ -5,8 +5,8 @@ create table information_of_candles
 (
     id            serial PRIMARY KEY,
     hash_code     text unique not null,
-    currency_pair text           not null,
-    time_frame    text           not null
+    currency_pair text        not null,
+    time_frame    text        not null
 );
 
 --changeset kazakov:2
@@ -14,9 +14,9 @@ create table information_of_indicator
 (
     id                     serial PRIMARY KEY,
     hash_code              text unique not null,
-    indicator_type         text           not null,
-    information_of_candles text           not null,
-    parameters             jsonb          not null
+    indicator_type         text        not null,
+    information_of_candles text        not null,
+    parameters             jsonb       not null
 );
 
 --changeset kazakov:3
@@ -26,27 +26,28 @@ create table specification_of_strategy
     id                               serial PRIMARY KEY,
     statistics_of_strategy_id        text,
     hash_code                        text unique not null,
-    start_score                      integer        not null,
-    acceptable_risk                  integer        not null,
-    sum_of_deal_type                 text           not null,
-    sum_of_deal_configuration_data   jsonb          not null,
+    date_of_creation                 date        not null,
+    start_score                      integer     not null,
+    acceptable_risk                  integer     not null,
+    sum_of_deal_type                 text        not null,
+    sum_of_deal_configuration_data   jsonb       not null,
 
-    stop_loss_type                   text           not null,
-    stop_loss_configuration_data     jsonb          not null,
+    stop_loss_type                   text        not null,
+    stop_loss_configuration_data     jsonb       not null,
 
-    trailing_stop_type               text           not null,
-    trailing_stop_configuration_data jsonb          not null,
+    trailing_stop_type               text        not null,
+    trailing_stop_configuration_data jsonb       not null,
 
-    take_profit_type                 text           not null,
-    take_profit_configuration_data   jsonb          not null,
+    take_profit_type                 text        not null,
+    take_profit_configuration_data   jsonb       not null,
 
-    type_of_deal                     text           not null,
+    type_of_deal                     text        not null,
 
-    information_of_candles           text           not null,
+    information_of_candles           text        not null,
 
-    description_to_open_a_deal       text[]         not null,
+    description_to_open_a_deal       text[]      not null,
 
-    description_to_close_a_deal      text[]         not null
+    description_to_close_a_deal      text[]      not null
 
 );
 
