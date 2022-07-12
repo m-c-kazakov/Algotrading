@@ -24,7 +24,7 @@ import java.util.Arrays;
 import java.util.List;
 
 @Configuration
-public class JdbcConfiguration extends AbstractJdbcConfiguration {
+public class JdbcConfig extends AbstractJdbcConfiguration {
 
     @Bean
     public ObjectMapper objectMapper() {

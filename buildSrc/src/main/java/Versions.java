@@ -7,4 +7,5 @@ public interface Versions {
     String guava = "31.1-jre";
     String mapstruct = "1.5.2.Final";
     String springBootStarterValidation = "2.7.1";
+    String kafkaClients = "3.2.0";
 }

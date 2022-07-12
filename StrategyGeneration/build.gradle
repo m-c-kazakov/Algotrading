@@ -20,22 +20,19 @@ dependencies {
 
     implementation 'org.springframework.boot:spring-boot-starter'
     implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.springframework.boot:spring-boot-starter-data-jdbc'
+    implementation 'org.springframework.boot:spring-boot-starter-validation'
+    implementation 'org.liquibase:liquibase-core'
+    implementation 'org.postgresql:postgresql'
+    implementation 'org.apache.kafka:kafka-clients'
     implementation 'com.google.guava:guava'
-
     implementation 'org.mapstruct:mapstruct'
     annotationProcessor 'org.mapstruct:mapstruct-processor'
 
-    implementation 'org.springframework.boot:spring-boot-starter-data-jdbc'
-    implementation 'org.liquibase:liquibase-core'
-    implementation 'org.postgresql:postgresql'
-
-    implementation 'org.springframework.boot:spring-boot-starter-validation'
-
-
-
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testImplementation 'org.testcontainers:kafka'
     testImplementation "org.testcontainers:postgresql"
     testImplementation 'org.testcontainers:junit-jupiter'
-    testImplementation 'org.springframework.boot:spring-boot-starter-test'
 
     implementation project(":StrategyDescriptionParameters")
     implementation project(":StrategyGenerationApi")

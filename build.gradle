@@ -37,6 +37,8 @@ allprojects {
             dependency("org.mapstruct:mapstruct:${Versions.mapstruct}")
             dependency("org.mapstruct:mapstruct-processor:${Versions.mapstruct}")
             dependency("'org.springframework.boot:spring-boot-starter-validation:${Versions.springBootStarterValidation}")
+            dependency("org.apache.kafka:kafka-clients:${Versions.kafkaClients}")
+            dependency("org.testcontainers:kafka:${Versions.testcontainers}")
         }
     }
 
