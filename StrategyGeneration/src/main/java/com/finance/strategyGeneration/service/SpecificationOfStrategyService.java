@@ -13,4 +13,6 @@ public interface SpecificationOfStrategyService {
     List<SpecificationOfStrategy> saveAll(List<SpecificationOfStrategy> populationAfterSelection);
 
     List<SpecificationOfStrategy> findTheBestIndividual(int numberOfIndividuals);
+
+    Integer findTheNumberOfUntestedStrategies();
 }

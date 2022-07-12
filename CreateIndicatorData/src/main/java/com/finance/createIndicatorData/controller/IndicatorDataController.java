@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequiredArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
-public class IndicatorDataImpl implements IndicatorDataApi {
+public class IndicatorDataController implements IndicatorDataApi {
 
     DataOfStrategyGenerationService dataOfStrategyGenerationService;
 

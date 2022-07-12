@@ -88,4 +88,9 @@ public class SpecificationOfStrategyServiceImpl implements SpecificationOfStrate
                             .withDescriptionToCloseADealIndicators(closeADealIndicators);
                 }).toList();
     }
+
+    @Override
+    public Integer findTheNumberOfUntestedStrategies() {
+        return repository.findTheNumberOfUntestedStrategies();
+    }
 }

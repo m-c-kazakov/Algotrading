@@ -25,6 +25,7 @@ spring:
 
 app:
   populationCreation:
+    frontierForCreatingNewStrategies: 1000
     numberOfRandomIndividual: 50
     numberOfTheBestIndividual: 50
   kafka:

@@ -43,6 +43,8 @@ class SchedulingServiceImplTest extends KafkaTestBased {
     List<StringValue> submittedStrategies;
     @MockBean
     GeneticAlgorithm geneticAlgorithm;
+    @MockBean
+    SpecificationOfStrategyService specificationOfStrategyService;
     @Autowired
     DataSender kafkaSender;
     @Autowired
@@ -53,8 +55,8 @@ class SchedulingServiceImplTest extends KafkaTestBased {
     static class SchedulingServiceImplTestConfiguration {
 
         @Bean
-        public SchedulingService schedulingService(GeneticAlgorithm geneticAlgorithm, DataSender dataSender) {
-            return new SchedulingServiceImpl(geneticAlgorithm, dataSender);
+        public SchedulingService schedulingService(GeneticAlgorithm geneticAlgorithm, DataSender dataSender, SpecificationOfStrategyService specificationOfStrategyService) {
+            return new SchedulingServiceImpl(geneticAlgorithm, dataSender, specificationOfStrategyService);
         }
 
         @Bean("submittedStrategies")
@@ -101,6 +103,7 @@ class SchedulingServiceImplTest extends KafkaTestBased {
                         .toList();
 
         Mockito.doReturn(specificationOfStrategies).when(geneticAlgorithm).execute();
+        Mockito.doReturn(0).when(specificationOfStrategyService).findTheNumberOfUntestedStrategies();
 
         schedulingService.execute();
 
