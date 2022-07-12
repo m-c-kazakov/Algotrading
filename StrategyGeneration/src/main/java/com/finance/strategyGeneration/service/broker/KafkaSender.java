@@ -28,6 +28,7 @@ public class KafkaSender implements DataSender {
                             log.error("message wasn't sent", exception);
                         } else {
                             log.info("message id:{} was sent, offset:{}", value.id(), metadata.offset());
+                            callBack.accept(value);
                         }
                     });
         } catch (Exception ex) {
