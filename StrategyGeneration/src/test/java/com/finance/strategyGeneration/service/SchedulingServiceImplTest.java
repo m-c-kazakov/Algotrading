@@ -2,7 +2,9 @@ package com.finance.strategyGeneration.service;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.finance.strategyGeneration.config.configurationProperties.KafkaConfigurationProperties;
+import com.finance.strategyGeneration.dto.SpecificationOfStrategyDto;
 import com.finance.strategyGeneration.intagration.KafkaTestBased;
+import com.finance.strategyGeneration.mapper.SpecificationOfStrategyMapper;
 import com.finance.strategyGeneration.model.SpecificationOfStrategy;
 import com.finance.strategyGeneration.service.broker.DataProducer;
 import com.finance.strategyGeneration.service.broker.JsonSerializer;
@@ -40,7 +42,7 @@ class SchedulingServiceImplTest extends KafkaTestBased {
 
     @Qualifier("submittedStrategies")
     @Autowired
-    List<SpecificationOfStrategy> submittedStrategies;
+    List<SpecificationOfStrategyDto> submittedStrategies;
     @MockBean
     GeneticAlgorithm geneticAlgorithm;
     @MockBean
@@ -49,6 +51,8 @@ class SchedulingServiceImplTest extends KafkaTestBased {
     DataProducer kafkaSender;
     @Autowired
     SchedulingService schedulingService;
+    @Autowired
+    SpecificationOfStrategyMapper mapper;
 
     @Autowired
     RandomPopulationCreationManager randomPopulationCreationManager;
@@ -69,31 +73,31 @@ class SchedulingServiceImplTest extends KafkaTestBased {
         await()
                 .atMost(30, TimeUnit.SECONDS)
                 .until(() -> submittedStrategies.size() == specificationOfStrategies.size());
-        assertThat(submittedStrategies).hasSameElementsAs(specificationOfStrategies);
+        assertThat(submittedStrategies).hasSameElementsAs(specificationOfStrategies.stream().map(mapper::mapTo).toList());
     }
 
     @TestConfiguration
     static class SchedulingServiceImplTestConfiguration {
 
         @Bean
-        public SchedulingService schedulingService(GeneticAlgorithm geneticAlgorithm, DataProducer dataProducer, SpecificationOfStrategyService specificationOfStrategyService) {
-            return new SchedulingServiceImpl(geneticAlgorithm, dataProducer, specificationOfStrategyService);
+        public SchedulingService schedulingService(GeneticAlgorithm geneticAlgorithm, DataProducer dataProducer, SpecificationOfStrategyService specificationOfStrategyService, SpecificationOfStrategyMapper mapper) {
+            return new SchedulingServiceImpl(geneticAlgorithm, dataProducer, specificationOfStrategyService, mapper);
         }
 
         @Bean("submittedStrategies")
-        public List<SpecificationOfStrategy> SpecificationOfStrategys() {
+        public List<SpecificationOfStrategyDto> SpecificationOfStrategys() {
             return new CopyOnWriteArrayList<>();
         }
 
         @Bean
-        public DataProducer dataSender(KafkaProducer<Long, SpecificationOfStrategy> producer,
+        public DataProducer dataSender(KafkaProducer<Long, SpecificationOfStrategyDto> producer,
                                        @Value("app.kafka.topic_name") String topicName,
-                                       List<SpecificationOfStrategy> SpecificationOfStrategys) {
+                                       List<SpecificationOfStrategyDto> SpecificationOfStrategys) {
             return new Producer(producer, topicName, SpecificationOfStrategys::add);
         }
 
         @Bean
-        public KafkaProducer<Long, SpecificationOfStrategy> kafkaProducer(KafkaConfigurationProperties properties) {
+        public KafkaProducer<Long, SpecificationOfStrategyDto> kafkaProducer(KafkaConfigurationProperties properties) {
             Properties props = new Properties();
             props.put(CLIENT_ID_CONFIG, properties.getClient_id_config());
             props.put(BOOTSTRAP_SERVERS_CONFIG, properties.getBootstrap_servers_config());
@@ -107,7 +111,7 @@ class SchedulingServiceImplTest extends KafkaTestBased {
             props.put(VALUE_SERIALIZER_CLASS_CONFIG, JsonSerializer.class);
             props.put(OBJECT_MAPPER, new ObjectMapper());
 
-            KafkaProducer<Long, SpecificationOfStrategy> kafkaProducer = new KafkaProducer<>(props);
+            KafkaProducer<Long, SpecificationOfStrategyDto> kafkaProducer = new KafkaProducer<>(props);
 
             var shutdownHook = new Thread(kafkaProducer::close);
             Runtime.getRuntime().addShutdownHook(shutdownHook);

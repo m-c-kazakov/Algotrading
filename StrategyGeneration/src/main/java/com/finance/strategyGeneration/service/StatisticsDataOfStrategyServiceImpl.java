@@ -1,8 +1,8 @@
 package com.finance.strategyGeneration.service;
 
 import com.finance.dataHolder.StatisticsDataOfStrategy;
+import com.finance.strategyGeneration.mapper.StatisticsOfStrategyMapper;
 import com.finance.strategyGeneration.model.StatisticsOfStrategy;
-import com.finance.strategyGeneration.model.mapper.StatisticsOfStrategyMapper;
 import com.finance.strategyGeneration.repository.SpecificationOfStrategyRepository;
 import com.finance.strategyGeneration.repository.StatisticsOfStrategyRepository;
 import lombok.AccessLevel;

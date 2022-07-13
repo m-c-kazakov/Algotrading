@@ -1,6 +1,6 @@
 package com.finance.strategyGeneration.service.broker;
 
-import com.finance.strategyGeneration.model.SpecificationOfStrategy;
+import com.finance.strategyGeneration.dto.SpecificationOfStrategyDto;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
@@ -16,19 +16,20 @@ import java.util.function.Consumer;
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class Producer implements DataProducer {
 
-    KafkaProducer<Long, SpecificationOfStrategy> producer;
+    KafkaProducer<Long, SpecificationOfStrategyDto> producer;
     String topicName;
-    Consumer<SpecificationOfStrategy> callBack;
+    Consumer<SpecificationOfStrategyDto> callBack;
 
     @Override
-    public void dataHandler(SpecificationOfStrategy specificationOfStrategy) {
+    public void dataHandler(SpecificationOfStrategyDto specificationOfStrategy) {
         try {
             producer.send(new ProducerRecord<>(topicName, specificationOfStrategy.getId(), specificationOfStrategy),
                     (metadata, exception) -> {
                         if (exception != null) {
                             log.error("message wasn't sent", exception);
                         } else {
-                            log.info("message id:{} was sent, offset:{}", specificationOfStrategy.getId(), metadata.offset());
+                            log.info("message id:{} was sent, offset:{}", specificationOfStrategy.getId(),
+                                    metadata.offset());
                             callBack.accept(specificationOfStrategy);
                         }
                     });
@@ -38,7 +39,7 @@ public class Producer implements DataProducer {
     }
 
     @Override
-    public void dataHandler(List<SpecificationOfStrategy> values) {
+    public void dataHandler(List<SpecificationOfStrategyDto> values) {
         values.forEach(this::dataHandler);
     }
 }

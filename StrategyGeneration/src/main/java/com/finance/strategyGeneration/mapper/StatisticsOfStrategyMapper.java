@@ -1,4 +1,4 @@
-package com.finance.strategyGeneration.model.mapper;
+package com.finance.strategyGeneration.mapper;
 
 import com.finance.dataHolder.StatisticsDataOfStrategy;
 import com.finance.strategyGeneration.model.StatisticsOfStrategy;

@@ -8,6 +8,12 @@ spring:
     properties.hibernate:
       hbm2ddl.auto: update
 
+app:
+  populationCreation:
+    frontierForCreatingNewStrategies: 1
+    numberOfRandomIndividual: 10
+    numberOfTheBestIndividual: 5
+
 
 
 

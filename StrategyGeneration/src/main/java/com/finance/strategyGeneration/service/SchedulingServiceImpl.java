@@ -1,6 +1,7 @@
 package com.finance.strategyGeneration.service;
 
-import com.finance.strategyGeneration.model.SpecificationOfStrategy;
+import com.finance.strategyGeneration.dto.SpecificationOfStrategyDto;
+import com.finance.strategyGeneration.mapper.SpecificationOfStrategyMapper;
 import com.finance.strategyGeneration.service.broker.DataProducer;
 import com.finance.strategyGeneration.stagesOfGeneticAlgorithm.GeneticAlgorithm;
 import lombok.AccessLevel;
@@ -26,6 +27,7 @@ public class SchedulingServiceImpl implements SchedulingService {
     GeneticAlgorithm geneticAlgorithm;
     DataProducer kafkaSender;
     SpecificationOfStrategyService specificationOfStrategyService;
+    SpecificationOfStrategyMapper mapper;
 
     @Override
     @Scheduled(fixedDelay = 30000)
@@ -36,10 +38,11 @@ public class SchedulingServiceImpl implements SchedulingService {
 
         if (numberOfUntestedStrategies < frontierForCreatingNewStrategies) {
             log.info("START: Запуск генетического алгоритма.");
-            List<SpecificationOfStrategy> values = geneticAlgorithm.execute();
-            log.info("END: Завершение генетического алгоритма. Количество созданных стратегий={}", values.size());
+            List<SpecificationOfStrategyDto> specificationOfStrategyDtos =
+                    geneticAlgorithm.execute().stream().map(mapper::mapTo).toList();
+            log.info("END: Завершение генетического алгоритма. Количество созданных стратегий={}", specificationOfStrategyDtos.size());
 
-            kafkaSender.dataHandler(values);
+            kafkaSender.dataHandler(specificationOfStrategyDtos);
         } else {
             log.info("Количество не проверенных стратегий больше {}. Новые стратегии не будут созданы.", frontierForCreatingNewStrategies);
         }

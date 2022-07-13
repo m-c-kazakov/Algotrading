@@ -2,7 +2,7 @@ package com.finance.strategyGeneration.config;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.finance.strategyGeneration.config.configurationProperties.KafkaConfigurationProperties;
-import com.finance.strategyGeneration.model.SpecificationOfStrategy;
+import com.finance.strategyGeneration.dto.SpecificationOfStrategyDto;
 import com.finance.strategyGeneration.service.broker.DataProducer;
 import com.finance.strategyGeneration.service.broker.JsonSerializer;
 import com.finance.strategyGeneration.service.broker.Producer;
@@ -26,12 +26,13 @@ import static org.apache.kafka.clients.producer.ProducerConfig.*;
 public class KafkaConfig {
 
     @Bean
-    public DataProducer dataSender(KafkaProducer<Long, SpecificationOfStrategy> producer, @Value("app.kafka.topic_name") String topicName) {
-        return new Producer(producer, topicName, stringValue -> {});
+    public DataProducer dataSender(KafkaProducer<Long, SpecificationOfStrategyDto> producer, @Value("app.kafka.topic_name") String topicName) {
+        return new Producer(producer, topicName, stringValue -> {
+        });
     }
 
     @Bean
-    public KafkaProducer<Long, SpecificationOfStrategy> kafkaProducer(KafkaConfigurationProperties properties) {
+    public KafkaProducer<Long, SpecificationOfStrategyDto> kafkaProducer(KafkaConfigurationProperties properties) {
         Properties props = new Properties();
         props.put(CLIENT_ID_CONFIG, properties.getClient_id_config());
         props.put(BOOTSTRAP_SERVERS_CONFIG, properties.getBootstrap_servers_config());
@@ -45,7 +46,7 @@ public class KafkaConfig {
         props.put(VALUE_SERIALIZER_CLASS_CONFIG, JsonSerializer.class);
         props.put(OBJECT_MAPPER, new ObjectMapper());
 
-        KafkaProducer<Long, SpecificationOfStrategy> kafkaProducer = new KafkaProducer<>(props);
+        KafkaProducer<Long, SpecificationOfStrategyDto> kafkaProducer = new KafkaProducer<>(props);
 
         var shutdownHook = new Thread(() -> {
             log.info("closing kafka producer");
