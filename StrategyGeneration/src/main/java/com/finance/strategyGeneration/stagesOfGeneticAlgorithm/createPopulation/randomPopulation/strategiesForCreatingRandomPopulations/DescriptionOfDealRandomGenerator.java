@@ -9,17 +9,17 @@ import com.finance.strategyGeneration.model.creator.IndicatorsDescriptionStorage
 import com.finance.strategyGeneration.model.creator.InformationOfCandlesStorageCreator;
 import com.finance.strategyGeneration.model.storage.IndicatorsDescriptionStorage;
 import com.finance.strategyGeneration.model.storage.InformationOfCandlesStorage;
-import com.finance.strategyGeneration.repository.InformationOfCandlesRepository;
 import com.finance.strategyGeneration.service.InformationOfCandleService;
 import com.finance.strategyGeneration.stagesOfGeneticAlgorithm.createPopulation.randomPopulation.strategiesForCreatingRandomPopulations.generatorRandomIndicators.GeneratorOfRandomIndicators;
 import lombok.AccessLevel;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
+import lombok.experimental.NonFinal;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
-import java.util.Objects;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.stream.Stream;
 
@@ -32,10 +32,10 @@ public class DescriptionOfDealRandomGenerator implements RandomStrategyParams {
 
     GeneratorOfRandomIndicators generatorOfRandomIndicators;
     InformationOfCandleService informationOfCandleService;
-    InformationOfCandlesRepository informationOfCandlesRepository;
 
-    // TODO вынести в property
-    Boolean isNeedToCreateDescriptionToCloseADeal = false;
+    @NonFinal
+    @Value("${app.populationCreation.isNeedToCreateDescriptionToCloseADeal}")
+    Boolean isNeedToCreateDescriptionToCloseADeal;
 
     @Override
     public void add(SpecificationOfStrategy.SpecificationOfStrategyBuilder specificationOfStrategyBuilder) {
@@ -69,30 +69,23 @@ public class DescriptionOfDealRandomGenerator implements RandomStrategyParams {
                 .filter(indicators -> !isEmpty(indicators))
                 .flatMap(List::stream)
                 .map(InformationOfIndicator::getInformationOfCandles)
-                .map(InformationOfCandlesStorage::getTimeFrame)
+                .map(InformationOfCandlesStorage::receiveTimeFrame)
                 .toList();
 
         return TimeFrame.getMinimalTimeFrame(timeFrames);
     }
 
     private IndicatorsDescriptionStorage generateIndicators(@NonNull CurrencyPair currencyPair) {
+
         int numberOfIndicators = ThreadLocalRandom.current()
                 .nextInt(1, 6);
+
         List<InformationOfIndicator> informationOfIndicators =
                 Stream.iterate(0, integer -> integer < numberOfIndicators, integer -> integer + 1)
                         .map(integer -> generatorOfRandomIndicators.createRandomIndicator(currencyPair))
                         .toList();
 
-        boolean result = informationOfIndicators
-                .stream()
-                .map(InformationOfIndicator::getInformationOfCandles)
-                .map(InformationOfCandlesStorage::getInformationOfCandles)
-                .map(InformationOfCandles::getCurrencyPair)
-                .anyMatch(Objects::isNull);
 
-        if (result) {
-            System.out.println("asdf");
-        }
         return IndicatorsDescriptionStorageCreator.create(informationOfIndicators);
     }
 }

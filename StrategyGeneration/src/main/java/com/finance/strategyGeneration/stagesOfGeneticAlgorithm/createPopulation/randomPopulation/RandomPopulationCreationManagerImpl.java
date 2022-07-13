@@ -10,7 +10,6 @@ import lombok.experimental.FieldDefaults;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
-import java.util.concurrent.ThreadLocalRandom;
 
 @Component
 @RequiredArgsConstructor
@@ -20,8 +19,6 @@ public class RandomPopulationCreationManagerImpl implements RandomPopulationCrea
     static long startScore = 1000; // TODO Вынести в Property
     static int acceptableRisk = 20; // TODO Вынести в Property
 
-    static List<TypeOfDeal> typeOfDeals = List.of(TypeOfDeal.values());
-
     List<RandomStrategyParams> randomStrategyParams;
 
     @Override
@@ -30,15 +27,10 @@ public class RandomPopulationCreationManagerImpl implements RandomPopulationCrea
         SpecificationOfStrategy.SpecificationOfStrategyBuilder dataOfStrategyBuilder = SpecificationOfStrategy.builder()
                 .startScore(startScore)
                 .acceptableRisk(acceptableRisk)
-                .typeOfDeal(getTypeOfDeal());
+                .typeOfDeal(TypeOfDeal.getRandomTypeOfDeal());
 
         randomStrategyParams.forEach(randomStrategyParam -> randomStrategyParam.add(dataOfStrategyBuilder));
         SpecificationOfStrategy specificationOfStrategy = dataOfStrategyBuilder.build();
         return SpecificationOfStrategyCreator.createWithHashCodeAndDataOfCreation(specificationOfStrategy);
-    }
-
-    private TypeOfDeal getTypeOfDeal() {
-        return typeOfDeals.get(ThreadLocalRandom.current()
-                .nextInt(typeOfDeals.size()));
     }
 }

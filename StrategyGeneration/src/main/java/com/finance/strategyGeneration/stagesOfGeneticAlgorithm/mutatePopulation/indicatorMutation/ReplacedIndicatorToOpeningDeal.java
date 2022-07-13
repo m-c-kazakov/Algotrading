@@ -30,7 +30,7 @@ public class ReplacedIndicatorToOpeningDeal implements Mutation {
 
         List<InformationOfIndicator> indicators =
                 new ArrayList<>(informationOfIndicatorService.findAllById(parentSpecificationOfStrategy
-                        .getDescriptionToOpenADealStringIds()));
+                        .receiveDescriptionToOpenADealStringIds()));
 
         int bound = Math.max(indicators.size() / 2, 1);
         int numberOfReplacedItems = Math.max(ThreadLocalRandom.current().nextInt(bound), 1);

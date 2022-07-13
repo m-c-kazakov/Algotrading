@@ -55,8 +55,8 @@ public class SpecificationOfStrategyServiceImpl implements SpecificationOfStrate
         List<String> indicatorsId =
                 theBestStrategy.stream()
                         .flatMap(specificationOfStrategy -> Stream.of(
-                                specificationOfStrategy.getDescriptionToOpenADealStringIds(),
-                                specificationOfStrategy.getDescriptionToCloseADealStringIds()))
+                                specificationOfStrategy.receiveDescriptionToOpenADealStringIds(),
+                                specificationOfStrategy.receiveDescriptionToCloseADealStringIds()))
                         .flatMap(List::stream)
                         .toList();
 
@@ -64,20 +64,20 @@ public class SpecificationOfStrategyServiceImpl implements SpecificationOfStrate
         Map<String, InformationOfIndicator> informationOfIndicatorMap = informationOfIndicatorService
                 .findAllById(indicatorsId)
                 .stream()
-                .collect(Collectors.toMap(InformationOfIndicator::getStringId,
+                .collect(Collectors.toMap(InformationOfIndicator::receiveStringId,
                         informationOfIndicator -> informationOfIndicator));
 
 
         return theBestStrategy.stream()
                 .map(specificationOfStrategy -> {
                     List<InformationOfIndicator> openADealIndicators = specificationOfStrategy
-                            .getDescriptionToOpenADealStringIds()
+                            .receiveDescriptionToOpenADealStringIds()
                             .stream()
                             .map(informationOfIndicatorMap::get)
                             .toList();
 
                     List<InformationOfIndicator> closeADealIndicators = specificationOfStrategy
-                            .getDescriptionToCloseADealIndicators()
+                            .receiveDescriptionToCloseADealIndicators()
                             .stream()
                             .map(informationOfIndicatorMap::get)
                             .toList();

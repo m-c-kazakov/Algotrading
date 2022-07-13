@@ -4,11 +4,11 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.finance.strategyGeneration.config.configurationProperties.KafkaConfigurationProperties;
 import com.finance.strategyGeneration.intagration.KafkaTestBased;
 import com.finance.strategyGeneration.model.SpecificationOfStrategy;
-import com.finance.strategyGeneration.service.broker.DataSender;
+import com.finance.strategyGeneration.service.broker.DataProducer;
 import com.finance.strategyGeneration.service.broker.JsonSerializer;
-import com.finance.strategyGeneration.service.broker.KafkaSender;
-import com.finance.strategyGeneration.service.broker.StringValue;
+import com.finance.strategyGeneration.service.broker.Producer;
 import com.finance.strategyGeneration.stagesOfGeneticAlgorithm.GeneticAlgorithm;
+import com.finance.strategyGeneration.stagesOfGeneticAlgorithm.createPopulation.randomPopulation.RandomPopulationCreationManager;
 import org.apache.kafka.clients.producer.KafkaProducer;
 import org.apache.kafka.common.serialization.LongSerializer;
 import org.junit.jupiter.api.Test;
@@ -17,9 +17,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
+import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
 
 import java.util.List;
 import java.util.Properties;
@@ -40,39 +40,60 @@ class SchedulingServiceImplTest extends KafkaTestBased {
 
     @Qualifier("submittedStrategies")
     @Autowired
-    List<StringValue> submittedStrategies;
+    List<SpecificationOfStrategy> submittedStrategies;
     @MockBean
     GeneticAlgorithm geneticAlgorithm;
     @MockBean
     SpecificationOfStrategyService specificationOfStrategyService;
     @Autowired
-    DataSender kafkaSender;
+    DataProducer kafkaSender;
     @Autowired
     SchedulingService schedulingService;
 
+    @Autowired
+    RandomPopulationCreationManager randomPopulationCreationManager;
 
-    @Configuration
+    @Test
+    void execute() {
+
+        List<SpecificationOfStrategy> specificationOfStrategies =
+                Stream.iterate(0, integer -> integer < 5, integer -> integer + 1)
+                        .map(integer -> randomPopulationCreationManager.execute())
+                        .toList();
+
+        Mockito.doReturn(specificationOfStrategies).when(geneticAlgorithm).execute();
+        Mockito.doReturn(0).when(specificationOfStrategyService).findTheNumberOfUntestedStrategies();
+
+        schedulingService.execute();
+
+        await()
+                .atMost(30, TimeUnit.SECONDS)
+                .until(() -> submittedStrategies.size() == specificationOfStrategies.size());
+        assertThat(submittedStrategies).hasSameElementsAs(specificationOfStrategies);
+    }
+
+    @TestConfiguration
     static class SchedulingServiceImplTestConfiguration {
 
         @Bean
-        public SchedulingService schedulingService(GeneticAlgorithm geneticAlgorithm, DataSender dataSender, SpecificationOfStrategyService specificationOfStrategyService) {
-            return new SchedulingServiceImpl(geneticAlgorithm, dataSender, specificationOfStrategyService);
+        public SchedulingService schedulingService(GeneticAlgorithm geneticAlgorithm, DataProducer dataProducer, SpecificationOfStrategyService specificationOfStrategyService) {
+            return new SchedulingServiceImpl(geneticAlgorithm, dataProducer, specificationOfStrategyService);
         }
 
         @Bean("submittedStrategies")
-        public List<StringValue> stringValues() {
+        public List<SpecificationOfStrategy> SpecificationOfStrategys() {
             return new CopyOnWriteArrayList<>();
         }
 
         @Bean
-        public DataSender dataSender(KafkaProducer<Long, StringValue> producer,
-                                     @Value("app.kafka.topic_name") String topicName,
-                                     List<StringValue> stringValues) {
-            return new KafkaSender(producer, topicName, stringValues::add);
+        public DataProducer dataSender(KafkaProducer<Long, SpecificationOfStrategy> producer,
+                                       @Value("app.kafka.topic_name") String topicName,
+                                       List<SpecificationOfStrategy> SpecificationOfStrategys) {
+            return new Producer(producer, topicName, SpecificationOfStrategys::add);
         }
 
         @Bean
-        public KafkaProducer<Long, StringValue> kafkaProducer(KafkaConfigurationProperties properties) {
+        public KafkaProducer<Long, SpecificationOfStrategy> kafkaProducer(KafkaConfigurationProperties properties) {
             Properties props = new Properties();
             props.put(CLIENT_ID_CONFIG, properties.getClient_id_config());
             props.put(BOOTSTRAP_SERVERS_CONFIG, properties.getBootstrap_servers_config());
@@ -86,35 +107,12 @@ class SchedulingServiceImplTest extends KafkaTestBased {
             props.put(VALUE_SERIALIZER_CLASS_CONFIG, JsonSerializer.class);
             props.put(OBJECT_MAPPER, new ObjectMapper());
 
-            KafkaProducer<Long, StringValue> kafkaProducer = new KafkaProducer<>(props);
+            KafkaProducer<Long, SpecificationOfStrategy> kafkaProducer = new KafkaProducer<>(props);
 
             var shutdownHook = new Thread(kafkaProducer::close);
             Runtime.getRuntime().addShutdownHook(shutdownHook);
             return kafkaProducer;
         }
 
-    }
-
-    @Test
-    void execute() {
-        List<SpecificationOfStrategy> specificationOfStrategies =
-                Stream.iterate(0, integer -> integer < 5, integer -> integer + 1)
-                        .map(integer -> SpecificationOfStrategy.builder().id(Long.valueOf(integer)).build())
-                        .toList();
-
-        Mockito.doReturn(specificationOfStrategies).when(geneticAlgorithm).execute();
-        Mockito.doReturn(0).when(specificationOfStrategyService).findTheNumberOfUntestedStrategies();
-
-        schedulingService.execute();
-
-        await()
-                .atMost(30, TimeUnit.SECONDS)
-                .until(() -> submittedStrategies.size() == specificationOfStrategies.size());
-        assertThat(submittedStrategies).hasSameElementsAs(
-                specificationOfStrategies.stream()
-                        .map(SpecificationOfStrategy::getId)
-                        .map(id -> new StringValue(id, String.valueOf(id)))
-                        .toList()
-        );
     }
 }

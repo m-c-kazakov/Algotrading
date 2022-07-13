@@ -10,6 +10,6 @@ public class IndicatorsDescriptionStorageToIdsConverter implements Converter<Ind
 
     @Override
     public String[] convert(IndicatorsDescriptionStorage indicatorsDescriptionStorage) {
-        return indicatorsDescriptionStorage.getStringIds().toArray(String[]::new);
+        return indicatorsDescriptionStorage.receiveStringIds().toArray(String[]::new);
     }
 }

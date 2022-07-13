@@ -27,7 +27,7 @@ public class RemoveIndicatorOpeningDeal implements Mutation {
 
         List<InformationOfIndicator> indicators =
                 new ArrayList<>(informationOfIndicatorService.findAllById(
-                        parentSpecificationOfStrategy.getDescriptionToOpenADealStringIds()));
+                        parentSpecificationOfStrategy.receiveDescriptionToOpenADealStringIds()));
 
         int numberOfDeletedItems = indicators.size() / 2;
 

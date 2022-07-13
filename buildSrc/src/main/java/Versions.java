@@ -8,4 +8,5 @@ public interface Versions {
     String mapstruct = "1.5.2.Final";
     String springBootStarterValidation = "2.7.1";
     String kafkaClients = "3.2.0";
+    String openfeign = "3.1.3";
 }

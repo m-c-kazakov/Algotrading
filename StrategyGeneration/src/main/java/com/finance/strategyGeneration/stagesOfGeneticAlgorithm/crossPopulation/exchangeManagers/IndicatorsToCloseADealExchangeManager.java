@@ -28,10 +28,10 @@ public class IndicatorsToCloseADealExchangeManager implements ExchangeManager {
                 .toList();
 
         SpecificationOfStrategy firstParent = SpecificationOfStrategyElements.get(0);
-        List<InformationOfIndicator> firstIndicators = firstParent.getDescriptionToCloseADealIndicators();
+        List<InformationOfIndicator> firstIndicators = firstParent.receiveDescriptionToCloseADealIndicators();
 
         SpecificationOfStrategy secondParent = SpecificationOfStrategyElements.get(1);
-        List<InformationOfIndicator> secondIndicators = secondParent.getDescriptionToCloseADealIndicators();
+        List<InformationOfIndicator> secondIndicators = secondParent.receiveDescriptionToCloseADealIndicators();
 
         if (!firstIndicators.isEmpty() && !secondIndicators.isEmpty()) {
             int separator = createSeparator.execute(firstIndicators, secondIndicators);

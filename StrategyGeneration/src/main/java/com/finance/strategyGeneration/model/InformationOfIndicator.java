@@ -32,32 +32,32 @@ public class InformationOfIndicator {
     IndicatorParametersConfigurationStorage parameters;
 
 
-    public String getStringId() {
+    public String receiveStringId() {
         return String.valueOf(id);
     }
 
-    public TimeFrame getTimeFrame() {
-        return informationOfCandles.getTimeFrame();
+    public TimeFrame receiveTimeFrame() {
+        return informationOfCandles.receiveTimeFrame();
     }
 
-    public CurrencyPair getCurrencyPair() {
-        return informationOfCandles.getCurrencyPair();
+    public CurrencyPair receiveCurrencyPair() {
+        return informationOfCandles.receiveCurrencyPair();
     }
 
 
-    public Long getInformationOfCandlesId() {
-        return informationOfCandles.getId();
+    public Long receiveInformationOfCandlesId() {
+        return informationOfCandles.receiveId();
     }
 
-    public Integer getIndicatorTypeHashCode() {
+    public Integer receiveIndicatorTypeHashCode() {
         return this.indicatorType.hashCode();
     }
 
-    public Integer getInformationOfCandlesHashCode() {
+    public Integer receiveInformationOfCandlesHashCode() {
         return this.informationOfCandles.hashCode();
     }
 
-    public Integer getParametersHashCode() {
+    public Integer receiveParametersHashCode() {
         return this.parameters.hashCode();
     }
 }

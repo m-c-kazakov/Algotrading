@@ -29,9 +29,9 @@ public class InformationOfIndicatorCreator {
     public static InformationOfIndicator createWithHashCode(InformationOfIndicator informationOfIndicator) {
         String uniqueIdentifier = Stream.of(
                 informationOfIndicator.hashCode(),
-                informationOfIndicator.getIndicatorTypeHashCode(),
-                informationOfIndicator.getInformationOfCandlesHashCode(),
-                informationOfIndicator.getParametersHashCode()
+                informationOfIndicator.receiveIndicatorTypeHashCode(),
+                informationOfIndicator.receiveInformationOfCandlesHashCode(),
+                informationOfIndicator.receiveParametersHashCode()
         ).map(String::valueOf).collect(Collectors.joining("_"));
         return informationOfIndicator
                 .withHashCode(uniqueIdentifier);

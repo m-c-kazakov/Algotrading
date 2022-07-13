@@ -1,6 +1,5 @@
 package com.finance.strategyGeneration.intagration;
 
-import com.finance.strategyGeneration.intagration.annotation.IT;
 import org.junit.jupiter.api.BeforeAll;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -13,8 +12,8 @@ import org.testcontainers.utility.DockerImageName;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeoutException;
 
-@IT
-public abstract class KafkaTestBased {
+//@IT
+public abstract class KafkaTestBased extends IntegrationTestBased {
 
     private static final Logger log = LoggerFactory.getLogger(KafkaTestBased.class);
 
@@ -26,16 +25,6 @@ public abstract class KafkaTestBased {
     @BeforeAll
     public static void start() throws ExecutionException, InterruptedException, TimeoutException {
         kafka.start();
-
-//        log.info("topics creation...");
-//        try (var admin = AdminClient.create(Map.of(BOOTSTRAP_SERVERS_CONFIG, kafka.getBootstrapServers()))) {
-//            var result = admin.createTopics(List.of(new NewTopic(TOPIC_NAME, 1, (short) 1)));
-//
-//            for (var topicResult : result.values().values()) {
-//                topicResult.get(10, TimeUnit.SECONDS);
-//            }
-//        }
-//        log.info("topics created");
     }
 
     @DynamicPropertySource

@@ -42,12 +42,12 @@ public class InformationOfIndicatorServiceImpl implements InformationOfIndicator
     private InformationOfIndicator addInformationOfCandles(InformationOfIndicator informationOfIndicator) {
 
         InformationOfCandles informationOfCandles =
-                informationOfCandleService.findById(informationOfIndicator.getInformationOfCandlesId());
+                informationOfCandleService.findById(informationOfIndicator.receiveInformationOfCandlesId());
 
         InformationOfIndicator result = informationOfIndicator.withInformationOfCandles(
                 InformationOfCandlesStorageCreator.create(informationOfCandles));
-        Assert.notNull(result.getTimeFrame(), "TimeFrame не может быть null.");
-        Assert.notNull(result.getCurrencyPair(), "CurrencyPair не может быть null.");
+        Assert.notNull(result.receiveTimeFrame(), "TimeFrame не может быть null.");
+        Assert.notNull(result.receiveCurrencyPair(), "CurrencyPair не может быть null.");
         return result;
     }
 

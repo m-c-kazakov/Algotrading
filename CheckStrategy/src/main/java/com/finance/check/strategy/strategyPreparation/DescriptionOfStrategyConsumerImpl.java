@@ -18,8 +18,6 @@ public class DescriptionOfStrategyConsumerImpl implements DescriptionOfStrategyC
     GeneticAlgorithmFeign geneticAlgorithmFeign;
 
 
-    // TODO Подключить Kafka
-
     @Override
     public void receive(DescriptionOfStrategy descriptionOfStrategy) {
 

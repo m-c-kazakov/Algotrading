@@ -30,7 +30,7 @@ public class AddIndicatorToOpeningDeal implements Mutation {
     public Stream<SpecificationOfStrategy> execute(SpecificationOfStrategy parentSpecificationOfStrategy) {
 
         List<InformationOfIndicator> indicators = new ArrayList<>(
-                informationOfIndicatorService.findAllById(parentSpecificationOfStrategy.getDescriptionToOpenADealStringIds()));
+                informationOfIndicatorService.findAllById(parentSpecificationOfStrategy.receiveDescriptionToOpenADealStringIds()));
 
         int bound = Math.max(indicators.size() / 3, 1);
         int numberOfAddedItems = Math.max(ThreadLocalRandom.current()

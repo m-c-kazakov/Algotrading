@@ -27,10 +27,10 @@ public class IndicatorsToOpenADealExchangeManager implements ExchangeManager {
                 .toList();
 
         SpecificationOfStrategy firstParent = SpecificationOfStrategyElements.get(0);
-        List<InformationOfIndicator> firstIndicators = firstParent.getDescriptionToOpenADealIndicators();
+        List<InformationOfIndicator> firstIndicators = firstParent.receiveDescriptionToOpenADealIndicators();
 
         SpecificationOfStrategy secondParent = SpecificationOfStrategyElements.get(1);
-        List<InformationOfIndicator> secondIndicators = secondParent.getDescriptionToOpenADealIndicators();
+        List<InformationOfIndicator> secondIndicators = secondParent.receiveDescriptionToOpenADealIndicators();
 
 
         if (!firstIndicators.isEmpty() && !secondIndicators.isEmpty()) {

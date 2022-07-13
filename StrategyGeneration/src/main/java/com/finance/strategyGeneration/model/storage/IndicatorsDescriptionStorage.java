@@ -13,14 +13,14 @@ public class IndicatorsDescriptionStorage {
 
     List<InformationOfIndicator> informationOfIndicators;
 
-    public List<String> getStringIds() {
+    public List<String> receiveStringIds() {
         return informationOfIndicators.stream()
                 .map(InformationOfIndicator::getId)
                 .map(String::valueOf)
                 .toList();
     }
 
-    public String getHashCodes() {
+    public String receiveHashCodes() {
         return informationOfIndicators
                 .stream()
                 .map(InformationOfIndicator::getHashCode)

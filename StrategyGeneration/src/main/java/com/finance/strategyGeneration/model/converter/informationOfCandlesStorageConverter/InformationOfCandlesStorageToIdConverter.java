@@ -9,6 +9,6 @@ public class InformationOfCandlesStorageToIdConverter implements Converter<Infor
 
     @Override
     public String convert(InformationOfCandlesStorage source) {
-        return source.getStringId();
+        return source.receiveStringId();
     }
 }

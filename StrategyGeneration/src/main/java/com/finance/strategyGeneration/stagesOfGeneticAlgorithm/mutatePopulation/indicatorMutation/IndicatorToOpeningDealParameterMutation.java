@@ -34,7 +34,7 @@ public class IndicatorToOpeningDealParameterMutation implements Mutation {
     @Override
     public Stream<SpecificationOfStrategy> execute(SpecificationOfStrategy parentSpecificationOfStrategy) {
 
-        List<InformationOfIndicator> indicators = new ArrayList<>(informationOfIndicatorService.findAllById(parentSpecificationOfStrategy.getDescriptionToOpenADealStringIds()));
+        List<InformationOfIndicator> indicators = new ArrayList<>(informationOfIndicatorService.findAllById(parentSpecificationOfStrategy.receiveDescriptionToOpenADealStringIds()));
 
         int bound = Math.max(indicators.size() / 2, 1);
         int numberOfReplacedItems = Math.max(ThreadLocalRandom.current()

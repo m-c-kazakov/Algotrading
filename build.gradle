@@ -39,6 +39,7 @@ allprojects {
             dependency("'org.springframework.boot:spring-boot-starter-validation:${Versions.springBootStarterValidation}")
             dependency("org.apache.kafka:kafka-clients:${Versions.kafkaClients}")
             dependency("org.testcontainers:kafka:${Versions.testcontainers}")
+            dependency("org.springframework.cloud:spring-cloud-starter-openfeign:${Versions.openfeign}")
         }
     }
 

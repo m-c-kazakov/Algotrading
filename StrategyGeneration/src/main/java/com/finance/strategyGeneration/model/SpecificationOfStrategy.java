@@ -68,11 +68,11 @@ public class SpecificationOfStrategy {
     @NotNull
     IndicatorsDescriptionStorage descriptionToCloseADeal;
 
-    public List<InformationOfIndicator> getDescriptionToCloseADealIndicators() {
+    public List<InformationOfIndicator> receiveDescriptionToCloseADealIndicators() {
         return this.descriptionToCloseADeal.getInformationOfIndicators();
     }
 
-    public List<InformationOfIndicator> getDescriptionToOpenADealIndicators() {
+    public List<InformationOfIndicator> receiveDescriptionToOpenADealIndicators() {
         return this.descriptionToOpenADeal.getInformationOfIndicators();
     }
 
@@ -90,27 +90,27 @@ public class SpecificationOfStrategy {
         return this.withDescriptionToOpenADeal(IndicatorsDescriptionStorageCreator.create(descriptionToOpenADeal));
     }
 
-    public List<String> getDescriptionToOpenADealStringIds() {
-        return this.descriptionToOpenADeal.getStringIds();
+    public List<String> receiveDescriptionToOpenADealStringIds() {
+        return this.descriptionToOpenADeal.receiveStringIds();
     }
 
-    public List<String> getDescriptionToCloseADealStringIds() {
-        return this.descriptionToCloseADeal.getStringIds();
+    public List<String> receiveDescriptionToCloseADealStringIds() {
+        return this.descriptionToCloseADeal.receiveStringIds();
     }
 
-    public Integer getSumOfDealConfigurationDataHashCode() {
+    public Integer receiveSumOfDealConfigurationDataHashCode() {
         return this.sumOfDealConfigurationData.hashCode();
     }
 
-    public Integer getStopLossConfigurationDataHashCode() {
+    public Integer receiveStopLossConfigurationDataHashCode() {
         return this.stopLossConfigurationData.hashCode();
     }
 
-    public Integer getTrailingStopConfigurationDataHashCode() {
+    public Integer receiveTrailingStopConfigurationDataHashCode() {
         return this.trailingStopConfigurationData.hashCode();
     }
 
-    public Integer getTakeProfitConfigurationDataHashCode() {
+    public Integer receiveTakeProfitConfigurationDataHashCode() {
         return this.takeProfitConfigurationData.hashCode();
     }
 }

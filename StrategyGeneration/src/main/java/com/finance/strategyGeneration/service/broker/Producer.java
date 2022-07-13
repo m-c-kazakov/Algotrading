@@ -1,5 +1,6 @@
 package com.finance.strategyGeneration.service.broker;
 
+import com.finance.strategyGeneration.model.SpecificationOfStrategy;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
@@ -13,22 +14,22 @@ import java.util.function.Consumer;
 @Slf4j
 @RequiredArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
-public class KafkaSender implements DataSender {
+public class Producer implements DataProducer {
 
-    KafkaProducer<Long, StringValue> producer;
+    KafkaProducer<Long, SpecificationOfStrategy> producer;
     String topicName;
-    Consumer<StringValue> callBack;
+    Consumer<SpecificationOfStrategy> callBack;
 
     @Override
-    public void dataHandler(StringValue value) {
+    public void dataHandler(SpecificationOfStrategy specificationOfStrategy) {
         try {
-            producer.send(new ProducerRecord<>(topicName, value.id(), value),
+            producer.send(new ProducerRecord<>(topicName, specificationOfStrategy.getId(), specificationOfStrategy),
                     (metadata, exception) -> {
                         if (exception != null) {
                             log.error("message wasn't sent", exception);
                         } else {
-                            log.info("message id:{} was sent, offset:{}", value.id(), metadata.offset());
-                            callBack.accept(value);
+                            log.info("message id:{} was sent, offset:{}", specificationOfStrategy.getId(), metadata.offset());
+                            callBack.accept(specificationOfStrategy);
                         }
                     });
         } catch (Exception ex) {
@@ -37,7 +38,7 @@ public class KafkaSender implements DataSender {
     }
 
     @Override
-    public void dataHandler(List<StringValue> values) {
+    public void dataHandler(List<SpecificationOfStrategy> values) {
         values.forEach(this::dataHandler);
     }
 }

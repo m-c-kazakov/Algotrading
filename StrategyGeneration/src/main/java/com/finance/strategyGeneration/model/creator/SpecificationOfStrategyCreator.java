@@ -18,9 +18,9 @@ public class SpecificationOfStrategyCreator {
                 specificationOfStrategy.getStopLossConfigurationData().toString(),
                 specificationOfStrategy.getTrailingStopConfigurationData().toString(),
                 specificationOfStrategy.getTakeProfitConfigurationData().toString(),
-                specificationOfStrategy.getInformationOfCandles().getHashCode(),
-                specificationOfStrategy.getDescriptionToOpenADeal().getHashCodes(),
-                specificationOfStrategy.getDescriptionToCloseADeal().getHashCodes()
+                specificationOfStrategy.getInformationOfCandles().receiveHashCode(),
+                specificationOfStrategy.getDescriptionToOpenADeal().receiveHashCodes(),
+                specificationOfStrategy.getDescriptionToCloseADeal().receiveHashCodes()
                 )
                 .map(String::valueOf)
                 .collect(Collectors.joining("_"));

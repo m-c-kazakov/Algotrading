@@ -28,6 +28,7 @@ app:
     frontierForCreatingNewStrategies: 1000
     numberOfRandomIndividual: 50
     numberOfTheBestIndividual: 50
+    isNeedToCreateDescriptionToCloseADeal: false
   kafka:
     client_id_config: StrategyGenerationProducer
     bootstrap_servers_config: localhost:9092

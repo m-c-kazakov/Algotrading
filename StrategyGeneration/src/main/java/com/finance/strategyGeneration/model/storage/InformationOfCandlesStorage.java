@@ -15,19 +15,19 @@ public class InformationOfCandlesStorage {
 
     InformationOfCandles informationOfCandles;
 
-    public Long getId() {
+    public Long receiveId() {
         return informationOfCandles.getId();
     }
 
-    public String getStringId() {
-        return String.valueOf(getId());
+    public String receiveStringId() {
+        return String.valueOf(receiveId());
     }
 
-    public TimeFrame getTimeFrame() {
+    public TimeFrame receiveTimeFrame() {
         return informationOfCandles.getTimeFrame();
     }
 
-    public CurrencyPair getCurrencyPair() {
+    public CurrencyPair receiveCurrencyPair() {
         return informationOfCandles.getCurrencyPair();
     }
 
@@ -35,7 +35,7 @@ public class InformationOfCandlesStorage {
         return InformationOfCandlesStorageCreator.create(informationOfCandles.withTimeFrame(timeFrame));
     }
 
-    public String getHashCode() {
+    public String receiveHashCode() {
         return this.informationOfCandles.getHashCode();
     }
 }

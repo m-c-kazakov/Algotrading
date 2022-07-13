@@ -2,10 +2,10 @@ package com.finance.strategyGeneration.config;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.finance.strategyGeneration.config.configurationProperties.KafkaConfigurationProperties;
-import com.finance.strategyGeneration.service.broker.DataSender;
+import com.finance.strategyGeneration.model.SpecificationOfStrategy;
+import com.finance.strategyGeneration.service.broker.DataProducer;
 import com.finance.strategyGeneration.service.broker.JsonSerializer;
-import com.finance.strategyGeneration.service.broker.KafkaSender;
-import com.finance.strategyGeneration.service.broker.StringValue;
+import com.finance.strategyGeneration.service.broker.Producer;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.kafka.clients.producer.KafkaProducer;
 import org.apache.kafka.common.serialization.LongSerializer;
@@ -26,12 +26,12 @@ import static org.apache.kafka.clients.producer.ProducerConfig.*;
 public class KafkaConfig {
 
     @Bean
-    public DataSender dataSender(KafkaProducer<Long, StringValue> producer, @Value("app.kafka.topic_name") String topicName) {
-        return new KafkaSender(producer, topicName, stringValue -> {});
+    public DataProducer dataSender(KafkaProducer<Long, SpecificationOfStrategy> producer, @Value("app.kafka.topic_name") String topicName) {
+        return new Producer(producer, topicName, stringValue -> {});
     }
 
     @Bean
-    public KafkaProducer<Long, StringValue> kafkaProducer(KafkaConfigurationProperties properties) {
+    public KafkaProducer<Long, SpecificationOfStrategy> kafkaProducer(KafkaConfigurationProperties properties) {
         Properties props = new Properties();
         props.put(CLIENT_ID_CONFIG, properties.getClient_id_config());
         props.put(BOOTSTRAP_SERVERS_CONFIG, properties.getBootstrap_servers_config());
@@ -45,7 +45,7 @@ public class KafkaConfig {
         props.put(VALUE_SERIALIZER_CLASS_CONFIG, JsonSerializer.class);
         props.put(OBJECT_MAPPER, new ObjectMapper());
 
-        KafkaProducer<Long, StringValue> kafkaProducer = new KafkaProducer<>(props);
+        KafkaProducer<Long, SpecificationOfStrategy> kafkaProducer = new KafkaProducer<>(props);
 
         var shutdownHook = new Thread(() -> {
             log.info("closing kafka producer");

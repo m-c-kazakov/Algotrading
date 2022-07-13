@@ -1,0 +1,13 @@
+
+
+
+app:
+  kafka:
+    bootstrap_servers_config: localhost:9092
+    group_id_config: checkStrategyConsumer
+    enable_auto_commit_config: true
+    auto_commit_interval_ms_config: 100
+    auto_offset_reset_config: earliest
+    max_poll_records_config: 3
+    max_poll_interval_ms_config: 300
+    topic_name: untestedStrategies
