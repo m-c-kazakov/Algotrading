@@ -5,19 +5,15 @@ import lombok.Builder;
 import lombok.Value;
 import lombok.extern.jackson.Jacksonized;
 
-import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
 @Value
 @Builder
 @Jacksonized
-public class SpecificationOfStrategyDto {
+public class DescriptionOfStrategyDto {
 
     Long id;
-    Long statisticsOfStrategyId;
-    String hashCode;
-    Date dateOfCreation;
     Long startScore;
     Integer acceptableRisk;
     SumOfDealType sumOfDealType;
@@ -29,8 +25,7 @@ public class SpecificationOfStrategyDto {
     TakeProfitType takeProfitType;
     Map<TakeProfitConfigurationKey, Object> takeProfitConfigurationData;
     TypeOfDeal typeOfDeal;
-
-    InformationOfCandlesDto informationOfCandles;
-    List<InformationOfIndicatorDto> descriptionToOpenADeal;
-    List<InformationOfIndicatorDto> descriptionToCloseADeal;
+    CandlesInformationDto informationOfCandles;
+    List<IndicatorDto> descriptionToOpenADeal;
+    List<IndicatorDto> descriptionToCloseADeal;
 }

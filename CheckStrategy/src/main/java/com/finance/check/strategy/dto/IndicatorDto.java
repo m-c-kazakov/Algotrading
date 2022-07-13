@@ -10,12 +10,9 @@ import java.util.Map;
 @Value
 @Builder
 @Jacksonized
-public class InformationOfIndicatorDto {
+public class IndicatorDto {
 
-
-    Long id;
-    String hashCode;
     IndicatorType indicatorType;
-    InformationOfCandlesDto informationOfCandles;
+    CandlesInformationDto informationOfCandles;
     Map<String, String> parameters;
 }

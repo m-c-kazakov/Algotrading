@@ -5,7 +5,7 @@ import com.finance.dataHolder.StatisticsDataOfStrategy;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.PostMapping;
 
-@FeignClient
+@FeignClient(name = "GeneticAlgorithmFeign")
 public interface GeneticAlgorithmFeign extends GeneticAlgorithmApi {
 
     @PostMapping("/strategyGeneration/statisticsDataOfStrategy")

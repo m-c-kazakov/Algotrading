@@ -4,7 +4,6 @@ import com.finance.strategyDescriptionParameters.CandlesInformation;
 import com.finance.strategyDescriptionParameters.CurrencyPair;
 import com.finance.strategyDescriptionParameters.TimeFrame;
 import lombok.Builder;
-import lombok.EqualsAndHashCode;
 import lombok.Value;
 import lombok.With;
 import lombok.extern.jackson.Jacksonized;
@@ -19,19 +18,12 @@ import java.util.Map;
 @Jacksonized
 public class Indicator {
 
-    @EqualsAndHashCode.Exclude
-    @NonNull
-    Long id;
     @NonNull
     IndicatorType indicatorType;
     @NonNull
     CandlesInformation candlesInformation;
     @NonNull
     Map<String, String> parameters;
-
-    public long getCandlesInformationId() {
-        return this.candlesInformation.getId();
-    }
 
     public Map<String, String> getParameters() {
         return new HashMap<>(parameters);

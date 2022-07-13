@@ -11,6 +11,7 @@ public class KafkaConfigurationProperties {
 
     String bootstrap_servers_config;
     String group_id_config;
+    String group_instance_id_config;
     String enable_auto_commit_config;
     String auto_commit_interval_ms_config;
     String auto_offset_reset_config;

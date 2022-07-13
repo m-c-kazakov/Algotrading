@@ -40,6 +40,7 @@ allprojects {
             dependency("org.apache.kafka:kafka-clients:${Versions.kafkaClients}")
             dependency("org.testcontainers:kafka:${Versions.testcontainers}")
             dependency("org.springframework.cloud:spring-cloud-starter-openfeign:${Versions.openfeign}")
+            dependency("org.springframework.cloud:spring-cloud-starter-loadbalancer:${Versions.openfeign}")
         }
     }
 

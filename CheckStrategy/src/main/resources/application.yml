@@ -5,6 +5,7 @@ app:
   kafka:
     bootstrap_servers_config: localhost:9092
     group_id_config: checkStrategyConsumer
+    group_instance_id_config: untestedStrategiesGroup
     enable_auto_commit_config: true
     auto_commit_interval_ms_config: 100
     auto_offset_reset_config: earliest

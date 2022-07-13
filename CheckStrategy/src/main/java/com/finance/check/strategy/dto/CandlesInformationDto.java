@@ -9,9 +9,8 @@ import lombok.extern.jackson.Jacksonized;
 @Value
 @Builder
 @Jacksonized
-public class InformationOfCandlesDto {
-    Long id;
-    String hashCode;
+public class CandlesInformationDto {
+
     CurrencyPair currencyPair;
     TimeFrame timeFrame;
 }

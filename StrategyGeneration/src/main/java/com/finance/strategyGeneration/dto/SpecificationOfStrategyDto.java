@@ -5,7 +5,6 @@ import lombok.Builder;
 import lombok.Value;
 import lombok.extern.jackson.Jacksonized;
 
-import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -15,7 +14,6 @@ import java.util.Map;
 public class SpecificationOfStrategyDto {
 
     Long id;
-    Date dateOfCreation;
     Long startScore;
     Integer acceptableRisk;
     SumOfDealType sumOfDealType;

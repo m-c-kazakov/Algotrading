@@ -14,9 +14,6 @@ import org.springframework.lang.NonNull;
 @EqualsAndHashCode
 public class CandlesInformation {
 
-    @EqualsAndHashCode.Exclude
-    @NonNull
-    Long id;
     @NonNull
     CurrencyPair currencyPair;
     @NonNull

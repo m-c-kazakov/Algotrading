@@ -28,12 +28,11 @@ import static java.util.Optional.ofNullable;
 public class DescriptionOfStrategy {
 
     @EqualsAndHashCode.Exclude
-    long id;
+    Long id;
 
     // это базовое значение * на количество знаков после запятой, которое есть у Pip. Находится в валютной паре
-    long startScore;
-
-    long acceptableRisk;
+    Long startScore;
+    Long acceptableRisk;
     @NotBlank
     SumOfDealType sumOfDealType;
     @NotEmpty
