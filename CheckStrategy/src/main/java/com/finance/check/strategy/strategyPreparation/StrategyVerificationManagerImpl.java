@@ -12,11 +12,10 @@ import org.springframework.stereotype.Component;
 @Component
 @RequiredArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
-public class DescriptionOfStrategyConsumerImpl implements DescriptionOfStrategyConsumer {
+public class StrategyVerificationManagerImpl implements StrategyVerificationManager {
 
     StrategyPreparationManager strategyPreparationManager;
     GeneticAlgorithmFeign geneticAlgorithmFeign;
-
 
     @Override
     public void receive(DescriptionOfStrategy descriptionOfStrategy) {

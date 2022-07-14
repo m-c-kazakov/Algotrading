@@ -9,16 +9,19 @@ import com.finance.check.strategy.dto.IndicatorDto;
 import com.finance.check.strategy.intagration.JsonSerializer;
 import com.finance.check.strategy.intagration.KafkaTestBased;
 import com.finance.check.strategy.mapper.DescriptionOfStrategyMapper;
-import com.finance.check.strategy.strategyPreparation.DescriptionOfStrategyConsumer;
+import com.finance.check.strategy.strategyPreparation.StrategyVerificationManager;
 import com.finance.strategyDescriptionParameters.*;
 import com.finance.strategyDescriptionParameters.indicators.IndicatorType;
 import lombok.SneakyThrows;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.kafka.clients.consumer.KafkaConsumer;
 import org.apache.kafka.clients.producer.KafkaProducer;
 import org.apache.kafka.clients.producer.ProducerRecord;
 import org.apache.kafka.common.serialization.LongDeserializer;
 import org.apache.kafka.common.serialization.LongSerializer;
+import org.junit.jupiter.api.RepeatedTest;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
@@ -31,10 +34,8 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
-import java.util.concurrent.CopyOnWriteArrayList;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.TimeUnit;
+import java.util.concurrent.ThreadPoolExecutor;
+import java.util.stream.Stream;
 
 import static com.finance.check.strategy.service.broker.JsonDeserializer.OBJECT_MAPPER;
 import static com.finance.check.strategy.service.broker.JsonDeserializer.TYPE_REFERENCE;
@@ -45,24 +46,21 @@ import static org.apache.kafka.clients.CommonClientConfigs.GROUP_INSTANCE_ID_CON
 import static org.apache.kafka.clients.consumer.ConsumerConfig.MAX_POLL_INTERVAL_MS_CONFIG;
 import static org.apache.kafka.clients.consumer.ConsumerConfig.*;
 import static org.apache.kafka.clients.producer.ProducerConfig.*;
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.testcontainers.shaded.org.awaitility.Awaitility.await;
+import static org.mockito.ArgumentMatchers.any;
 
+@Slf4j
 @EnableConfigurationProperties(value = KafkaConfigurationProperties.class)
-class DataConsumerTest extends KafkaTestBased {
+class KafkaDataConsumerTest extends KafkaTestBased {
 
     @MockBean
-    DescriptionOfStrategyConsumer descriptionOfStrategyConsumer;
+    StrategyVerificationManager strategyVerificationManager;
 
     @Autowired
-    DataConsumer dataConsumer;
+    KafkaDataConsumer kafkaDataConsumer;
 
     @Autowired
     DescriptionOfStrategyMapper mapper;
 
-    @Autowired
-    @Qualifier("descriptionOfStrategyDtoList")
-    List<DescriptionOfStrategyDto> descriptionOfStrategyDtoList;
     @Autowired
     KafkaConfigurationProperties properties;
 
@@ -84,23 +82,20 @@ class DataConsumerTest extends KafkaTestBased {
     }
 
     @Test
+    @RepeatedTest(value = 3)
     void poll() {
 
-        DescriptionOfStrategyDto descriptionOfStrategyDto = create();
-        List<DescriptionOfStrategyDto> descriptionOfStrategyDtos = List.of(descriptionOfStrategyDto);
+        List<DescriptionOfStrategyDto> descriptionOfStrategyDtos =
+                Stream.iterate(0, i -> i < 3, i -> i + 1).map(Long::valueOf).map(this::create).toList();
         putValuesToKafka(descriptionOfStrategyDtos);
 
-        dataConsumer.poll();
-
-        await()
-                .atMost(30, TimeUnit.SECONDS)
-                .until(() -> descriptionOfStrategyDtoList.size() == descriptionOfStrategyDtos.size());
-        assertThat(descriptionOfStrategyDtoList).hasSameElementsAs(descriptionOfStrategyDtos);
+        kafkaDataConsumer.poll();
 
 
+        Mockito.verify(strategyVerificationManager, Mockito.times(3)).receive(any());
     }
 
-    private DescriptionOfStrategyDto create() {
+    private DescriptionOfStrategyDto create(Long id) {
         CandlesInformationDto candlesInformationDto = CandlesInformationDto
                 .builder()
                 .currencyPair(CurrencyPair.EURUSD)
@@ -108,7 +103,7 @@ class DataConsumerTest extends KafkaTestBased {
                 .build();
         return DescriptionOfStrategyDto
                 .builder()
-                .id(1L)
+                .id(id)
                 .startScore(100L)
                 .acceptableRisk(3)
                 .sumOfDealType(SumOfDealType.PERCENT_OF_SCORE)
@@ -133,25 +128,17 @@ class DataConsumerTest extends KafkaTestBased {
     @TestConfiguration
     static class DataConsumerTestConfiguration {
 
-        @Bean("descriptionOfStrategyDtoList")
-        public List<DescriptionOfStrategyDto> descriptionOfStrategyDtoList() {
-            return new CopyOnWriteArrayList<>();
-        }
+
 
         @Bean
-        public DataConsumer dataConsumer(
-                KafkaConsumer<Long,
-                        DescriptionOfStrategyDto> kafkaConsumer,
-                DescriptionOfStrategyConsumer descriptionOfStrategyConsumer,
+        public KafkaDataConsumer dataConsumer(
+                KafkaConsumer<Long, DescriptionOfStrategyDto> kafkaConsumer,
                 DescriptionOfStrategyMapper mapper,
-                List<DescriptionOfStrategyDto> descriptionOfStrategyDtoList) {
+                StrategyVerificationManager strategyVerificationManager,
+                @Qualifier("strategyManagerThreadPoolExecutor") ThreadPoolExecutor threadPoolExecutor) {
 
             Duration timeout = Duration.ofMillis(2_000);
-            ExecutorService executor = Executors.newFixedThreadPool(16);
-            var shutdownHook = new Thread(executor::shutdown);
-            Runtime.getRuntime().addShutdownHook(shutdownHook);
-            return new DataConsumer(kafkaConsumer, timeout, descriptionOfStrategyDtoList::add,
-                    descriptionOfStrategyConsumer, executor, mapper);
+            return new KafkaDataConsumer(kafkaConsumer, timeout, mapper, strategyVerificationManager, threadPoolExecutor);
         }
 
         @Bean
@@ -171,7 +158,7 @@ class DataConsumerTest extends KafkaTestBased {
             props.put(TYPE_REFERENCE, new TypeReference<DescriptionOfStrategyDto>() {
             });
             props.put(MAX_POLL_RECORDS_CONFIG, 3);
-            props.put(MAX_POLL_INTERVAL_MS_CONFIG, properties.getMax_poll_interval_ms_config());
+            props.put(MAX_POLL_INTERVAL_MS_CONFIG, 300);
 
             KafkaConsumer<Long, DescriptionOfStrategyDto> kafkaConsumer = new KafkaConsumer<>(props);
             kafkaConsumer.subscribe(Collections.singletonList(properties.getTopic_name()));

@@ -34,6 +34,11 @@ services:
     container_name: check-strategy
     ports:
       - "8080:8080"
+    depends_on:
+      - strategy-generation
+      - create-indicator-data
+      - zookeeper
+      - broker
   create-indicator-data:
     build: CreateIndicatorData/
     container_name: create-indicator-data
@@ -49,6 +54,8 @@ services:
       - "8082:8080"
     depends_on:
       - strategies-db
+      - zookeeper
+      - broker
   zookeeper:
     image: confluentinc/cp-zookeeper:6.2.0
     container_name: zookeeper
