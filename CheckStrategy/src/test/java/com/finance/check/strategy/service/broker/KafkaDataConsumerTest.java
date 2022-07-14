@@ -19,7 +19,6 @@ import org.apache.kafka.clients.producer.KafkaProducer;
 import org.apache.kafka.clients.producer.ProducerRecord;
 import org.apache.kafka.common.serialization.LongDeserializer;
 import org.apache.kafka.common.serialization.LongSerializer;
-import org.junit.jupiter.api.RepeatedTest;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -82,7 +81,6 @@ class KafkaDataConsumerTest extends KafkaTestBased {
     }
 
     @Test
-    @RepeatedTest(value = 3)
     void poll() {
 
         List<DescriptionOfStrategyDto> descriptionOfStrategyDtos =
