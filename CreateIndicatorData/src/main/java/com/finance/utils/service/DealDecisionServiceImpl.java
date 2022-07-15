@@ -4,6 +4,7 @@ import com.finance.strategyDescriptionParameters.TimeFrame;
 import com.finance.strategyDescriptionParameters.indicators.Indicator;
 import com.finance.utils.dto.DataOfCurrencyPair;
 import com.finance.utils.dto.RequestDataOfStrategy;
+import com.finance.utils.service.converterToDataOfIndicator.IndicatorUtils;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
@@ -19,6 +20,7 @@ import java.util.Map;
 public class DealDecisionServiceImpl implements DealDecisionService {
 
     FinalSolutionGenerator finalSolutionGenerator;
+    IndicatorUtils indicatorUtils;
 
     @Override
     public List<Byte> makeDecisionOnOpeningDeal(RequestDataOfStrategy request,
@@ -42,15 +44,17 @@ public class DealDecisionServiceImpl implements DealDecisionService {
                 groupedByTimeFrameIndicatorsDecision);
 
         // Привести все результаты работы индикаторов к одному таймфрейму
-
         List<List<Integer>> timeFrameListMap = finalSolutionGenerator.convertIndicatorDataToTheSmallestTimeFrame(
                 request.getTheSmallestTimeFrame(), decisionByTimeFrame);
 
         // Сформировать итоговое решение по решениям индикаторов в разных таймфремах
         List<Integer> finalDecision = finalSolutionGenerator.generateFinalDecision(timeFrameListMap);
 
+        // Обрезать начало итогового решения
+        List<Integer> trimFinalDecision = indicatorUtils.trimPercentageOfArray(finalDecision, 5);
+
         // создать итоговое решение в byte
-        return finalDecision.stream()
+        return trimFinalDecision.stream()
                 .map(Integer::toBinaryString)
                 .flatMap(binaryStringInt -> Arrays.stream(binaryStringInt.split("")))
                 .map(Byte::parseByte).toList();

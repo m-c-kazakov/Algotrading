@@ -1,6 +1,5 @@
 package com.finance.utils.controller;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.finance.utils.IndicatorDataApi;
 import com.finance.utils.dto.RequestDataOfStrategy;
 import com.finance.utils.dto.ResponseDataOfStrategy;
@@ -21,14 +20,11 @@ import org.springframework.web.bind.annotation.RestController;
 public class IndicatorDataController implements IndicatorDataApi {
 
     DataOfStrategyGenerationService dataOfStrategyGenerationService;
-    // TODO удалить
-    ObjectMapper objectMapper = new ObjectMapper();
 
     @PostMapping("/generateDataOfIndicators")
     @SneakyThrows
     public ResponseDataOfStrategy generateDataOfIndicators(@RequestBody RequestDataOfStrategy request) {
 
-        log.info(">> generateDataOfIndicators request={}", objectMapper.writeValueAsString(request));
         return dataOfStrategyGenerationService.generate(request);
     }
 }

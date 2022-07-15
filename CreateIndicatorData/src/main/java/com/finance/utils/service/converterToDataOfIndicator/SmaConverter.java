@@ -32,11 +32,13 @@ public class SmaConverter implements ConverterToDataOfIndicator {
         // Получить массив с данными индикатора
         List<Integer> smaResult = smaIndicator.sequentialGenerationSmaResult(period, dataOfCandle);
 
-        // обрезать массив dataOfCandle до размера smaResult
-        List<Integer> trimDataOfCandle = indicatorUtils.trimTheArray(period, dataOfCandle);
+        // Привести размер коллекции smaResult к начальному размеру коллекции данных свечей
+        List<Integer> increaseIndicatorResultSize = indicatorUtils.increaseIndicatorResultSize(smaResult, dataOfCandle.size());
 
         // Сформировать коллекцию решений
-        List<Integer> decision = smaIndicator.getDecision(typeOfDeal, indicator, trimDataOfCandle, smaResult);
+        List<Integer> decision = smaIndicator.getDecision(typeOfDeal, indicator, dataOfCandle, increaseIndicatorResultSize);
+
+
 
         // Сформировать объект с результатом
         return DataOfIndicator.builder()

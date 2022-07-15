@@ -79,7 +79,7 @@ public class DataOfIndicatorConverterToAnotherTimeFrameImpl implements DataOfInd
                                         .orElseThrow(() -> new RuntimeException(
                                                 "Не найдено значение для подстановки TimeFrame=H1, value=0"));
                             } else if ("1".equals(el)) {
-                                return ofNullable(constantsForTimeFrame.get(TimeFrame.H1)).map(map -> map.get("0"))
+                                return ofNullable(constantsForTimeFrame.get(TimeFrame.H1)).map(map -> map.get("1"))
                                         .orElseThrow(() -> new RuntimeException(
                                                 "Не найдено значение для подстановки TimeFrame=H1, value=1"));
                             } else {

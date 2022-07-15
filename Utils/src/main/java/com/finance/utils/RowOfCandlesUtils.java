@@ -5,7 +5,10 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.util.Assert;
 
 import java.io.*;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.Objects;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -17,19 +20,21 @@ public class RowOfCandlesUtils {
             "20220604", "20220605",
             "20220611", "20220612",
             "20220618", "20220619",
-            "20220625", "20220626"
+            "20220625", "20220626",
+            "20220630", "20220631",
+            "20220701"
     );
 
 
     public static void main(String[] args) {
         try {
-//            String filePath = "M1/EURUSD_220601_220630 (копия)";
-//            String newFilePath = "M1/EURUSD_220601_220630_NEW";
-//            Integer numberElements = 1440;
+            String filePath = "M1/EURUSD_220601_220630 (копия)";
+            String newFilePath = "M1/EURUSD_220601_220630";
+            Integer numberElements = 1440;
 
-            String filePath = "H1/EURUSD_220601_220630 (копия)";
-            String newFilePath = "H1/EURUSD_220601_220630_NEW";
-            Integer numberElements = 24;
+//            String filePath = "H1/EURUSD_220601_220630 (копия)";
+//            String newFilePath = "H1/EURUSD_220601_220630";
+//            Integer numberElements = 24;
 
             File file = new File(
                     "/home/maxim/Yandex.Disk/algotrading/data/candles-data/" + filePath + ".txt");
@@ -37,11 +42,11 @@ public class RowOfCandlesUtils {
             BufferedReader reader = new BufferedReader(fr);
 
 
-            LinkedList<String> linesWithOutWeekends =
+            List<String> linesWithOutWeekends =
                     Stream
                             .iterate(getLine(reader), Objects::nonNull, s -> getLine(reader))
                             .filter(line -> WEEKENDS.stream().noneMatch(line::contains))
-                            .collect(Collectors.toCollection(LinkedList::new));
+                            .collect(Collectors.toCollection(ArrayList::new));
 
 
             Map<String, Integer> countLinesMap = linesWithOutWeekends
@@ -116,7 +121,7 @@ public class RowOfCandlesUtils {
         writer.write(value);
     }
 
-    public static void changeList(LinkedList<String> linesWithOutWeekends, List<String> timesForOneDay, Integer index, Integer timeIndex, String currentDay) {
+    public static void changeList(List<String> linesWithOutWeekends, List<String> timesForOneDay, Integer index, Integer timeIndex, String currentDay) {
         String line = linesWithOutWeekends.get(index);
         String time = getTime(line);
         String day = getDay(line);
@@ -149,14 +154,6 @@ public class RowOfCandlesUtils {
 
     private static String getTime(String line) {
         return line.split(";")[3];
-    }
-
-    private static List<String> connectСollections(List<String> strings, List<String> strings2) {
-        return Stream.of(strings, strings2).flatMap(List::stream).toList();
-    }
-
-    private static List<String> createValueList(String line) {
-        return new ArrayList<>(Collections.singleton(line));
     }
 
     private static String createKey(String line) {

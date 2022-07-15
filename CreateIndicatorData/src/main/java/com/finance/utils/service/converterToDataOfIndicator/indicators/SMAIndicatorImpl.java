@@ -43,8 +43,8 @@ public class SMAIndicatorImpl implements SMAIndicator {
 
     @Override
     public List<Integer> parallelGenerationSmaResult(int period, List<Integer> dataOfCandle) {
+        throw new RuntimeException("Метод не реализован");
         // TODO реализовать параллельное выполнение. Сравнить скорость. https://www.baeldung.com/java-when-to-use-parallel-stream
-        return List.of();
     }
 
     @Override
@@ -54,15 +54,16 @@ public class SMAIndicatorImpl implements SMAIndicator {
                 "Размер коллекции данных свечи не равен размеру коллекции данных индикатора.");
 
         int batchSize = indicator.getTimeFrame().getBatchSize();
-        List<Integer> butchDecisionByBuy = new ArrayList<>();
+        List<Integer> butchDecision = new ArrayList<>();
 
-        for (int cursorOfBatch = batchSize; cursorOfBatch < dataOfCandles.size(); cursorOfBatch += batchSize) {
+        for (int cursorOfBatch = batchSize; cursorOfBatch <= dataOfCandles.size(); cursorOfBatch += batchSize) {
 
             int baseCursor = cursorOfBatch - batchSize;
             int batchOfResult = rulesForCreationSmaSolution.get(typeOfDeal)
                     .execute(dataOfCandles, smaResult, baseCursor) ? 1 : 0;
 
             for (int cursorOfElement = baseCursor + 1; cursorOfElement < cursorOfBatch; cursorOfElement++) {
+
                 if (rulesForCreationSmaSolution.get(typeOfDeal)
                         .execute(dataOfCandles, smaResult, cursorOfElement)) {
                     batchOfResult = BitwiseShift.addOne(batchOfResult);
@@ -71,11 +72,12 @@ public class SMAIndicatorImpl implements SMAIndicator {
                 }
             }
 
-            butchDecisionByBuy.add(batchOfResult);
+            butchDecision.add(batchOfResult);
 
         }
 
-        return butchDecisionByBuy;
+        Assert.state(butchDecision.size() == smaResult.size()/batchSize, "Коллекция решений индикатора должна быть равна количеству индикаторов / batchSize");
+        return butchDecision;
     }
 
     @FunctionalInterface

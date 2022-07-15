@@ -58,7 +58,9 @@ public class FinalSolutionGeneratorImpl implements FinalSolutionGenerator {
 
     @Override
     public List<Integer> generateFinalDecision(List<List<Integer>> indicatorDecisions) {
-        Assert.state(indicatorDecisions.stream().map(List::size).collect(Collectors.toSet()).size() == 1, "Коллекции indicatorDecisions не могут быть разного размера.");
+
+        Assert.state(indicatorDecisions.stream().map(List::size).collect(Collectors.toSet()).size() == 1,
+                "Коллекции indicatorDecisions не могут быть разного размера.");
         return Stream
                 .iterate(0,
                         index -> index < indicatorDecisions.get(0).size(),
