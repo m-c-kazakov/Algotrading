@@ -21,7 +21,7 @@ public class StrategyVerificationManagerImpl implements StrategyVerificationMana
 
     @Override
     public void receive(DescriptionOfStrategy descriptionOfStrategy) {
-        log.debug("Запуск стратегии с id={} на проверку.", descriptionOfStrategy.getId());
+        log.info("Запуск стратегии с id={} на проверку.", descriptionOfStrategy.getId());
 
         StrategyExecutor strategyExecutor = strategyPreparationManager.prepare(descriptionOfStrategy);
 

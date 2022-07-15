@@ -16,6 +16,7 @@
             <option value="$PROJECT_DIR$/StrategyDescriptionParameters" />
             <option value="$PROJECT_DIR$/StrategyGeneration" />
             <option value="$PROJECT_DIR$/StrategyGenerationApi" />
+            <option value="$PROJECT_DIR$/Utils" />
             <option value="$PROJECT_DIR$/buildSrc" />
           </set>
         </option>

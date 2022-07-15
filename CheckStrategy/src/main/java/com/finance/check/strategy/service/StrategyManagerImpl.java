@@ -22,12 +22,12 @@ public class StrategyManagerImpl implements StrategyManager {
     ThreadPoolExecutor executor;
 
     @Override
-    @Scheduled(fixedDelay = 500)
+    @Scheduled(fixedDelay = 1500)
     public void execute() {
-        log.debug("Проверка необходимости получения новых стратегий из Kafka result={}", executor.getTaskCount() < theBorderForGettingNewDescriptionOfStrategy);
+        log.info("Проверка необходимости получения новых стратегий из Kafka result={}; TaskCount={}; theBorderForGettingNewDescriptionOfStrategy={}", executor.getTaskCount() < theBorderForGettingNewDescriptionOfStrategy, executor.getTaskCount(), theBorderForGettingNewDescriptionOfStrategy);
         if (executor.getTaskCount() < theBorderForGettingNewDescriptionOfStrategy) {
             Stream.iterate(0, i -> i < Math.max(executor.getTaskCount() / 3, 2), i -> i + 1)
-                    .forEach(descriptionOfStrategyConsumer -> executor.execute(() -> kafkaDataConsumer.poll()));
+                    .forEach(descriptionOfStrategyConsumer -> executor.execute(kafkaDataConsumer::poll));
         }
 
     }

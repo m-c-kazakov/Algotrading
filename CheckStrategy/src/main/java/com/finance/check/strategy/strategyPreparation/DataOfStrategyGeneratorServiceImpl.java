@@ -1,9 +1,9 @@
 package com.finance.check.strategy.strategyPreparation;
 
 import com.finance.check.strategy.feign.IndicatorDataFeign;
-import com.finance.createIndicatorData.dto.RequestDataOfStrategy;
-import com.finance.createIndicatorData.dto.ResponseDataOfStrategy;
 import com.finance.dataHolder.DescriptionOfStrategy;
+import com.finance.utils.dto.RequestDataOfStrategy;
+import com.finance.utils.dto.ResponseDataOfStrategy;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;

@@ -91,6 +91,6 @@ public class SpecificationOfStrategyServiceImpl implements SpecificationOfStrate
 
     @Override
     public Integer findTheNumberOfUntestedStrategies() {
-        return repository.findTheNumberOfUntestedStrategies();
+        return repository.findTheNumberOfUntestedStrategies().orElse(0);
     }
 }

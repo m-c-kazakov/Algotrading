@@ -28,7 +28,9 @@ public class Producer implements DataProducer {
                         if (exception != null) {
                             log.error("message wasn't sent", exception);
                         } else {
-                            log.info("message id:{} was sent, offset:{}", specificationOfStrategy.getId(),
+                            log.info("message id:{} was sent, topicName={} offset:{}",
+                                    specificationOfStrategy.getId(),
+                                    topicName,
                                     metadata.offset());
                             callBack.accept(specificationOfStrategy);
                         }

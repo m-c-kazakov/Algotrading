@@ -29,9 +29,9 @@ public class KafkaDataConsumer implements DataConsumer {
 
     @Override
     public synchronized void poll() {
-        log.debug("poll records");
+        log.info("poll records");
         ConsumerRecords<Long, DescriptionOfStrategyDto> records = kafkaConsumer.poll(timeout);
-        log.debug("polled records.counter:{}", records.count());
+        log.info("polled records.counter:{}", records.count());
 
         StreamSupport.stream(records.spliterator(), false)
                 .map(ConsumerRecord::value)

@@ -9,7 +9,6 @@ import com.finance.strategyGeneration.service.broker.Producer;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.kafka.clients.producer.KafkaProducer;
 import org.apache.kafka.common.serialization.LongSerializer;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -26,8 +25,8 @@ import static org.apache.kafka.clients.producer.ProducerConfig.*;
 public class KafkaConfig {
 
     @Bean
-    public DataProducer dataSender(KafkaProducer<Long, SpecificationOfStrategyDto> producer, @Value("app.kafka.topic_name") String topicName) {
-        return new Producer(producer, topicName, stringValue -> {
+    public DataProducer dataSender(KafkaProducer<Long, SpecificationOfStrategyDto> producer, KafkaConfigurationProperties properties) {
+        return new Producer(producer, properties.getTopic_name(), stringValue -> {
         });
     }
 

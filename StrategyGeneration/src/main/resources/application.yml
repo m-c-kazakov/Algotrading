@@ -7,6 +7,16 @@ logging:
     root: INFO
     org.springframework.jdbc.core: INFO
 
+server:
+  port: 8082
+
+# Actuator
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+
 spring:
   main:
     allow-circular-references: true
@@ -26,8 +36,8 @@ spring:
 app:
   populationCreation:
     frontierForCreatingNewStrategies: 1000
-    numberOfRandomIndividual: 50
-    numberOfTheBestIndividual: 50
+    numberOfRandomIndividual: 10
+    numberOfTheBestIndividual: 10
     isNeedToCreateDescriptionToCloseADeal: false
   kafka:
     client_id_config: StrategyGenerationProducer

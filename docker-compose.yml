@@ -1,7 +1,8 @@
 version: "3.9"
 services:
   # SET datestyle = DMY;
-  # COPY candles FROM '/var/lib/candles-data/EURUSD_220531_220531.csv' DELIMITER ';' CSV HEADER;
+  # COPY candles(ticker, per, date, time, open, high, low, close, vol) FROM PROGRAM 'cat /var/lib/candles-data/M1/*.txt' DELIMITER ';' CSV HEADER;
+  # COPY candles(ticker, per, date, time, open, high, low, close, vol) FROM PROGRAM 'cat /var/lib/candles-data/H1/*.txt' DELIMITER ';' CSV HEADER;
   # Название сервиса
   # TODO Переделать название теперь тут данные индикаторов тоже лежат
   candles-db:
@@ -43,7 +44,7 @@ services:
     build: CreateIndicatorData/
     container_name: create-indicator-data
     ports:
-      - "8081:8080"
+      - "8081:8081"
     depends_on:
       - strategies-db
       - candles-db
@@ -51,7 +52,7 @@ services:
     build: StrategyGeneration/
     container_name: strategy-generation
     ports:
-      - "8082:8080"
+      - "8082:8082"
     depends_on:
       - strategies-db
       - zookeeper
