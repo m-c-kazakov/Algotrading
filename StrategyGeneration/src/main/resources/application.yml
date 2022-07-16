@@ -36,8 +36,8 @@ spring:
 app:
   populationCreation:
     frontierForCreatingNewStrategies: 1000
-    numberOfRandomIndividual: 10
-    numberOfTheBestIndividual: 10
+    numberOfRandomIndividual: 5
+    numberOfTheBestIndividual: 5
     isNeedToCreateDescriptionToCloseADeal: false
   kafka:
     client_id_config: StrategyGenerationProducer

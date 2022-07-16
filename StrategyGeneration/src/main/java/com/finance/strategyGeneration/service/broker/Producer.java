@@ -30,7 +30,7 @@ public class Producer implements DataProducer {
                         } else {
                             log.info("message id:{} was sent, topicName={} offset:{}",
                                     specificationOfStrategy.getId(),
-                                    topicName,
+                                    metadata.topic(),
                                     metadata.offset());
                             callBack.accept(specificationOfStrategy);
                         }

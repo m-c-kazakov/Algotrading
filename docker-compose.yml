@@ -30,6 +30,8 @@ services:
       - "5434:5432"
     volumes:
       - /home/maxim/Yandex.Disk/algotrading/data/strategies-db:/var/lib/postgresql/data
+    depends_on:
+      - broker
   check-strategy:
     build: CheckStrategy/
     container_name: check-strategy
