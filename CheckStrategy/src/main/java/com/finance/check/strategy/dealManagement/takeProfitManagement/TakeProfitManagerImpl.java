@@ -13,7 +13,7 @@ public class TakeProfitManagerImpl implements TakeProfitManager {
     public void create(DescriptionOfStrategy descriptionOfStrategy, DataOfDeal dataOfDeal, int cursor) {
         // TODO при написании теста отрефакторить. Много вложенных if
         descriptionOfStrategy.getFromTakeProfitConfigurationData(TakeProfitConfigurationKey.FIXED_TAKE_PROFIT)
-                .map(int.class::cast)
+                .map(Integer::parseInt)
                 .ifPresent(fixedTakeProfit -> {
                     int takeProfit;
                     TypeOfDeal typeOfDeal = descriptionOfStrategy.getTypeOfDeal();

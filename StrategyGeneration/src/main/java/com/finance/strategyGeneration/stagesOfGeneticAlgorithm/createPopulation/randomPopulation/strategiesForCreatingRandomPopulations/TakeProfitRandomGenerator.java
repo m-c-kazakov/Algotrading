@@ -32,7 +32,7 @@ public class TakeProfitRandomGenerator implements RandomStrategyParams {
     {
         mapWithSupplierGeneratedRandomParams.put(TakeProfitType.FIXED_TAKE_PROFIT,
                 () -> new ConfigurationStorage<>(Map.of(TakeProfitConfigurationKey.FIXED_TAKE_PROFIT,
-                        ThreadLocalRandom.current().nextInt(0, 300))));
+                        String.valueOf(ThreadLocalRandom.current().nextInt(0, 300)))));
     }
 
     {

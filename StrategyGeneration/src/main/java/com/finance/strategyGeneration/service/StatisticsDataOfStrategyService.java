@@ -1,7 +1,7 @@
 package com.finance.strategyGeneration.service;
 
-import com.finance.dataHolder.StatisticsDataOfStrategy;
+import com.finance.utils.StatisticsDataOfStrategyDto;
 
 public interface StatisticsDataOfStrategyService {
-    void save(StatisticsDataOfStrategy statisticsDataOfStrategy);
+    void save(StatisticsDataOfStrategyDto statisticsDataOfStrategyDto);
 }

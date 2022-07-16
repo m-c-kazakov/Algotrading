@@ -1,7 +1,7 @@
 package com.finance.strategyGeneration.mapper;
 
-import com.finance.dataHolder.StatisticsDataOfStrategy;
 import com.finance.strategyGeneration.model.StatisticsOfStrategy;
+import com.finance.utils.StatisticsDataOfStrategyDto;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.MappingConstants;
@@ -10,5 +10,5 @@ import org.mapstruct.MappingConstants;
 public interface StatisticsOfStrategyMapper {
 
     @Mapping(target = "id", ignore = true)
-    StatisticsOfStrategy mapTo(StatisticsDataOfStrategy statisticsDataOfStrategy);
+    StatisticsOfStrategy mapTo(StatisticsDataOfStrategyDto statisticsDataOfStrategyDto);
 }

@@ -1,9 +1,11 @@
 package com.finance.check.strategy.strategyPreparation;
 
 import com.finance.check.strategy.feign.GeneticAlgorithmFeign;
+import com.finance.check.strategy.mapper.StatisticsDataOfStrategyMapper;
 import com.finance.check.strategy.service.StrategyExecutor;
 import com.finance.dataHolder.DescriptionOfStrategy;
 import com.finance.dataHolder.StatisticsDataOfStrategy;
+import com.finance.utils.StatisticsDataOfStrategyDto;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
@@ -18,6 +20,7 @@ public class StrategyVerificationManagerImpl implements StrategyVerificationMana
 
     StrategyPreparationManager strategyPreparationManager;
     GeneticAlgorithmFeign geneticAlgorithmFeign;
+    StatisticsDataOfStrategyMapper mapper;
 
     @Override
     public void receive(DescriptionOfStrategy descriptionOfStrategy) {
@@ -27,6 +30,8 @@ public class StrategyVerificationManagerImpl implements StrategyVerificationMana
 
         StatisticsDataOfStrategy statisticsDataOfStrategy = strategyExecutor.perform();
 
-        geneticAlgorithmFeign.saveStatisticsDataOfStrategy(statisticsDataOfStrategy);
+        StatisticsDataOfStrategyDto statisticsDataOfStrategyDto = mapper.mapTo(statisticsDataOfStrategy);
+
+        geneticAlgorithmFeign.saveStatisticsDataOfStrategy(statisticsDataOfStrategyDto);
     }
 }

@@ -32,7 +32,7 @@ public class SumOfDealRandomGenerator implements RandomStrategyParams {
     {
         mapWithSupplierGeneratedRandomParams.put(SumOfDealType.PERCENT_OF_SCORE,
                 () -> new ConfigurationStorage<>(
-                        Map.of(SumOfDealConfigurationKey.PERCENT_OF_SCORE, ThreadLocalRandom.current().nextInt(1, 5))));
+                        Map.of(SumOfDealConfigurationKey.PERCENT_OF_SCORE, String.valueOf(ThreadLocalRandom.current().nextInt(1, 5)))));
     }
 
     {

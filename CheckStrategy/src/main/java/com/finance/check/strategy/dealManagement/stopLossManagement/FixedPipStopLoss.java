@@ -12,7 +12,7 @@ public class FixedPipStopLoss implements StopLossManager {
     public void create(DescriptionOfStrategy descriptionOfStrategy, DataOfDeal dataOfDeal, int cursor) {
         //TODO При написании теста отрефакторить. слишком много if
         descriptionOfStrategy.getFromStopLossConfigurationData(StopLossConfigurationKey.FIXED_STOP_LOSS)
-                .map(int.class::cast)
+                .map(Integer::parseInt)
                 .ifPresent(fixedStopLoss -> {
                     int stopLoss;
                     TypeOfDeal typeOfDeal = descriptionOfStrategy.getTypeOfDeal();

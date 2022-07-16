@@ -1,10 +1,10 @@
 package com.finance.strategyGeneration.service;
 
-import com.finance.dataHolder.StatisticsDataOfStrategy;
 import com.finance.strategyGeneration.mapper.StatisticsOfStrategyMapper;
 import com.finance.strategyGeneration.model.StatisticsOfStrategy;
 import com.finance.strategyGeneration.repository.SpecificationOfStrategyRepository;
 import com.finance.strategyGeneration.repository.StatisticsOfStrategyRepository;
+import com.finance.utils.StatisticsDataOfStrategyDto;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
@@ -22,9 +22,9 @@ public class StatisticsDataOfStrategyServiceImpl implements StatisticsDataOfStra
     SpecificationOfStrategyRepository specificationOfStrategyRepository;
 
     @Override
-    public void save(StatisticsDataOfStrategy statisticsDataOfStrategy) {
+    public void save(StatisticsDataOfStrategyDto statisticsDataOfStrategyDto) {
 
-        StatisticsOfStrategy statisticsOfStrategy = mapper.mapTo(statisticsDataOfStrategy);
+        StatisticsOfStrategy statisticsOfStrategy = mapper.mapTo(statisticsDataOfStrategyDto);
 
         StatisticsOfStrategy statisticsOfStrategyWithId = statisticsOfStrategyRepository.save(statisticsOfStrategy);
 

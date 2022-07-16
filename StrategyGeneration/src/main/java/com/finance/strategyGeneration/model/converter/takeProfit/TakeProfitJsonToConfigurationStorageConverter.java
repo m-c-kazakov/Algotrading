@@ -27,7 +27,7 @@ public class TakeProfitJsonToConfigurationStorageConverter implements Converter<
     @SneakyThrows
     public ConfigurationStorage<TakeProfitConfigurationKey> convert(@NonNull PGobject source) {
         String json = source.getValue();
-        Map<TakeProfitConfigurationKey, Object> map = objectMapper.readValue(json, HashMap.class);
+        Map<TakeProfitConfigurationKey, String> map = objectMapper.readValue(json, HashMap.class);
         return new ConfigurationStorage<>(map);
     }
 }

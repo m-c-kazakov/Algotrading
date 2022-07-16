@@ -22,7 +22,7 @@ public class StrategyManagerImpl implements StrategyManager {
     ThreadPoolExecutor executor;
 
     @Override
-    @Scheduled(fixedDelay = 1500)
+    @Scheduled(fixedDelay = 5000)
     public void execute() {
         log.info("Проверка необходимости получения новых стратегий из Kafka result={}; TaskCount={}; theBorderForGettingNewDescriptionOfStrategy={}", executor.getTaskCount() < theBorderForGettingNewDescriptionOfStrategy, executor.getTaskCount(), theBorderForGettingNewDescriptionOfStrategy);
         if (executor.getTaskCount() < theBorderForGettingNewDescriptionOfStrategy) {

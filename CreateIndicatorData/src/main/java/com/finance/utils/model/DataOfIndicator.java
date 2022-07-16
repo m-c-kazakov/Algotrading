@@ -24,6 +24,8 @@ public class DataOfIndicator {
     @Id
     Long id;
 
+    String uniqueIdentifier;
+
     List<Integer> decisionByDeal;
 
     IndicatorType indicatorType;

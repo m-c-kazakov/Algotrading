@@ -1,45 +1,50 @@
 package com.finance.dataHolder;
 
-import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.NonNull;
 import lombok.Setter;
-import lombok.experimental.FieldDefaults;
 import lombok.extern.jackson.Jacksonized;
 
 @Getter
 @Builder
 @Jacksonized
-@FieldDefaults(level = AccessLevel.PRIVATE)
 public class StatisticsDataOfStrategy {
 
+    @NonNull
     Long specificationOfStrategyId;
     @Setter
-    long score;
-
-    int valueOfAcceptableRisk;
+    @NonNull
+    Long score;
+    @NonNull
+    Integer valueOfAcceptableRisk;
 
     @Setter
-    long maximumPercentDrawdownFromStartScore;
+    @NonNull
+    Long maximumPercentDrawdownFromStartScore;
     @Setter
-    long averagePercentDrawdownOfScore;
+    @NonNull
+    Long averagePercentDrawdownOfScore;
     @Setter
-    long maximumValueFromScore;
+    @NonNull
+    Long maximumValueFromScore;
 
+    @NonNull
     Integer numberOfWinningDeals;
+    @NonNull
     Integer numberOfLosingDeals;
 
 
     public void incrementLosingDeal() {
-        this.numberOfLosingDeals = numberOfLosingDeals + 1;
+        this.numberOfLosingDeals = this.numberOfLosingDeals + 1;
     }
 
     public void incrementWinningDeal() {
-        this.numberOfWinningDeals = numberOfWinningDeals + 1;
+        this.numberOfWinningDeals = this.numberOfWinningDeals + 1;
     }
 
     public boolean isNeedToBreakStrategy() {
-        return score <= valueOfAcceptableRisk;
+        return this.score <= this.valueOfAcceptableRisk;
     }
 
 }

@@ -32,8 +32,8 @@ public class TrailingStopRandomGenerator implements RandomStrategyParams {
     {
         mapWithSupplierGeneratedRandomParams.put(TrailingStopType.FIXED_TRAILING_STOP_TYPE,
                 () -> new ConfigurationStorage<>(
-                        Map.of(TrailingStopConfigurationKey.FIXED_TRAILING_STOP, ThreadLocalRandom.current()
-                                .nextInt(1, 100)))
+                        Map.of(TrailingStopConfigurationKey.FIXED_TRAILING_STOP, String.valueOf(ThreadLocalRandom.current()
+                                .nextInt(1, 100))))
         );
     }
 

@@ -25,6 +25,11 @@ public class StrategyPreparationManagerImpl implements StrategyPreparationManage
                 .specificationOfStrategyId(descriptionOfStrategyWithCandleAndIndicatorData.getId())
                 .score(descriptionOfStrategyWithCandleAndIndicatorData.getStartScore())
                 .valueOfAcceptableRisk(generateValueOfAcceptableRisk(descriptionOfStrategyWithCandleAndIndicatorData))
+                .maximumPercentDrawdownFromStartScore(0L)
+                .averagePercentDrawdownOfScore(0L)
+                .maximumValueFromScore(0L)
+                .numberOfWinningDeals(0)
+                .numberOfLosingDeals(0)
                 .build();
 
         return strategyExecutorConfiguration.configurate(descriptionOfStrategyWithCandleAndIndicatorData,

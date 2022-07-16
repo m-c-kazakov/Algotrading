@@ -17,7 +17,6 @@ class CandleRepositoryTest extends IntegrationTestBased {
     void findAllByTickerAndPer() {
 
         assertThat(candleRepository.findAllByTickerAndPer(CurrencyPair.EURUSD, 1))
-                .isNotEmpty()
-                .hasSize(7);
+                .isNotEmpty();
     }
 }

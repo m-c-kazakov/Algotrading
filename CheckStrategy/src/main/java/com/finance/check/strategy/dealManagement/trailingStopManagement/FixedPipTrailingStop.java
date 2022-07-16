@@ -13,7 +13,7 @@ public class FixedPipTrailingStop implements TrailingStopManager {
     public void update(DescriptionOfStrategy descriptionOfStrategy, DataOfDeal dataOfDeal, int cursor) {
 
         descriptionOfStrategy.getFromTrailingStopConfigurationData(TrailingStopConfigurationKey.FIXED_TRAILING_STOP)
-                .map(int.class::cast)
+                .map(Integer::parseInt)
                 .ifPresent(fixedValue -> {
                     // TODO При написании теста отрефакторить. Слишком умного уровней вложенных if
                     if (descriptionOfStrategy.getTypeOfDeal() == TypeOfDeal.BUY) {

@@ -1,8 +1,6 @@
 package com.finance.utils;
 
-import com.finance.dataHolder.StatisticsDataOfStrategy;
-
 public interface GeneticAlgorithmApi {
 
-    void saveStatisticsDataOfStrategy(StatisticsDataOfStrategy statisticsDataOfStrategy);
+    void saveStatisticsDataOfStrategy(StatisticsDataOfStrategyDto statisticsDataOfStrategyDto);
 }

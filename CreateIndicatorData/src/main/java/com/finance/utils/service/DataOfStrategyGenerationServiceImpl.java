@@ -53,6 +53,13 @@ public class DataOfStrategyGenerationServiceImpl implements DataOfStrategyGenera
 
         List<DataOfCandle> candles = dataOfCandleMapper.mapTo(dataOfCurrencyPair.getCandles());
         // TODO Добавить решения по закрытию сделки
-        return ResponseDataOfStrategy.of(dataOfCurrencyPair.getCandlesInformation(), candles, decisionOnOpeningDeal, List.of());
+
+        return ResponseDataOfStrategy
+                .builder()
+                .candles(candles)
+                .candlesInformation(dataOfCurrencyPair.getCandlesInformation())
+                .decisionToOpenADeal(decisionOnOpeningDeal)
+                .decisionToCloseADeal(List.of())
+                .build();
     }
 }

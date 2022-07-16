@@ -10,10 +10,12 @@ import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Map;
 
 @Component
+@Transactional
 @RequiredArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class IndicatorDataGeneratorImpl implements IndicatorDataGenerator {
@@ -24,10 +26,7 @@ public class IndicatorDataGeneratorImpl implements IndicatorDataGenerator {
 
     @Override
     public DataOfIndicator generate(Indicator indicator, TypeOfDeal typeOfDeal, DataOfCurrencyPair dataOfCurrencyPair) {
-        return dataOfIndicatorRepository.getDataOfIndicatorByIndicatorTypeAndAndCurrencyPairAndTimeFrame(
-                indicator.getIndicatorType().name(),
-                dataOfCurrencyPair.getCurrencyPair().name(),
-                dataOfCurrencyPair.getTimeFrame().name())
+        return dataOfIndicatorRepository.getDataOfIndicatorByUniqueIdentifier(indicator.getUniqueIdentifier())
                 .orElseGet(() -> {
                     ConverterToDataOfIndicator converterToDataOfIndicator = converterToDataOfIndicatorMap.get(
                             indicator.getIndicatorType().name());

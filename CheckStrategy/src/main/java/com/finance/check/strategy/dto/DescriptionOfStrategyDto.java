@@ -17,13 +17,13 @@ public class DescriptionOfStrategyDto {
     Long startScore;
     Integer acceptableRisk;
     SumOfDealType sumOfDealType;
-    Map<SumOfDealConfigurationKey, Object> sumOfDealConfigurationData;
+    Map<SumOfDealConfigurationKey, String> sumOfDealConfigurationData;
     StopLossType stopLossType;
-    Map<StopLossConfigurationKey, Object> stopLossConfigurationData;
+    Map<StopLossConfigurationKey, String> stopLossConfigurationData;
     TrailingStopType trailingStopType;
-    Map<TrailingStopConfigurationKey, Object> trailingStopConfigurationData;
+    Map<TrailingStopConfigurationKey, String> trailingStopConfigurationData;
     TakeProfitType takeProfitType;
-    Map<TakeProfitConfigurationKey, Object> takeProfitConfigurationData;
+    Map<TakeProfitConfigurationKey, String> takeProfitConfigurationData;
     TypeOfDeal typeOfDeal;
     CandlesInformationDto informationOfCandles;
     List<IndicatorDto> descriptionToOpenADeal;

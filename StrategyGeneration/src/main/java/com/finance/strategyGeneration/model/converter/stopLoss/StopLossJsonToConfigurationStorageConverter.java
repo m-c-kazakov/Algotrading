@@ -27,7 +27,7 @@ public class StopLossJsonToConfigurationStorageConverter implements Converter<PG
     @SneakyThrows
     public ConfigurationStorage<StopLossConfigurationKey> convert(@NonNull PGobject source) {
         String json = source.getValue();
-        Map<StopLossConfigurationKey, Object> map = objectMapper.readValue(json, HashMap.class);
+        Map<StopLossConfigurationKey, String> map = objectMapper.readValue(json, HashMap.class);
         return new ConfigurationStorage<>(map);
     }
 }

@@ -30,7 +30,8 @@ public class StopLossRandomGenerator implements RandomStrategyParams {
     {
         mapWithSupplierGeneratedRandomParams.put(StopLossType.FIXED_STOP_LOSS,
                 () -> new ConfigurationStorage<>(
-                        Map.of(StopLossConfigurationKey.FIXED_STOP_LOSS, ThreadLocalRandom.current().nextInt(1, 100))));
+                        Map.of(StopLossConfigurationKey.FIXED_STOP_LOSS,
+                                String.valueOf(ThreadLocalRandom.current().nextInt(1, 100)))));
     }
 
     {

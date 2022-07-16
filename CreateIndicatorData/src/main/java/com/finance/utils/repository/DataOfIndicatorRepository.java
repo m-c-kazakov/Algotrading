@@ -11,4 +11,6 @@ public interface DataOfIndicatorRepository extends CrudRepository<DataOfIndicato
                                                                                               String currencyPair,
                                                                                               String timeFrame);
 
+    Optional<DataOfIndicator> getDataOfIndicatorByUniqueIdentifier(String uniqueIdentifier);
+
 }

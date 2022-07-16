@@ -27,7 +27,7 @@ public class SumOfDealJsonToConfigurationStorageConverter implements Converter<P
     @SneakyThrows
     public ConfigurationStorage<SumOfDealConfigurationKey> convert(@NonNull PGobject source) {
         String json = source.getValue();
-        Map<SumOfDealConfigurationKey, Object> map = objectMapper.readValue(json, HashMap.class);
+        Map<SumOfDealConfigurationKey, String> map = objectMapper.readValue(json, HashMap.class);
         return new ConfigurationStorage<>(map);
     }
 }

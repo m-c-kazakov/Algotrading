@@ -8,5 +8,5 @@ import java.util.Map;
 @Value
 @EqualsAndHashCode
 public class ConfigurationStorage<T> {
-    Map<T, Object> configurationData;
+    Map<T, String> configurationData;
 }

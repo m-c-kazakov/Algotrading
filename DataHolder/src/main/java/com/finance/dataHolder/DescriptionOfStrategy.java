@@ -36,20 +36,20 @@ public class DescriptionOfStrategy {
     @NotBlank
     SumOfDealType sumOfDealType;
     @NotEmpty
-    Map<SumOfDealConfigurationKey, Object> sumOfDealConfigurationData;
+    Map<SumOfDealConfigurationKey, String> sumOfDealConfigurationData;
 
     @NotBlank
     StopLossType stopLossType;
     @NotEmpty
-    Map<StopLossConfigurationKey, Object> stopLossConfigurationData;
+    Map<StopLossConfigurationKey, String> stopLossConfigurationData;
     @NotBlank
     TrailingStopType trailingStopType;
     @NotEmpty
-    Map<TrailingStopConfigurationKey, Object> trailingStopConfigurationData;
+    Map<TrailingStopConfigurationKey, String> trailingStopConfigurationData;
     @NotBlank
     TakeProfitType takeProfitType;
     @NotEmpty
-    Map<TakeProfitConfigurationKey, Object> takeProfitConfigurationData;
+    Map<TakeProfitConfigurationKey, String> takeProfitConfigurationData;
     @NotBlank
     TypeOfDeal typeOfDeal;
     @Getter(AccessLevel.NONE)
@@ -95,19 +95,19 @@ public class DescriptionOfStrategy {
         return dataOfCandles.get(cursor).getHighPrices();
     }
 
-    public Optional<Object> getFromSumOfDealConfigurationData(SumOfDealConfigurationKey key) {
+    public Optional<String> getFromSumOfDealConfigurationData(SumOfDealConfigurationKey key) {
         return ofNullable(this.sumOfDealConfigurationData.get(key));
     }
 
-    public Optional<Object> getFromStopLossConfigurationData(StopLossConfigurationKey key) {
+    public Optional<String> getFromStopLossConfigurationData(StopLossConfigurationKey key) {
         return ofNullable(this.stopLossConfigurationData.get(key));
     }
 
-    public Optional<Object> getFromTakeProfitConfigurationData(TakeProfitConfigurationKey key) {
+    public Optional<String> getFromTakeProfitConfigurationData(TakeProfitConfigurationKey key) {
         return ofNullable(this.takeProfitConfigurationData.get(key));
     }
 
-    public Optional<Object> getFromTrailingStopConfigurationData(TrailingStopConfigurationKey key) {
+    public Optional<String> getFromTrailingStopConfigurationData(TrailingStopConfigurationKey key) {
         return ofNullable(this.trailingStopConfigurationData.get(key));
     }
 

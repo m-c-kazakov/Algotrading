@@ -42,6 +42,7 @@ public class SmaConverter implements ConverterToDataOfIndicator {
 
         // Сформировать объект с результатом
         return DataOfIndicator.builder()
+                .uniqueIdentifier(indicator.getUniqueIdentifier())
                 .decisionByDeal(decision)
                 .indicatorType(indicator.getIndicatorType())
                 .currencyPair(dataOfCurrencyPair.getCurrencyPair())

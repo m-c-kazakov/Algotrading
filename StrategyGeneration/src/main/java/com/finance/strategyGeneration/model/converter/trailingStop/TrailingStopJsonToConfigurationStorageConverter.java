@@ -27,7 +27,7 @@ public class TrailingStopJsonToConfigurationStorageConverter implements Converte
     @SneakyThrows
     public ConfigurationStorage<TrailingStopConfigurationKey> convert(@NonNull PGobject source) {
         String json = source.getValue();
-        Map<TrailingStopConfigurationKey, Object> map = objectMapper.readValue(json, HashMap.class);
+        Map<TrailingStopConfigurationKey, String> map = objectMapper.readValue(json, HashMap.class);
         return new ConfigurationStorage<>(map);
     }
 }
