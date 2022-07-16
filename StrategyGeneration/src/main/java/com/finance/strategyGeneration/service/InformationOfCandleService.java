@@ -4,17 +4,11 @@ import com.finance.strategyDescriptionParameters.CurrencyPair;
 import com.finance.strategyDescriptionParameters.TimeFrame;
 import com.finance.strategyGeneration.model.InformationOfCandles;
 
-import java.util.Optional;
-
 public interface InformationOfCandleService {
 
     InformationOfCandles findById(long candlesInformationId);
 
     InformationOfCandles create(TimeFrame timeFrame, CurrencyPair currencyPair);
 
-    InformationOfCandles createWithNewTimeFrame(String informationOfCandlesId, TimeFrame timeFrame);
-
     InformationOfCandles create(InformationOfCandles informationOfCandles);
-
-    Optional<InformationOfCandles> findByHashCode(String hashCode);
 }

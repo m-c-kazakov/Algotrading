@@ -29,11 +29,7 @@ public class AppConfig {
 
     @Bean
     public StrategyManager strategyManager(DataConsumer kafkaDataConsumer,
-                                           @Value("${app.checkStrategy.theBorderForGettingNewDescriptionOfStrategy}") Integer theBorderForGettingNewDescriptionOfStrategy,
-                                           @Qualifier("strategyManagerThreadPoolExecutor") ThreadPoolExecutor threadPoolExecutor ) {
-
-
-        return new StrategyManagerImpl(kafkaDataConsumer,
-                theBorderForGettingNewDescriptionOfStrategy, threadPoolExecutor);
+                                           @Qualifier("strategyManagerThreadPoolExecutor") ThreadPoolExecutor executor) {
+        return new StrategyManagerImpl(kafkaDataConsumer, executor);
     }
 }

@@ -8,11 +8,6 @@ spring:
     properties.hibernate:
       hbm2ddl.auto: update
 
-app:
-  populationCreation:
-    numberOfRandomIndividual: 10
-    numberOfTheBestIndividual: 5
-
 
 
 

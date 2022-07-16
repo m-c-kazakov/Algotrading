@@ -51,7 +51,7 @@ app:
       topic_name: untestedStrategies
     consumer:
       bootstrap_servers_config: localhost:9092
-      group_id_config: checkStrategyConsumer
+      group_id_config: StrategyGenerationConsumer
       group_instance_id_config: untestedStrategiesGroup
       enable_auto_commit_config: true
       auto_commit_interval_ms_config: 100
@@ -59,6 +59,6 @@ app:
       # Количество данных получаемых за раз
       max_poll_records_config: 1000
       # Дает понгимание для Kafka что consumer живой
-      max_poll_interval_ms_config: 10000
+      max_poll_interval_ms_config: 50000
       topic_name: untestedStrategies
-      timeout_duration: 10000
+      timeout_duration: 2000

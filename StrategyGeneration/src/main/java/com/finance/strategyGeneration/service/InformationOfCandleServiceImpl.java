@@ -9,10 +9,11 @@ import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.cache.annotation.Cacheable;
+import org.springframework.retry.annotation.Backoff;
+import org.springframework.retry.annotation.Retryable;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.Optional;
 
 @Component
 @Slf4j
@@ -24,6 +25,7 @@ public class InformationOfCandleServiceImpl implements InformationOfCandleServic
     InformationOfCandlesRepository repository;
 
     @Override
+    @Cacheable(cacheNames = "findByIdInformationOfCandles", key = "#candlesInformationId")
     public InformationOfCandles findById(long candlesInformationId) {
         return repository.findById(candlesInformationId)
                 .orElseThrow(
@@ -31,6 +33,7 @@ public class InformationOfCandleServiceImpl implements InformationOfCandleServic
     }
 
     @Override
+    @Cacheable(cacheNames = "createInformationOfCandles", key = "#currencyPair+'_'+#timeFrame")
     public InformationOfCandles create(TimeFrame timeFrame, CurrencyPair currencyPair) {
 
         InformationOfCandles entity = InformationOfCandles.builder()
@@ -42,24 +45,22 @@ public class InformationOfCandleServiceImpl implements InformationOfCandleServic
     }
 
     @Override
-    public InformationOfCandles createWithNewTimeFrame(String informationOfCandlesId, TimeFrame timeFrame) {
-        InformationOfCandles informationOfCandles = repository.findById(Long.valueOf(informationOfCandlesId))
-                .orElseThrow(() -> new RuntimeException("Не найден CandlesInformation для Id == " + informationOfCandlesId));
-        return create(informationOfCandles.withTimeFrame(timeFrame));
-    }
-
-    @Override
+    @Retryable(value = Exception.class, maxAttempts = 2, backoff = @Backoff(delay = 100))
+    @Cacheable(cacheNames = "createInformationOfCandles", key = "#informationOfCandles.currencyPair+'_'+#informationOfCandles.timeFrame")
     public InformationOfCandles create(InformationOfCandles informationOfCandles) {
-        InformationOfCandles entity = InformationOfCandlesCreator.createWithHashCode(informationOfCandles);
+        InformationOfCandles entityTemplate = InformationOfCandlesCreator.createWithHashCode(informationOfCandles);
+
+//        Optional<InformationOfCandles> optionalEntity = repository.findByHashCode(entityTemplate.getHashCode());
+//        if (optionalEntity.isPresent()) {
+//            return optionalEntity.get();
+//        } else {
+//            return repository.save(entityTemplate.withId(null));
+//        }
+
 
         return repository
-                .findByHashCode(entity.getHashCode())
-                .orElseGet(() -> repository.save(entity.withId(null)));
+                .findByHashCode(entityTemplate.getHashCode())
+                .orElseGet(() -> repository.save(entityTemplate.withId(null)));
 
-    }
-
-    @Override
-    public Optional<InformationOfCandles> findByHashCode(String hashCode) {
-        return repository.findByHashCode(hashCode);
     }
 }

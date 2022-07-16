@@ -37,34 +37,32 @@ public class DataOfIndicatorConverterToAnotherTimeFrameImpl implements DataOfInd
     );
 
     @Override
-    public List<Integer> convert(final TimeFrame desiredTimeFrame, TimeFrame currentTimeFrame,
-                                 String binaryStringIndicatorDecisions) {
+    public List<Integer> convert(final TimeFrame desiredTimeFrame, final TimeFrame currentTimeFrame,
+                                 final String binaryStringIndicatorDecisions) {
 
-        List<String> convertedResultList = List.of(binaryStringIndicatorDecisions);
+        ConvertedResult convertedResult = new ConvertedResult(currentTimeFrame, List.of(binaryStringIndicatorDecisions));
 
-        if (desiredTimeFrame != currentTimeFrame) {
-            for (int i = 0; i < currentTimeFrame.getPer(); i++) {
-
-                TimeFrame finalCurrentTimeFrame = currentTimeFrame;
-                Function<List<String>, ConvertedResult> converter = ofNullable(
-                        converters.get(currentTimeFrame)).orElseThrow(
-                        () -> new RuntimeException("Не найдена функция для обработки TimeFrame=" + finalCurrentTimeFrame));
-
-                ConvertedResult convertedResult = converter.apply(convertedResultList);
-
-                currentTimeFrame = convertedResult.timeFrame;
-                convertedResultList = convertedResult.binaryStringIndicatorDecisions;
-
+        for (int i = 0; i < currentTimeFrame.getPer(); i++) {
+            TimeFrame timeFrame = convertedResult.getTimeFrame();
+            if (desiredTimeFrame == timeFrame) {
+                break;
             }
+            Function<List<String>, ConvertedResult> converter = ofNullable(
+                    converters.get(timeFrame)).orElseThrow(
+                    () -> new RuntimeException(
+                            "Не найдена функция для обработки desiredTimeFrame=%s; currentTimeFrame=%s; binaryStringIndicatorDecisions=%s".formatted(desiredTimeFrame,
+                                    timeFrame, binaryStringIndicatorDecisions)));
+
+            convertedResult = converter.apply(convertedResult.getBinaryStringIndicatorDecisions());
         }
 
 
-        Assert.notEmpty(convertedResultList,
+        Assert.notEmpty(convertedResult.getBinaryStringIndicatorDecisions(),
                 "Результат конвертации не может быть пустым. desiredTimeFrame=%s; currentTimeFrame=%s; binaryStringIndicatorDecisions=%s".formatted(
                         desiredTimeFrame, currentTimeFrame, binaryStringIndicatorDecisions));
 
 
-        return convertedResultList.stream()
+        return convertedResult.getBinaryStringIndicatorDecisions().stream()
                 .map(s -> Integer.parseInt(s, 2))
                 .toList();
     }

@@ -17,14 +17,19 @@ import java.util.concurrent.ThreadPoolExecutor;
 public class StrategyManagerImpl implements StrategyManager {
 
     DataConsumer kafkaDataConsumer;
-    Integer theBorderForGettingNewDescriptionOfStrategy;
     ThreadPoolExecutor executor;
 
     @Override
-    @Scheduled(fixedDelay = 5000)
+    @Scheduled(fixedDelayString = "#{new Integer('${app.kafka.max_poll_interval_ms_config}')*10/100}")
     public void execute() {
-        // TODO придумать как брать стратегии на исполнение только в случае способности брать дополнительные задачи
-        kafkaDataConsumer.poll();
-
+        executor.execute(() -> {
+            try {
+                log.info(">> Запуск получения данных из Kafka");
+                // TODO придумать как брать стратегии на исполнение только в случае способности брать дополнительные задачи
+                kafkaDataConsumer.poll();
+            } catch (Exception e) {
+                log.error("Ошибка при получении данных из Kafka={}", e.getMessage(), e);
+            }
+        });
     }
 }

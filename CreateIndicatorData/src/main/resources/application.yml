@@ -4,8 +4,8 @@ logging:
 #        name: createIndicatorData.log
 #        path: /
     level:
-        root: DEBUG
-        org.springframework.jdbc.core: TRACE
+        root: INFO
+        org.springframework.jdbc.core: INFO
 
 server:
   port: 8081

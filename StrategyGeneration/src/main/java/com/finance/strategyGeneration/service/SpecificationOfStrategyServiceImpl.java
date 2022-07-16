@@ -7,12 +7,11 @@ import com.google.common.collect.Lists;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
-import lombok.experimental.NonFinal;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -27,9 +26,6 @@ public class SpecificationOfStrategyServiceImpl implements SpecificationOfStrate
 
     SpecificationOfStrategyRepository repository;
     InformationOfIndicatorService informationOfIndicatorService;
-    @Autowired
-    @NonFinal
-    SpecificationOfStrategyService self;
 
     @Transactional
     @Override
@@ -40,8 +36,17 @@ public class SpecificationOfStrategyServiceImpl implements SpecificationOfStrate
 
     @Override
     public List<SpecificationOfStrategy> saveAll(List<SpecificationOfStrategy> populationAfterSelection) {
-        // TODO сделать batch insert
-        return Lists.newArrayList(repository.saveAll(populationAfterSelection));
+        try {
+            // TODO сделать batch insert
+            log.info("START SpecificationOfStrategyService");
+            ArrayList<SpecificationOfStrategy> specificationOfStrategies =
+                    Lists.newArrayList(repository.saveAll(populationAfterSelection));
+            log.info("END SpecificationOfStrategyService");
+            return specificationOfStrategies;
+        } catch (Exception exception) {
+            log.error("ERROR SpecificationOfStrategyService.saveAll={}", exception.getMessage(), exception);
+            throw exception;
+        }
     }
 
     @Override

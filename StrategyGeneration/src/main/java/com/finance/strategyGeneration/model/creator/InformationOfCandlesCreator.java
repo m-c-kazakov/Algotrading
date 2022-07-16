@@ -6,6 +6,6 @@ public class InformationOfCandlesCreator {
 
     public static InformationOfCandles createWithHashCode(InformationOfCandles informationOfCandles) {
         return informationOfCandles
-                .withHashCode(informationOfCandles.toString());
+                .withHashCode(String.join("_", informationOfCandles.getCurrencyPair().name(), informationOfCandles.getTimeFrame().name()));
     }
 }

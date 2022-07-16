@@ -1,5 +1,9 @@
+server:
+  port: 8083
 
-
+logging:
+  level:
+    root: INFO
 
 app:
   geneticAlgorithm:
@@ -11,8 +15,8 @@ app:
     enable_auto_commit_config: true
     auto_commit_interval_ms_config: 100
     auto_offset_reset_config: earliest
-    max_poll_records_config: 3
-    max_poll_interval_ms_config: 300
+    max_poll_records_config: 16
+    max_poll_interval_ms_config: 50000
     topic_name: untestedStrategies
   checkStrategy:
       theBorderForGettingNewDescriptionOfStrategy: 10
