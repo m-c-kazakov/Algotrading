@@ -38,4 +38,8 @@ public class InformationOfCandlesStorage {
     public String receiveHashCode() {
         return this.informationOfCandles.getHashCode();
     }
+
+    public String getInformationOfCandlesHashCode() {
+        return this.informationOfCandles.getHashCode();
+    }
 }

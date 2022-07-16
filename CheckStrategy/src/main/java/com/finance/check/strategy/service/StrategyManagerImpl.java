@@ -9,7 +9,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.scheduling.annotation.Scheduled;
 
 import java.util.concurrent.ThreadPoolExecutor;
-import java.util.stream.Stream;
 
 
 @Slf4j
@@ -24,11 +23,8 @@ public class StrategyManagerImpl implements StrategyManager {
     @Override
     @Scheduled(fixedDelay = 5000)
     public void execute() {
-        log.info("Проверка необходимости получения новых стратегий из Kafka result={}; TaskCount={}; theBorderForGettingNewDescriptionOfStrategy={}", executor.getTaskCount() < theBorderForGettingNewDescriptionOfStrategy, executor.getTaskCount(), theBorderForGettingNewDescriptionOfStrategy);
-        if (executor.getTaskCount() < theBorderForGettingNewDescriptionOfStrategy) {
-            Stream.iterate(0, i -> i < Math.max(executor.getTaskCount() / 3, 2), i -> i + 1)
-                    .forEach(descriptionOfStrategyConsumer -> executor.execute(kafkaDataConsumer::poll));
-        }
+        // TODO придумать как брать стратегии на исполнение только в случае способности брать дополнительные задачи
+        kafkaDataConsumer.poll();
 
     }
 }

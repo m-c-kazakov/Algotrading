@@ -7,16 +7,14 @@ import com.finance.strategyGeneration.model.creator.SpecificationOfStrategyCreat
 import com.finance.strategyGeneration.stagesOfGeneticAlgorithm.createPopulation.randomPopulation.RandomPopulationCreationManager;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.test.context.jdbc.Sql;
 import org.springframework.transaction.annotation.Transactional;
+import org.testcontainers.junit.jupiter.Testcontainers;
 
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-@Sql({
-        "classpath:sql/data.sql"
-})
+@Testcontainers
 @Transactional
 class SpecificationOfStrategyRepositoryTest extends IntegrationTestBased {
 
@@ -29,25 +27,24 @@ class SpecificationOfStrategyRepositoryTest extends IntegrationTestBased {
 
     @Test
     void existsByHashCode() {
-        assertThat(repository.existsByHashCode("123123123")).isTrue();
+        SpecificationOfStrategy entity = repository.save(randomPopulationCreationManager.execute());
+        assertThat(repository.existsByHashCode(entity.getHashCode())).isTrue();
     }
 
     @Test
     void updateStatisticsOfStrategyId() {
+        SpecificationOfStrategy entity = repository.save(randomPopulationCreationManager.execute());
+
         long statisticsOfStrategyId = 5L;
-        Optional<SpecificationOfStrategy> optionalSpecificationOfStrategy = repository.findAll().stream().findFirst();
-        assertThat(optionalSpecificationOfStrategy).isPresent();
-        optionalSpecificationOfStrategy.ifPresent(specificationOfStrategy -> {
 
-            repository.updateStatisticsOfStrategyId(specificationOfStrategy.getId(), statisticsOfStrategyId);
-            Optional<SpecificationOfStrategy> optionalSpecification = repository.findById(
-                    specificationOfStrategy.getId());
+        repository.updateStatisticsOfStrategyId(entity.getId(), statisticsOfStrategyId);
+        Optional<SpecificationOfStrategy> optionalSpecification = repository.findById(
+                entity.getId());
 
-            assertThat(optionalSpecification).isPresent();
-            optionalSpecification.ifPresent(specification ->
-                    assertThat(specification.getStatisticsOfStrategyId()).isEqualTo(statisticsOfStrategyId)
-            );
-        });
+        assertThat(optionalSpecification).isPresent();
+        optionalSpecification.ifPresent(specification ->
+                assertThat(specification.getStatisticsOfStrategyId()).isEqualTo(statisticsOfStrategyId)
+        );
     }
 
     @Test

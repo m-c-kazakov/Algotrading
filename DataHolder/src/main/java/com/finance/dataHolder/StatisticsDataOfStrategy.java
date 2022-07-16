@@ -36,11 +36,11 @@ public class StatisticsDataOfStrategy {
 
 
     public void incrementLosingDeal() {
-        this.numberOfLosingDeals = this.numberOfLosingDeals + 1;
+        this.numberOfLosingDeals++;
     }
 
     public void incrementWinningDeal() {
-        this.numberOfWinningDeals = this.numberOfWinningDeals + 1;
+        this.numberOfWinningDeals++;
     }
 
     public boolean isNeedToBreakStrategy() {

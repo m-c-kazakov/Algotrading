@@ -85,15 +85,15 @@ class SchedulingServiceImplTest extends KafkaTestBased {
         }
 
         @Bean("submittedStrategies")
-        public List<SpecificationOfStrategyDto> SpecificationOfStrategys() {
+        public List<SpecificationOfStrategyDto> specificationOfStrategyDtos() {
             return new CopyOnWriteArrayList<>();
         }
 
         @Bean
         public DataProducer dataSender(KafkaProducer<Long, SpecificationOfStrategyDto> producer,
                                        @Value("app.kafka.topic_name") String topicName,
-                                       List<SpecificationOfStrategyDto> SpecificationOfStrategys) {
-            return new Producer(producer, topicName, SpecificationOfStrategys::add);
+                                       @Qualifier("submittedStrategies") List<SpecificationOfStrategyDto> specificationOfStrategyDtos) {
+            return new Producer(producer, topicName, specificationOfStrategyDtos::add);
         }
 
         @Bean

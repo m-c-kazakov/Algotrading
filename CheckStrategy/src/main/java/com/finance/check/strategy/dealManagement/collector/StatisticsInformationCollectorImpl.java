@@ -1,14 +1,17 @@
 package com.finance.check.strategy.dealManagement.collector;
 
 import com.finance.dataHolder.StatisticsDataOfStrategy;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
+@Slf4j
 @Component
 public class StatisticsInformationCollectorImpl implements StatisticsInformationCollector {
     @Override
     public void toCollect(StatisticsDataOfStrategy statisticsDataOfStrategy, long startScore, long oldStateOfScore,
                           long newStateOfScore) {
         boolean isDealProfitable = newStateOfScore > oldStateOfScore;
+        log.debug(">> toCollect: startScore={}; oldStateOfScore={}; isDealProfitabl={}", startScore, oldStateOfScore, isDealProfitable);
 
         increaseStatisticsOfEndDeal(statisticsDataOfStrategy, isDealProfitable);
 

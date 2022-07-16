@@ -6,14 +6,10 @@ import com.finance.strategyGeneration.model.InformationOfIndicator;
 import com.finance.strategyGeneration.stagesOfGeneticAlgorithm.createPopulation.randomPopulation.strategiesForCreatingRandomPopulations.generatorRandomIndicators.GeneratorOfRandomIndicators;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.test.context.jdbc.Sql;
 import org.springframework.transaction.annotation.Transactional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-@Sql({
-        "classpath:sql/data.sql"
-})
 @Transactional
 class InformationOfIndicatorRepositoryTest extends IntegrationTestBased {
 
@@ -23,14 +19,17 @@ class InformationOfIndicatorRepositoryTest extends IntegrationTestBased {
     GeneratorOfRandomIndicators generatorOfRandomIndicators;
 
 
+
     @Test
     void existsByHashCode() {
-        assertThat(repository.existsByHashCode("3")).isTrue();
+        InformationOfIndicator randomIndicator = generatorOfRandomIndicators.createRandomIndicator(CurrencyPair.EURUSD);
+        assertThat(repository.existsByHashCode(randomIndicator.getHashCode())).isTrue();
     }
 
     @Test
     void findByHashCode() {
-        assertThat(repository.findByHashCode("3")).isPresent();
+        InformationOfIndicator randomIndicator = generatorOfRandomIndicators.createRandomIndicator(CurrencyPair.EURUSD);
+        assertThat(repository.findByHashCode(randomIndicator.getHashCode())).isPresent();
     }
 
     @Test
