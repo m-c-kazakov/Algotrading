@@ -10,7 +10,6 @@ spring:
 
 app:
   populationCreation:
-    frontierForCreatingNewStrategies: 1
     numberOfRandomIndividual: 10
     numberOfTheBestIndividual: 5
 

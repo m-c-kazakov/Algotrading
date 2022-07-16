@@ -2,7 +2,8 @@ package com.finance.strategyGeneration.service;
 
 import com.finance.strategyGeneration.dto.SpecificationOfStrategyDto;
 import com.finance.strategyGeneration.mapper.SpecificationOfStrategyMapper;
-import com.finance.strategyGeneration.service.broker.DataProducer;
+import com.finance.strategyGeneration.service.broker.consumer.DataConsumer;
+import com.finance.strategyGeneration.service.broker.producer.DataProducer;
 import com.finance.strategyGeneration.stagesOfGeneticAlgorithm.GeneticAlgorithm;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
@@ -15,6 +16,7 @@ import org.springframework.stereotype.Component;
 
 import java.util.List;
 
+
 @Component
 @Slf4j
 @RequiredArgsConstructor
@@ -22,27 +24,29 @@ import java.util.List;
 public class SchedulingServiceImpl implements SchedulingService {
 
     @NonFinal
-    @Value("${app.populationCreation.frontierForCreatingNewStrategies}")
+    @Value("#{new Integer('${app.kafka.consumer.max_poll_records_config}')/2}")
     Integer frontierForCreatingNewStrategies;
+
     GeneticAlgorithm geneticAlgorithm;
-    DataProducer kafkaSender;
-    SpecificationOfStrategyService specificationOfStrategyService;
+    DataProducer dataProducer;
+    DataConsumer dataConsumer;
     SpecificationOfStrategyMapper mapper;
 
+
     @Override
-    @Scheduled(fixedDelay = 30000)
+    @Scheduled(fixedDelayString = "#{new Integer('${app.kafka.consumer.max_poll_interval_ms_config}')*75/100}")
     public void execute() {
 
-        Integer numberOfUntestedStrategies = specificationOfStrategyService.findTheNumberOfUntestedStrategies();
-        log.info("Количество не проверенных стратегий {}", numberOfUntestedStrategies);
+        Integer batchCount = dataConsumer.poll();
+        log.info("Количество стратегий в пачке {}. Для создания новых стратегий должно быть меньше {} ", batchCount, frontierForCreatingNewStrategies);
 
-        if (numberOfUntestedStrategies < frontierForCreatingNewStrategies) {
+        if (batchCount < frontierForCreatingNewStrategies) {
             log.info("START: Запуск генетического алгоритма.");
             List<SpecificationOfStrategyDto> specificationOfStrategyDtos =
                     geneticAlgorithm.execute().stream().map(mapper::mapTo).toList();
             log.info("END: Завершение генетического алгоритма. Количество созданных стратегий={}", specificationOfStrategyDtos.size());
 
-            kafkaSender.dataHandler(specificationOfStrategyDtos);
+            dataProducer.dataHandler(specificationOfStrategyDtos);
         } else {
             log.info("Количество не проверенных стратегий больше {}. Новые стратегии не будут созданы.", frontierForCreatingNewStrategies);
         }

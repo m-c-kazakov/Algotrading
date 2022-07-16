@@ -8,8 +8,8 @@ import javax.validation.constraints.NotBlank;
 
 @Getter
 @Setter
-@ConfigurationProperties(prefix = "app.kafka")
-public class KafkaConfigurationProperties {
+@ConfigurationProperties(prefix = "app.kafka.producer")
+public class KafkaProducerConfigurationProperties {
     @NotBlank
     String client_id_config;
     @NotBlank

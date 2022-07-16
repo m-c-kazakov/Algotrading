@@ -1,11 +1,11 @@
 package com.finance.strategyGeneration.config;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.finance.strategyGeneration.config.configurationProperties.KafkaConfigurationProperties;
+import com.finance.strategyGeneration.config.configurationProperties.KafkaProducerConfigurationProperties;
 import com.finance.strategyGeneration.dto.SpecificationOfStrategyDto;
-import com.finance.strategyGeneration.service.broker.DataProducer;
-import com.finance.strategyGeneration.service.broker.JsonSerializer;
-import com.finance.strategyGeneration.service.broker.Producer;
+import com.finance.strategyGeneration.service.broker.producer.DataProducer;
+import com.finance.strategyGeneration.service.broker.producer.JsonSerializer;
+import com.finance.strategyGeneration.service.broker.producer.KafkaDataProducer;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.kafka.clients.producer.KafkaProducer;
 import org.apache.kafka.common.serialization.LongSerializer;
@@ -14,7 +14,7 @@ import org.springframework.context.annotation.Configuration;
 
 import java.util.Properties;
 
-import static com.finance.strategyGeneration.service.broker.JsonSerializer.OBJECT_MAPPER;
+import static com.finance.strategyGeneration.service.broker.producer.JsonSerializer.OBJECT_MAPPER;
 import static org.apache.kafka.clients.CommonClientConfigs.BOOTSTRAP_SERVERS_CONFIG;
 import static org.apache.kafka.clients.CommonClientConfigs.CLIENT_ID_CONFIG;
 import static org.apache.kafka.clients.CommonClientConfigs.RETRIES_CONFIG;
@@ -22,16 +22,16 @@ import static org.apache.kafka.clients.producer.ProducerConfig.*;
 
 @Slf4j
 @Configuration
-public class KafkaConfig {
+public class KafkaProducerConfig {
 
     @Bean
-    public DataProducer dataSender(KafkaProducer<Long, SpecificationOfStrategyDto> producer, KafkaConfigurationProperties properties) {
-        return new Producer(producer, properties.getTopic_name(), stringValue -> {
+    public DataProducer dataSender(KafkaProducer<Long, SpecificationOfStrategyDto> producer, KafkaProducerConfigurationProperties properties) {
+        return new KafkaDataProducer(producer, properties.getTopic_name(), stringValue -> {
         });
     }
 
     @Bean
-    public KafkaProducer<Long, SpecificationOfStrategyDto> kafkaProducer(KafkaConfigurationProperties properties) {
+    public KafkaProducer<Long, SpecificationOfStrategyDto> kafkaProducer(KafkaProducerConfigurationProperties properties) {
         Properties props = new Properties();
         props.put(CLIENT_ID_CONFIG, properties.getClient_id_config());
         props.put(BOOTSTRAP_SERVERS_CONFIG, properties.getBootstrap_servers_config());

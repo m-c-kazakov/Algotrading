@@ -1,4 +1,4 @@
-package com.finance.strategyGeneration.service.broker;
+package com.finance.strategyGeneration.service.broker.producer;
 
 import com.finance.strategyGeneration.dto.SpecificationOfStrategyDto;
 import lombok.AccessLevel;
@@ -14,7 +14,7 @@ import java.util.function.Consumer;
 @Slf4j
 @RequiredArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
-public class Producer implements DataProducer {
+public class KafkaDataProducer implements DataProducer {
 
     KafkaProducer<Long, SpecificationOfStrategyDto> producer;
     String topicName;

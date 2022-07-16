@@ -35,17 +35,30 @@ spring:
 
 app:
   populationCreation:
-    frontierForCreatingNewStrategies: 1000
     numberOfRandomIndividual: 5
     numberOfTheBestIndividual: 5
     isNeedToCreateDescriptionToCloseADeal: false
   kafka:
-    client_id_config: StrategyGenerationProducer
-    bootstrap_servers_config: localhost:9092
-    acks_config: 1
-    retries_config: 1
-    batch_size_config: 16384
-    linger_ms_config:  10
-    buffer_memory_config: 33_554_432
-    max_block_ms_config: 1_000
-    topic_name: untestedStrategies
+    producer:
+      client_id_config: StrategyGenerationProducer
+      bootstrap_servers_config: localhost:9092
+      acks_config: 1
+      retries_config: 1
+      batch_size_config: 16384
+      linger_ms_config:  10
+      buffer_memory_config: 33_554_432
+      max_block_ms_config: 1_000
+      topic_name: untestedStrategies
+    consumer:
+      bootstrap_servers_config: localhost:9092
+      group_id_config: checkStrategyConsumer
+      group_instance_id_config: untestedStrategiesGroup
+      enable_auto_commit_config: true
+      auto_commit_interval_ms_config: 100
+      auto_offset_reset_config: earliest
+      # Количество данных получаемых за раз
+      max_poll_records_config: 1000
+      # Дает понгимание для Kafka что consumer живой
+      max_poll_interval_ms_config: 10000
+      topic_name: untestedStrategies
+      timeout_duration: 10000

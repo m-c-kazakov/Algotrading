@@ -2,7 +2,7 @@ package com.finance.check.strategy.service.broker;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.finance.check.strategy.config.configurationProperties.KafkaConfigurationProperties;
+import com.finance.check.strategy.config.configurationProperties.KafkaConsumerConfigurationProperties;
 import com.finance.check.strategy.dto.CandlesInformationDto;
 import com.finance.check.strategy.dto.DescriptionOfStrategyDto;
 import com.finance.check.strategy.dto.IndicatorDto;
@@ -48,7 +48,7 @@ import static org.apache.kafka.clients.producer.ProducerConfig.*;
 import static org.mockito.ArgumentMatchers.any;
 
 @Slf4j
-@EnableConfigurationProperties(value = KafkaConfigurationProperties.class)
+@EnableConfigurationProperties(value = KafkaConsumerConfigurationProperties.class)
 class KafkaDataConsumerTest extends KafkaTestBased {
 
     @MockBean
@@ -61,7 +61,7 @@ class KafkaDataConsumerTest extends KafkaTestBased {
     DescriptionOfStrategyMapper mapper;
 
     @Autowired
-    KafkaConfigurationProperties properties;
+    KafkaConsumerConfigurationProperties properties;
 
     private void putValuesToKafka(List<DescriptionOfStrategyDto> descriptionOfStrategyDtos) {
         Properties props = new Properties();
@@ -141,7 +141,7 @@ class KafkaDataConsumerTest extends KafkaTestBased {
 
         @Bean
         @SneakyThrows
-        public KafkaConsumer<Long, DescriptionOfStrategyDto> kafkaConsumer(KafkaConfigurationProperties properties) {
+        public KafkaConsumer<Long, DescriptionOfStrategyDto> kafkaConsumer(KafkaConsumerConfigurationProperties properties) {
 
             var props = new Properties();
             props.put(BOOTSTRAP_SERVERS_CONFIG, properties.getBootstrap_servers_config());

@@ -1,4 +1,4 @@
-package com.finance.strategyGeneration.service.broker;
+package com.finance.strategyGeneration.service.broker.producer;
 
 import com.finance.strategyGeneration.dto.SpecificationOfStrategyDto;
 

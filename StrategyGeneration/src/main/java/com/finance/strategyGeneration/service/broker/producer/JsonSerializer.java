@@ -1,4 +1,4 @@
-package com.finance.strategyGeneration.service.broker;
+package com.finance.strategyGeneration.service.broker.producer;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.kafka.common.errors.SerializationException;

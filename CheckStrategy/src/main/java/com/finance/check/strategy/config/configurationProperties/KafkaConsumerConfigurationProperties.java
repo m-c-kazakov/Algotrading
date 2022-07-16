@@ -7,7 +7,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 @Getter
 @Setter
 @ConfigurationProperties(prefix = "app.kafka")
-public class KafkaConfigurationProperties {
+public class KafkaConsumerConfigurationProperties {
 
     String bootstrap_servers_config;
     String group_id_config;

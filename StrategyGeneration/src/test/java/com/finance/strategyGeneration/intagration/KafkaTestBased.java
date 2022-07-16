@@ -19,6 +19,7 @@ public abstract class KafkaTestBased extends IntegrationTestBased {
 
     @DynamicPropertySource
     static void postgresProperties(DynamicPropertyRegistry registry) {
-        registry.add("app.kafka.bootstrap_servers_config", kafka::getBootstrapServers);
+        registry.add("app.kafka.producer.bootstrap_servers_config", kafka::getBootstrapServers);
+        registry.add("app.kafka.consumer.bootstrap_servers_config", kafka::getBootstrapServers);
     }
 }
