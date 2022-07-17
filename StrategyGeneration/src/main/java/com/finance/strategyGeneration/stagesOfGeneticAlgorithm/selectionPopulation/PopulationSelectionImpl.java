@@ -1,5 +1,8 @@
 package com.finance.strategyGeneration.stagesOfGeneticAlgorithm.selectionPopulation;
 
+import com.finance.strategyDescriptionParameters.TimeFrame;
+import com.finance.strategyGeneration.model.InformationOfCandles;
+import com.finance.strategyGeneration.model.InformationOfIndicator;
 import com.finance.strategyGeneration.model.SpecificationOfStrategy;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
@@ -8,6 +11,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.stream.Stream;
 
 @Slf4j
 @Component
@@ -30,5 +34,26 @@ public class PopulationSelectionImpl implements PopulationSelection {
             log.error("ERROR PopulationSelection={}", e.getMessage(), e);
             throw e;
         }
+    }
+
+    @Override
+    public Boolean isValidStrategy(SpecificationOfStrategy specificationOfStrategy) {
+        return isInformationOfCandlesContainsMinimalTimeFrame(specificationOfStrategy);
+    }
+
+    private Boolean isInformationOfCandlesContainsMinimalTimeFrame(SpecificationOfStrategy specificationOfStrategy) {
+        InformationOfCandles informationOfCandles = specificationOfStrategy.receiveInformationOfCandles();
+        TimeFrame minimalTimeFrame = informationOfCandles.getTimeFrame();
+
+        boolean allMatch = Stream.of(specificationOfStrategy.receiveDescriptionToCloseADealIndicators(),
+                        specificationOfStrategy.receiveDescriptionToCloseADealIndicators())
+                .flatMap(List::stream)
+                .map(InformationOfIndicator::receiveTimeFrame)
+                .allMatch(timeFrame -> minimalTimeFrame.getPer() < timeFrame.getPer());
+
+        if (!allMatch) {
+            log.info("InformationOfCandles содержит не минимальный time frame");
+        }
+        return allMatch;
     }
 }

@@ -1,8 +1,8 @@
 package com.finance.strategyGeneration.repository;
 
 import com.finance.strategyGeneration.intagration.IntegrationTestBased;
+import com.finance.strategyGeneration.model.InformationOfCandles;
 import com.finance.strategyGeneration.model.SpecificationOfStrategy;
-import com.finance.strategyGeneration.model.storage.InformationOfCandlesStorage;
 import com.finance.strategyGeneration.stagesOfGeneticAlgorithm.createPopulation.randomPopulation.RandomPopulationCreationManager;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,14 +24,14 @@ class InformationOfCandlesRepositoryTest extends IntegrationTestBased {
     @Test
     void existsByHashCode() {
         SpecificationOfStrategy execute = randomPopulationCreationManager.execute();
-        InformationOfCandlesStorage informationOfCandles = execute.getInformationOfCandles();
-        assertThat(repository.existsByHashCode(informationOfCandles.getInformationOfCandlesHashCode())).isTrue();
+        InformationOfCandles informationOfCandles = execute.receiveInformationOfCandles();
+        assertThat(repository.existsByHashCode(informationOfCandles.getHashCode())).isTrue();
     }
 
     @Test
     void findByHashCode() {
         SpecificationOfStrategy execute = randomPopulationCreationManager.execute();
-        InformationOfCandlesStorage informationOfCandles = execute.getInformationOfCandles();
-        assertThat(repository.findByHashCode(informationOfCandles.getInformationOfCandlesHashCode())).isPresent();
+        InformationOfCandles informationOfCandles = execute.receiveInformationOfCandles();
+        assertThat(repository.findByHashCode(informationOfCandles.getHashCode())).isPresent();
     }
 }

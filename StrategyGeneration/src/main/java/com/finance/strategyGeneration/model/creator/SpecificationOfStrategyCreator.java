@@ -25,7 +25,7 @@ public class SpecificationOfStrategyCreator {
                         specificationOfStrategy.getStopLossConfigurationData().toString(),
                         specificationOfStrategy.getTrailingStopConfigurationData().toString(),
                         specificationOfStrategy.getTakeProfitConfigurationData().toString(),
-                        specificationOfStrategy.getInformationOfCandles().receiveHashCode(),
+                        specificationOfStrategy.receiveInformationOfCandles().getHashCode(),
                         specificationOfStrategy.getDescriptionToOpenADeal().receiveHashCodes(),
                         specificationOfStrategy.getDescriptionToCloseADeal().receiveHashCodes()
                 )

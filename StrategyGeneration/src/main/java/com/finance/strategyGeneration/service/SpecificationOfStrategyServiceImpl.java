@@ -66,7 +66,7 @@ public class SpecificationOfStrategyServiceImpl implements SpecificationOfStrate
     @Override
     public List<SpecificationOfStrategy> findTheBestIndividual(int numberOfIndividuals) {
 
-        List<SpecificationOfStrategy> theBestStrategy = repository.findTheBestStrategy(100);
+        List<SpecificationOfStrategy> theBestStrategy = repository.findTheBestStrategy(numberOfIndividuals);
         if (theBestStrategy.isEmpty()) {
             return List.of();
         }

@@ -44,6 +44,7 @@ public class PopulationCreationManagerImpl implements PopulationCreationManager 
                     .distinct()
                     .toList();
 
+            log.info("PopulationCreationManager NUMBER_OF_RANDOM_INDIVIDUALS={}; NUMBER_OF_THE_BEST_INDIVIDUALS={}; theBestIndividual={}; Actual={}", NUMBER_OF_RANDOM_INDIVIDUALS, NUMBER_OF_THE_BEST_INDIVIDUALS, theBestIndividual.size(), specificationOfStrategies.size());
             Assert.state(specificationOfStrategies.size() <= NUMBER_OF_RANDOM_INDIVIDUALS+NUMBER_OF_THE_BEST_INDIVIDUALS, "Количество созданных стратегий не соответствует ожидаемому значению");
             log.info("END PopulationCreationManager populationAfterCreation.size={}", specificationOfStrategies.size());
             return specificationOfStrategies;

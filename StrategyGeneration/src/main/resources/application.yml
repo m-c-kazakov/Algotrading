@@ -4,7 +4,7 @@ logging:
   #        name: createIndicatorData.log
   #        path: /
   level:
-    com.finance.strategyGeneration: DEBUG
+    com.finance.strategyGeneration: INFO
     root: INFO
     org.springframework.jdbc.core: INFO
 

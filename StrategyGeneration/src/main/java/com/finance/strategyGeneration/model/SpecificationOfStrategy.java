@@ -111,4 +111,8 @@ public class SpecificationOfStrategy {
     public List<InformationOfIndicator> getOpenADealInformationOfIndicators() {
         return new ArrayList<>(this.descriptionToOpenADeal.getInformationOfIndicators());
     }
+
+    public InformationOfCandles receiveInformationOfCandles() {
+        return this.informationOfCandles.getInformationOfCandles();
+    }
 }

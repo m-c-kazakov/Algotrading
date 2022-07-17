@@ -4,6 +4,7 @@ import com.finance.strategyGeneration.dto.SpecificationOfStrategyDto;
 import com.finance.strategyGeneration.mapper.SpecificationOfStrategyMapper;
 import com.finance.strategyGeneration.model.SpecificationOfStrategy;
 import com.finance.strategyGeneration.service.broker.producer.DataProducer;
+import com.finance.strategyGeneration.stagesOfGeneticAlgorithm.selectionPopulation.PopulationSelection;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
@@ -23,12 +24,15 @@ public class ManagerOfSendingForVerificationImpl implements ManagerOfSendingForV
     SpecificationOfStrategyService specificationOfStrategyService;
     Executor executor;
     DataProducer dataProducer;
+    PopulationSelection populationSelection;
 
     @Override
     public void execute(SpecificationOfStrategy specificationOfStrategy) {
 
         try {
-            if (specificationOfStrategyService.findByHashCode(specificationOfStrategy.getHashCode()).isEmpty()) {
+
+            Boolean isValidStrategy = populationSelection.isValidStrategy(specificationOfStrategy);
+            if (isValidStrategy && specificationOfStrategyService.findByHashCode(specificationOfStrategy.getHashCode()).isEmpty()) {
                 SpecificationOfStrategy entity = specificationOfStrategyService.save(specificationOfStrategy);
                 SpecificationOfStrategyDto specificationOfStrategyDto = mapper.mapTo(entity);
                 dataProducer.dataHandler(specificationOfStrategyDto);

@@ -6,4 +6,6 @@ import java.util.List;
 
 public interface PopulationSelection {
     List<SpecificationOfStrategy> execute(List<SpecificationOfStrategy> populationAfterMutation);
+
+    Boolean isValidStrategy(SpecificationOfStrategy specificationOfStrategy);
 }
