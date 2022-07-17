@@ -1,4 +1,4 @@
-package com.finance.strategyGeneration;
+package com.finance.strategyGeneration.config;
 
 
 import org.springframework.context.annotation.Configuration;

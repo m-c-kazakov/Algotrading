@@ -1,6 +1,7 @@
 package com.finance.strategyGeneration.service;
 
 import com.finance.strategyGeneration.service.broker.consumer.DataConsumer;
+import com.finance.strategyGeneration.stagesOfGeneticAlgorithm.GeneticAlgorithm;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
@@ -10,6 +11,8 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
+import java.util.concurrent.Executor;
+
 
 @Component
 @Slf4j
@@ -17,12 +20,12 @@ import org.springframework.stereotype.Component;
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class SchedulingServiceImpl implements SchedulingService {
 
-
-    GeneticAlgorithmManager geneticAlgorithmManager;
     DataConsumer dataConsumer;
     @NonFinal
     @Value("#{new Integer('${app.kafka.consumer.max_poll_records_config}')/2}")
     Integer frontierForCreatingNewStrategies;
+    Executor executor;
+    GeneticAlgorithm geneticAlgorithm;
 
     @Override
     @Scheduled(fixedDelayString = "#{new Integer('${app.kafka.consumer.max_poll_interval_ms_config}')*75/100}")
@@ -34,7 +37,7 @@ public class SchedulingServiceImpl implements SchedulingService {
 
         if (batchCount < frontierForCreatingNewStrategies) {
 
-            geneticAlgorithmManager.execute();
+            executor.execute(geneticAlgorithm::execute);
 
         } else {
             log.info("Количество не проверенных стратегий больше {}. Новые стратегии не будут созданы.",

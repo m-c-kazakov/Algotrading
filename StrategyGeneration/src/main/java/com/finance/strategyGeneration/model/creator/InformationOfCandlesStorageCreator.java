@@ -13,6 +13,6 @@ public class InformationOfCandlesStorageCreator {
     }
 
     public static InformationOfCandlesStorage create(@NonNull InformationOfCandles informationOfCandles) {
-        return new InformationOfCandlesStorage(InformationOfCandlesCreator.createWithHashCode(informationOfCandles));
+        return new InformationOfCandlesStorage(informationOfCandles);
     }
 }

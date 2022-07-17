@@ -36,7 +36,6 @@ dependencies {
     annotationProcessor 'org.mapstruct:mapstruct-processor'
 
 
-
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation 'org.testcontainers:kafka'
     testImplementation "org.testcontainers:postgresql"

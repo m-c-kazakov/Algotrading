@@ -11,4 +11,5 @@ public interface StatisticsOfStrategyRepository extends CrudRepository<Statistic
 
     @Query(value = "SELECT stat.specification_of_strategy_id FROM statistics_of_strategy stat ORDER BY score DESC LIMIT :count")
     List<Long> findTheBestStatistics(@Param("count") int count);
+
 }

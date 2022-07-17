@@ -13,8 +13,6 @@ import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ThreadLocalRandom;
@@ -34,7 +32,7 @@ public class IndicatorToOpeningDealParameterMutation implements Mutation {
     @Override
     public Stream<SpecificationOfStrategy> execute(SpecificationOfStrategy parentSpecificationOfStrategy) {
 
-        List<InformationOfIndicator> indicators = new ArrayList<>(informationOfIndicatorService.findAllById(parentSpecificationOfStrategy.receiveDescriptionToOpenADealStringIds()));
+        List<InformationOfIndicator> indicators = parentSpecificationOfStrategy.getOpenADealInformationOfIndicators();
 
         int bound = Math.max(indicators.size() / 2, 1);
         int numberOfReplacedItems = Math.max(ThreadLocalRandom.current()
@@ -42,10 +40,9 @@ public class IndicatorToOpeningDealParameterMutation implements Mutation {
 
         for (int i = 0; i < numberOfReplacedItems; i++) {
 
-            int replacedIndex = ThreadLocalRandom.current()
-                    .nextInt(indicators.size());
+            int replacedIndex = ThreadLocalRandom.current().nextInt(indicators.size());
 
-            InformationOfIndicator indicatorForReplace = indicators.get(replacedIndex).toBuilder().build();
+            InformationOfIndicator indicatorForReplace = indicators.get(replacedIndex);
 
             IndicatorType indicatorType = indicatorForReplace.getIndicatorType();
 
@@ -60,18 +57,18 @@ public class IndicatorToOpeningDealParameterMutation implements Mutation {
 
             Supplier<String> supplierToMutationParameter = mapWithRandomMutationSuppliers.get(keyOfIndicatorParameter);
 
-            Map<String, String> parametersOfIndicator = new HashMap<>(indicatorForReplace.getParameters().getParameters());
+            Map<String, String> parametersOfIndicator = indicatorForReplace.receiveParameters();
             parametersOfIndicator.put(keyOfIndicatorParameter, supplierToMutationParameter.get());
-            indicatorForReplace.withParameters(new IndicatorParametersConfigurationStorage(parametersOfIndicator));
-
-            informationOfIndicatorService.create(indicatorForReplace);
 
 
-            indicators.set(replacedIndex, indicatorForReplace);
+            InformationOfIndicator entity = informationOfIndicatorService.create(indicatorForReplace.withParameters(
+                    new IndicatorParametersConfigurationStorage(parametersOfIndicator)));
+            indicators.set(replacedIndex, entity);
         }
 
         SpecificationOfStrategy SpecificationOfStrategyAfterMutation =
-                parentSpecificationOfStrategy.withDescriptionToOpenADeal(IndicatorsDescriptionStorageCreator.create(indicators));
+                parentSpecificationOfStrategy.withDescriptionToOpenADeal(
+                        IndicatorsDescriptionStorageCreator.create(indicators));
 
         return Stream.of(parentSpecificationOfStrategy, SpecificationOfStrategyAfterMutation);
     }

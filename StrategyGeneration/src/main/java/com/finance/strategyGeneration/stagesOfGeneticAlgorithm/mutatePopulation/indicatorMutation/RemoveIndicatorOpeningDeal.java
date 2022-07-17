@@ -3,14 +3,12 @@ package com.finance.strategyGeneration.stagesOfGeneticAlgorithm.mutatePopulation
 import com.finance.strategyGeneration.model.InformationOfIndicator;
 import com.finance.strategyGeneration.model.SpecificationOfStrategy;
 import com.finance.strategyGeneration.model.creator.IndicatorsDescriptionStorageCreator;
-import com.finance.strategyGeneration.service.InformationOfIndicatorService;
 import com.finance.strategyGeneration.stagesOfGeneticAlgorithm.mutatePopulation.Mutation;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.stream.Stream;
@@ -20,14 +18,10 @@ import java.util.stream.Stream;
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class RemoveIndicatorOpeningDeal implements Mutation {
 
-    InformationOfIndicatorService informationOfIndicatorService;
-
     @Override
     public Stream<SpecificationOfStrategy> execute(SpecificationOfStrategy parentSpecificationOfStrategy) {
 
-        List<InformationOfIndicator> indicators =
-                new ArrayList<>(informationOfIndicatorService.findAllById(
-                        parentSpecificationOfStrategy.receiveDescriptionToOpenADealStringIds()));
+        List<InformationOfIndicator> indicators = parentSpecificationOfStrategy.getOpenADealInformationOfIndicators();
 
         int numberOfDeletedItems = indicators.size() / 2;
 

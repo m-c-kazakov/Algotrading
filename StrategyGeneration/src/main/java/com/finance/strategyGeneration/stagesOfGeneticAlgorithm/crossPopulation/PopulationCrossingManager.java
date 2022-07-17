@@ -5,5 +5,5 @@ import com.finance.strategyGeneration.model.SpecificationOfStrategy;
 import java.util.List;
 
 public interface PopulationCrossingManager {
-    List<SpecificationOfStrategy> execute(List<SpecificationOfStrategy> population);
+    void execute(List<SpecificationOfStrategy> population);
 }

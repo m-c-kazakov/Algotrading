@@ -3,7 +3,6 @@ package com.finance.strategyGeneration.service;
 import com.finance.strategyDescriptionParameters.CurrencyPair;
 import com.finance.strategyDescriptionParameters.TimeFrame;
 import com.finance.strategyGeneration.model.InformationOfCandles;
-import com.finance.strategyGeneration.model.creator.InformationOfCandlesCreator;
 import com.finance.strategyGeneration.repository.InformationOfCandlesRepository;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
@@ -26,6 +25,7 @@ public class InformationOfCandleServiceImpl implements InformationOfCandleServic
 
     @Override
     @Cacheable(cacheNames = "findByIdInformationOfCandles", key = "#candlesInformationId")
+    @Retryable(value = Exception.class, maxAttempts = 2, backoff = @Backoff(delay = 100))
     public InformationOfCandles findById(long candlesInformationId) {
         return repository.findById(candlesInformationId)
                 .orElseThrow(
@@ -34,6 +34,7 @@ public class InformationOfCandleServiceImpl implements InformationOfCandleServic
 
     @Override
     @Cacheable(cacheNames = "createInformationOfCandles", key = "#currencyPair+'_'+#timeFrame")
+    @Retryable(value = Exception.class, maxAttempts = 2, backoff = @Backoff(delay = 100))
     public InformationOfCandles create(TimeFrame timeFrame, CurrencyPair currencyPair) {
 
         InformationOfCandles entity = InformationOfCandles.builder()
@@ -45,22 +46,13 @@ public class InformationOfCandleServiceImpl implements InformationOfCandleServic
     }
 
     @Override
-    @Retryable(value = Exception.class, maxAttempts = 2, backoff = @Backoff(delay = 100))
     @Cacheable(cacheNames = "createInformationOfCandles", key = "#informationOfCandles.currencyPair+'_'+#informationOfCandles.timeFrame")
+    @Retryable(value = Exception.class, maxAttempts = 2, backoff = @Backoff(delay = 100))
     public InformationOfCandles create(InformationOfCandles informationOfCandles) {
-        InformationOfCandles entityTemplate = InformationOfCandlesCreator.createWithHashCode(informationOfCandles);
-
-//        Optional<InformationOfCandles> optionalEntity = repository.findByHashCode(entityTemplate.getHashCode());
-//        if (optionalEntity.isPresent()) {
-//            return optionalEntity.get();
-//        } else {
-//            return repository.save(entityTemplate.withId(null));
-//        }
-
 
         return repository
-                .findByHashCode(entityTemplate.getHashCode())
-                .orElseGet(() -> repository.save(entityTemplate.withId(null)));
+                .findByHashCode(informationOfCandles.getHashCode())
+                .orElseGet(() -> repository.save(informationOfCandles.withId(null)));
 
     }
 }

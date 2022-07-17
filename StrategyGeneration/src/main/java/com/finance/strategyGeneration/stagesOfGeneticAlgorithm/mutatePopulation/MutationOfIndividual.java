@@ -3,7 +3,10 @@ package com.finance.strategyGeneration.stagesOfGeneticAlgorithm.mutatePopulation
 import com.finance.strategyGeneration.model.SpecificationOfStrategy;
 
 import java.util.List;
+import java.util.stream.Stream;
 
 public interface MutationOfIndividual {
-    List<SpecificationOfStrategy> execute(List<SpecificationOfStrategy> populationAfterCrossing);
+    Stream<SpecificationOfStrategy> execute(SpecificationOfStrategy specificationOfStrategy);
+
+    void execute(List<SpecificationOfStrategy> populationAfterCrossing);
 }

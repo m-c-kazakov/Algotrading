@@ -28,7 +28,7 @@ public class KafkaDataProducer implements DataProducer {
                         if (exception != null) {
                             log.error("message wasn't sent", exception);
                         } else {
-                            log.info("message id:{} was sent, topicName={} offset:{}",
+                            log.debug("message id:{} was sent, topicName={} offset:{}",
                                     specificationOfStrategy.getId(),
                                     metadata.topic(),
                                     metadata.offset());

@@ -13,7 +13,7 @@ public interface SpecificationOfStrategyRepository extends CrudRepository<Specif
 
     List<SpecificationOfStrategy> findAll();
 
-    Optional<SpecificationOfStrategy> findByHashCode(long hashCode);
+    Optional<SpecificationOfStrategy> findByHashCode(String hashCode);
 
     @Modifying
     @Query("UPDATE specification_of_strategy SET statistics_of_strategy_id= :statisticsOfStrategyId WHERE id= :id")
@@ -26,4 +26,7 @@ public interface SpecificationOfStrategyRepository extends CrudRepository<Specif
 
     @Query("SELECT COUNT(*) FROM specification_of_strategy spec WHERE spec.statistics_of_strategy_id IS NULL ")
     Optional<Integer> findTheNumberOfUntestedStrategies();
+
+    @Query("SELECT COUNT(*) FROM specification_of_strategy spec")
+    Optional<Integer> countAll();
 }

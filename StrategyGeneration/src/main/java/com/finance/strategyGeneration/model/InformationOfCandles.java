@@ -3,18 +3,17 @@ package com.finance.strategyGeneration.model;
 import com.finance.strategyDescriptionParameters.CurrencyPair;
 import com.finance.strategyDescriptionParameters.TimeFrame;
 import lombok.*;
-import lombok.experimental.FieldDefaults;
+import lombok.experimental.NonFinal;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.relational.core.mapping.Column;
 import org.springframework.data.relational.core.mapping.Table;
 
-@Getter
-@Builder
+
+
 @With
-@RequiredArgsConstructor
+@Value
+@Builder
 @Table("information_of_candles")
-@ToString
-@EqualsAndHashCode
-@FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class InformationOfCandles {
     @Id
     @ToString.Exclude
@@ -22,7 +21,15 @@ public class InformationOfCandles {
     Long id;
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
+    @NonFinal
     String hashCode;
     CurrencyPair currencyPair;
     TimeFrame timeFrame;
+
+    @Column("hash_code")
+    public String getHashCode() {
+        // TODO понять как лениво инициализировать поле при обращении к нему. Spring Data JDBC не использует getter для получения данных
+        this.hashCode = String.join("_", currencyPair.name(), timeFrame.name());
+        return hashCode;
+    }
 }

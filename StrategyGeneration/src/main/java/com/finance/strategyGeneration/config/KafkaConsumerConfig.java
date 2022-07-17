@@ -7,6 +7,7 @@ import com.finance.strategyGeneration.dto.SpecificationOfStrategyDto;
 import com.finance.strategyGeneration.service.broker.consumer.JsonDeserializer;
 import com.finance.strategyGeneration.service.broker.consumer.KafkaDataConsumer;
 import lombok.SneakyThrows;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.kafka.clients.consumer.KafkaConsumer;
 import org.apache.kafka.common.serialization.LongDeserializer;
 import org.springframework.context.annotation.Bean;
@@ -24,6 +25,7 @@ import static org.apache.kafka.clients.CommonClientConfigs.GROUP_INSTANCE_ID_CON
 import static org.apache.kafka.clients.consumer.ConsumerConfig.MAX_POLL_INTERVAL_MS_CONFIG;
 import static org.apache.kafka.clients.consumer.ConsumerConfig.*;
 
+@Slf4j
 @Configuration
 public class KafkaConsumerConfig {
 
@@ -53,6 +55,12 @@ public class KafkaConsumerConfig {
 
         KafkaConsumer<Long, SpecificationOfStrategyDto> kafkaConsumer = new KafkaConsumer<>(props);
         kafkaConsumer.subscribe(Collections.singletonList(properties.getTopic_name()));
+
+        var shutdownHook = new Thread(() -> {
+            log.info("closing kafka consumer");
+            kafkaConsumer.close();
+        });
+        Runtime.getRuntime().addShutdownHook(shutdownHook);
         return kafkaConsumer;
     }
 }

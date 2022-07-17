@@ -44,9 +44,7 @@ public class GeneratorOfRandomIndicatorsImpl implements GeneratorOfRandomIndicat
 
         Assert.notNull(entity.receiveInformationOfCandlesId(), "InformationOfCandlesId не может быть null");
 
-        InformationOfIndicator informationOfIndicator = informationOfIndicatorService.create(
+        return informationOfIndicatorService.create(
                 entity);
-
-        return informationOfIndicator;
     }
 }

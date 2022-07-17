@@ -4,6 +4,7 @@ logging:
   #        name: createIndicatorData.log
   #        path: /
   level:
+    com.finance.strategyGeneration: DEBUG
     root: INFO
     org.springframework.jdbc.core: INFO
 
@@ -43,9 +44,11 @@ app:
       client_id_config: StrategyGenerationProducer
       bootstrap_servers_config: localhost:9092
       acks_config: 1
-      retries_config: 1
-      batch_size_config: 16384
-      linger_ms_config:  10
+      retries_config: 2
+      # Какая должна быть группа запросов перед отправкой
+      batch_size_config: 2500
+      # Ожидание заполнения группы запросов в batch_size_config
+      linger_ms_config:  100
       buffer_memory_config: 33_554_432
       max_block_ms_config: 1_000
       topic_name: untestedStrategies

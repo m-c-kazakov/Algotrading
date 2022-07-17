@@ -4,7 +4,6 @@ import com.finance.strategyDescriptionParameters.CurrencyPair;
 import com.finance.strategyGeneration.model.InformationOfIndicator;
 import com.finance.strategyGeneration.model.SpecificationOfStrategy;
 import com.finance.strategyGeneration.model.creator.IndicatorsDescriptionStorageCreator;
-import com.finance.strategyGeneration.service.InformationOfIndicatorService;
 import com.finance.strategyGeneration.stagesOfGeneticAlgorithm.createPopulation.randomPopulation.strategiesForCreatingRandomPopulations.generatorRandomIndicators.GeneratorOfRandomIndicators;
 import com.finance.strategyGeneration.stagesOfGeneticAlgorithm.mutatePopulation.Mutation;
 import lombok.AccessLevel;
@@ -12,7 +11,6 @@ import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.stream.Stream;
@@ -23,14 +21,11 @@ import java.util.stream.Stream;
 public class ReplacedIndicatorToOpeningDeal implements Mutation {
 
     GeneratorOfRandomIndicators generatorOfRandomIndicators;
-    InformationOfIndicatorService informationOfIndicatorService;
 
     @Override
     public Stream<SpecificationOfStrategy> execute(SpecificationOfStrategy parentSpecificationOfStrategy) {
 
-        List<InformationOfIndicator> indicators =
-                new ArrayList<>(informationOfIndicatorService.findAllById(parentSpecificationOfStrategy
-                        .receiveDescriptionToOpenADealStringIds()));
+        List<InformationOfIndicator> indicators = parentSpecificationOfStrategy.getOpenADealInformationOfIndicators();
 
         int bound = Math.max(indicators.size() / 2, 1);
         int numberOfReplacedItems = Math.max(ThreadLocalRandom.current().nextInt(bound), 1);

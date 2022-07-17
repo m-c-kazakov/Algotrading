@@ -9,7 +9,6 @@ import lombok.experimental.FieldDefaults;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
-import java.util.Set;
 import java.util.stream.Stream;
 
 @Component
@@ -21,15 +20,9 @@ public class IndicatorsToOpenADealExchangeManager implements ExchangeManager {
     SeparatorCreator createSeparator;
 
     @Override
-    public Stream<SpecificationOfStrategy> execute(Set<SpecificationOfStrategy> dataOfStrategies) {
+    public Stream<SpecificationOfStrategy> execute(SpecificationOfStrategy firstParent, SpecificationOfStrategy secondParent) {
 
-        List<SpecificationOfStrategy> SpecificationOfStrategyElements = dataOfStrategies.stream()
-                .toList();
-
-        SpecificationOfStrategy firstParent = SpecificationOfStrategyElements.get(0);
         List<InformationOfIndicator> firstIndicators = firstParent.receiveDescriptionToOpenADealIndicators();
-
-        SpecificationOfStrategy secondParent = SpecificationOfStrategyElements.get(1);
         List<InformationOfIndicator> secondIndicators = secondParent.receiveDescriptionToOpenADealIndicators();
 
 

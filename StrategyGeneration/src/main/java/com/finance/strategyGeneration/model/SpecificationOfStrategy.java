@@ -2,11 +2,12 @@ package com.finance.strategyGeneration.model;
 
 import com.finance.strategyDescriptionParameters.*;
 import com.finance.strategyGeneration.model.creator.IndicatorsDescriptionStorageCreator;
+import com.finance.strategyGeneration.model.creator.SpecificationOfStrategyCreator;
 import com.finance.strategyGeneration.model.storage.ConfigurationStorage;
 import com.finance.strategyGeneration.model.storage.IndicatorsDescriptionStorage;
 import com.finance.strategyGeneration.model.storage.InformationOfCandlesStorage;
 import lombok.*;
-import lombok.experimental.FieldDefaults;
+import lombok.experimental.NonFinal;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.relational.core.mapping.Table;
 import org.springframework.util.Assert;
@@ -14,17 +15,14 @@ import org.springframework.util.Assert;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 @With
-@Getter
+@Value
 @Builder
-@ToString
-@RequiredArgsConstructor
 @Table("specification_of_strategy")
-@EqualsAndHashCode
-@FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class SpecificationOfStrategy {
 
     @Id
@@ -36,7 +34,11 @@ public class SpecificationOfStrategy {
     Long statisticsOfStrategyId;
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
+    @NonFinal
     String hashCode;
+    @NonFinal
+    @EqualsAndHashCode.Exclude
+    @ToString.Exclude
     Date dateOfCreation;
     @NotNull
     Long startScore;
@@ -68,6 +70,14 @@ public class SpecificationOfStrategy {
     @NotNull
     IndicatorsDescriptionStorage descriptionToCloseADeal;
 
+    public String getHashCode() {
+        // TODO Понять как линиво инициализировать hashCode и dateOfCreation при сохранении в бд
+
+        this.hashCode = SpecificationOfStrategyCreator.generateHashCode(this);
+        this.dateOfCreation = new Date();
+        return hashCode;
+    }
+
     public List<InformationOfIndicator> receiveDescriptionToCloseADealIndicators() {
         return this.descriptionToCloseADeal.getInformationOfIndicators();
     }
@@ -98,19 +108,7 @@ public class SpecificationOfStrategy {
         return this.descriptionToCloseADeal.receiveStringIds();
     }
 
-    public Integer receiveSumOfDealConfigurationDataHashCode() {
-        return this.sumOfDealConfigurationData.hashCode();
-    }
-
-    public Integer receiveStopLossConfigurationDataHashCode() {
-        return this.stopLossConfigurationData.hashCode();
-    }
-
-    public Integer receiveTrailingStopConfigurationDataHashCode() {
-        return this.trailingStopConfigurationData.hashCode();
-    }
-
-    public Integer receiveTakeProfitConfigurationDataHashCode() {
-        return this.takeProfitConfigurationData.hashCode();
+    public List<InformationOfIndicator> getOpenADealInformationOfIndicators() {
+        return new ArrayList<>(this.descriptionToOpenADeal.getInformationOfIndicators());
     }
 }

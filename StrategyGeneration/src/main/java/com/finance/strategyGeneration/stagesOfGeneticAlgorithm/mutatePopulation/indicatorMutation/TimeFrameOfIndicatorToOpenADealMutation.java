@@ -13,9 +13,7 @@ import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import org.springframework.stereotype.Component;
-import org.springframework.util.Assert;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.stream.Stream;
@@ -31,8 +29,7 @@ public class TimeFrameOfIndicatorToOpenADealMutation implements Mutation {
     @Override
     public Stream<SpecificationOfStrategy> execute(SpecificationOfStrategy parentSpecificationOfStrategy) {
 
-        List<InformationOfIndicator> indicators = new ArrayList<>(informationOfIndicatorService.findAllById(
-                parentSpecificationOfStrategy.receiveDescriptionToOpenADealStringIds()));
+        List<InformationOfIndicator> indicators = parentSpecificationOfStrategy.getOpenADealInformationOfIndicators();
 
         int bound = Math.max(indicators.size() / 2, 1);
         int numberOfReplacedItems = Math.max(ThreadLocalRandom.current()
@@ -42,9 +39,7 @@ public class TimeFrameOfIndicatorToOpenADealMutation implements Mutation {
 
             int replacedIndex = ThreadLocalRandom.current()
                     .nextInt(indicators.size());
-            InformationOfIndicator indicator = indicators.get(replacedIndex).toBuilder().build();
-            Assert.notNull(indicator.receiveCurrencyPair(), "CurrencyPair не может быть null");
-            Assert.notNull(indicator.receiveTimeFrame(), "TimeFrame не может быть null");
+            InformationOfIndicator indicator = indicators.get(replacedIndex);
 
             InformationOfCandles informationOfCandles = informationOfCandleService.create(
                     indicator

@@ -13,7 +13,7 @@ public class IndicatorsDescriptionStorageCreator {
 
     public static IndicatorsDescriptionStorage create(@NonNull List<InformationOfIndicator> informationOfIndicators) {
         Assert.notEmpty(informationOfIndicators.stream().filter(Objects::nonNull).toList(), "Коллекция informationOfIndicators не может быть пустой");
-        return new IndicatorsDescriptionStorage(informationOfIndicators.stream().map(InformationOfIndicatorCreator::createWithHashCode).toList());
+        return new IndicatorsDescriptionStorage(informationOfIndicators);
     }
 
     public static IndicatorsDescriptionStorage create(String... ids) {

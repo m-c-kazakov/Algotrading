@@ -8,12 +8,16 @@ import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.cache.annotation.Cacheable;
+import org.springframework.retry.annotation.Backoff;
+import org.springframework.retry.annotation.Retryable;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -27,10 +31,20 @@ public class SpecificationOfStrategyServiceImpl implements SpecificationOfStrate
     SpecificationOfStrategyRepository repository;
     InformationOfIndicatorService informationOfIndicatorService;
 
-    @Transactional
     @Override
-    public SpecificationOfStrategy save(SpecificationOfStrategy specificationOfStrategy) {
+    // TODO Возможна проблема. Т.к. на разные String можнт быть одинаковый hashCode, то в БД он может для разных стратегий возвращать одинаковые результаты
+    @Cacheable(
+            cacheNames = "findByHashCodeSpecificationOfStrategy",
+            key = "#hashCode"
+    )
+    @Retryable(value = Exception.class, maxAttempts = 2, backoff = @Backoff(delay = 100))
+    public Optional<SpecificationOfStrategy> findByHashCode(String hashCode) {
+        return repository.findByHashCode(hashCode);
+    }
 
+    @Override
+    @Retryable(value = Exception.class, maxAttempts = 2, backoff = @Backoff(delay = 100))
+    public SpecificationOfStrategy save(SpecificationOfStrategy specificationOfStrategy) {
         return repository.save(specificationOfStrategy);
     }
 

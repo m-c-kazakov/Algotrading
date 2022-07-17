@@ -8,6 +8,8 @@ import lombok.EqualsAndHashCode;
 import lombok.ToString;
 import lombok.Value;
 
+import java.util.Optional;
+
 @Value
 @ToString
 @EqualsAndHashCode
@@ -20,7 +22,7 @@ public class InformationOfCandlesStorage {
     }
 
     public String receiveStringId() {
-        return String.valueOf(receiveId());
+        return Optional.ofNullable(receiveId()).map(String::valueOf).orElseThrow(() -> new RuntimeException("InformationOfCandles id не может быть null"));
     }
 
     public TimeFrame receiveTimeFrame() {

@@ -3,16 +3,20 @@ package com.finance.strategyGeneration.service;
 import com.finance.strategyGeneration.model.InformationOfCandles;
 import com.finance.strategyGeneration.model.InformationOfIndicator;
 import com.finance.strategyGeneration.model.creator.InformationOfCandlesStorageCreator;
-import com.finance.strategyGeneration.model.creator.InformationOfIndicatorCreator;
 import com.finance.strategyGeneration.repository.InformationOfIndicatorRepository;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
+import org.springframework.cache.annotation.Cacheable;
+import org.springframework.retry.annotation.Backoff;
+import org.springframework.retry.annotation.Retryable;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
 import java.util.List;
+
+import static java.util.Objects.isNull;
 
 @Component
 @Transactional
@@ -23,13 +27,6 @@ public class InformationOfIndicatorServiceImpl implements InformationOfIndicator
     InformationOfIndicatorRepository repository;
     InformationOfCandleService informationOfCandleService;
 
-    // TODO ДОБАВИТЬ КЭШИРОВАНИЕ
-    @Override
-    public InformationOfIndicator findById(long id) {
-        return repository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Не найдена сущность Indicator с Id=" + id));
-    }
-
 
     // Todo возможно стоит удалить
     @Override
@@ -37,6 +34,25 @@ public class InformationOfIndicatorServiceImpl implements InformationOfIndicator
         Assert.notEmpty(strindIds, "Коллекция id не может быть пустой");
         List<Long> ids = strindIds.stream().map(Long::valueOf).toList();
         return repository.findAllByIdIn(ids).stream().map(this::addInformationOfCandles).toList();
+    }
+
+    @Override
+    @Cacheable(cacheNames = "createInformationOfIndicator", key = "#informationOfIndicator.hashCode")
+    @Retryable(value = Exception.class, maxAttempts = 2, backoff = @Backoff(delay = 100))
+    public InformationOfIndicator create(InformationOfIndicator informationOfIndicator) {
+
+        InformationOfIndicator entity = repository
+                .findByHashCode(informationOfIndicator.getHashCode())
+                .map(indicator -> indicator.withInformationOfCandles(informationOfIndicator.getInformationOfCandles()))
+                .orElseGet(() -> repository.save(informationOfIndicator.withId(null)));
+
+        if (isNull(entity.getInformationOfCandles()) || isNull(entity.receiveTimeFrame()) || isNull(
+                entity.receiveCurrencyPair())) {
+            entity = addInformationOfCandles(entity);
+        }
+        Assert.notNull(entity.getId(), "InformationOfIndicator id не может быть null");
+        Assert.notNull(entity.receiveInformationOfCandlesId(), "InformationOfCandlesId id не может быть null");
+        return entity;
     }
 
     private InformationOfIndicator addInformationOfCandles(InformationOfIndicator informationOfIndicator) {
@@ -49,17 +65,5 @@ public class InformationOfIndicatorServiceImpl implements InformationOfIndicator
         Assert.notNull(result.receiveTimeFrame(), "TimeFrame не может быть null.");
         Assert.notNull(result.receiveCurrencyPair(), "CurrencyPair не может быть null.");
         return result;
-    }
-
-    @Override
-    public InformationOfIndicator create(InformationOfIndicator informationOfIndicator) {
-        InformationOfIndicator entity = InformationOfIndicatorCreator.createWithHashCode(informationOfIndicator);
-
-        InformationOfIndicator informationOfIndicatorResult = repository
-                .findByHashCode(entity.getHashCode())
-                .orElseGet(() -> repository.save(entity.withId(null)))
-                .withInformationOfCandles(informationOfIndicator.getInformationOfCandles());
-
-        return addInformationOfCandles(informationOfIndicatorResult);
     }
 }

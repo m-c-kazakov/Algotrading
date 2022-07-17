@@ -9,8 +9,6 @@ import lombok.NonNull;
 import org.springframework.util.Assert;
 
 import java.util.Map;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 public class InformationOfIndicatorCreator {
 
@@ -18,22 +16,11 @@ public class InformationOfIndicatorCreator {
                                                 @NonNull InformationOfCandles informationOfCandles,
                                                 @NonNull Map<String, String> parameters) {
         Assert.notEmpty(parameters, "parameters у индикатора не может быть пустым");
-        InformationOfIndicator informationOfIndicator = InformationOfIndicator.builder()
+        return InformationOfIndicator
+                .builder()
                 .indicatorType(indicatorType)
                 .informationOfCandles(new InformationOfCandlesStorage(informationOfCandles))
                 .parameters(new IndicatorParametersConfigurationStorage(parameters))
                 .build();
-        return InformationOfIndicatorCreator.createWithHashCode(informationOfIndicator);
-    }
-
-    public static InformationOfIndicator createWithHashCode(InformationOfIndicator informationOfIndicator) {
-        String uniqueIdentifier = Stream.of(
-                informationOfIndicator.hashCode(),
-                informationOfIndicator.receiveIndicatorTypeHashCode(),
-                informationOfIndicator.receiveInformationOfCandlesHashCode(),
-                informationOfIndicator.receiveParametersHashCode()
-        ).map(String::valueOf).collect(Collectors.joining("_"));
-        return informationOfIndicator
-                .withHashCode(uniqueIdentifier);
     }
 }

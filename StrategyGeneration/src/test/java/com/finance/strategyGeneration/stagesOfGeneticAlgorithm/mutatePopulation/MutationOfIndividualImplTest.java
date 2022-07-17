@@ -1,4 +1,4 @@
-package com.finance.strategyGeneration.stagesOfGeneticAlgorithm.crossPopulation;
+package com.finance.strategyGeneration.stagesOfGeneticAlgorithm.mutatePopulation;
 
 import com.finance.strategyGeneration.intagration.KafkaTestBased;
 import com.finance.strategyGeneration.model.SpecificationOfStrategy;
@@ -6,6 +6,7 @@ import com.finance.strategyGeneration.repository.SpecificationOfStrategyReposito
 import com.finance.strategyGeneration.service.SchedulingService;
 import com.finance.strategyGeneration.service.broker.consumer.DataConsumer;
 import com.finance.strategyGeneration.stagesOfGeneticAlgorithm.createPopulation.PopulationCreationManager;
+import com.finance.strategyGeneration.stagesOfGeneticAlgorithm.createPopulation.randomPopulation.RandomPopulationCreationManager;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -17,8 +18,7 @@ import java.util.Optional;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.doReturn;
 
-
-class PopulationCrossingManagerImplTest extends KafkaTestBased {
+class MutationOfIndividualImplTest extends KafkaTestBased {
 
     @MockBean
     DataConsumer dataConsumer;
@@ -26,11 +26,14 @@ class PopulationCrossingManagerImplTest extends KafkaTestBased {
     SchedulingService schedulingService;
 
     @Autowired
-    PopulationCrossingManagerImpl populationCrossingManager;
+    RandomPopulationCreationManager randomPopulationCreationManager;
     @Autowired
     PopulationCreationManager populationCreationManager;
     @Autowired
+    MutationOfIndividual mutationOfIndividual;
+    @Autowired
     SpecificationOfStrategyRepository repository;
+
 
     @Value("${app.kafka.consumer.max_poll_records_config}")
     Integer max_poll_records_config;
@@ -41,18 +44,17 @@ class PopulationCrossingManagerImplTest extends KafkaTestBased {
 
 
     @Test
-    void execute() {
+    void testExecute() {
 
-        doReturn(max_poll_records_config * 5).when(dataConsumer).poll();
+        doReturn(max_poll_records_config*5).when(dataConsumer).poll();
 
         List<SpecificationOfStrategy> specificationOfStrategies = populationCreationManager.execute();
-
-        populationCrossingManager.execute(specificationOfStrategies);
-
+        mutationOfIndividual.execute(specificationOfStrategies);
         Optional<Integer> result = repository.countAll();
         assertThat(result).isPresent();
         result.ifPresent(integer -> {
             assertThat(integer).isGreaterThan(numberOfRandomIndividual + numberOfTheBestIndividual);
         });
+
     }
 }

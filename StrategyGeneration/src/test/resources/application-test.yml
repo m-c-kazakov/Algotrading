@@ -9,5 +9,11 @@ spring:
       hbm2ddl.auto: update
 
 
+app:
+  populationCreation:
+    numberOfRandomIndividual: 100
+    numberOfTheBestIndividual: 5
+
+
 
 
