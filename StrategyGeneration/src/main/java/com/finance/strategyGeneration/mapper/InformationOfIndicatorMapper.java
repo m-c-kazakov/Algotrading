@@ -9,7 +9,7 @@ import org.mapstruct.MappingConstants;
 @Mapper(componentModel = MappingConstants.ComponentModel.SPRING, uses = {InformationOfCandlesMapper.class})
 public interface InformationOfIndicatorMapper {
 
-    @Mapping(target = "parameters", source = "parameters.parameters" )
-    @Mapping(target = "informationOfCandles", source = "informationOfCandles.informationOfCandles" )
+    @Mapping(target = "parameters", source = "parameters.parameters")
+    @Mapping(target = "informationOfCandles", source = "informationOfCandles.informationOfCandles")
     InformationOfIndicatorDto mapTo(InformationOfIndicator informationOfIndicator);
 }

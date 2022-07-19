@@ -49,7 +49,8 @@ public class TimeFrameOfIndicatorToOpenADealMutation implements Mutation {
 
             InformationOfIndicator informationOfIndicator =
                     informationOfIndicatorService.create(
-                            indicator.withInformationOfCandles(InformationOfCandlesStorageCreator.create(informationOfCandles)));
+                            indicator.withInformationOfCandles(
+                                    InformationOfCandlesStorageCreator.create(informationOfCandles)));
 
             indicators.set(replacedIndex, informationOfIndicator);
         }

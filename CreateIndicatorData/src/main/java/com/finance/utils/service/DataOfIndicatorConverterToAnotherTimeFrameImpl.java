@@ -40,7 +40,8 @@ public class DataOfIndicatorConverterToAnotherTimeFrameImpl implements DataOfInd
     public List<Integer> convert(final TimeFrame desiredTimeFrame, final TimeFrame currentTimeFrame,
                                  final String binaryStringIndicatorDecisions) {
 
-        ConvertedResult convertedResult = new ConvertedResult(currentTimeFrame, List.of(binaryStringIndicatorDecisions));
+        ConvertedResult convertedResult =
+                new ConvertedResult(currentTimeFrame, List.of(binaryStringIndicatorDecisions));
 
         for (int i = 0; i < currentTimeFrame.getPer(); i++) {
             TimeFrame timeFrame = convertedResult.getTimeFrame();
@@ -50,7 +51,8 @@ public class DataOfIndicatorConverterToAnotherTimeFrameImpl implements DataOfInd
             Function<List<String>, ConvertedResult> converter = ofNullable(
                     converters.get(timeFrame)).orElseThrow(
                     () -> new RuntimeException(
-                            "Не найдена функция для обработки desiredTimeFrame=%s; currentTimeFrame=%s; binaryStringIndicatorDecisions=%s".formatted(desiredTimeFrame,
+                            "Не найдена функция для обработки desiredTimeFrame=%s; currentTimeFrame=%s; binaryStringIndicatorDecisions=%s".formatted(
+                                    desiredTimeFrame,
                                     timeFrame, binaryStringIndicatorDecisions)));
 
             convertedResult = converter.apply(convertedResult.getBinaryStringIndicatorDecisions());

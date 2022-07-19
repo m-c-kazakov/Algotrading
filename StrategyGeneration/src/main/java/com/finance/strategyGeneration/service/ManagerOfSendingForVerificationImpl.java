@@ -32,7 +32,9 @@ public class ManagerOfSendingForVerificationImpl implements ManagerOfSendingForV
         try {
 
             Boolean isValidStrategy = populationSelection.isValidStrategy(specificationOfStrategy);
-            if (isValidStrategy && specificationOfStrategyService.findByHashCode(specificationOfStrategy.getHashCode()).isEmpty()) {
+            if (isValidStrategy && specificationOfStrategyService
+                    .findByHashCode(specificationOfStrategy.getHashCode())
+                    .isEmpty()) {
                 SpecificationOfStrategy entity = specificationOfStrategyService.save(specificationOfStrategy);
                 SpecificationOfStrategyDto specificationOfStrategyDto = mapper.mapTo(entity);
                 dataProducer.dataHandler(specificationOfStrategyDto);
@@ -49,7 +51,8 @@ public class ManagerOfSendingForVerificationImpl implements ManagerOfSendingForV
         log.info("Создание асинхронных запросов на сохранение стратегий в БД и отправку в Kafka");
 
         specificationOfStrategies
-                .forEach(specificationOfStrategy -> CompletableFuture.runAsync(() -> this.execute(specificationOfStrategy), executor));
+                .forEach(specificationOfStrategy -> CompletableFuture.runAsync(
+                        () -> this.execute(specificationOfStrategy), executor));
 
     }
 }

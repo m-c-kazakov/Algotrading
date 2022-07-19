@@ -21,11 +21,11 @@ import java.util.concurrent.Executor;
 public class SchedulingServiceImpl implements SchedulingService {
 
     DataConsumer dataConsumer;
+    Executor executor;
+    GeneticAlgorithm geneticAlgorithm;
     @NonFinal
     @Value("#{new Integer('${app.kafka.consumer.max_poll_records_config}')/2}")
     Integer frontierForCreatingNewStrategies;
-    Executor executor;
-    GeneticAlgorithm geneticAlgorithm;
 
     @Override
     @Scheduled(fixedDelayString = "#{new Integer('${app.kafka.consumer.max_poll_interval_ms_config}')*75/100}")

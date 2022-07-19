@@ -22,7 +22,10 @@ public class InformationOfCandlesStorage {
     }
 
     public String receiveStringId() {
-        return Optional.ofNullable(receiveId()).map(String::valueOf).orElseThrow(() -> new RuntimeException("InformationOfCandles id не может быть null"));
+        return Optional
+                .ofNullable(receiveId())
+                .map(String::valueOf)
+                .orElseThrow(() -> new RuntimeException("InformationOfCandles id не может быть null"));
     }
 
     public TimeFrame receiveTimeFrame() {

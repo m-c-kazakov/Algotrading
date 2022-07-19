@@ -11,7 +11,8 @@ public class StatisticsInformationCollectorImpl implements StatisticsInformation
     public void toCollect(StatisticsDataOfStrategy statisticsDataOfStrategy, long startScore, long oldStateOfScore,
                           long newStateOfScore) {
         boolean isDealProfitable = newStateOfScore > oldStateOfScore;
-        log.debug(">> toCollect: startScore={}; oldStateOfScore={}; isDealProfitabl={}", startScore, oldStateOfScore, isDealProfitable);
+        log.debug(">> toCollect: startScore={}; oldStateOfScore={}; isDealProfitabl={}", startScore, oldStateOfScore,
+                isDealProfitable);
 
         increaseStatisticsOfEndDeal(statisticsDataOfStrategy, isDealProfitable);
 

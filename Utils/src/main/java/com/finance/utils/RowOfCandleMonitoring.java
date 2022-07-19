@@ -46,7 +46,7 @@ public class RowOfCandleMonitoring {
 
         // M1 linesWithOutWeekends size=30240
         // H1 linesWithOutWeekends size=504*60=30240
-        System.out.println("linesWithOutWeekends size="+linesWithOutWeekends.size());
+        System.out.println("linesWithOutWeekends size=" + linesWithOutWeekends.size());
 
 
         Map<String, Integer> countLinesMap = linesWithOutWeekends
@@ -54,7 +54,7 @@ public class RowOfCandleMonitoring {
                 .collect(Collectors.toMap(RowOfCandleMonitoring::createKey, s -> 1, Integer::sum));
 
         System.out.println(countLinesMap);
-        System.out.println("size: "+countLinesMap.entrySet().size());
+        System.out.println("size: " + countLinesMap.entrySet().size());
         System.out.println(countLinesMap.entrySet().stream().map(Map.Entry::getKey).toList());
 
 

@@ -30,9 +30,11 @@ public class IndicatorsToOpenADealExchangeManager implements ExchangeManager {
 
             int separator = createSeparator.execute(firstIndicators, secondIndicators);
 
-            SpecificationOfStrategy firstChild = generateChild(firstIndicators, secondIndicators, separator, firstParent);
+            SpecificationOfStrategy firstChild =
+                    generateChild(firstIndicators, secondIndicators, separator, firstParent);
 
-            SpecificationOfStrategy secondChild = generateChild(secondIndicators, firstIndicators, separator, secondParent);
+            SpecificationOfStrategy secondChild =
+                    generateChild(secondIndicators, firstIndicators, separator, secondParent);
 
             return Stream.of(firstParent, secondParent, firstChild, secondChild);
         }

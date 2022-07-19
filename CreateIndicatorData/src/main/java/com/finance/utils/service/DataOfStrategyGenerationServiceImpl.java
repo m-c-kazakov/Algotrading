@@ -43,7 +43,8 @@ public class DataOfStrategyGenerationServiceImpl implements DataOfStrategyGenera
 
         // Отдать данные валютных пар на обработку индикаторам
         // свести результат работы индикаторов к 1 массиву
-        List<Byte> decisionOnOpeningDeal = dealDecisionService.makeDecisionOnOpeningDeal(request, dataOfCurrencyPairMap);
+        List<Byte> decisionOnOpeningDeal =
+                dealDecisionService.makeDecisionOnOpeningDeal(request, dataOfCurrencyPairMap);
 
         String candleWithSmallestTimeFrame = request.getCandlesInformation().toString();
         DataOfCurrencyPair dataOfCurrencyPair = Optional.ofNullable(

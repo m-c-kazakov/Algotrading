@@ -36,12 +36,14 @@ public class OpeningDealManagerImpl implements OpeningDealManager {
 
         ofNullable(trailingStopManagement.get(descriptionOfStrategy.getTrailingStopType()
                 .name()))
-                .ifPresent(trailingStopManager -> trailingStopManager.update(descriptionOfStrategy, dataOfDeal, cursor));
+                .ifPresent(
+                        trailingStopManager -> trailingStopManager.update(descriptionOfStrategy, dataOfDeal, cursor));
 
         ofNullable(sumOfDealManagement.get(descriptionOfStrategy.getSumOfDealType()
                 .name()))
-                .ifPresent(sumOfDealManger -> sumOfDealManger.determineSumOfDeal(descriptionOfStrategy, dataOfDeal, cursor,
-                        statisticsDataOfStrategy.getScore()));
+                .ifPresent(
+                        sumOfDealManger -> sumOfDealManger.determineSumOfDeal(descriptionOfStrategy, dataOfDeal, cursor,
+                                statisticsDataOfStrategy.getScore()));
 
         ofNullable(stopLossManagement.get(descriptionOfStrategy.getStopLossType()
                 .name()))

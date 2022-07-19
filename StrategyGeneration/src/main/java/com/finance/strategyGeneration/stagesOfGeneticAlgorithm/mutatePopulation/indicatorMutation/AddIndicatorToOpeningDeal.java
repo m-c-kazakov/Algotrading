@@ -44,7 +44,8 @@ public class AddIndicatorToOpeningDeal implements Mutation {
 
 
         SpecificationOfStrategy SpecificationOfStrategyAfterMutation =
-                parentSpecificationOfStrategy.withDescriptionToOpenADeal(IndicatorsDescriptionStorageCreator.create(indicators));
+                parentSpecificationOfStrategy.withDescriptionToOpenADeal(
+                        IndicatorsDescriptionStorageCreator.create(indicators));
 
         return Stream.of(parentSpecificationOfStrategy, SpecificationOfStrategyAfterMutation);
     }

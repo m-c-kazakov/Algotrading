@@ -36,6 +36,7 @@ public class AppConfig {
             PopulationSelection populationSelection
     ) {
 
-        return new ManagerOfSendingForVerificationImpl(mapper, specificationOfStrategyService, executor, dataProducer, populationSelection);
+        return new ManagerOfSendingForVerificationImpl(mapper, specificationOfStrategyService, executor, dataProducer,
+                populationSelection);
     }
 }

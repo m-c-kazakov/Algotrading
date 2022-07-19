@@ -53,7 +53,7 @@ public class RowOfCandlesUtils {
                     .stream()
                     .collect(Collectors.toMap(RowOfCandlesUtils::createKey, s -> 1, Integer::sum));
 
-            System.out.println("countLinesMap="+countLinesMap);
+            System.out.println("countLinesMap=" + countLinesMap);
 
             List<String> timesForOneDay = countLinesMap
                     .entrySet()
@@ -66,7 +66,7 @@ public class RowOfCandlesUtils {
                             .map(RowOfCandlesUtils::getTime).toList())
                     .orElseThrow(() -> new RuntimeException("Не найдены значения с нужным количеством элементов"));
 
-            Assert.state(timesForOneDay.size() == numberElements, "Количество элементов должно быть="+numberElements);
+            Assert.state(timesForOneDay.size() == numberElements, "Количество элементов должно быть=" + numberElements);
 
 //            System.out.println(timesForOneDay);
 
@@ -138,7 +138,6 @@ public class RowOfCandlesUtils {
 
             }
         }
-
 
 
     }

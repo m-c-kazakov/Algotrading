@@ -10,10 +10,11 @@ import org.testcontainers.utility.DockerImageName;
 @IT
 public abstract class KafkaTestBased {
 
-    private static final KafkaContainer kafka = new KafkaContainer(DockerImageName.parse("confluentinc/cp-kafka:7.0.0"));
+    private static final KafkaContainer kafka =
+            new KafkaContainer(DockerImageName.parse("confluentinc/cp-kafka:7.0.0"));
 
     @BeforeAll
-    public static void start()  {
+    public static void start() {
         kafka.start();
     }
 

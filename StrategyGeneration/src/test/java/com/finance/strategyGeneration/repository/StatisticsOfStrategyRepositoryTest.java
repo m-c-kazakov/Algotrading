@@ -10,8 +10,6 @@ class StatisticsOfStrategyRepositoryTest extends IntegrationTestBased {
     StatisticsOfStrategyRepository repository;
 
 
-
-
     @Test
     void findTheBestStatistics() {
         repository.findAll();

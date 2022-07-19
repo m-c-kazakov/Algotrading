@@ -22,11 +22,13 @@ import java.util.function.Supplier;
 public class TakeProfitRandomGenerator implements RandomStrategyParams {
 
     // TODO Вынести паля и статические блоки инициализации
-    Map<TakeProfitType, Consumer<SpecificationOfStrategy.SpecificationOfStrategyBuilder>> takeProfitTypeConsumerMap = new EnumMap<>(
-            TakeProfitType.class);
+    Map<TakeProfitType, Consumer<SpecificationOfStrategy.SpecificationOfStrategyBuilder>> takeProfitTypeConsumerMap =
+            new EnumMap<>(
+                    TakeProfitType.class);
 
     @Getter
-    Map<TakeProfitType, Supplier<ConfigurationStorage<TakeProfitConfigurationKey>>> mapWithSupplierGeneratedRandomParams = new EnumMap<>(
+    Map<TakeProfitType, Supplier<ConfigurationStorage<TakeProfitConfigurationKey>>>
+            mapWithSupplierGeneratedRandomParams = new EnumMap<>(
             TakeProfitType.class);
 
     {

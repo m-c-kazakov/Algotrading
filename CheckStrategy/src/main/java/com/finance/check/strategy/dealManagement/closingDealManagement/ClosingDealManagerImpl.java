@@ -21,8 +21,9 @@ public class ClosingDealManagerImpl implements ClosingDealManager {
     public void execute(DescriptionOfStrategy descriptionOfStrategy, int cursor, DataOfDeal dataOfDeal,
                         StatisticsDataOfStrategy statisticsDataOfStrategy) {
 
-        int pipResult = createPipResult(descriptionOfStrategy.getTypeOfDeal(), descriptionOfStrategy.getClosingPrice(cursor),
-                dataOfDeal.getOpeningPrice());
+        int pipResult =
+                createPipResult(descriptionOfStrategy.getTypeOfDeal(), descriptionOfStrategy.getClosingPrice(cursor),
+                        dataOfDeal.getOpeningPrice());
         long resultOfDeal = pipResult * dataOfDeal.getSumOfDeal();
 
         long oldStateOfScore = statisticsDataOfStrategy.getScore();

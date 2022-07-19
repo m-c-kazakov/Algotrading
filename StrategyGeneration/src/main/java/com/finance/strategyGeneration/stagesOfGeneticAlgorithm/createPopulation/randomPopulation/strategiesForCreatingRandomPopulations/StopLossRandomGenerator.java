@@ -20,12 +20,14 @@ import java.util.function.Supplier;
 public class StopLossRandomGenerator implements RandomStrategyParams {
 
     // TODO Вынести паля и статические блоки инициализации
-    Map<StopLossType, Consumer<SpecificationOfStrategy.SpecificationOfStrategyBuilder>> stopLossTypeConsumerMap = new EnumMap<>(
-            StopLossType.class);
+    Map<StopLossType, Consumer<SpecificationOfStrategy.SpecificationOfStrategyBuilder>> stopLossTypeConsumerMap =
+            new EnumMap<>(
+                    StopLossType.class);
 
     @Getter
-    Map<StopLossType, Supplier<ConfigurationStorage<StopLossConfigurationKey>>> mapWithSupplierGeneratedRandomParams = new EnumMap<>(
-            StopLossType.class);
+    Map<StopLossType, Supplier<ConfigurationStorage<StopLossConfigurationKey>>> mapWithSupplierGeneratedRandomParams =
+            new EnumMap<>(
+                    StopLossType.class);
 
     {
         mapWithSupplierGeneratedRandomParams.put(StopLossType.FIXED_STOP_LOSS,

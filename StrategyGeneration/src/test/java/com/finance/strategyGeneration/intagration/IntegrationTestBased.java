@@ -7,7 +7,6 @@ import org.springframework.test.context.DynamicPropertySource;
 import org.testcontainers.containers.PostgreSQLContainer;
 
 
-
 @IT
 public abstract class IntegrationTestBased {
 

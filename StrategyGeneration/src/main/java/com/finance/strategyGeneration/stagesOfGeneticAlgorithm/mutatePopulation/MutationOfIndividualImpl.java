@@ -58,7 +58,8 @@ public class MutationOfIndividualImpl implements MutationOfIndividual {
             Set<String> uniqueIdentifiers = new HashSet<>();
             // TODO при создании стратегий с descriptionToCloseADeal - добавить мутацию
             List<SpecificationOfStrategy> specificationOfStrategies = populationAfterCrossing.stream()
-                    .map(specificationOfStrategy -> CompletableFuture.supplyAsync(() -> this.execute(specificationOfStrategy), executor))
+                    .map(specificationOfStrategy -> CompletableFuture.supplyAsync(
+                            () -> this.execute(specificationOfStrategy), executor))
                     .flatMap(this::getCompletableFutureResult)
                     .filter(strategy -> uniqueIdentifiers.add(strategy.getHashCode()))
                     .toList();

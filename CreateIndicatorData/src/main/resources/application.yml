@@ -1,27 +1,27 @@
 logging:
-#   Сохранить логи в файл
-#    file:
-#        name: createIndicatorData.log
-#        path: /
-    level:
-        root: INFO
-        org.springframework.jdbc.core: INFO
+  #   Сохранить логи в файл
+  #    file:
+  #        name: createIndicatorData.log
+  #        path: /
+  level:
+    root: INFO
+    org.springframework.jdbc.core: INFO
 
 server:
   port: 8081
 
 spring:
-    mvc:
-        format:
-            # Устанавливает формат для конвертации дат в формат iso
-            date: iso
-    datasource:
-        url: jdbc:postgresql://localhost:5433/candles-db
-        username: algotrading
-        password: parol
-        driver-class-name: org.postgresql.Driver
-    jpa:
-        # Транзакции не будет созданы на уровне контроллеров если стоит аннотация @Transactional
-        open-in-view: false
+  mvc:
+    format:
+      # Устанавливает формат для конвертации дат в формат iso
+      date: iso
+  datasource:
+    url: jdbc:postgresql://localhost:5433/candles-db
+    username: algotrading
+    password: parol
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    # Транзакции не будет созданы на уровне контроллеров если стоит аннотация @Transactional
+    open-in-view: false
 
 

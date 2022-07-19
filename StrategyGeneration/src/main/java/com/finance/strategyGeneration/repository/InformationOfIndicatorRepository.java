@@ -9,6 +9,7 @@ import java.util.Optional;
 public interface InformationOfIndicatorRepository extends CrudRepository<InformationOfIndicator, Long> {
 
     Boolean existsByHashCode(String hashCode);
+
     Optional<InformationOfIndicator> findByHashCode(String hashCode);
 
     List<InformationOfIndicator> findAllByIdIn(List<Long> ids);

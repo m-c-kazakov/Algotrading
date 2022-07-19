@@ -76,7 +76,8 @@ public class SMAIndicatorImpl implements SMAIndicator {
 
         }
 
-        Assert.state(butchDecision.size() == smaResult.size()/batchSize, "Коллекция решений индикатора должна быть равна количеству индикаторов / batchSize");
+        Assert.state(butchDecision.size() == smaResult.size() / batchSize,
+                "Коллекция решений индикатора должна быть равна количеству индикаторов / batchSize");
         return butchDecision;
     }
 

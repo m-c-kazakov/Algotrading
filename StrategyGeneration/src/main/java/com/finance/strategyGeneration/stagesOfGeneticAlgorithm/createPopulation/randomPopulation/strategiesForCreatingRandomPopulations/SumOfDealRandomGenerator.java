@@ -22,17 +22,20 @@ import java.util.function.Supplier;
 public class SumOfDealRandomGenerator implements RandomStrategyParams {
 
     // TODO Вынести паля и статические блоки инициализации
-    Map<SumOfDealType, Consumer<SpecificationOfStrategy.SpecificationOfStrategyBuilder>> sumOfDealTypeConsumerMap = new EnumMap<>(
-            SumOfDealType.class);
+    Map<SumOfDealType, Consumer<SpecificationOfStrategy.SpecificationOfStrategyBuilder>> sumOfDealTypeConsumerMap =
+            new EnumMap<>(
+                    SumOfDealType.class);
 
     @Getter
-    Map<SumOfDealType, Supplier<ConfigurationStorage<SumOfDealConfigurationKey>>> mapWithSupplierGeneratedRandomParams = new EnumMap<>(
-            SumOfDealType.class);
+    Map<SumOfDealType, Supplier<ConfigurationStorage<SumOfDealConfigurationKey>>> mapWithSupplierGeneratedRandomParams =
+            new EnumMap<>(
+                    SumOfDealType.class);
 
     {
         mapWithSupplierGeneratedRandomParams.put(SumOfDealType.PERCENT_OF_SCORE,
                 () -> new ConfigurationStorage<>(
-                        Map.of(SumOfDealConfigurationKey.PERCENT_OF_SCORE, String.valueOf(ThreadLocalRandom.current().nextInt(1, 5)))));
+                        Map.of(SumOfDealConfigurationKey.PERCENT_OF_SCORE,
+                                String.valueOf(ThreadLocalRandom.current().nextInt(1, 5)))));
     }
 
     {

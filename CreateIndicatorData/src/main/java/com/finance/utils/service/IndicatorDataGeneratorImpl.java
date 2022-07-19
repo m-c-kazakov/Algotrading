@@ -30,11 +30,11 @@ public class IndicatorDataGeneratorImpl implements IndicatorDataGenerator {
                 .orElseGet(() -> {
                     ConverterToDataOfIndicator converterToDataOfIndicator = converterToDataOfIndicatorMap.get(
                             indicator.getIndicatorType().name());
-                    DataOfIndicator dataOfIndicator = converterToDataOfIndicator.convert(indicator, typeOfDeal, dataOfCurrencyPair);
+                    DataOfIndicator dataOfIndicator =
+                            converterToDataOfIndicator.convert(indicator, typeOfDeal, dataOfCurrencyPair);
                     dataOfIndicatorRepository.save(dataOfIndicator);
                     return dataOfIndicator;
                 });
-
 
 
     }

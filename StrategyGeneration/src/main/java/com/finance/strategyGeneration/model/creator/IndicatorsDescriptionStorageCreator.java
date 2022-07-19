@@ -12,7 +12,8 @@ import java.util.stream.Stream;
 public class IndicatorsDescriptionStorageCreator {
 
     public static IndicatorsDescriptionStorage create(@NonNull List<InformationOfIndicator> informationOfIndicators) {
-        Assert.notEmpty(informationOfIndicators.stream().filter(Objects::nonNull).toList(), "Коллекция informationOfIndicators не может быть пустой");
+        Assert.notEmpty(informationOfIndicators.stream().filter(Objects::nonNull).toList(),
+                "Коллекция informationOfIndicators не может быть пустой");
         return new IndicatorsDescriptionStorage(informationOfIndicators);
     }
 

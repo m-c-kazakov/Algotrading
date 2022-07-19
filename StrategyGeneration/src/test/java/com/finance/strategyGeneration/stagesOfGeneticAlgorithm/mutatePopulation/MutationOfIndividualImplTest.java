@@ -46,7 +46,7 @@ class MutationOfIndividualImplTest extends KafkaTestBased {
     @Test
     void testExecute() {
 
-        doReturn(max_poll_records_config*5).when(dataConsumer).poll();
+        doReturn(max_poll_records_config * 5).when(dataConsumer).poll();
 
         List<SpecificationOfStrategy> specificationOfStrategies = populationCreationManager.execute();
         mutationOfIndividual.execute(specificationOfStrategies);

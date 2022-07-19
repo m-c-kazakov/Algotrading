@@ -31,9 +31,10 @@ public class DealDecisionServiceImpl implements DealDecisionService {
 
         // Получить решение по всем индикаторам
         // Сгрупировать решения по TimeFrame
-        Map<TimeFrame, List<List<Integer>>> groupedByTimeFrameIndicatorsDecision = finalSolutionGenerator.getGroupedByTimeFrameIndicatorsDecision(
-                request,
-                dataOfCurrencyPairMap, indicatorsOfDescriptionToOpenADeal);
+        Map<TimeFrame, List<List<Integer>>> groupedByTimeFrameIndicatorsDecision =
+                finalSolutionGenerator.getGroupedByTimeFrameIndicatorsDecision(
+                        request,
+                        dataOfCurrencyPairMap, indicatorsOfDescriptionToOpenADeal);
 
         // Проверить что все коллекции имеют одинаковый размер
         finalSolutionGenerator.checkingTheEqualityOfListSizes(groupedByTimeFrameIndicatorsDecision);

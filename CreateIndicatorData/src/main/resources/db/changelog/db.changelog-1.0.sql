@@ -18,12 +18,12 @@ create table candles
 --changeset kazakov:2
 create table data_of_indicators
 (
-    id               serial PRIMARY KEY,
+    id                serial PRIMARY KEY,
     unique_identifier text unique not null,
-    decision_by_deal integer[]   not null,
-    indicator_type   varchar(50) not null,
-    currency_pair    varchar(50) not null,
-    time_frame       varchar(50) not null
+    decision_by_deal  integer[]   not null,
+    indicator_type    varchar(50) not null,
+    currency_pair     varchar(50) not null,
+    time_frame        varchar(50) not null
 
 )
 

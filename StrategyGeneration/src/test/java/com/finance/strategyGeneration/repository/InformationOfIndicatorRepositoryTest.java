@@ -19,7 +19,6 @@ class InformationOfIndicatorRepositoryTest extends IntegrationTestBased {
     GeneratorOfRandomIndicators generatorOfRandomIndicators;
 
 
-
     @Test
     void existsByHashCode() {
         InformationOfIndicator randomIndicator = generatorOfRandomIndicators.createRandomIndicator(CurrencyPair.EURUSD);

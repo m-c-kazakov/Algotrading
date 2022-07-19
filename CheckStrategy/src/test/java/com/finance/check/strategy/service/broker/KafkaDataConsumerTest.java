@@ -127,7 +127,6 @@ class KafkaDataConsumerTest extends KafkaTestBased {
     static class DataConsumerTestConfiguration {
 
 
-
         @Bean
         public KafkaDataConsumer dataConsumer(
                 KafkaConsumer<Long, DescriptionOfStrategyDto> kafkaConsumer,
@@ -136,7 +135,8 @@ class KafkaDataConsumerTest extends KafkaTestBased {
                 @Qualifier("strategyManagerThreadPoolExecutor") ThreadPoolExecutor threadPoolExecutor) {
 
             Duration timeout = Duration.ofMillis(2_000);
-            return new KafkaDataConsumer(kafkaConsumer, timeout, mapper, strategyVerificationManager, threadPoolExecutor);
+            return new KafkaDataConsumer(kafkaConsumer, timeout, mapper, strategyVerificationManager,
+                    threadPoolExecutor);
         }
 
         @Bean

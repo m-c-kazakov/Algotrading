@@ -60,19 +60,21 @@ public class PopulationCrossingManagerImpl implements PopulationCrossingManager 
             Set<String> uniqueIdentifiers = new HashSet<>();
             List<SpecificationOfStrategy> specificationOfStrategies = Sets.combinations(Sets.newHashSet(population), 2)
                     .stream()
-                    .map( pairOfValue -> CompletableFuture.supplyAsync(() -> this.execute(pairOfValue), executor))
+                    .map(pairOfValue -> CompletableFuture.supplyAsync(() -> this.execute(pairOfValue), executor))
                     .map(this::getCompletableFutureResult)
                     .flatMap(List::stream)
                     .filter(strategy -> uniqueIdentifiers.add(strategy.getHashCode()))
                     .toList();
 
             managerOfSendingForVerification.execute(specificationOfStrategies);
-            log.info("<< END PopulationCrossingManager populationAfterCrossing.size={}", specificationOfStrategies.size());
+            log.info("<< END PopulationCrossingManager populationAfterCrossing.size={}",
+                    specificationOfStrategies.size());
         } catch (Exception exception) {
             log.error("ERROR PopulationCrossingManager={}", exception.getMessage(), exception);
             throw exception;
         }
     }
+
     @SneakyThrows
     private List<SpecificationOfStrategy> getCompletableFutureResult(CompletableFuture<List<SpecificationOfStrategy>> completableFuture) {
         return completableFuture.get();

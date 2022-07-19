@@ -29,7 +29,7 @@ class GeneticAlgorithmImplTest extends KafkaTestBased {
         Optional<Integer> optionalInteger = repository.countAll();
         assertThat(optionalInteger).isPresent();
         optionalInteger.ifPresent(value -> {
-            System.out.println("Количество найденных стратегий="+ value);
+            System.out.println("Количество найденных стратегий=" + value);
             assertThat(value).isGreaterThan(0);
         });
     }

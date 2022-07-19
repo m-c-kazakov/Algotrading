@@ -32,14 +32,6 @@ public class SpecificationOfStrategy {
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
     Long statisticsOfStrategyId;
-    @ToString.Exclude
-    @EqualsAndHashCode.Exclude
-    @NonFinal
-    String hashCode;
-    @NonFinal
-    @EqualsAndHashCode.Exclude
-    @ToString.Exclude
-    Date dateOfCreation;
     @NotNull
     Long startScore;
     @NotNull
@@ -62,13 +54,20 @@ public class SpecificationOfStrategy {
     ConfigurationStorage<TakeProfitConfigurationKey> takeProfitConfigurationData;
     @NotBlank
     TypeOfDeal typeOfDeal;
-
     @NotBlank
     InformationOfCandlesStorage informationOfCandles;
     @NotNull
     IndicatorsDescriptionStorage descriptionToOpenADeal;
     @NotNull
     IndicatorsDescriptionStorage descriptionToCloseADeal;
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
+    @NonFinal
+    String hashCode;
+    @NonFinal
+    @EqualsAndHashCode.Exclude
+    @ToString.Exclude
+    Date dateOfCreation;
 
     public String getHashCode() {
         // TODO Понять как линиво инициализировать hashCode и dateOfCreation при сохранении в бд

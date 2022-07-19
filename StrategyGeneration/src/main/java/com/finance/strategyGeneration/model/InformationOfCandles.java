@@ -9,7 +9,6 @@ import org.springframework.data.relational.core.mapping.Column;
 import org.springframework.data.relational.core.mapping.Table;
 
 
-
 @With
 @Value
 @Builder
@@ -19,12 +18,12 @@ public class InformationOfCandles {
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
     Long id;
+    CurrencyPair currencyPair;
+    TimeFrame timeFrame;
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
     @NonFinal
     String hashCode;
-    CurrencyPair currencyPair;
-    TimeFrame timeFrame;
 
     @Column("hash_code")
     public String getHashCode() {

@@ -24,7 +24,7 @@ class IndicatorUtilsImplTest {
         int expectedSize = 11;
         int upperBound = 5;
         int templateValue = 0;
-        List<Integer> integers = Stream.iterate(templateValue, i -> i < upperBound, i -> i+1).toList();
+        List<Integer> integers = Stream.iterate(templateValue, i -> i < upperBound, i -> i + 1).toList();
         List<Integer> result = indicatorUtils.increaseIndicatorResultSize(integers, expectedSize);
         assertThat(result).hasSize(expectedSize);
         for (int i = templateValue; i < upperBound; i++) {
@@ -35,7 +35,7 @@ class IndicatorUtilsImplTest {
 
     @Test
     void trimPercentageOfArray() {
-        List<Integer> integers = Stream.iterate(0, i -> i < 10, i -> i+1).toList();
+        List<Integer> integers = Stream.iterate(0, i -> i < 10, i -> i + 1).toList();
 
         assertThat(indicatorUtils.trimPercentageOfArray(integers, 10)).hasSize(9);
 

@@ -24,25 +24,13 @@ public final class InformationOfIndicator {
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
     Long id;
+    IndicatorType indicatorType;
+    InformationOfCandlesStorage informationOfCandles;
+    IndicatorParametersConfigurationStorage parameters;
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
     @NonFinal
     String hashCode;
-    IndicatorType indicatorType;
-    InformationOfCandlesStorage informationOfCandles;
-    IndicatorParametersConfigurationStorage parameters;
-
-    public String getHashCode() {
-        if (nonNull(indicatorType) && nonNull(informationOfCandles) && nonNull(parameters)) {
-            this.hashCode  =
-                    String.join("_", indicatorType.name(), informationOfCandles.toString(), parameters.toString());
-        } else {
-            throw new RuntimeException(
-                    "Один из объектов для формирования uniqueIdentifier/hashCode = null; indicatorType=%s; informationOfCandles=%s; parameters=%s; ".formatted(this.indicatorType, this.informationOfCandles, this.parameters));
-        }
-
-        return hashCode;
-    }
 
     @Builder(builderMethodName = "builder", toBuilder = true)
     public static InformationOfIndicator newInformationOfIndicator(Long id, IndicatorType indicatorType,
@@ -55,6 +43,19 @@ public final class InformationOfIndicator {
         }
 
         return new InformationOfIndicator(id, uniqueIdentifier, indicatorType, informationOfCandles, parameters);
+    }
+
+    public String getHashCode() {
+        if (nonNull(indicatorType) && nonNull(informationOfCandles) && nonNull(parameters)) {
+            this.hashCode =
+                    String.join("_", indicatorType.name(), informationOfCandles.toString(), parameters.toString());
+        } else {
+            throw new RuntimeException(
+                    "Один из объектов для формирования uniqueIdentifier/hashCode = null; indicatorType=%s; informationOfCandles=%s; parameters=%s; ".formatted(
+                            this.indicatorType, this.informationOfCandles, this.parameters));
+        }
+
+        return hashCode;
     }
 
     public String receiveStringId() {
@@ -78,7 +79,7 @@ public final class InformationOfIndicator {
     }
 
     public InformationOfIndicator withInformationOfCandles(InformationOfCandlesStorage informationOfCandles) {
-        
+
         return InformationOfIndicator
                 .builder()
                 .id(this.id)

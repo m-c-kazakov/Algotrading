@@ -36,6 +36,7 @@ public class KafkaDataConsumer implements DataConsumer {
         StreamSupport.stream(records.spliterator(), false)
                 .map(ConsumerRecord::value)
                 .map(mapper::mapTo)
-                .forEach(descriptionOfStrategy -> executor.execute(() -> strategyVerificationManager.receive(descriptionOfStrategy)));
+                .forEach(descriptionOfStrategy -> executor.execute(
+                        () -> strategyVerificationManager.receive(descriptionOfStrategy)));
     }
 }

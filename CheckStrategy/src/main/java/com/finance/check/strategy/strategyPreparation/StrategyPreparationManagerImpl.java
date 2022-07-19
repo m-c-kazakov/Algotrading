@@ -19,7 +19,8 @@ public class StrategyPreparationManagerImpl implements StrategyPreparationManage
     @Override
     public StrategyExecutorImpl prepare(DescriptionOfStrategy descriptionOfStrategy) {
 
-        DescriptionOfStrategy descriptionOfStrategyWithCandleAndIndicatorData = dataOfStrategyGeneratorService.generateDataOfIndicators(descriptionOfStrategy);
+        DescriptionOfStrategy descriptionOfStrategyWithCandleAndIndicatorData =
+                dataOfStrategyGeneratorService.generateDataOfIndicators(descriptionOfStrategy);
 
         StatisticsDataOfStrategy statisticsDataOfStrategy = StatisticsDataOfStrategy.builder()
                 .specificationOfStrategyId(descriptionOfStrategyWithCandleAndIndicatorData.getId())

@@ -20,15 +20,14 @@ import java.util.stream.Stream;
 @RequiredArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class PopulationCreationManagerImpl implements PopulationCreationManager {
+    RandomPopulationCreationManager randomPopulationCreationManager;
+    SpecificationOfStrategyService specificationOfStrategyService;
     @NonFinal
     @Value("${app.populationCreation.numberOfRandomIndividual}")
     Integer NUMBER_OF_RANDOM_INDIVIDUALS;
     @NonFinal
     @Value("${app.populationCreation.numberOfTheBestIndividual}")
     Integer NUMBER_OF_THE_BEST_INDIVIDUALS;
-
-    RandomPopulationCreationManager randomPopulationCreationManager;
-    SpecificationOfStrategyService specificationOfStrategyService;
 
     @Override
     public List<SpecificationOfStrategy> execute() {
@@ -44,8 +43,13 @@ public class PopulationCreationManagerImpl implements PopulationCreationManager 
                     .distinct()
                     .toList();
 
-            log.info("PopulationCreationManager NUMBER_OF_RANDOM_INDIVIDUALS={}; NUMBER_OF_THE_BEST_INDIVIDUALS={}; theBestIndividual={}; Actual={}", NUMBER_OF_RANDOM_INDIVIDUALS, NUMBER_OF_THE_BEST_INDIVIDUALS, theBestIndividual.size(), specificationOfStrategies.size());
-            Assert.state(specificationOfStrategies.size() <= NUMBER_OF_RANDOM_INDIVIDUALS+NUMBER_OF_THE_BEST_INDIVIDUALS, "Количество созданных стратегий не соответствует ожидаемому значению");
+            log.info(
+                    "PopulationCreationManager NUMBER_OF_RANDOM_INDIVIDUALS={}; NUMBER_OF_THE_BEST_INDIVIDUALS={}; theBestIndividual={}; Actual={}",
+                    NUMBER_OF_RANDOM_INDIVIDUALS, NUMBER_OF_THE_BEST_INDIVIDUALS, theBestIndividual.size(),
+                    specificationOfStrategies.size());
+            Assert.state(
+                    specificationOfStrategies.size() <= NUMBER_OF_RANDOM_INDIVIDUALS + NUMBER_OF_THE_BEST_INDIVIDUALS,
+                    "Количество созданных стратегий не соответствует ожидаемому значению");
             log.info("END PopulationCreationManager populationAfterCreation.size={}", specificationOfStrategies.size());
             return specificationOfStrategies;
         } catch (Exception exception) {

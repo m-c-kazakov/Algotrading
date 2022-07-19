@@ -28,8 +28,9 @@ public class TrailingStopConfigurationDataMutation implements Mutation {
                 .get(parentSpecificationOfStrategy.getTrailingStopType())
                 .get();
 
-        SpecificationOfStrategy childSpecificationOfStrategy = parentSpecificationOfStrategy.withTrailingStopConfigurationData(
-                randomParamsForStopLoss);
+        SpecificationOfStrategy childSpecificationOfStrategy =
+                parentSpecificationOfStrategy.withTrailingStopConfigurationData(
+                        randomParamsForStopLoss);
 
         return Stream.of(parentSpecificationOfStrategy, childSpecificationOfStrategy);
     }

@@ -19,5 +19,5 @@ app:
     max_poll_interval_ms_config: 50000
     topic_name: untestedStrategies
   checkStrategy:
-      theBorderForGettingNewDescriptionOfStrategy: 10
-      threadPoolSize: 16
+    theBorderForGettingNewDescriptionOfStrategy: 10
+    threadPoolSize: 16

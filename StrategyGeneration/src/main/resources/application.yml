@@ -48,7 +48,7 @@ app:
       # Какая должна быть группа запросов перед отправкой
       batch_size_config: 2500
       # Ожидание заполнения группы запросов в batch_size_config
-      linger_ms_config:  100
+      linger_ms_config: 100
       buffer_memory_config: 33_554_432
       max_block_ms_config: 1_000
       topic_name: untestedStrategies

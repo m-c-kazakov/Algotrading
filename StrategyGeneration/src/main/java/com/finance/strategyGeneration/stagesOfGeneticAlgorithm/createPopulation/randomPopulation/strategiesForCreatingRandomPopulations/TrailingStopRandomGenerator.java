@@ -22,18 +22,21 @@ import java.util.function.Supplier;
 public class TrailingStopRandomGenerator implements RandomStrategyParams {
 
     // TODO Вынести паля и статические блоки инициализации
-    Map<TrailingStopType, Consumer<SpecificationOfStrategy.SpecificationOfStrategyBuilder>> trailingStopTypeConsumerMap = new EnumMap<>(
+    Map<TrailingStopType, Consumer<SpecificationOfStrategy.SpecificationOfStrategyBuilder>>
+            trailingStopTypeConsumerMap = new EnumMap<>(
             TrailingStopType.class);
 
     @Getter
-    Map<TrailingStopType, Supplier<ConfigurationStorage<TrailingStopConfigurationKey>>> mapWithSupplierGeneratedRandomParams = new EnumMap<>(
+    Map<TrailingStopType, Supplier<ConfigurationStorage<TrailingStopConfigurationKey>>>
+            mapWithSupplierGeneratedRandomParams = new EnumMap<>(
             TrailingStopType.class);
 
     {
         mapWithSupplierGeneratedRandomParams.put(TrailingStopType.FIXED_TRAILING_STOP_TYPE,
                 () -> new ConfigurationStorage<>(
-                        Map.of(TrailingStopConfigurationKey.FIXED_TRAILING_STOP, String.valueOf(ThreadLocalRandom.current()
-                                .nextInt(1, 100))))
+                        Map.of(TrailingStopConfigurationKey.FIXED_TRAILING_STOP,
+                                String.valueOf(ThreadLocalRandom.current()
+                                        .nextInt(1, 100))))
         );
     }
 

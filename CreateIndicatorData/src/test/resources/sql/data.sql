@@ -1,6 +1,6 @@
 SET datestyle = DMY;
-COPY candles(ticker, per, date, time, open, high, low, close, vol) FROM PROGRAM 'cat /var/lib/candles-data/M1/EURUSD_220601_220630.txt' DELIMITER ';' CSV HEADER;
-COPY candles(ticker, per, date, time, open, high, low, close, vol) FROM PROGRAM 'cat /var/lib/candles-data/H1/EURUSD_220601_220630.txt' DELIMITER ';' CSV HEADER;
+COPY candles (ticker, per, date, time, open, high, low, close, vol) FROM PROGRAM 'cat /var/lib/candles-data/M1/EURUSD_220601_220630.txt' DELIMITER ';' CSV HEADER;
+COPY candles (ticker, per, date, time, open, high, low, close, vol) FROM PROGRAM 'cat /var/lib/candles-data/H1/EURUSD_220601_220630.txt' DELIMITER ';' CSV HEADER;
 -- COPY candles(ticker, per, date, time, open, high, low, close, vol) FROM PROGRAM 'cat /home/maxim/Yandex.Disk/algotrading/data/candles-data/M1/*.txt' DELIMITER ';' CSV HEADER;
 -- COPY candles(ticker, per, date, time, open, high, low, close, vol) FROM PROGRAM 'cat /home/maxim/Yandex.Disk/algotrading/data/candles-data/H1/*.txt' DELIMITER ';' CSV HEADER;
 
