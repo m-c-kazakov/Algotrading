@@ -35,7 +35,7 @@ class IndicatorUtilsImplTest {
 
     @Test
     void trimPercentageOfArray() {
-        List<Integer> integers = Stream.iterate(0, i -> i < 10, i -> i + 1).toList();
+        List<Byte> integers = Stream.iterate(0, i -> i < 10, i -> i + 1).map(Integer::byteValue).toList();
 
         assertThat(indicatorUtils.trimPercentageOfArray(integers, 10)).hasSize(9);
 

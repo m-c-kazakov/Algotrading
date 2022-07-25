@@ -56,14 +56,13 @@ class IndicatorDataControllerImplTest extends IntegrationTestBased {
                 .descriptionToCloseADeal(List.of())
                 .build();
 
-        String request = this.objectMapper.writeValueAsString(requestDataOfStrategy);
+        // TODO дописать тест на анализ результата
         mockMvc.perform(
                         post("/generateDataOfIndicators")
                                 .contentType(ContentType.APPLICATION_JSON.getMimeType())
                                 .content(json))
                 .andExpectAll(
                         status().is2xxSuccessful()
-//                        content().json("{\"candlesInformation\":{\"currencyPair\":\"EURUSD\",\"timeFrame\":\"M1\",\"per\":1},\"candles\":[{\"closingPrices\":107342,\"openingPrices\":107360,\"lowPrices\":107342,\"highPrices\":107360},{\"closingPrices\":107346,\"openingPrices\":107339,\"lowPrices\":107318,\"highPrices\":107350},{\"closingPrices\":107340,\"openingPrices\":107338,\"lowPrices\":107333,\"highPrices\":107345},{\"closingPrices\":107342,\"openingPrices\":107332,\"lowPrices\":107327,\"highPrices\":107343},{\"closingPrices\":107339,\"openingPrices\":107332,\"lowPrices\":107330,\"highPrices\":107360},{\"closingPrices\":107331,\"openingPrices\":107344,\"lowPrices\":107325,\"highPrices\":107355},{\"closingPrices\":107312,\"openingPrices\":107331,\"lowPrices\":107312,\"highPrices\":107342}],\"decisionToOpenADeal\":[1,1,0,0,0,0,1,1,0,1,0,0,1,1,1,1,1,1,1,1,0,1,1,0,1,0,1,0,1,1,0,1,1,1,1,1,0,0,0,1],\"decisionToCloseADeal\":[]}")
                 ).andReturn();
     }
 }

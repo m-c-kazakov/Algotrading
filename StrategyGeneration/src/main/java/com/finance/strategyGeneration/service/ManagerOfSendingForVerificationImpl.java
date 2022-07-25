@@ -45,7 +45,7 @@ public class ManagerOfSendingForVerificationImpl implements ManagerOfSendingForV
 
         } catch (Exception e) {
             log.error("Ошибка при сохранении стратегий. ErrorMessage={}", e.getCause().toString());
-            log.debug("Ошибка при сохранении стратегий.", e);
+            log.debug("Ошибка при сохранении стратегий={}", e.getMessage());
         }
 
     }

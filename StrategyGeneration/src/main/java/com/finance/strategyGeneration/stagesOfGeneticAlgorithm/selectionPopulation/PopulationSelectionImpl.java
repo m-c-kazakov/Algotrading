@@ -11,6 +11,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Stream;
 
 @Slf4j
@@ -45,15 +46,17 @@ public class PopulationSelectionImpl implements PopulationSelection {
         InformationOfCandles informationOfCandles = specificationOfStrategy.receiveInformationOfCandles();
         TimeFrame minimalTimeFrame = informationOfCandles.getTimeFrame();
 
-        boolean allMatch = Stream.of(specificationOfStrategy.receiveDescriptionToCloseADealIndicators(),
+        Optional<TimeFrame> result = Stream.of(specificationOfStrategy.receiveDescriptionToCloseADealIndicators(),
                         specificationOfStrategy.receiveDescriptionToCloseADealIndicators())
                 .flatMap(List::stream)
                 .map(InformationOfIndicator::receiveTimeFrame)
-                .allMatch(timeFrame -> minimalTimeFrame.getPer() < timeFrame.getPer());
+                .filter(timeFrame -> minimalTimeFrame.getPer() > timeFrame.getPer())
+                .findFirst();
 
-        if (!allMatch) {
-            log.info("InformationOfCandles содержит не минимальный time frame");
-        }
-        return allMatch;
+
+        result.ifPresent(timeFrame -> log.info(
+                "InformationOfCandles содержит не минимальный time frame. minimalTimeFrame={}; indicatorTimeFrame={};",
+                minimalTimeFrame, timeFrame));
+        return result.isEmpty();
     }
 }

@@ -16,6 +16,6 @@ public class ResponseEntityExceptionHandler {
     public ResponseEntity<Object> handle(Exception ex, WebRequest request) {
         log.error("Ошибка в модуле генерации данных индикаторов: {}", ex.getMessage(), ex);
         return new ResponseEntity<Object>(
-                ex.getCause(), new HttpHeaders(), HttpStatus.FORBIDDEN);
+                ex.getMessage(), new HttpHeaders(), HttpStatus.FORBIDDEN);
     }
 }

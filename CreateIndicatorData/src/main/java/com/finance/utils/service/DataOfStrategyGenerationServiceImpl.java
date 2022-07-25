@@ -25,7 +25,9 @@ public class DataOfStrategyGenerationServiceImpl implements DataOfStrategyGenera
     DealDecisionService dealDecisionService;
     DataOfCurrencyPairService dataOfCurrencyPairService;
     DataOfCandleMapper dataOfCandleMapper;
-    RequestDataOfStrategyValidation requestDataOfStrategyValidation ;
+    RequestDataOfStrategyValidation requestDataOfStrategyValidation;
+    ResponseDataOfStrategyCreator responseDataOfStrategyCreator;
+
 
 
     @Override
@@ -59,12 +61,6 @@ public class DataOfStrategyGenerationServiceImpl implements DataOfStrategyGenera
         List<DataOfCandle> candles = dataOfCandleMapper.mapTo(dataOfCurrencyPair.getCandles());
         // TODO Добавить решения по закрытию сделки
 
-        return ResponseDataOfStrategy
-                .builder()
-                .candles(candles)
-                .candlesInformation(dataOfCurrencyPair.getCandlesInformation())
-                .decisionToOpenADeal(decisionOnOpeningDeal)
-                .decisionToCloseADeal(List.of())
-                .build();
+        return responseDataOfStrategyCreator.execute(decisionOnOpeningDeal, dataOfCurrencyPair.getCandlesInformation(), candles);
     }
 }

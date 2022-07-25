@@ -10,7 +10,6 @@ import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import org.springframework.stereotype.Component;
 
-import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
@@ -21,6 +20,8 @@ public class DealDecisionServiceImpl implements DealDecisionService {
 
     FinalSolutionGenerator finalSolutionGenerator;
     IndicatorUtils indicatorUtils;
+    FinalDecisionToByteConverter finalDecisionToByteConverter;
+
 
     @Override
     public List<Byte> makeDecisionOnOpeningDeal(RequestDataOfStrategy request,
@@ -51,13 +52,11 @@ public class DealDecisionServiceImpl implements DealDecisionService {
         // Сформировать итоговое решение по решениям индикаторов в разных таймфремах
         List<Integer> finalDecision = finalSolutionGenerator.generateFinalDecision(timeFrameListMap);
 
+        List<Byte> convertFinalDecision = finalDecisionToByteConverter.execute(request.getTheSmallestTimeFrame(), finalDecision);
         // Обрезать начало итогового решения
-        List<Integer> trimFinalDecision = indicatorUtils.trimPercentageOfArray(finalDecision, 5);
+        List<Byte> trimFinalDecision = indicatorUtils.trimPercentageOfArray(convertFinalDecision, 5);
 
         // создать итоговое решение в byte
-        return trimFinalDecision.stream()
-                .map(Integer::toBinaryString)
-                .flatMap(binaryStringInt -> Arrays.stream(binaryStringInt.split("")))
-                .map(Byte::parseByte).toList();
+        return trimFinalDecision;
     }
 }

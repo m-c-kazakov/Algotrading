@@ -25,6 +25,12 @@ public class IndicatorDataController implements IndicatorDataApi {
     @SneakyThrows
     public ResponseDataOfStrategy generateDataOfIndicators(@RequestBody RequestDataOfStrategy request) {
         log.debug(">> generateDataOfIndicators={}", request);
-        return dataOfStrategyGenerationService.generate(request);
+        ResponseDataOfStrategy response = dataOfStrategyGenerationService.generate(request);
+        log.info("<< ResponseDataOfStrategy DataOfCandle={}; DecisionToOpenADeal={}; DecisionToCloseADeal={}",
+                response.getCandles().size(),
+                response.getDecisionToOpenADeal().size(),
+                response.getDecisionToCloseADeal().size()
+        );
+        return response;
     }
 }

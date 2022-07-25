@@ -7,5 +7,5 @@ public interface IndicatorUtils {
 
     List<Integer> increaseIndicatorResultSize(List<Integer> smaResult, int size);
 
-    List<Integer> trimPercentageOfArray(List<Integer> finalDecision, int i);
+    List<Byte> trimPercentageOfArray(List<Byte> finalDecision, int i);
 }

@@ -4,6 +4,7 @@ import com.finance.strategyDescriptionParameters.*;
 import com.finance.strategyDescriptionParameters.indicators.Indicator;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
+import lombok.extern.slf4j.Slf4j;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
@@ -19,6 +20,7 @@ import static java.util.Optional.ofNullable;
  * <p>
  * Счет представлен типом Long для удобства работы. Информация о числах после запятой находится в CurrencyPair.class
  */
+@Slf4j
 @Getter
 @With
 @Builder
@@ -72,7 +74,12 @@ public class DescriptionOfStrategy {
 
 
     public boolean getDecisionToOpenADeal(int cursor) {
-        return decisionToOpenADeal.get(cursor) == 1;
+        try {
+            return decisionToOpenADeal.get(cursor) == 1;
+        } catch (Exception exception) {
+            log.error("decisionToOpenADeal.size={}; dataOfCandles.size={};", decisionToOpenADeal.size(), dataOfCandles.size());
+            throw exception;
+        }
     }
 
     public boolean getDecisionToClosingADeal(int cursor) {
