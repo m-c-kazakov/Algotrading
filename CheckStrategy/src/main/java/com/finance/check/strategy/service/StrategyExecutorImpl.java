@@ -49,7 +49,7 @@ public class StrategyExecutorImpl implements StrategyExecutor {
             // TODO можно переделать в конечный автомат, он же паттерн состояние
             if (orderIsOpen) {
                 // TODO Сохранить максимально значение по тренду, чтобы понять на сколько вовремя сделка закрылась
-                log.info("Strategy.id={}, score={}", descriptionOfStrategy.getId(), statisticsDataOfStrategy.getScore());
+                log.debug("Strategy.id={}, score={}", descriptionOfStrategy.getId(), statisticsDataOfStrategy.getScore());
                 if (macroClosingDealchecker.isNeedClosingDeal(descriptionOfStrategy, cursor, dataOfDeal)) {
                     closingDealManager.execute(descriptionOfStrategy, cursor, dataOfDeal, statisticsDataOfStrategy);
                     if (statisticsDataOfStrategy.isNeedToBreakStrategy()) {

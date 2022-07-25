@@ -17,5 +17,7 @@ public interface SpecificationOfStrategyService {
 
     List<SpecificationOfStrategy> findTheBestIndividual(int numberOfIndividuals);
 
+    List<SpecificationOfStrategy> findMaximumScoreStrategy(int numberOfIndividuals);
+
     Integer findTheNumberOfUntestedStrategies();
 }

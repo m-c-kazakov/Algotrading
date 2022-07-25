@@ -15,8 +15,9 @@ import lombok.experimental.FieldDefaults;
 @Setter
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class DataOfDeal {
-
-    long sumOfDeal;
+    // TODO Доработать расчет по лотам:
+    //  https://blog.roboforex.com/ru/blog/2019/09/17/kak-rasschitat-torgovyj-lot-dlja-otkry/
+    long lot;
 
     int openingPrice;
     int stopLoss;

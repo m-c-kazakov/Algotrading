@@ -65,6 +65,9 @@ public class SpecificationOfStrategyServiceImpl implements SpecificationOfStrate
             throw exception;
         }
     }
+    
+    
+    
 
     @Override
     public List<SpecificationOfStrategy> findTheBestIndividual(int numberOfIndividuals) {
@@ -74,6 +77,21 @@ public class SpecificationOfStrategyServiceImpl implements SpecificationOfStrate
             return List.of();
         }
 
+        return addStrategyData(theBestStrategy);
+    }
+
+    @Override
+    public List<SpecificationOfStrategy> findMaximumScoreStrategy(int numberOfIndividuals) {
+
+        List<SpecificationOfStrategy> theBestStrategy = repository.findMaximumScoreStrategy(numberOfIndividuals);
+        if (theBestStrategy.isEmpty()) {
+            return List.of();
+        }
+
+        return addStrategyData(theBestStrategy);
+    }
+
+    private List<SpecificationOfStrategy> addStrategyData(List<SpecificationOfStrategy> theBestStrategy) {
         List<String> indicatorsId =
                 theBestStrategy.stream()
                         .flatMap(specificationOfStrategy -> Stream.of(
@@ -89,7 +107,7 @@ public class SpecificationOfStrategyServiceImpl implements SpecificationOfStrate
                 .collect(Collectors.toMap(InformationOfIndicator::receiveStringId,
                         informationOfIndicator -> informationOfIndicator));
 
-        return theBestStrategy.stream()
+        List<SpecificationOfStrategy> specificationOfStrategies = theBestStrategy.stream()
                 .map(specificationOfStrategy -> {
                     List<InformationOfIndicator> openADealIndicators = specificationOfStrategy
                             .receiveDescriptionToOpenADealStringIds()
@@ -112,6 +130,7 @@ public class SpecificationOfStrategyServiceImpl implements SpecificationOfStrate
                             .withDescriptionToOpenADealIndicators(openADealIndicators)
                             .withDescriptionToCloseADealIndicators(closeADealIndicators);
                 }).toList();
+        return specificationOfStrategies;
     }
 
     @Override

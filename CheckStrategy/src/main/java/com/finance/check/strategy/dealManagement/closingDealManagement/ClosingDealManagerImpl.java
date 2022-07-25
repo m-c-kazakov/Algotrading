@@ -8,8 +8,10 @@ import com.finance.strategyDescriptionParameters.TypeOfDeal;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
+@Slf4j
 @Component
 @RequiredArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
@@ -21,10 +23,14 @@ public class ClosingDealManagerImpl implements ClosingDealManager {
     public void execute(DescriptionOfStrategy descriptionOfStrategy, int cursor, DataOfDeal dataOfDeal,
                         StatisticsDataOfStrategy statisticsDataOfStrategy) {
 
+
+
         int pipResult =
                 createPipResult(descriptionOfStrategy.getTypeOfDeal(), descriptionOfStrategy.getClosingPrice(cursor),
                         dataOfDeal.getOpeningPrice());
-        long resultOfDeal = pipResult * dataOfDeal.getSumOfDeal();
+
+        long resultOfDeal = pipResult * dataOfDeal.getLot();
+        log.debug("Strategy.id={}; pipResult={}; lot={}; resultOfDeal={}", descriptionOfStrategy.getId(), pipResult, dataOfDeal.getLot(), resultOfDeal);
 
         long oldStateOfScore = statisticsDataOfStrategy.getScore();
         long newStateOfScore = oldStateOfScore + resultOfDeal;

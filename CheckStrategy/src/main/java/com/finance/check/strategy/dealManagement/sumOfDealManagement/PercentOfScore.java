@@ -15,11 +15,12 @@ public class PercentOfScore implements SumOfDealManger {
         descriptionOfStrategy.getFromSumOfDealConfigurationData(SumOfDealConfigurationKey.PERCENT_OF_SCORE)
                 .map(Integer::parseInt)
                 .ifPresent(percentOfScore -> {
-                    // TODO при тестировании отрефакторить. Вынести функцию получения суммы сделки в отдельный метод и отдельно протестировать.
+                    // TODO Определять на какое количество лотов можно заключить сделку
                     long sumOfDeal = score * percentOfScore / 100;
-                    dataOfDeal.setSumOfDeal(sumOfDeal);
+
+                    // Расчет количества лотов, на которые можно открыть сделку
+                    long lot = sumOfDeal <= 1000 ? 1 : sumOfDeal / 1000;
+                    dataOfDeal.setLot(lot);
                 });
-
-
     }
 }

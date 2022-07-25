@@ -38,7 +38,9 @@ public class StrategyPreparationManagerImpl implements StrategyPreparationManage
     }
 
     private int generateValueOfAcceptableRisk(DescriptionOfStrategy descriptionOfStrategy) {
-        return (int) (descriptionOfStrategy.getStartScore() * descriptionOfStrategy.getAcceptableRisk() / 100);
+        // TODO Возможно уровень приемлемого риска стоит делать выше, чтобы находить стратегии,
+        //  которые правильно открывают сделки, но не вовремя их закрывают
+        return (int) (descriptionOfStrategy.getStartScore() * (100 - descriptionOfStrategy.getAcceptableRisk()) / 100);
     }
 
 }

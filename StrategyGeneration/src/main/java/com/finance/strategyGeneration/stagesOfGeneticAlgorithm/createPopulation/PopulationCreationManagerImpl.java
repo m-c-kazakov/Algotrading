@@ -40,8 +40,10 @@ public class PopulationCreationManagerImpl implements PopulationCreationManager 
             List<SpecificationOfStrategy> randomPopulation = createRandomPopulation(NUMBER_OF_RANDOM_INDIVIDUALS);
             List<SpecificationOfStrategy> theBestIndividual = specificationOfStrategyService.findTheBestIndividual(
                     NUMBER_OF_THE_BEST_INDIVIDUALS);
+            List<SpecificationOfStrategy> maximumScoreStrategy = specificationOfStrategyService.findMaximumScoreStrategy(
+                    NUMBER_OF_THE_BEST_INDIVIDUALS);
 
-            List<SpecificationOfStrategy> specificationOfStrategies = Stream.of(randomPopulation, theBestIndividual)
+            List<SpecificationOfStrategy> specificationOfStrategies = Stream.of(randomPopulation, theBestIndividual, maximumScoreStrategy)
                     .flatMap(List::stream)
                     .toList();
 

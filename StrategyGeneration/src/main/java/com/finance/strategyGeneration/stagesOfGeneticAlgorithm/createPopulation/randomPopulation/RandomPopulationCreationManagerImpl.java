@@ -16,8 +16,8 @@ import java.util.List;
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class RandomPopulationCreationManagerImpl implements RandomPopulationCreationManager {
 
-    static long startScore = 1000; // TODO Вынести в Property
-    static int acceptableRisk = 20; // TODO Вынести в Property
+    static long startScore = 10000; // TODO Вынести в Property
+    static int acceptableRisk = 50; // TODO Вынести в Property
 
     List<RandomStrategyParams> randomStrategyParams;
 

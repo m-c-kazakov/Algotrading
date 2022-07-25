@@ -21,8 +21,12 @@ public interface SpecificationOfStrategyRepository extends CrudRepository<Specif
 
     Boolean existsByHashCode(String hashCode);
 
-    @Query("SELECT * FROM specification_of_strategy spec WHERE spec.id IN (SELECT stat.specification_of_strategy_id FROM statistics_of_strategy stat ORDER BY score DESC LIMIT :count)")
+    @Query("SELECT * FROM specification_of_strategy spec WHERE spec.id IN (SELECT stat.specification_of_strategy_id FROM statistics_of_strategy stat ORDER BY stat.score DESC LIMIT :count)")
     List<SpecificationOfStrategy> findTheBestStrategy(@Param("count") int count);
+
+    @Query("SELECT * FROM specification_of_strategy spec WHERE spec.id IN (SELECT stat.specification_of_strategy_id FROM statistics_of_strategy stat ORDER BY stat.maximum_value_from_score DESC LIMIT :count)")
+    List<SpecificationOfStrategy> findMaximumScoreStrategy(@Param("count") int count);
+
 
     @Query("SELECT COUNT(*) FROM specification_of_strategy spec WHERE spec.statistics_of_strategy_id IS NULL ")
     Optional<Integer> findTheNumberOfUntestedStrategies();
