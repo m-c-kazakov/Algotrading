@@ -9,8 +9,10 @@ import com.finance.dataHolder.DescriptionOfStrategy;
 import com.finance.dataHolder.StatisticsDataOfStrategy;
 import lombok.AccessLevel;
 import lombok.experimental.FieldDefaults;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Qualifier;
 
+@Slf4j
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class StrategyExecutorImpl implements StrategyExecutor {
 
@@ -47,6 +49,7 @@ public class StrategyExecutorImpl implements StrategyExecutor {
             // TODO можно переделать в конечный автомат, он же паттерн состояние
             if (orderIsOpen) {
                 // TODO Сохранить максимально значение по тренду, чтобы понять на сколько вовремя сделка закрылась
+                log.info("Strategy.id={}, score={}", descriptionOfStrategy.getId(), statisticsDataOfStrategy.getScore());
                 if (macroClosingDealchecker.isNeedClosingDeal(descriptionOfStrategy, cursor, dataOfDeal)) {
                     closingDealManager.execute(descriptionOfStrategy, cursor, dataOfDeal, statisticsDataOfStrategy);
                     if (statisticsDataOfStrategy.isNeedToBreakStrategy()) {

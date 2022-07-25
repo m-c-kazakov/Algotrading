@@ -8,7 +8,6 @@ import lombok.experimental.FieldDefaults;
 import org.springframework.stereotype.Component;
 
 import java.util.function.Supplier;
-import java.util.stream.Stream;
 
 @Component("sellDealchecker")
 @RequiredArgsConstructor
@@ -21,14 +20,14 @@ public class SellDealchecker implements MacroClosingDealchecker {
 
     @Override
     public boolean isNeedClosingDeal(DescriptionOfStrategy descriptionOfStrategy, int cursor, DataOfDeal dataOfDeal) {
+        // В расчет берется нижняя или высшая цена для учета колебаний
         Supplier<Boolean> stopLossCheck = executeCheckOnSell(dataOfDeal.getStopLoss(),
-                descriptionOfStrategy.getHighPrice(cursor), stopLossChecker);
+                descriptionOfStrategy.getClosingPrice(cursor), stopLossChecker);
         Supplier<Boolean> trailingStopCheck = executeCheckOnSell(dataOfDeal.getTrailingStop(),
-                descriptionOfStrategy.getHighPrice(cursor), trailingStopChecker);
+                descriptionOfStrategy.getClosingPrice(cursor), trailingStopChecker);
         Supplier<Boolean> takeProfitCheck = executeCheckOnSell(dataOfDeal.getTakeProfit(),
-                descriptionOfStrategy.getLowPrice(cursor), takeProfitChecker);
-        return Stream.of(stopLossCheck, trailingStopCheck, takeProfitCheck)
-                .anyMatch(Supplier::get);
+                descriptionOfStrategy.getClosingPrice(cursor), takeProfitChecker);
+        return stopLossCheck.get() || trailingStopCheck.get() || takeProfitCheck.get();
     }
 
     public Supplier<Boolean> executeCheckOnSell(int valueForDealChecker, int candleValue,

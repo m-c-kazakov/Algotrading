@@ -24,6 +24,8 @@ public class MacroClosingDealcheckerImpl implements MacroClosingDealchecker {
     @Override
     public boolean isNeedClosingDeal(DescriptionOfStrategy descriptionOfStrategy, int cursor, DataOfDeal dataOfDeal) {
 
+        // Todo Добавить в качестве одного из условий закрытия сделки.
+        //  Если текущие возможные потери больше чем уровень риска, то закрой сделку.
         if (descriptionOfStrategy.getDecisionToClosingADeal(cursor)) {
             return true;
         }

@@ -8,7 +8,6 @@ import lombok.experimental.FieldDefaults;
 import org.springframework.stereotype.Component;
 
 import java.util.function.Supplier;
-import java.util.stream.Stream;
 
 @Component("buyDealchecker")
 @RequiredArgsConstructor
@@ -21,6 +20,7 @@ public class BuyDealchecker implements MacroClosingDealchecker {
 
     @Override
     public boolean isNeedClosingDeal(DescriptionOfStrategy descriptionOfStrategy, int cursor, DataOfDeal dataOfDeal) {
+        // В расчет берется нижняя или высшая цена для учета колебаний
         Supplier<Boolean> stopLossCheck = executeCheckOnBuy(dataOfDeal.getStopLoss(),
                 descriptionOfStrategy.getLowPrice(cursor), stopLossChecker);
         Supplier<Boolean> trailingStopCheck = executeCheckOnBuy(dataOfDeal.getTrailingStop(),
@@ -28,13 +28,12 @@ public class BuyDealchecker implements MacroClosingDealchecker {
         Supplier<Boolean> takeProfitCheck = executeCheckOnBuy(dataOfDeal.getTakeProfit(),
                 descriptionOfStrategy.getHighPrice(cursor), takeProfitChecker);
 
-        return Stream.of(stopLossCheck, trailingStopCheck, takeProfitCheck)
-                .anyMatch(Supplier::get);
+        return stopLossCheck.get() || trailingStopCheck.get() || takeProfitCheck.get();
     }
 
-    public Supplier<Boolean> executeCheckOnBuy(int valueForDealChecker, int candleValue,
+    public Supplier<Boolean> executeCheckOnBuy(int dataOfDealValue, int candleValue,
                                                BaseClosingDealchecker baseClosingDealchecker) {
-        return () -> valueForDealChecker != 0 && baseClosingDealchecker.checkDealOnBuy(valueForDealChecker,
+        return () -> dataOfDealValue != 0 && baseClosingDealchecker.checkDealOnBuy(dataOfDealValue,
                 candleValue);
     }
 }
