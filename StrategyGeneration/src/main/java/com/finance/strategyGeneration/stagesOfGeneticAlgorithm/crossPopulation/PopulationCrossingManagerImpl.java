@@ -3,6 +3,7 @@ package com.finance.strategyGeneration.stagesOfGeneticAlgorithm.crossPopulation;
 import com.finance.strategyGeneration.model.SpecificationOfStrategy;
 import com.finance.strategyGeneration.service.ManagerOfSendingForVerification;
 import com.finance.strategyGeneration.stagesOfGeneticAlgorithm.crossPopulation.exchangeManagers.ExchangeManager;
+import com.finance.strategyGeneration.stagesOfGeneticAlgorithm.selectionPopulation.PopulationSelection;
 import com.google.common.collect.Sets;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
@@ -30,6 +31,7 @@ public class PopulationCrossingManagerImpl implements PopulationCrossingManager 
 
     List<ExchangeManager> exchangeManagers;
     ManagerOfSendingForVerification managerOfSendingForVerification;
+    PopulationSelection populationSelection;
     Executor executor;
 
 
@@ -38,14 +40,12 @@ public class PopulationCrossingManagerImpl implements PopulationCrossingManager 
 
             List<SpecificationOfStrategy> pairOfValue = new ArrayList<>(specificationOfStrategies);
             Assert.state(pairOfValue.size() >= 2, "В наборе должно содержаться >= 2 элемента");
-            Set<String> uniqueIdentifiers = new HashSet<>();
             List<SpecificationOfStrategy> pairCrossingResult = exchangeManagers
                     .stream()
                     .flatMap(exchangeManager -> exchangeManager.execute(pairOfValue.get(0), pairOfValue.get(1)))
-                    .filter(strategy -> uniqueIdentifiers.add(strategy.getHashCode()))
                     .toList();
             log.debug("<< PairOfValueCrossingResult.size={}", pairCrossingResult.size());
-            return pairCrossingResult;
+            return populationSelection.execute(pairCrossingResult);
 
         } catch (Exception exception) {
             log.error("ERROR PopulationCrossingManager errorMessage={}", exception.getMessage(), exception);

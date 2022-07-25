@@ -5,7 +5,6 @@ import com.finance.strategyGeneration.service.ManagerOfSendingForVerification;
 import com.finance.strategyGeneration.service.ManagerOfSendingForVerificationImpl;
 import com.finance.strategyGeneration.service.SpecificationOfStrategyService;
 import com.finance.strategyGeneration.service.broker.producer.DataProducer;
-import com.finance.strategyGeneration.stagesOfGeneticAlgorithm.selectionPopulation.PopulationSelection;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -32,11 +31,9 @@ public class AppConfig {
             SpecificationOfStrategyMapper mapper,
             SpecificationOfStrategyService specificationOfStrategyService,
             Executor executor,
-            DataProducer dataProducer,
-            PopulationSelection populationSelection
+            DataProducer dataProducer
     ) {
 
-        return new ManagerOfSendingForVerificationImpl(mapper, specificationOfStrategyService, executor, dataProducer,
-                populationSelection);
+        return new ManagerOfSendingForVerificationImpl(mapper, specificationOfStrategyService, executor, dataProducer);
     }
 }

@@ -1,7 +1,9 @@
 package com.finance.strategyGeneration.service;
 
+import com.finance.strategyGeneration.model.InformationOfCandles;
 import com.finance.strategyGeneration.model.InformationOfIndicator;
 import com.finance.strategyGeneration.model.SpecificationOfStrategy;
+import com.finance.strategyGeneration.model.creator.InformationOfCandlesStorageCreator;
 import com.finance.strategyGeneration.repository.SpecificationOfStrategyRepository;
 import com.google.common.collect.Lists;
 import lombok.AccessLevel;
@@ -29,6 +31,7 @@ import java.util.stream.Stream;
 public class SpecificationOfStrategyServiceImpl implements SpecificationOfStrategyService {
 
     SpecificationOfStrategyRepository repository;
+    InformationOfCandleService informationOfCandleService;
     InformationOfIndicatorService informationOfIndicatorService;
 
     @Override
@@ -86,7 +89,6 @@ public class SpecificationOfStrategyServiceImpl implements SpecificationOfStrate
                 .collect(Collectors.toMap(InformationOfIndicator::receiveStringId,
                         informationOfIndicator -> informationOfIndicator));
 
-
         return theBestStrategy.stream()
                 .map(specificationOfStrategy -> {
                     List<InformationOfIndicator> openADealIndicators = specificationOfStrategy
@@ -101,8 +103,12 @@ public class SpecificationOfStrategyServiceImpl implements SpecificationOfStrate
                             .map(informationOfIndicatorMap::get)
                             .toList();
 
+                    InformationOfCandles informationOfCandles = informationOfCandleService.findById(
+                            specificationOfStrategy.receiveInformationOfCandles().getId());
+
                     return specificationOfStrategy
                             .withId(null)
+                            .withInformationOfCandles(InformationOfCandlesStorageCreator.create(informationOfCandles))
                             .withDescriptionToOpenADealIndicators(openADealIndicators)
                             .withDescriptionToCloseADealIndicators(closeADealIndicators);
                 }).toList();

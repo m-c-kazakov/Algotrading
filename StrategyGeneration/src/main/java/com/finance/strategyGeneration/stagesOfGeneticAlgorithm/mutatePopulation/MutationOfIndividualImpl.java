@@ -2,6 +2,7 @@ package com.finance.strategyGeneration.stagesOfGeneticAlgorithm.mutatePopulation
 
 import com.finance.strategyGeneration.model.SpecificationOfStrategy;
 import com.finance.strategyGeneration.service.ManagerOfSendingForVerification;
+import com.finance.strategyGeneration.stagesOfGeneticAlgorithm.selectionPopulation.PopulationSelection;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
@@ -28,22 +29,21 @@ public class MutationOfIndividualImpl implements MutationOfIndividual {
     ManagerOfSendingForVerification managerOfSendingForVerification;
     List<Mutation> mutations;
     Executor executor;
+    PopulationSelection populationSelection;
 
     @Override
     public Stream<SpecificationOfStrategy> execute(SpecificationOfStrategy specificationOfStrategy) {
 
         try {
-            Set<String> uniqueIdentifiers = new HashSet<>();
             log.debug("START strategy mutation.size={}", 1);
             // TODO при создании стратегий с descriptionToCloseADeal - добавить мутацию
             List<SpecificationOfStrategy> specificationOfStrategies = mutations.stream()
                     .flatMap(mutation -> mutation.execute(specificationOfStrategy))
-                    .filter(strategy -> uniqueIdentifiers.add(strategy.getHashCode()))
                     .toList();
 
 
             log.debug("END strategy mutation.size={}", specificationOfStrategies.size());
-            return specificationOfStrategies.stream();
+            return populationSelection.execute(specificationOfStrategies).stream();
         } catch (Exception exception) {
             log.error("ERROR MutationOfIndividual={}", exception.getMessage(), exception);
             return Stream.empty();

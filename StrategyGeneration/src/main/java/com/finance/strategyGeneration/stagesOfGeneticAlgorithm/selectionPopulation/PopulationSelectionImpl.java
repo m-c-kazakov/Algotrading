@@ -28,7 +28,10 @@ public class PopulationSelectionImpl implements PopulationSelection {
 
         try {
             log.info("START PopulationSelection populationBeforeSelection.size={}", populationAfterMutation.size());
-            List<SpecificationOfStrategy> execute = сheckingTheUniquenessOfStrategies.execute(populationAfterMutation);
+            List<SpecificationOfStrategy> execute = сheckingTheUniquenessOfStrategies.execute(populationAfterMutation)
+                    .stream()
+                    .filter(this::isValidStrategy)
+                    .toList();
             log.info("END PopulationSelection populationAfterSelection.size={}", execute.size());
             return execute;
         } catch (Exception e) {

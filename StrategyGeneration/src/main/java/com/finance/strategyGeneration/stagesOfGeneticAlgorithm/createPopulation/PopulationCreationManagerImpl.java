@@ -3,6 +3,7 @@ package com.finance.strategyGeneration.stagesOfGeneticAlgorithm.createPopulation
 import com.finance.strategyGeneration.model.SpecificationOfStrategy;
 import com.finance.strategyGeneration.service.SpecificationOfStrategyService;
 import com.finance.strategyGeneration.stagesOfGeneticAlgorithm.createPopulation.randomPopulation.RandomPopulationCreationManager;
+import com.finance.strategyGeneration.stagesOfGeneticAlgorithm.selectionPopulation.PopulationSelection;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
@@ -29,6 +30,8 @@ public class PopulationCreationManagerImpl implements PopulationCreationManager 
     @Value("${app.populationCreation.numberOfTheBestIndividual}")
     Integer NUMBER_OF_THE_BEST_INDIVIDUALS;
 
+    PopulationSelection populationSelection;
+
     @Override
     public List<SpecificationOfStrategy> execute() {
         try {
@@ -40,7 +43,6 @@ public class PopulationCreationManagerImpl implements PopulationCreationManager 
 
             List<SpecificationOfStrategy> specificationOfStrategies = Stream.of(randomPopulation, theBestIndividual)
                     .flatMap(List::stream)
-                    .distinct()
                     .toList();
 
             log.info(
@@ -51,7 +53,7 @@ public class PopulationCreationManagerImpl implements PopulationCreationManager 
                     specificationOfStrategies.size() <= NUMBER_OF_RANDOM_INDIVIDUALS + NUMBER_OF_THE_BEST_INDIVIDUALS,
                     "Количество созданных стратегий не соответствует ожидаемому значению");
             log.info("END PopulationCreationManager populationAfterCreation.size={}", specificationOfStrategies.size());
-            return specificationOfStrategies;
+            return populationSelection.execute(specificationOfStrategies);
         } catch (Exception exception) {
             log.error("ERROR PopulationCreationManager={}", exception.getMessage(), exception);
             throw exception;
