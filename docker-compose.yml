@@ -40,8 +40,6 @@ services:
     depends_on:
       - strategy-generation
       - create-indicator-data
-      - zookeeper
-      - broker
   create-indicator-data:
     build: CreateIndicatorData/
     container_name: create-indicator-data

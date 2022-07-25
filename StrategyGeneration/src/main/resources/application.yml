@@ -61,7 +61,7 @@ app:
       auto_offset_reset_config: earliest
       # Количество данных получаемых за раз
       max_poll_records_config: 1000
-      # Дает понгимание для Kafka что consumer живой
+      # Дает понимание для Kafka что consumer живой
       max_poll_interval_ms_config: 50000
       topic_name: untestedStrategies
       timeout_duration: 2000

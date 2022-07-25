@@ -24,7 +24,7 @@ public class IndicatorDataController implements IndicatorDataApi {
     @PostMapping("/generateDataOfIndicators")
     @SneakyThrows
     public ResponseDataOfStrategy generateDataOfIndicators(@RequestBody RequestDataOfStrategy request) {
-        log.info(">> generateDataOfIndicators={}", request);
+        log.debug(">> generateDataOfIndicators={}", request);
         return dataOfStrategyGenerationService.generate(request);
     }
 }

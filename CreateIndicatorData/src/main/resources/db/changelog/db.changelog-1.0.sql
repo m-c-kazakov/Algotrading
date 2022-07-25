@@ -20,6 +20,7 @@ create table data_of_indicators
 (
     id                serial PRIMARY KEY,
     unique_identifier text unique not null,
+    type_of_deal      varchar(50) not null,
     decision_by_deal  integer[]   not null,
     indicator_type    varchar(50) not null,
     currency_pair     varchar(50) not null,

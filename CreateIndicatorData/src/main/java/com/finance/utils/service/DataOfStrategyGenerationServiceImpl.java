@@ -25,10 +25,14 @@ public class DataOfStrategyGenerationServiceImpl implements DataOfStrategyGenera
     DealDecisionService dealDecisionService;
     DataOfCurrencyPairService dataOfCurrencyPairService;
     DataOfCandleMapper dataOfCandleMapper;
+    RequestDataOfStrategyValidation requestDataOfStrategyValidation ;
 
 
     @Override
     public ResponseDataOfStrategy generate(RequestDataOfStrategy request) {
+
+        // Валидация стратегии
+        requestDataOfStrategyValidation.execute(request);
 
         // Определить данные какой валютной пары с каким таймфреймом нужны
         Set<CandlesInformation> dataOfCurrencyPairs = dataOfCurrencyPairInitializer.execute(request);

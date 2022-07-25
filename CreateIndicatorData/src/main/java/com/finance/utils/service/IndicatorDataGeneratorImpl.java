@@ -4,7 +4,6 @@ import com.finance.strategyDescriptionParameters.TypeOfDeal;
 import com.finance.strategyDescriptionParameters.indicators.Indicator;
 import com.finance.utils.dto.DataOfCurrencyPair;
 import com.finance.utils.model.DataOfIndicator;
-import com.finance.utils.repository.DataOfIndicatorRepository;
 import com.finance.utils.service.converterToDataOfIndicator.ConverterToDataOfIndicator;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
@@ -22,19 +21,15 @@ public class IndicatorDataGeneratorImpl implements IndicatorDataGenerator {
 
     Map<String, ConverterToDataOfIndicator> converterToDataOfIndicatorMap;
 
-    DataOfIndicatorRepository dataOfIndicatorRepository;
+    DataToIndicatorService dataToIndicatorService;
 
     @Override
     public DataOfIndicator generate(Indicator indicator, TypeOfDeal typeOfDeal, DataOfCurrencyPair dataOfCurrencyPair) {
-        return dataOfIndicatorRepository.getDataOfIndicatorByUniqueIdentifier(indicator.getUniqueIdentifier())
-                .orElseGet(() -> {
-                    ConverterToDataOfIndicator converterToDataOfIndicator = converterToDataOfIndicatorMap.get(
-                            indicator.getIndicatorType().name());
-                    DataOfIndicator dataOfIndicator =
-                            converterToDataOfIndicator.convert(indicator, typeOfDeal, dataOfCurrencyPair);
-                    dataOfIndicatorRepository.save(dataOfIndicator);
-                    return dataOfIndicator;
-                });
+        ConverterToDataOfIndicator converterToDataOfIndicator = converterToDataOfIndicatorMap.get(
+                indicator.getIndicatorType().name());
+        DataOfIndicator dataOfIndicator =
+                converterToDataOfIndicator.convert(indicator, typeOfDeal, dataOfCurrencyPair);
+        return dataToIndicatorService.save(dataOfIndicator);
 
 
     }

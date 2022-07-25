@@ -52,9 +52,4 @@ public class Indicator {
     public Indicator withTimeFrame(TimeFrame timeFrame) {
         return this.withCandlesInformation(this.candlesInformation.withTimeFrame(timeFrame));
     }
-
-    public String getUniqueIdentifier() {
-        return String.join("_", indicatorType.name(), candlesInformation.getCurrencyPair().name(),
-                candlesInformation.getTimeFrame().name(), parameters.toString());
-    }
 }

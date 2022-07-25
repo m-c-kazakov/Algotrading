@@ -24,13 +24,14 @@ public final class InformationOfIndicator {
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
     Long id;
-    IndicatorType indicatorType;
-    InformationOfCandlesStorage informationOfCandles;
-    IndicatorParametersConfigurationStorage parameters;
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
     @NonFinal
     String hashCode;
+    IndicatorType indicatorType;
+    InformationOfCandlesStorage informationOfCandles;
+    IndicatorParametersConfigurationStorage parameters;
+
 
     @Builder(builderMethodName = "builder", toBuilder = true)
     public static InformationOfIndicator newInformationOfIndicator(Long id, IndicatorType indicatorType,

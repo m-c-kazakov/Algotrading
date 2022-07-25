@@ -38,10 +38,14 @@ public class ManagerOfSendingForVerificationImpl implements ManagerOfSendingForV
                 SpecificationOfStrategy entity = specificationOfStrategyService.save(specificationOfStrategy);
                 SpecificationOfStrategyDto specificationOfStrategyDto = mapper.mapTo(entity);
                 dataProducer.dataHandler(specificationOfStrategyDto);
+                log.debug("Стратегия сохранена и отправлена в Kafka");
+            } else {
+                log.info("Стратегия уже существует либо не прошла проверку");
             }
 
         } catch (Exception e) {
-            log.error("Ошибка при создании стратегий.", e);
+            log.error("Ошибка при сохранении стратегий. ErrorMessage={}", e.getCause().toString());
+            log.debug("Ошибка при сохранении стратегий.", e);
         }
 
     }

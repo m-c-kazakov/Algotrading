@@ -7,10 +7,6 @@ import java.util.Optional;
 
 public interface DataOfIndicatorRepository extends CrudRepository<DataOfIndicator, Long> {
 
-    Optional<DataOfIndicator> getDataOfIndicatorByIndicatorTypeAndAndCurrencyPairAndTimeFrame(String indicatorType,
-                                                                                              String currencyPair,
-                                                                                              String timeFrame);
-
     Optional<DataOfIndicator> getDataOfIndicatorByUniqueIdentifier(String uniqueIdentifier);
 
 }
