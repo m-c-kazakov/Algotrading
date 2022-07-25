@@ -4,6 +4,7 @@ import com.finance.strategyGeneration.intagration.IntegrationTestBased;
 import com.finance.strategyGeneration.model.InformationOfCandles;
 import com.finance.strategyGeneration.model.SpecificationOfStrategy;
 import com.finance.strategyGeneration.stagesOfGeneticAlgorithm.createPopulation.randomPopulation.RandomPopulationCreationManager;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
@@ -29,6 +30,7 @@ class InformationOfCandlesRepositoryTest extends IntegrationTestBased {
     }
 
     @Test
+    @Disabled
     void findByHashCode() {
         SpecificationOfStrategy execute = randomPopulationCreationManager.execute();
         InformationOfCandles informationOfCandles = execute.receiveInformationOfCandles();
