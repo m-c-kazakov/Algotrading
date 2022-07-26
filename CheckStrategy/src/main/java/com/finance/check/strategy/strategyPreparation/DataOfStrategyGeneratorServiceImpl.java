@@ -1,7 +1,7 @@
 package com.finance.check.strategy.strategyPreparation;
 
-import com.finance.check.strategy.feign.IndicatorDataFeign;
 import com.finance.dataHolder.DescriptionOfStrategy;
+import com.finance.utils.IndicatorDataApi;
 import com.finance.utils.dto.RequestDataOfStrategy;
 import com.finance.utils.dto.ResponseDataOfStrategy;
 import lombok.AccessLevel;
@@ -14,13 +14,13 @@ import org.springframework.stereotype.Component;
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class DataOfStrategyGeneratorServiceImpl implements DataOfStrategyGeneratorService {
 
-    IndicatorDataFeign indicatorDataFeign;
+    IndicatorDataApi indicatorDataApi;
 
     @Override
     public DescriptionOfStrategy generateDataOfIndicators(DescriptionOfStrategy descriptionOfStrategy) {
         RequestDataOfStrategy requestDataOfStrategy = createRequestDataOfStrategy(descriptionOfStrategy);
 
-        ResponseDataOfStrategy responseDataOfStrategy = indicatorDataFeign.generateDataOfIndicators(
+        ResponseDataOfStrategy responseDataOfStrategy = indicatorDataApi.generateDataOfIndicators(
                 requestDataOfStrategy);
 
         return updateDescriptionOfStrategy(descriptionOfStrategy, responseDataOfStrategy);
