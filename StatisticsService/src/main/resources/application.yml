@@ -1,0 +1,18 @@
+server:
+  port: 8081
+
+logging:
+  level:
+    root: DEBUG
+
+spring:
+  main:
+    allow-circular-references: true
+  datasource:
+    url: jdbc:postgresql://localhost:5434/strategies-db
+    username: algotrading
+    password: parol
+    driver-class-name: org.postgresql.Driver
+    jpa:
+      # Транзакции не будет созданы на уровне контроллеров если стоит аннотация @Transactional
+      open-in-view: false
