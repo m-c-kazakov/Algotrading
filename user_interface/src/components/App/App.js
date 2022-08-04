@@ -2,17 +2,19 @@ import './App.css';
 import React, {useState} from "react";
 import CustomInput from "../CustomInput/CustomInput";
 import CustomButton from "../CustomButton/CustomButton";
-import CustomTable from "../CustomTable/CustomTable";
 import axios from "axios";
 
 
 const initialValues = {
     id: '',
-    name: '',
-    author: '',
-    genre: '',
-    bookComments: []
-
+    specificationOfStrategyId: '',
+    score: '',
+    valueOfAcceptableRisk: '',
+    maximumPercentDrawdownFromStartScore: '',
+    averagePercentDrawdownOfScore: '',
+    maximumValueFromScore: '',
+    numberOfWinningDeals: '',
+    numberOfLosingDeals: ''
 }
 
 
@@ -37,38 +39,32 @@ axios.defaults.withCredentials = true
 
 function App() {
 
-    const [bookData, setBookData] = useState(initialValues);
     const [securityCookiesData, setSecurityCookiesData] = useState({
         authentication: false
     })
 
-    const [books, setBooks] = useState(findAllBook())
-    const [editableBookData, setEditableBookData] = useState({
-        isEdit: false,
-        bookId: null
-    })
+    const [statistics, setStatistics] = useState(findAllBook())
 
 
     const [userData, setUserData] = useState(initUserData)
 
     function findAllBook() {
-        let booksData = []
+        let statisticsData = []
         console.log(securityCookiesData.authentication)
         if (securityCookiesData.authentication) {
-            axios.get(baseUrl + '/api/v1/books', config)
+            axios.get(baseUrl + '/api/v1/statistics', config)
                 .then(response => {
                     // console.log(response.data)
                     response.data
                         .map((book) => responseMapToBookData(book))
-                        .forEach((book) => booksData.push(book))
+                        .forEach((book) => statisticsData.push(book))
                 });
         }
 
-        return booksData;
+        return statisticsData;
     }
 
 
-    const isFilledBookDataFields = bookData.name && bookData.author && bookData.genre
     const isFilledUserDataFields = userData.userName && userData.userPassword
 
 
@@ -80,45 +76,6 @@ function App() {
             genre: book.genre
         }
     }
-
-    const handleSubmitBook = (event) => {
-        event.preventDefault();
-        console.log(event.label)
-        if (isFilledBookDataFields) {
-            if (editableBookData.isEdit) {
-                const editedBooks = books;
-                const updateBookData = axios.put(baseUrl + '/api/v1/books', {
-                    id: bookData.id,
-                    name: bookData.name,
-                    author: bookData.author,
-                    genre: bookData.genre,
-                    bookComments: bookData.bookComments
-                }, config).then(response => {
-                    console.log(updateBookData);
-                    editedBooks.splice(editableBookData.bookId, 1, responseMapToBookData(response.data));
-                    setBooks(editedBooks);
-                    setEditableBookData({
-                        isEdit: false,
-                        bookId: null
-                    });
-                })
-            } else {
-
-                axios.post(baseUrl+'/api/v1/books', {
-                    name: bookData.name,
-                    author: bookData.author,
-                    genre: bookData.genre,
-                    bookComments: bookData.bookComments
-                }, config).then(response => {
-                    setBooks(prevState => [...prevState, responseMapToBookData(response.data)]);
-                })
-
-
-            }
-            setBookData(initialValues)
-        }
-    };
-
 
 
     const handleSubmitUser = (event) => {
@@ -154,27 +111,7 @@ function App() {
         }
     }
 
-    const handleCleanClick = () => setBookData(initialValues);
-
-    const handleRemoveClick = (id) => {
-        axios.delete(baseUrl + '/api/v1/books/' + id)
-        setBooks(books.filter((book) => book.id !== id));
-    }
-
-    const handleEditClick = ({book}) => {
-        setBookData(book)
-        setEditableBookData({
-            isEdit: true,
-            bookId: book.id
-        });
-    };
-
-    const handleInputBookChange = (event, fieldName) => {
-        setBookData(prevState => ({
-            ...prevState,
-            [fieldName]: event.target.value
-        }))
-    }
+    const handleCleanClick = () => setUserData(initUserData);
 
     const handleInputUserChange = (event, fieldName) => {
         setUserData(prevState => ({
@@ -199,7 +136,8 @@ function App() {
 
     return (
         <div className={"wrapper"}>
-            {!securityCookiesData.authentication ?
+            {/*TODO вернуть авторизацию*/}
+            {securityCookiesData.authentication ?
 
                 <div className={"wrapper-content"}>
                     <div>
@@ -243,45 +181,34 @@ function App() {
                 :
                 <div className={"wrapper-content"}>
                     <div className={"table-data"}>
-                        <CustomTable
-                            books={books}
-                            handleRemoveClick={handleRemoveClick}
-                            handleEditClick={handleEditClick}
-                        />
-                    </div>
+                        <table>
+                            <tbody>
+                            <tr>
+                                <th>Id</th>
+                                <th>SpecificationOfStrategyId</th>
+                                <th>Score</th>
+                                <th>MaximumValueFromScore</th>
+                                <th>NumberOfWinningDeals</th>
+                                <th>NumberOfLosingDeals</th>
+                            </tr>
+                            {
+                                statistics.map((statistic) => (
+                                    <tr key={statistic.id}>
+                                        <td>{statistic.id}</td>
+                                        <td>{statistic.specificationOfStrategyId}</td>
+                                        <td>{statistic.score}</td>
+                                        <td>{statistic.maximumValueFromScore}</td>
+                                        <td>{statistic.numberOfWinningDeals}</td>
+                                        <td>{statistic.numberOfLosingDeals}</td>
+                                    </tr>
+                                ))
+                            }
 
-                    <div>
-                        <form onSubmit={handleSubmitBook} onReset={handleCleanClick}>
-                            <CustomInput
-                                placeholder={"Write Book Name"}
-                                handleChange={handleInputBookChange}
-                                value={bookData.name}
-                                fieldName={"name"}
-                            />
-                            <CustomInput
-                                placeholder={"Write Book Author"}
-                                handleChange={handleInputBookChange}
-                                value={bookData.author}
-                                fieldName={"author"}
-                            />
-                            <CustomInput
-                                placeholder={"Write Book Genre"}
-                                handleChange={handleInputBookChange}
-                                value={bookData.genre}
-                                fieldName={"genre"}
-                            />
-                            <div className={"buttons-wrapper"}>
-                                <CustomButton
-                                    label={"Clean"}
-                                    type={"reset"}
-                                />
-                                <CustomButton
-                                    label={editableBookData.isEdit ? 'Update' : 'Save'}
-                                    disabled={!isFilledBookDataFields}
-                                    type={"submit"}
-                                />
-                            </div>
-                        </form>
+                            </tbody>
+                        </table>
+                        {/*<CustomTable*/}
+                        {/*    books={statistics}*/}
+                        {/*/>*/}
                     </div>
                 </div>
             }
