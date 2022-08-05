@@ -1,7 +1,6 @@
---liquibase formatted sql
 
---changeset kazakov:1
-create table users
+
+create table if not exists users
 (
     id        serial PRIMARY KEY,
     user_name text unique not null,
@@ -10,8 +9,7 @@ create table users
     enabled   boolean     not null
 );
 
---changeset kazakov:2
-create table statistics_of_strategy
+create table if not exists statistics_of_strategy
 (
     id                                        serial PRIMARY KEY,
     specification_of_strategy_id              integer not null,
@@ -23,8 +21,3 @@ create table statistics_of_strategy
     number_of_winning_deals                   integer not null,
     number_of_losing_deals                    integer not null
 );
-
-
-
-
-

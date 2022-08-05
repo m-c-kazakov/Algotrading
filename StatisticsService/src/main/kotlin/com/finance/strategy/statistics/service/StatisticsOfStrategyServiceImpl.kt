@@ -25,4 +25,8 @@ open class StatisticsOfStrategyServiceImpl(
         val pageRequest = PageRequest.of(offset, limit, Sort.Direction.DESC, "id")
         return repository.findAll(pageRequest).content
     }
+
+    override fun findTheBestScore(): List<StatisticsOfStrategy> {
+        return repository.findTheBestScore(100)
+    }
 }

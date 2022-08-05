@@ -7,4 +7,6 @@ interface StatisticsOfStrategyService {
     fun findAll(): List<StatisticsOfStrategy>
 
     fun findAll(offset: Int, limit: Int): List<StatisticsOfStrategy>
+
+    fun findTheBestScore(): List<StatisticsOfStrategy>
 }

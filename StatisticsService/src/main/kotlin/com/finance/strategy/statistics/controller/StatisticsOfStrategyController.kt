@@ -27,9 +27,12 @@ class StatisticsOfStrategyController(
     ): List<StatisticsOfStrategyDto> {
         log.info(">>GET: /api/v1/statistics: offset=$offset, limit=$limit")
 
-        return service
-            .findAll(offset, limit)
+        val statisticsOfStrategyDtos = service
+            .findTheBestScore()
             .map { mapTo(it) }
+
+        log.info("response={}", statisticsOfStrategyDtos.get(0))
+        return statisticsOfStrategyDtos
     }
 
     private fun mapTo(statisticsOfStrategy: StatisticsOfStrategy): StatisticsOfStrategyDto {
