@@ -185,10 +185,11 @@ function App() {
                         <tbody>
                         <tr>
                             <th>Id</th>
-                            <th>Name</th>
-                            <th>Author</th>
-                            <th>Genre</th>
-                            <th>Actions</th>
+                            <th>specificationOfStrategyId</th>
+                            <th>score</th>
+                            <th>maximumValueFromScore</th>
+                            <th>numberOfWinningDeals</th>
+                            <th>numberOfLosingDeals</th>
                         </tr>
                         {
                             statisticsOfStrategy.map((statistic) => (
