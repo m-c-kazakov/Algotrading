@@ -5,16 +5,6 @@ import CustomButton from "../CustomButton/CustomButton";
 import axios from "axios";
 
 
-const initialValues = {
-    id: '',
-    specificationOfStrategyId: '',
-    score: '',
-    maximumValueFromScore: '',
-    numberOfWinningDeals: '',
-    numberOfLosingDeals: ''
-}
-
-
 const initUserData = {
     userName: '',
     userPassword: '',
@@ -39,7 +29,7 @@ function App() {
         authentication: false
     })
 
-    const [statisticsOfStrategy, setStatisticsOfStrategy] = useState(initialValues)
+    const [statisticsOfStrategy, setStatisticsOfStrategy] = useState([])
 
 
 
@@ -56,15 +46,23 @@ function App() {
                     response.data
                         .map((statisticOfStrategyData) => responseMapToStatisticOfStrategyData(statisticOfStrategyData))
                         .forEach((statisticOfStrategyData) => statisticsOfStrategyData.push(statisticOfStrategyData))
+
+                    // console.log(statisticsOfStrategyData.length)
+                    if (statisticsOfStrategyData.length !== 0) {
+                        console.log("statisticsOfStrategy")
+                        // console.log(statisticsOfStrategy)
+                        setStatisticsOfStrategy(statisticsOfStrategyData);
+                    }
                 });
         }
 
-        setStatisticsOfStrategy(statisticsOfStrategyData)
-        console.log("statisticsOfStrategyData:" )
-        return statisticsOfStrategyData;
+
+
     }
 
-    setTimeout(getStatisticsOfStrategy, 1000)
+    setInterval(getStatisticsOfStrategy, 5_000)
+    // setImmediate
+
 
     const isFilledUserDataFields = userData.userName && userData.userPassword
 
@@ -84,7 +82,7 @@ function App() {
 
 
 
-    const handleCleanUserDataClick = () => setUserData(initialValues);
+    const handleCleanUserDataClick = () => setUserData(initUserData);
     const handleSubmitUser = (event) => {
         event.preventDefault();
 

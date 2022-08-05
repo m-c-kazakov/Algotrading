@@ -11,6 +11,6 @@ interface StatisticsOfStrategyRepository : CrudRepository<StatisticsOfStrategy, 
 
     fun findAll(pageable: Pageable): Page<StatisticsOfStrategy>
 
-    @Query(value = "SELECT * FROM statistics_of_strategy stat ORDER BY stat.score DESC LIMIT :count")
+    @Query(value = "SELECT * FROM statistics_of_strategy stat WHERE stat.maximum_value_from_score > 0 ORDER BY stat.score DESC LIMIT :count")
     fun findTheBestScore(@Param("count") count: Int): List<StatisticsOfStrategy>
 }
